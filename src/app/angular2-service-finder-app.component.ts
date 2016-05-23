@@ -20,14 +20,14 @@ import { SearchComponent } from './search/search.component';
 
 @Routes([
   {
+    path: '/organisations/:id',
+    component: OrganisationsComponent
+  },
+  {
     path: '/organisations',
     component: OrganisationsComponent
   },
 
-  {
-    path: '/organisations/:id',
-    component: OrganisationsComponent
-  },
 {
     path: '/organisation/:id',
     component: OrganisationDetailComponent
