@@ -1,0 +1,9 @@
+<search-options></search-options>
+<h2>My organisations</h2>
+<h4>{{errorMessage}}</h4>
+<ul class="organisation">
+  <li *ngFor="let organisation of organisations"
+    (click)="onSelect(organisation)">
+    <span class="badge">{{organisation.Id}}</span> {{organisation.Name}}
+  </li>
+</ul>
