@@ -29,21 +29,12 @@ export class OrganisationsComponent implements OnInit {
 
   // When the component starts, get the organisations
   ngOnInit () {
-    this.getOrganisations();
-
+    this.getOrganisations('all', undefined, undefined);
   }
-
   // Get organisations from the service,
-  // then assigned the returned promise to the Organisation Array
-  getOrganisations() {
-    this.organisationService.getOrganisations()
-      .subscribe(
-        organisations => this.organisations = organisations,
-        error =>  this.errorMessage = <any>error);
-  }
-
-  getOrganisationsByType(type: ProviderType) {
-    this.organisationService.getOrganisationsByType(type)
+  // then assigned the returned observable to the Organisation Array
+  getOrganisations(searchType, value1, value2) {
+    this.organisationService.getOrganisations(searchType, value1, value2)
       .subscribe(
         organisations => this.organisations = organisations,
         error =>  this.errorMessage = <any>error);

@@ -10,6 +10,7 @@ import { ProviderTypesComponent } from '../categories/provider-types.component';
   template: `
   <div class='search-area'>
     <h2>{{title}}</h2>
+    
     <provider-types (onSelectedProviderType)="onSelectedProviderType($event)">></provider-types>
   </div>
   `,
@@ -21,15 +22,14 @@ import { ProviderTypesComponent } from '../categories/provider-types.component';
 export class SearchComponent {
   title = 'Search Options';
 
-  @Output() emitSelectedProviderTypeToParent = new EventEmitter<ProviderType>();
+  @Output() onChangedSearch = new EventEmitter<any[]>();
 
   constructor(
     private router: Router
   ) {}
 
   onSelectedProviderType (selectedProviderType: ProviderType) {
-    this.emitSelectedProviderTypeToParent.emit(selectedProviderType);
-
+    this.onChangedSearch.emit(['byProviderType', selectedProviderType, undefined]);
   }
 
 }

@@ -43,7 +43,8 @@ export class OrganisationService {
   // ????
 
   // Get within a shape
-  // http://finder.dss.gov.au/disability/ndap/api/provider/GetAllWithinShape/-36.037825426409505/148.3338165283203/
+  // http://finder.dss.gov.au/disability/ndap/api/provider
+  // /GetAllWithinShape/-36.037825426409505/148.3338165283203/
 
   // Get within a distance
   // http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByDistance/-35.276/149.13/300
@@ -56,30 +57,42 @@ export class OrganisationService {
   // TODO - add other methods
   // TODO - refactor the get.map.catch so it doesnt repeat for each method (DRY)
 
-  // Get all Orgs
-  getOrganisations(): Observable<Organisation[]> {
-    return this.http.get(this.getAllOrganisationsUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+  // Main Method called to get organisations list
+
+  getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
+    switch (searchType) {
+
+    case "byProviderType":
+      return this.getJsonFromAPI(
+        this.getOrganisationsFilteredByTypeUrlA
+        + value1.Code
+        + this.getOrganisationsFilteredByTypeUrlB);
+    case "byPostCode":
+        return this.getJsonFromAPI(this.getOrganisationsInPostcodeUrl + value1);
+    case "all":
+        return this.getJsonFromAPI(this.getAllOrganisationsUrl);
+    default:
+        return this.getJsonFromAPI(this.getAllOrganisationsUrl);
+    }
   }
 
   // Get a single Org
   getOrganisation(id: number): Observable<Organisation> {
-    return this.http.get(this.getSingleOrganisationUrl + id)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-  }
-
-  // Get all Orgs of a type
-  getOrganisationsByType(type: ProviderType): Observable<Organisation[]> {
-    console.log(type.Code);
-    return this.http.get(this.getOrganisationsFilteredByTypeUrlA + type.Code + this.getOrganisationsFilteredByTypeUrlB)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+    return this.getJsonFromAPI(this.getSingleOrganisationUrl + id);
   }
 
 
-
+  // Using the url, get the response from the API,
+  // map through it to extract the data and catch any errors
+  private getJsonFromAPI (url) {
+    return this.http.get(url)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+  // Return the body of the json file
+  // NOTE: there is no value after "body ||",
+  // if we wanted the 'data' object we would put it here after the ||
+  // e.g. 'return body || data { };'
   private extractData(res: Response) {
     let body = res.json();
     return body || { };

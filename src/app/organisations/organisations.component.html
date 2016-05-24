@@ -1,6 +1,6 @@
 
 <!-- Search options -->
-<search-options (emitSelectedProviderTypeToParent)="getOrganisationsByType($event)"></search-options>
+<search-options (onChangedSearch)="getOrganisations($event[0],$event[1],$event[2])"></search-options>
 
 <!-- Organisation Results List -->
 <h2>My organisations</h2>
