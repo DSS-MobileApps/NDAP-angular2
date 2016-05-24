@@ -50,6 +50,6 @@ export class Angular2ServiceFinderAppComponent implements OnInit  {
             ) {};
 
   ngOnInit() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/organisations']);
   }
 }

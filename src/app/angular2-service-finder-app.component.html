@@ -1,5 +1,8 @@
-<h1>{{title}}</h1>
+<div class="container">
+    <div class="row">
+        <h1>{{title}}</h1>
+    </div>
 
-<a [routerLink]="['/organisations']">Organisations</a>
+    <router-outlet></router-outlet>
 
-<router-outlet></router-outlet>
+</div>

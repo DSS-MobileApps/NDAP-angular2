@@ -1,15 +1,22 @@
-
 <!-- Search options -->
-<search-options (onChangedSearch)="getOrganisations($event[0],$event[1],$event[2])"></search-options>
+<div class="row" id="searchArea">
+    <search-options (onChangedSearch)="getOrganisations($event[0],$event[1],$event[2])"></search-options>
+</div>
 
 <!-- Organisation Results List -->
-<h2>My organisations</h2>
-<h4>{{errorMessage}}</h4>
-<ul class="organisation">
-  <li *ngFor="let organisation of organisations"
-    (click)="onSelect(organisation)">
-    ID: {{organisation.Id}} Name: {{organisation.Name}}, Street Address: {{organisation.StreetAddress}}
-  </li>
-</ul>
+<div class="row" id="orgsList">
+    <div class="col-md-12">
+        <h2>My organisations</h2>
+        <h4>{{errorMessage}}</h4>
+    </div>
 
-<p *ngIf= "!organisations">Loading...</p>
+    <div class="col-md-3" id=orgResult *ngFor="let organisation of organisations">
+        <div class="well"
+        (click)="onSelect(organisation)">
+            <p>ID: {{organisation.Id}} </p>
+            <p>Name: {{organisation.Name}} </p>
+            <p>Street Address: {{organisation.StreetAddress}}</p>
+        </div>
+    </div>
+    <p *ngIf="!organisations">Loading...</p>
+</div>
