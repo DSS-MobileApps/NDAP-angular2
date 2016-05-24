@@ -23,8 +23,14 @@ export class OrganisationService {
     'http://finder.dss.gov.au/disability/ndap/api/provider/';
 
   // Organisation (URL + postcode) (60ms on average)
-  private getOrganisationsInPostcodeUrl =
-    'http://finder.dss.gov.au/disability/ndap/api/location/';
+  private getOrganisationsInPostcodeUrlA =
+    'http://finder.dss.gov.au/disability/ndap/api/provider/getallbypostcode/'
+
+  private getOrganisationsInPostcodeUrlB =
+    '/NDAP'
+
+  // Get suburbs from a postcode
+  //'http://finder.dss.gov.au/disability/ndap/api/location/';
 
   // Get by State
   // http://finder.dss.gov.au/disability/ndap/api/provider/getallbystate/ACT/NDAP
@@ -67,10 +73,16 @@ export class OrganisationService {
         this.getOrganisationsFilteredByTypeUrlA
         + value1.Code
         + this.getOrganisationsFilteredByTypeUrlB);
+
     case "byPostCode":
-        return this.getJsonFromAPI(this.getOrganisationsInPostcodeUrl + value1);
+        return this.getJsonFromAPI(
+          this.getOrganisationsInPostcodeUrlA
+          + value1
+          + this.getOrganisationsInPostcodeUrlB);
+
     case "all":
         return this.getJsonFromAPI(this.getAllOrganisationsUrl);
+
     default:
         return this.getJsonFromAPI(this.getAllOrganisationsUrl);
     }

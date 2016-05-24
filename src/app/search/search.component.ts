@@ -10,7 +10,15 @@ import { ProviderTypesComponent } from '../categories/provider-types.component';
   template: `
   <div class='search-area'>
     <h2>{{title}}</h2>
-    
+
+    <h3>Search by PostCode</h3>
+    <button type="button" name="postCodeSearch" value="2602"
+      (click)="onPostCodeSearch(postCode)">
+      Press for {{postCode}} postcode search
+    </button>
+    <input [(ngModel)]="postCode" placeholder="PostCode"/>
+
+    <h3>Search by Provider Type</h3>
     <provider-types (onSelectedProviderType)="onSelectedProviderType($event)">></provider-types>
   </div>
   `,
@@ -21,6 +29,7 @@ import { ProviderTypesComponent } from '../categories/provider-types.component';
 
 export class SearchComponent {
   title = 'Search Options';
+  postCode: number;
 
   @Output() onChangedSearch = new EventEmitter<any[]>();
 
@@ -30,6 +39,10 @@ export class SearchComponent {
 
   onSelectedProviderType (selectedProviderType: ProviderType) {
     this.onChangedSearch.emit(['byProviderType', selectedProviderType, undefined]);
+  }
+
+  onPostCodeSearch (postCode) {
+    this.onChangedSearch.emit(['byPostCode', postCode, undefined]);
   }
 
 }
