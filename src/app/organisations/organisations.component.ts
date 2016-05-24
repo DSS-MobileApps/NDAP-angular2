@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProviderType } from '../categories/provider-type';
 
 import { Organisation } from './organisation';
 import { OrganisationService } from './organisation.service';
@@ -11,7 +12,7 @@ import { SearchComponent } from '../search/search.component';
   selector: 'organisations',
   templateUrl: 'organisations.component.html',
   styleUrls: ['organisations.component.css'],
-  directives: [SearchComponent]
+  directives: [ SearchComponent ]
 
 })
 
@@ -19,7 +20,7 @@ export class OrganisationsComponent implements OnInit {
   title = 'List of Organisations';
   organisations: Organisation[];
   selectedOrganisation: Organisation;
-  errorMessage: string; 
+  errorMessage: string;
 
   constructor(
     private router: Router,
@@ -36,6 +37,13 @@ export class OrganisationsComponent implements OnInit {
   // then assigned the returned promise to the Organisation Array
   getOrganisations() {
     this.organisationService.getOrganisations()
+      .subscribe(
+        organisations => this.organisations = organisations,
+        error =>  this.errorMessage = <any>error);
+  }
+
+  getOrganisationsByType(type: ProviderType) {
+    this.organisationService.getOrganisationsByType(type)
       .subscribe(
         organisations => this.organisations = organisations,
         error =>  this.errorMessage = <any>error);

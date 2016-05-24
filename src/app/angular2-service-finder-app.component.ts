@@ -28,7 +28,7 @@ import { SearchComponent } from './search/search.component';
     component: OrganisationsComponent
   },
 
-{
+  {
     path: '/organisation/:id',
     component: OrganisationDetailComponent
   },

@@ -1,6 +1,7 @@
 import { Injectable }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
+import { ProviderType } from '../categories/provider-type';
 
 import { Organisation }   from './organisation';
 
@@ -25,9 +26,27 @@ export class OrganisationService {
   private getOrganisationsInPostcodeUrl =
     'http://finder.dss.gov.au/disability/ndap/api/location/';
 
-  // TODO - add other calls here
+  // Get by State
+  // http://finder.dss.gov.au/disability/ndap/api/provider/getallbystate/ACT/NDAP
 
+  // Get all by Provider Type
+  private getOrganisationsFilteredByTypeUrlA =
+    'http://finder.dss.gov.au/disability/ndap/api/provider/getallbytype/';
 
+  private getOrganisationsFilteredByTypeUrlB =
+      '/NDAP';
+
+  // Get Provider Types
+  // http://finder.dss.gov.au/disability/ndap/api/utilities/getallprovidertypes/NDAP
+
+  // Get by name
+  // ????
+
+  // Get within a shape
+  // http://finder.dss.gov.au/disability/ndap/api/provider/GetAllWithinShape/-36.037825426409505/148.3338165283203/
+
+  // Get within a distance
+  // http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByDistance/-35.276/149.13/300
 
 
   // ************************************
@@ -50,6 +69,16 @@ export class OrganisationService {
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+
+  // Get all Orgs of a type
+  getOrganisationsByType(type: ProviderType): Observable<Organisation[]> {
+    console.log(type.Code);
+    return this.http.get(this.getOrganisationsFilteredByTypeUrlA + type.Code + this.getOrganisationsFilteredByTypeUrlB)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+
 
   private extractData(res: Response) {
     let body = res.json();

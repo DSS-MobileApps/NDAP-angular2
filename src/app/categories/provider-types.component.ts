@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProviderType } from './provider-type';
@@ -17,10 +17,16 @@ export class ProviderTypesComponent implements OnInit {
   selectedProviderType: ProviderType;
   errorMessage: string;
 
+  // Output that a provider type has been selected
+  @Output() onSelectedProviderType = new EventEmitter<ProviderType>();
+
   constructor(
     private router: Router,
     private providerTypesService: ProviderTypesService
   ) {}
+
+
+
 
   // When the component starts, get the organisations
   ngOnInit () {
@@ -36,10 +42,10 @@ export class ProviderTypesComponent implements OnInit {
         error =>  this.errorMessage = <any>error);
   }
 
-  // When an Org is selected from the list, navigate to that record in a detail view
+  // When a provider type is selected, tell the org list to filter by the type selected
   onSelect(providerType: ProviderType) {
-    this.router.navigate(['/organisations', providerType.Code]);
-    // this.selectedOrganisation = organisation;
+    // emit the provider value e.g. "All Disability"
+    this.onSelectedProviderType.emit(providerType);
   }
 
 }

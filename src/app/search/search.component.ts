@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ProviderType } from '../categories/provider-type';
 import { ProviderTypesComponent } from '../categories/provider-types.component';
 
 @Component({
@@ -8,8 +9,8 @@ import { ProviderTypesComponent } from '../categories/provider-types.component';
   selector: 'search-options',
   template: `
   <div class='search-area'>
-    <h2>Search options</h2>
-    <provider-types></provider-types>
+    <h2>{{title}}</h2>
+    <provider-types (onSelectedProviderType)="onSelectedProviderType($event)">></provider-types>
   </div>
   `,
   directives: [ProviderTypesComponent]
@@ -17,15 +18,18 @@ import { ProviderTypesComponent } from '../categories/provider-types.component';
   // styleUrls: ['provider-types.component.css']
 })
 
-export class SearchComponent implements OnInit {
+export class SearchComponent {
   title = 'Search Options';
+
+  @Output() emitSelectedProviderTypeToParent = new EventEmitter<ProviderType>();
 
   constructor(
     private router: Router
   ) {}
 
-  // When the component starts, get the organisations
-  ngOnInit () {
+  onSelectedProviderType (selectedProviderType: ProviderType) {
+    this.emitSelectedProviderTypeToParent.emit(selectedProviderType);
+
   }
 
 }
