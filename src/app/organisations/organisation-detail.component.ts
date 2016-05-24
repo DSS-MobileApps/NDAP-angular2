@@ -8,6 +8,7 @@ import { OrganisationService } from './organisation.service';
   selector: 'my-organisation-detail',
   template: `
     <div *ngIf="organisation">
+    <button (click)="goBack()">Back</button>
       <h2>{{organisation.Name}} details!</h2>
       <div><label>id: </label>{{organisation.Id}}</div>
       <div>
@@ -33,5 +34,9 @@ export class OrganisationDetailComponent implements OnActivate {
     // Set organisation to the one returned
     this.organisationService.getOrganisation(id)
     .subscribe(organisation => this.organisation = organisation);
+  }
+
+  goBack() {
+    window.history.back();
   }
 }
