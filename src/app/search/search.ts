@@ -1,9 +1,20 @@
+import { ProviderType } from '../categories/provider-type';
+
 export class Search {
-  Type: string;
-  Value1: any;
-  Value2: any;
-  Lat: number;
-  Long: number;
-  Postcode: number;
-  
+  // Type of Search
+  type: string;
+
+  // For Distance or Area search
+  lat: number;
+  lng: number;
+  distance: number;
+
+  // Postcode search
+  postcode: number;
+
+  // State search
+  state: number;
+
+  // ProviderType search
+  providerType: ProviderType;
 }
