@@ -19,23 +19,22 @@ export class SearchComponent {
   title = 'Search Options';
   postCode: number;
 
-  @Output() onChangedSearch = new EventEmitter<any[]>();
-
   constructor(
     private router: Router,
     private organisationService: OrganisationService
   ) {}
 
   onSelectedProviderType (selectedProviderType: ProviderType) {
-    this.onChangedSearch.emit(['byProviderType', selectedProviderType, undefined]);
+    this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
   }
 
   onPostCodeSearch (postCode) {
-    this.onChangedSearch.emit(['byPostCode', postCode, undefined]);
+    this.organisationService.searchOrgList('byPostCode', postCode, undefined);
   }
 
-  onClickOfTestButton() {
-  this.organisationService.testSourceStreamMethod(5);
+  onAllOrganisations() {
+  this.organisationService.searchOrgList('byPostCode', 2905, undefined);
+
   }
 
 }

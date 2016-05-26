@@ -10,6 +10,11 @@ import { Organisation }   from './organisation';
 @Injectable()
 export class OrganisationService {
 
+
+  private orgListSource = new Subject<Organisation[]>();
+
+  orgListSource$ = this.orgListSource.asObservable();
+
   constructor (private http: Http) {}
 
   // ************************************
@@ -67,7 +72,13 @@ export class OrganisationService {
 
   // Main Method called to get organisations list
 
-  getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
+  searchOrgList(searchType, value1, value2) {
+    this.getOrganisations(searchType, value1, value2).subscribe(
+      result => this.orgListSource.next(result)
+    ) 
+  }
+
+  private getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
     switch (searchType) {
 
     case "byProviderType":
@@ -120,21 +131,20 @@ export class OrganisationService {
     return Observable.throw(errMsg);
   }
 
-  // BELOW IS FOR:
-  //  TESTING COMMS USING A SERVICE RATHER THAN THROUGH TEMPLATE
+  // // BELOW IS FOR:
+  // //  TESTING COMMS USING A SERVICE RATHER THAN THROUGH TEMPLATE
 
-  //
-  private testCallCount: number = 0;
+  // //
+  // private testCallCount: number = 0;
 
-  // Observable string sources
-  private testSource = new Subject<string>();
+  // // Observable string sources
+  // private testSource = new Subject<string>();
 
-  // Observable string streams
-  testSourceSteam$ = this.testSource.asObservable();
+  // // Observable string streams
+  // testSourceSteam$ = this.testSource.asObservable();
 
-  // Service message commands
-  testSourceStreamMethod(x) {
-    this.testCallCount += x;
-    this.testSource.next('test: ' + this.testCallCount);
-  }
+  // // Service message commands
+  // testSourceStreamMethod(x) {
+  //   this.testCallCount += x;
+  //   this.testSource.next('test: ' + this.testCallCount);
 }
