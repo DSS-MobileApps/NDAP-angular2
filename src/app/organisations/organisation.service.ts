@@ -1,6 +1,8 @@
 import { Injectable }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
+import { Subject }    from 'rxjs/Subject';
+
 import { ProviderType } from '../categories/provider-type';
 
 import { Organisation }   from './organisation';
@@ -29,18 +31,18 @@ export class OrganisationService {
   private getOrganisationsInPostcodeUrlB =
     '/NDAP'
 
-  // Get suburbs from a postcode
-  //'http://finder.dss.gov.au/disability/ndap/api/location/';
-
-  // Get by State
-  // http://finder.dss.gov.au/disability/ndap/api/provider/getallbystate/ACT/NDAP
-
   // Get all by Provider Type
   private getOrganisationsFilteredByTypeUrlA =
     'http://finder.dss.gov.au/disability/ndap/api/provider/getallbytype/';
 
   private getOrganisationsFilteredByTypeUrlB =
       '/NDAP';
+
+  // Get suburbs from a postcode
+  // 'http://finder.dss.gov.au/disability/ndap/api/location/';
+
+  // Get by State
+  // http://finder.dss.gov.au/disability/ndap/api/provider/getallbystate/ACT/NDAP
 
   // Get Provider Types
   // http://finder.dss.gov.au/disability/ndap/api/utilities/getallprovidertypes/NDAP
@@ -116,5 +118,23 @@ export class OrganisationService {
     let errMsg = error.message || error.statusText || 'Server error';
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
+  }
+
+  // BELOW IS FOR:
+  //  TESTING COMMS USING A SERVICE RATHER THAN THROUGH TEMPLATE
+
+  //
+  private testCallCount: number = 0;
+
+  // Observable string sources
+  private testSource = new Subject<string>();
+
+  // Observable string streams
+  testSourceSteam$ = this.testSource.asObservable();
+
+  // Service message commands
+  testSourceStreamMethod(x) {
+    this.testCallCount += x;
+    this.testSource.next('test: ' + this.testCallCount);
   }
 }
