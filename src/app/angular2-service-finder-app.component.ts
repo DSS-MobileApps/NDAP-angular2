@@ -7,7 +7,6 @@ import { OrganisationsComponent } from './organisations/organisations.component'
 import { OrganisationDetailComponent } from './organisations/organisation-detail.component';
 
 import { ProviderTypesService } from './categories/provider-types.service';
-import { SearchComponent } from './search/search.component';
 
 @Component({
   moduleId: module.id,

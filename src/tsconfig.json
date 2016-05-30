@@ -26,6 +26,7 @@
     "organisation.service.ts",
     "mock-organisation.ts",
     "angular2-service-finder-app.component.ts",
+    "search.component.ts",
     "search.ts"
   ]
 }

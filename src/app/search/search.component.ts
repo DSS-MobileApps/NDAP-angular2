@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ProviderType } from '../categories/provider-type';
 import { ProviderTypesComponent } from '../categories/provider-types.component';
 
+import { OrganisationService } from '../organisations/organisation.service'
+
 @Component({
   moduleId: module.id,
   selector: 'search-options',
@@ -17,18 +19,22 @@ export class SearchComponent {
   title = 'Search Options';
   postCode: number;
 
-  @Output() onChangedSearch = new EventEmitter<any[]>();
-
   constructor(
-    private router: Router
+    private router: Router,
+    private organisationService: OrganisationService
   ) {}
 
   onSelectedProviderType (selectedProviderType: ProviderType) {
-    this.onChangedSearch.emit(['byProviderType', selectedProviderType, undefined]);
+    this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
   }
 
   onPostCodeSearch (postCode) {
-    this.onChangedSearch.emit(['byPostCode', postCode, undefined]);
+    this.organisationService.searchOrgList('byPostCode', postCode, undefined);
+  }
+
+  onAllOrganisations() {
+  this.organisationService.searchOrgList('byPostCode', 2905, undefined);
+
   }
 
 }

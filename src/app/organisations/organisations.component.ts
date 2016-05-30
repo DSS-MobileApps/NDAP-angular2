@@ -21,27 +21,33 @@ export class OrganisationsComponent implements OnInit {
   organisations: Organisation[];
   selectedOrganisation: Organisation;
   errorMessage: string;
+  
+  testString = 'No Tests';
 
   constructor(
     private router: Router,
     private organisationService: OrganisationService
-  ) {}
+  ) 
+  {
+  // organisationService.testSourceSteam$.subscribe(
+  //     x => {
+  //       this.testString = x;
+  //     })
+  }
 
   // When the component starts, get the organisations
   ngOnInit () {
-    this.getOrganisations('all', undefined, undefined);
-  }
-  // Get organisations from the service,
-  // then assigned the returned observable to the Organisation Array
-  getOrganisations(searchType, value1, value2) {
-    this.organisationService.getOrganisations(searchType, value1, value2)
+    this.organisationService.searchOrgList('all', undefined, undefined);
+    
+    this.organisationService.orgListSource$
       .subscribe(
         organisations => this.organisations = organisations,
         error =>  this.errorMessage = <any>error);
+        
   }
 
   // When an Org is selected from the list, navigate to that record in a detail view
-  onSelect(organisation: Organisation) {
+    onSelect(organisation: Organisation) {
     this.router.navigate(['/organisation', organisation.Id]);
     // this.selectedOrganisation = organisation;
   }
