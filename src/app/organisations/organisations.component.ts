@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProviderType } from '../categories/provider-type';
 
 import { Organisation } from './organisation';
 import { OrganisationService } from './organisation.service';
 
 import { SearchComponent } from '../search/search.component';
 
+import { MapComponent } from '../map/map.component'
+
 @Component({
   moduleId: module.id,
   selector: 'organisations',
   templateUrl: 'organisations.component.html',
   styleUrls: ['organisations.component.css'],
-  directives: [ SearchComponent ]
+  directives: [ SearchComponent, MapComponent ]
 
 })
 

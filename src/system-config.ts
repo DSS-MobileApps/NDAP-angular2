@@ -7,6 +7,11 @@ const map: any = {
 
 /** User packages configuration. */
 const packages: any = {
+  'angular2-google-maps': {
+    format: 'cjs',
+    defaultExtension: 'js',
+    main: 'core.js'
+  },
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
