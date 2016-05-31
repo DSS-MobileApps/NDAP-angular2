@@ -12,7 +12,7 @@ module.exports = function(defaults) {
       'reflect-metadata/*.js',
       'rxjs/**/*.js',
       '@angular/**/*.js',
-      'angular2-google-maps/**/*.js'
+      'angular2-google-maps/bundles/angular2-google-maps.min.js'
     ]
   });
 };

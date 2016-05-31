@@ -1,17 +1,16 @@
 
     <h2>Search Options</h2>
 
-    <h3>Search by PostCode</h3>
-    <button type="button" name="postCodeSearch" value="2602" (click)="onPostCodeSearch(postCode)">
-        Press for {{postCode}} postcode search
+    <h3>PostCode</h3>
+    <input type="number" name="" id="input1/(\w+)/\u\1/g" class="form-control" [(ngModel)]="postCode" min="0" max="9999" step="" title="" placeholder="Postcode" >
+    <button type="button" name="postCodeSearch" class="btn btn-primary btn-block" (click)="onPostCodeSearch(postCode)">
+        Search
     </button>
-    <input [(ngModel)]="postCode" placeholder="PostCode" />
 
-    <h3>Search by Provider Type</h3>
+    <h3>Provider Type</h3>
     <provider-types (onSelectedProviderType)="onSelectedProviderType($event)">></provider-types>
 
-    <h3>Get all Organisations</h3>
-    <button type="submit" class="btn btn-primary"
+    <button type="button" class="btn btn-primary btn-block"
     (click)="onAllOrganisations()">
-        All Organisations
+        All Providers
     </button>

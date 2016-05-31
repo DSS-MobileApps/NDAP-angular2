@@ -42,8 +42,6 @@ import { ProviderTypesService } from './categories/provider-types.service';
 ])
 
 export class Angular2ServiceFinderAppComponent implements OnInit  {
-  title = 'Angular 2 Service Finder';
-
   constructor(private router: Router,
               private providerTypesService: ProviderTypesService
             ) {};

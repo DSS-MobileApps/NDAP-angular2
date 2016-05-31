@@ -1,7 +1,4 @@
-<h4>Provider types</h4>
-<ul class="provider-type">
-  <li *ngFor="let providerType of providerTypes"
-    (click)="onSelect(providerType)">
-    <span class="badge">{{providerType.Code}}</span> {{providerType.Value}}
-  </li>
-</ul>
+<button 
+    type="button" 
+    class="btn btn-default btn-sm btn-block"
+    *ngFor="let providerType of providerTypes">{{providerType.Value}}</button>
