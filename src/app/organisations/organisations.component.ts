@@ -22,8 +22,6 @@ export class OrganisationsComponent implements OnInit {
   organisations: Organisation[];
   selectedOrganisation: Organisation;
   errorMessage: string;
-  
-  testString = 'No Tests';
 
   constructor(
     private router: Router,

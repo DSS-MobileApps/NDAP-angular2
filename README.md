@@ -21,6 +21,8 @@ Using Observables the following happens:
 I (Daniel H) have imported the google maps package from https://angular-maps.com/ 
 and followed the following guide :https://angular-maps.com/docs/getting-started.html
 
+There were no docs on how to add the api key so the last step below is how i added it though it doesn't seem like the correct way to do it, though it works
+
 I modified the following files:
 - npm install --save angular2-google-maps
 - index.html - added a src import at the bottom
@@ -28,3 +30,4 @@ I modified the following files:
 - updated system-config.ts
 - added provider to main.ts
 - added to the map.component.ts
+- added APIkey to /node_modules/angular2-google-maps/bundles/angular2-google-maps.js (personal key)

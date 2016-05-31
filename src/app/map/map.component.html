@@ -1,3 +1,19 @@
-Above Map
-<sebm-google-map [latitude]="lat" [longitude]="lng"></sebm-google-map>
-Below Map
+
+<!--Map Placeholder-->
+<sebm-google-map [latitude]="lat" [longitude]="lng">
+     <sebm-google-map-marker 
+        *ngFor="let marker of markers" 
+        [latitude]= "marker.lat"
+        [longitude]="marker.lng" 
+        [label]="marker.label">
+     </sebm-google-map-marker>
+</sebm-google-map>
+
+<button 
+    type="button" 
+    class="btn btn-large btn-block btn-danger"
+    (click)="addTestMarker()">
+    Add Marker
+</button>
+
+
