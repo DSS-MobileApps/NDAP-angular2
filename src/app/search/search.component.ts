@@ -16,7 +16,6 @@ import { OrganisationService } from '../organisations/organisation.service'
 })
 
 export class SearchComponent {
-  title = 'Search Options';
   postCode: number;
 
   constructor(

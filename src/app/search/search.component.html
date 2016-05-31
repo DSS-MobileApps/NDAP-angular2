@@ -1,26 +1,17 @@
-<div class="col-md-12">
-    <h2>{{title}}</h2>
-</div>
 
-<div class="col-md-4">
+    <h2>Search Options</h2>
+
     <h3>Search by PostCode</h3>
     <button type="button" name="postCodeSearch" value="2602" (click)="onPostCodeSearch(postCode)">
         Press for {{postCode}} postcode search
     </button>
     <input [(ngModel)]="postCode" placeholder="PostCode" />
-</div>
 
-<div class="col-md-4">
     <h3>Search by Provider Type</h3>
     <provider-types (onSelectedProviderType)="onSelectedProviderType($event)">></provider-types>
-</div>
 
-<div class="col-md-4">
     <h3>Get all Organisations</h3>
-    
     <button type="submit" class="btn btn-primary"
     (click)="onAllOrganisations()">
         All Organisations
     </button>
-    
-</div>

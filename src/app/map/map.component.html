@@ -1,11 +1,16 @@
 <!--Map Placeholder-->
 <sebm-google-map [latitude]="lat" [longitude]="lng">
      <sebm-google-map-marker 
-        *ngFor="let marker of markers" 
-        [latitude]= "marker.lat"
-        [longitude]="marker.lng" 
-        [label]="marker.label">
+        *ngFor="let organisation of organisations" 
+        [latitude]= "organisation.Lat"
+        [longitude]="organisation.Lng" 
+        [label]="'O'"
+        (markerClick)="clickedMarker(organisation)">
      </sebm-google-map-marker>
 </sebm-google-map>
 
+<div class="alert" *ngIf="selectedOrganisation">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>{{selectedOrganisation.Name}}</strong> 
+</div>
 

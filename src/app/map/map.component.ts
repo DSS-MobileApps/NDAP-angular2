@@ -16,8 +16,6 @@ import { ANGULAR2_GOOGLE_MAPS_DIRECTIVES} from 'angular2-google-maps/core';
 import { OrganisationService } from '../organisations/organisation.service';
 import { Organisation } from '../organisations/organisation';
 
-import { Marker } from './marker'
-
 @Component({
   moduleId: module.id,
   selector: 'map-component',
@@ -31,8 +29,14 @@ export class MapComponent implements OnInit {
   lat: number = -33.7711375;
   lng: number = 151.0802965;
 
-  // Create an array of Markers and initiate as empty
-  markers: Marker[] = [];
+  // Create an array of Organisations and initiate as empty
+  organisations: Organisation[] = [];
+
+  // Label for the google maps (to be removed when there is an icon)
+  labelForMarker: 'O';
+
+  // The Org Id of the currently selected record
+  selectedOrganisation: Organisation = null;
 
   constructor(
     private organisationService: OrganisationService
@@ -41,26 +45,39 @@ export class MapComponent implements OnInit {
   // When the component starts
   ngOnInit () {
     this.subscribeToOrganisationListUpdates();
+    this.subscribeToSelectedOrganisationUpdates();
   }
 
   subscribeToOrganisationListUpdates() {
     this.organisationService.orgListSource$
     .subscribe(
-      organisations => this.clearAndAddNewMarkers(organisations),
+      organisations => {
+        // set the map.comp Org Array to match the results
+        this.organisations = organisations;
+        // convert the lat/lng to number for google api to work
+        this.convertOrgArrayLatLngStringToNum(organisations);
+      },
       error =>  console.log(error));
   }
 
-  clearAndAddNewMarkers(organisations: Organisation[]) {
-    // Clear the markers Array
-    this.markers = [];
-
-    // For each search result, create a new marker
-    organisations.forEach(organisation => {
-      this.markers.push({
-        lat: Number(organisation.Lat), 
-        lng: Number(organisation.Lng), 
-        label: 'O'})
-      }
-    );
+  convertOrgArrayLatLngStringToNum(organisation: Organisation[]) {
+    return organisation = organisation.map(org => {
+      org.Lat = Number(org.Lat);
+      org.Lng = Number(org.Lng);
+      return org;
+    });
   }
+
+  // When a marker is clicked, tell the Org Service
+  clickedMarker(selectedOrganisation) {
+    this.organisationService.updateSelectedOrganisation(selectedOrganisation);
+  };
+
+  // Be notified when a organisation is selected
+  subscribeToSelectedOrganisationUpdates() {
+  this.organisationService.selectedOrganisation$
+    .subscribe(
+      selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
+      error =>  console.log(error));
+    }
 }

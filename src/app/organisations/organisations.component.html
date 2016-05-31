@@ -1,27 +1,28 @@
 <!-- Search options -->
-<div class="row" id="searchArea">
-    <search-options></search-options>
-</div>
-
-<!--Map area-->
-<div class="row" id="mapArea">
-    <map-component>LOADING MAP...</map-component>
-</div>
-
-
-<!-- Organisation Results List -->
-<div class="row" id="orgsList">
-    <div class="col-md-12">
-        <h2>My organisations</h2>
-        <h4>{{testString}}</h4>
+<div class="row" id="orgSearch">
+    <div class="col-md-3">
+        <search-options></search-options>
     </div>
 
-    <div class="col-md-3" id=orgResult *ngFor="let organisation of organisations">
-        <div class="well" (click)="onSelect(organisation)">
-            <p>ID: {{organisation.Id}} </p>
-            <p>Name: {{organisation.Name}} </p>
-            <p>Street Address: {{organisation.StreetAddress}}</p>
+    <div class="col-md-6">
+        <map-component>LOADING MAP...</map-component>
+    </div>
+
+
+
+    <!-- Organisation Results List -->
+    <div class="col-md-3">
+        <h2>Results</h2>
+        
+        <!--Each Organisation Record -->
+        <div id=orgResult *ngFor="let organisation of organisations">
+            <div class="well well-sm" (click)="onSelect(organisation)" [class.selected]="organisation === selectedOrganisation">
+                <p>ID: {{organisation.Id}} </p>
+                <p>Name: {{organisation.Name}} </p>
+                <p>Street Address: {{organisation.StreetAddress}}</p>
+            </div>
         </div>
+        <p *ngIf="!organisations">Loading...</p>
     </div>
-    <p *ngIf="!organisations">Loading...</p>
 </div>
+
