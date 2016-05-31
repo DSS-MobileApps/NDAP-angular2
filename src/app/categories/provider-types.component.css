@@ -1,3 +1,4 @@
 .btn {
+    /*To make the button text wrap*/
     white-space: normal;
 }

@@ -24,16 +24,13 @@ export class ProviderTypesComponent implements OnInit {
     private providerTypesService: ProviderTypesService
   ) {}
 
-
-
-
   // When the component starts, get the organisations
   ngOnInit () {
     this.getProviderTypes();
   }
 
-  // Get organisations from the service,
-  // then assigned the returned promise to the Organisation Array
+  // Get provider types from the provider service,
+  // then assigned the observable result to the Provider Types Array
   getProviderTypes() {
     this.providerTypesService.getProviderTypes()
       .subscribe(
@@ -42,6 +39,7 @@ export class ProviderTypesComponent implements OnInit {
   }
 
   // When a provider type is selected, tell the org list to filter by the type selected
+  // This event is captured through the organisation.component html template
   onSelect(providerType: ProviderType) {
     // emit the provider value e.g. "All Disability"
     this.onSelectedProviderType.emit(providerType);

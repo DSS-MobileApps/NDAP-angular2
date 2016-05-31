@@ -33,8 +33,6 @@ export class ProviderTypesService {
                     .catch(this.handleError);
   }
 
-
-
   private extractData(res: Response) {
     let body = res.json();
     return body || { };
