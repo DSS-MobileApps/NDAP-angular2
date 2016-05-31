@@ -1,6 +1,6 @@
 /*
 
-This map component provides the Google Map UI 
+This map component provides the Google Map UI
 with the markers of the organisations returned by the search results
 
 This component works as follows:
@@ -44,7 +44,11 @@ export class MapComponent implements OnInit {
 
   // When the component starts
   ngOnInit () {
+    // Subscribes to the list of search results of the providers
     this.subscribeToOrganisationListUpdates();
+
+    // Subscribes to any updates to the selected provider record 
+    // These come from either the the marker on the map or the provider details tiles
     this.subscribeToSelectedOrganisationUpdates();
   }
 
@@ -60,6 +64,9 @@ export class MapComponent implements OnInit {
       error =>  console.log(error));
   }
 
+
+  // As the JSON that comes in has the lat and lng as strings, this is to convert them to Number
+  // TODO - put this into the service
   convertOrgArrayLatLngStringToNum(organisation: Organisation[]) {
     return organisation = organisation.map(org => {
       org.Lat = Number(org.Lat);
