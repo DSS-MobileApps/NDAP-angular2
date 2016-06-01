@@ -1,4 +1,8 @@
 <button 
     type="button" 
     class="btn btn-default btn-sm btn-block"
-    *ngFor="let providerType of providerTypes">{{providerType.Value}}</button>
+    *ngFor="let providerType of providerTypes"
+    (click)="onSelect(providerType)"
+    >{{providerType.Value}}
+    
+</button>
