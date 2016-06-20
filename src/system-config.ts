@@ -7,6 +7,9 @@ const map: any = {
 
 /** User packages configuration. */
 const packages: any = {
+  'angular2-google-maps': {
+    defaultExtension: 'js',
+  },
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

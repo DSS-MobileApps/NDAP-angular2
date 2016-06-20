@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProviderTypesComponent } from './search-categories/provider-types.component';
@@ -21,7 +21,6 @@ import { OrganisationService } from '../organisations/organisation.service'
 })
 
 export class SearchComponent {
-  title = 'Search Options';
   postCode: number;
 
   constructor(
