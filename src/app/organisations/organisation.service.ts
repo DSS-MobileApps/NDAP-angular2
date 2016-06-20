@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
 
-import { ProviderType } from '../categories/provider-type';
+import { ProviderType } from '../search/search-categories/provider-type';
 
 import { Organisation }   from './organisation';
 
@@ -43,6 +43,15 @@ export class OrganisationService {
   private getOrganisationsFilteredByTypeUrlB =
       '/NDAP';
 
+
+  private getOrganisationsByState =
+        'http://finder.dss.gov.au/disability/ndap/api/provider/getallbyState/'
+  private getOrganisationsByDistance =
+        'http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByDistance/'
+
+  private getOrganisationsByKeyword =
+        'http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByKeyword/'
+
   // Get suburbs from a postcode
   // 'http://finder.dss.gov.au/disability/ndap/api/location/';
 
@@ -75,7 +84,7 @@ export class OrganisationService {
   searchOrgList(searchType, value1, value2) {
     this.getOrganisations(searchType, value1, value2).subscribe(
       result => this.orgListSource.next(result)
-    ) 
+    )
   }
 
   private getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
@@ -86,6 +95,27 @@ export class OrganisationService {
         this.getOrganisationsFilteredByTypeUrlA
         + value1.Code
         + this.getOrganisationsFilteredByTypeUrlB);
+
+    case "byRadius":
+            return this.getJsonFromAPI(
+              this.getOrganisationsByDistance
+              + "-35.276/149.13/"
+              + value1
+              + this.getOrganisationsInPostcodeUrlB);
+
+    case "byState":
+            return this.getJsonFromAPI(
+              this.getOrganisationsByState
+              // + "-35.276/149.13/"
+              + value1.code
+              + this.getOrganisationsInPostcodeUrlB);
+
+    case "byKeyword":
+          return this.getJsonFromAPI(
+            this.getOrganisationsByKeyword
+            + "-35.276/149.13/"
+            + value1
+            + this.getOrganisationsInPostcodeUrlB);
 
     case "byPostCode":
         return this.getJsonFromAPI(

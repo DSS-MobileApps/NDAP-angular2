@@ -1,0 +1,13 @@
+<!-- <h4>Near you</h4> -->
+<span style="color:red">{{errorMessage}}</span>
+<!-- <ngLocation></ngLocation> -->
+<span>location is {{selectedCity}}</span>
+<!-- <div *ngIf="userLoc != ''"> -->
+
+<ul class="app-search-location" class="nav nav-tabs nav-stacked"  role="tablist">
+  <li role="presentation" *ngFor="let radiusi of radiuslist" >
+    <a (click)="onSelect(radiusi)" class="">within {{radiusi}}kms</a>
+  </li>
+
+</ul>
+<!-- </div> -->

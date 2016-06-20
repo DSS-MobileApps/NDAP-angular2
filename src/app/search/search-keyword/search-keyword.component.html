@@ -1,0 +1,8 @@
+<div>Searching {{keyword}}</div>
+<label for="keyword" class="sr-only">Keywords to search for (enter a provider name or type)</label>
+<div class="input-group" role="presentation">
+  <input [(ngModel)]="keyword" placeholder="Enter name or type" class="form-control" />
+  <span class="input-group-btn">
+    <button type="submit" name="keywordSearch" (click)="onSearch(keyword)" class="btn btn-default">Go</button>
+  </span>
+</div>

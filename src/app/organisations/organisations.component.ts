@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProviderType } from '../categories/provider-type';
+import { ProviderType } from '../search/search-categories/provider-type';
 
 import { Organisation } from './organisation';
 import { OrganisationService } from './organisation.service';
@@ -21,13 +21,13 @@ export class OrganisationsComponent implements OnInit {
   organisations: Organisation[];
   selectedOrganisation: Organisation;
   errorMessage: string;
-  
+
   testString = 'No Tests';
 
   constructor(
     private router: Router,
     private organisationService: OrganisationService
-  ) 
+  )
   {
   // organisationService.testSourceSteam$.subscribe(
   //     x => {
@@ -38,12 +38,12 @@ export class OrganisationsComponent implements OnInit {
   // When the component starts, get the organisations
   ngOnInit () {
     this.organisationService.searchOrgList('all', undefined, undefined);
-    
+
     this.organisationService.orgListSource$
       .subscribe(
         organisations => this.organisations = organisations,
         error =>  this.errorMessage = <any>error);
-        
+
   }
 
   // When an Org is selected from the list, navigate to that record in a detail view

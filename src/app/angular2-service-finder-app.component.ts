@@ -6,7 +6,10 @@ import { OrganisationService } from './organisations/organisation.service';
 import { OrganisationsComponent } from './organisations/organisations.component';
 import { OrganisationDetailComponent } from './organisations/organisation-detail.component';
 
-import { ProviderTypesService } from './categories/provider-types.service';
+import { ProviderTypesService } from './search/search-categories/provider-types.service';
+import { GeolocationService } from './shared/geolocation.service';
+import { nglocationService } from './shared/ng2-location/browser-location-service';
+import {ngSelectLocation, EmitterService} from './shared/ng2-location/browser-location';
 
 @Component({
   moduleId: module.id,
@@ -32,7 +35,13 @@ import { ProviderTypesService } from './categories/provider-types.service';
     component: OrganisationDetailComponent
   },
 
-  // Catch all for any undefined URL
+  // Root Url
+  {
+  path: '/',
+  component: OrganisationsComponent
+},
+
+// Catch all for any undefined URL
   {
   path: '*',
   component: OrganisationsComponent

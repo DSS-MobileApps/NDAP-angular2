@@ -1,4 +1,4 @@
-import { ProviderType } from '../categories/provider-type';
+import { ProviderType } from './search-categories/provider-type';
 
 export class Search {
   // Type of Search

@@ -1,4 +1,124 @@
-<div class="col-md-12">
+<div class="sidebar-nav">
+  <h2>{{title}}</h2>
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div id="nav-currentlocation" class="panel panel-default" role="presentation">
+            <!-- animated bounceInLeft-->
+            <div class="panel-heading" role="presentation">
+                <h4 class="panel-title" role="presentation">
+                    <a id="tab-location" class="accordion-toggle" role="tab" aria-controls="collapseLocation" aria-selected="false" aria-expanded="true">
+
+                        <i class="fa fa-location-arrow fa-lg fa-fw"></i> Near me <span class="caret "></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseLocation" class="panel-collapse" aria-labelledby="tab-location" role="tabpanel"  tabindex="-1" aria-hidden="false" >
+                <div class="panel-body">
+
+
+                <search-location (onSelectedRadius)="onSelectedRadius($event)"></search-location>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default" role="presentation">
+            <div class="panel-heading" role="presentation">
+                <h4 class="panel-title" role="presentation">
+                    <a id="tab-keyword" role="tab" aria-controls="collapseKeyword"  aria-selected="false" aria-expanded="true" >
+                        <i class="fa fa-envelope-o fa-lg fa-fw"></i> Find by Name <span class="caret"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseKeyword" aria-labelledby="tab-keyword" role="tabpanel" aria-hidden="false">
+                <div class="panel-body">
+                  <search-keyword (onKeywordSearch)="onKeywordSearch($event)"></search-keyword>
+                </div>
+            </div>
+        </div>
+
+        <div>
+
+          <div class="panel panel-default" role="presentation">
+              <div class="panel-heading" role="presentation">
+                  <h4 class="panel-title" role="presentation">
+                      <a id="tab-postcode" role="tab" aria-controls="collapsePostcode"  aria-selected="false" aria-expanded="true" >
+                          <i class="fa fa-envelope-o fa-lg fa-fw"></i> Find by Postcode <span class="caret"></span>
+                      </a>
+                  </h4>
+              </div>
+              <div id="collapsePostcode" aria-labelledby="tab-postcode" role="tabpanel" aria-hidden="false">
+                  <div class="panel-body">
+                      <!-- <h3>Search by PostCode</h3> -->
+                      <label for="postcode" class="sr-only">Postcode (must be a 4 digit number only)</label>
+                      <div class="input-group" role="presentation">
+                          <input [(ngModel)]="postCode" placeholder="PostCode" type="tel" min="200" max="9999" maxlength="4" class="form-control" autocomplete="off"/>
+                          <!-- <input data-bind="value: postcode, valueUpdate: 'afterkeydown'" id="postcode" placeholder="Postcode" > -->
+                          <span class="input-group-btn">
+                            <button type="button" name="postCodeSearch"  class="btn btn-default" type="submit" value="2602" (click)="onPostCodeSearch(postCode)">Go</button>
+                          </span>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        <div class="panel panel-default" role="presentation">
+            <div class="panel-heading" role="presentation">
+                <h4 class="panel-title" role="presentation">
+                    <a id="tab-state" class="accordion-toggle" role="tab" aria-controls="collapseState" aria-selected="false" aria-expanded="true" tabindex="">
+                        <i class="fa fa-globe fa-lg fa-fw"></i> Find by State <span class="caret"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseState" class="panel-collapse" aria-labelledby="tab-state" role="tabpanel" tabindex="-1" aria-hidden="true">
+                <div class=" panel-body">
+                  <search-state (onSelectedState)="onSelectedState($event)"></search-state>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" role="presentation">
+            <div class="panel-heading" role="presentation">
+                <h4 class="panel-title" role="presentation">
+                    <a id="tab-type" class="accordion-toggle" role="tab" aria-controls="collapseType" aria-selected="false" aria-expanded="true" tabindex="">
+                        <i class="fa fa-tags fa-lg fa-fw"></i> Find by Provider Type <span class="caret"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseType" class="panel-collapse" aria-labelledby="tab-type" role="tabpanel" tabindex="-1" aria-hidden="true">
+                <div class=" panel-body">
+                  <provider-types (onSelectedProviderType)="onSelectedProviderType($event)"></provider-types>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" role="presentation">
+            <div class="panel-heading " role="presentation">
+                <h4 class="panel-title" role="presentation">
+                    <a id="tab-all" class="accordion-toggle collapsed" href="#" role="tab"  aria-selected="false" aria-expanded="true" aria-controls="" tabindex="">
+                        <i class="fa fa-sort-amount-asc fa-lg fa-fw"></i> View all Providers
+                    </a>
+                </h4>
+            </div>
+            <div id="" class="" aria-labelledby="tab-all" role="tabpanel">
+                <div class="panel-body">
+                  <button type="submit" class="btn btn-primary"
+                  (click)="onAllOrganisations()">
+                      View all Organisations
+                  </button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+      </div>
+</div>
+
+
+
+<!-- <div class="col-md-12">
     <h2>{{title}}</h2>
 </div>
 
@@ -10,17 +130,35 @@
     <input [(ngModel)]="postCode" placeholder="PostCode" />
 </div>
 
+
+<div class="col-md-4">
+    <h3>Search by name</h3>
+
+    <search-keyword (onKeywordSearch)="onKeywordSearch($event)"></search-keyword>
+</div>
+
+
 <div class="col-md-4">
     <h3>Search by Provider Type</h3>
-    <provider-types (onSelectedProviderType)="onSelectedProviderType($event)">></provider-types>
+    <provider-types (onSelectedProviderType)="onSelectedProviderType($event)"></provider-types>
+</div>
+
+<div class="col-md-4">
+    <h3>Near me</h3>
+    <search-location (onSelectedRadius)="onSelectedRadius($event)"></search-location>
+</div>
+
+<div class="col-md-4">
+    <h3>By State</h3>
+    <search-state (onSelectedState)="onSelectedState($event)"></search-state>
 </div>
 
 <div class="col-md-4">
     <h3>Get all Organisations</h3>
-    
+
     <button type="submit" class="btn btn-primary"
     (click)="onAllOrganisations()">
         All Organisations
     </button>
-    
-</div>
+
+</div> -->

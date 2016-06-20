@@ -1,0 +1,7 @@
+<!-- <h4>By State</h4> -->
+<span style="color:red">{{errorMessage}}</span>
+<ul class="app-search-state nav nav-tabs nav-stacked" role="tablist">
+  <li *ngFor="let state of statelist" role="presentation">
+    <a (click)="onSelect(state)">{{ state.name }}</a>
+  </li>
+</ul>
