@@ -46,7 +46,7 @@ export class SearchComponent {
   }
 
   onAllOrganisations() {
-  this.organisationService.searchOrgList('byPostCode', 2905, undefined);
+    this.organisationService.searchOrgList('all', undefined, undefined);
 
   }
 

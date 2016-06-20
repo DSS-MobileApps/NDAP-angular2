@@ -51,7 +51,8 @@ import {ngSelectLocation, EmitterService} from './shared/ng2-location/browser-lo
 ])
 
 export class Angular2ServiceFinderAppComponent implements OnInit  {
-  title = 'Angular 2 Service Finder';
+  title = 'Disability Advocacy Finder';
+
   public userLoc: string;
   // public userLocation: ngSelectLocation;
 

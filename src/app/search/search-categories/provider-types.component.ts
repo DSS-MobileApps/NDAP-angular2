@@ -15,7 +15,7 @@ export class ProviderTypesComponent implements OnInit {
   title = 'List of Provider Types';
   providerTypes: ProviderType[];
   selectedProviderType: ProviderType;
-  errorMessage: string;
+  // errorMessage: string;
 
   // Output that a provider type has been selected
   @Output() onSelectedProviderType = new EventEmitter<ProviderType>();
@@ -39,7 +39,9 @@ export class ProviderTypesComponent implements OnInit {
     this.providerTypesService.getProviderTypes()
       .subscribe(
         providerTypes => this.providerTypes = providerTypes,
-        error =>  this.errorMessage = <any>error);
+        error =>  console.log(error));
+        // error =>  this.errorMessage = <any>error);
+
   }
 
   // When a provider type is selected, tell the org list to filter by the type selected

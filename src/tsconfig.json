@@ -19,14 +19,6 @@
   "files": [
     "main.ts",
     "typings.d.ts",
-    "organisation.ts",
-    "organisation-detail.component.ts",
-    "organisations.component.ts",
-    "organisations.component.spec.ts",
-    "organisation.service.ts",
-    "mock-organisation.ts",
-    "angular2-service-finder-app.component.ts",
-    "search.component.ts",
-    "search.ts"
+    "app/**/*.ts"
   ]
 }
