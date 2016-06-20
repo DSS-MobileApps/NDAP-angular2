@@ -17,7 +17,7 @@ import {ngSelectLocation, EmitterService} from './shared/ng2-location/browser-lo
   templateUrl: 'angular2-service-finder-app.component.html',
   styleUrls: ['angular2-service-finder-app.component.css'],
   directives: [ROUTER_DIRECTIVES],
-  providers: [OrganisationService, ProviderTypesService]
+  providers: [OrganisationService, ProviderTypesService, GeolocationService, nglocationService, EmitterService]
 })
 
 @Routes([
@@ -52,12 +52,36 @@ import {ngSelectLocation, EmitterService} from './shared/ng2-location/browser-lo
 
 export class Angular2ServiceFinderAppComponent implements OnInit  {
   title = 'Angular 2 Service Finder';
+  public userLoc: string;
+  // public userLocation: ngSelectLocation;
 
   constructor(private router: Router,
-              private providerTypesService: ProviderTypesService
-            ) {};
+              private providerTypesService: ProviderTypesService,
+              private _ngLocation: nglocationService
+            ) {
+              window.localStorage.removeItem("city");
+              _ngLocation.getCitydata();
+              // this.selectedCity = localStorage.getItem('city');
+            };
 
   ngOnInit() {
-    this.router.navigate(['/organisations']);
+    // this.router.navigate(['/organisations']);
+    // this.initGeoLocation();
+    // userLocation.selectedCity
+
   }
+
+  initGeoLocation() {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+            this.userLoc = `${position.coords.latitude},${position.coords.longitude}`;
+            console.log('userLoc: ' + this.userLoc);
+        });
+        }
+    }
+
+    getSearchResults(){
+        console.log('userLoc: ' + this.userLoc);
+    }
 }
