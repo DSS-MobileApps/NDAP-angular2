@@ -9,27 +9,22 @@ export class ProviderTypesService {
 
   constructor (private http: Http) {}
 
-  // ************************************
-  // API CALLS
-  // ************************************
+  /*  
+  *************************************
+  * API Calls
+  *************************************
+  */
 
   // All Provider Types (URL) (800ms on average)
   private getAllProviderTypesUrl =
     'http://finder.dss.gov.au/disability/ndap/api/utilities/getallprovidertypes/NDAP';
 
 
-
-  // TODO - add other calls here
-
-
-
-
-  // ************************************
-  // Methods that the Service returns
-  // ************************************
-
-  // TODO - add other methods
-  // TODO - refactor the get.map.catch so it doesnt repeat for each method (DRY)
+  /*  
+  *************************************
+  * Methods that the Service returns
+  *************************************
+  */
 
   // Get all Types
   getProviderTypes(): Observable<ProviderType[]> {
@@ -37,8 +32,6 @@ export class ProviderTypesService {
                     .map(this.extractData)
                     .catch(this.handleError);
   }
-
-
 
   private extractData(res: Response) {
     let body = res.json();

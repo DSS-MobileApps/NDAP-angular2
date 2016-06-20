@@ -10,16 +10,25 @@ import { Organisation }   from './organisation';
 @Injectable()
 export class OrganisationService {
 
-
+  // Observable for Organisation Search Results
   private orgListSource = new Subject<Organisation[]>();
-
   orgListSource$ = this.orgListSource.asObservable();
+
+  // Observable for selected organisation record
+  selectedOrganisation = new Subject<Organisation>();
+  selectedOrganisation$ = this.selectedOrganisation.asObservable();
+
+  updateSelectedOrganisation (selectedOrganisation){
+    this.selectedOrganisation.next(selectedOrganisation);
+  }
 
   constructor (private http: Http) {}
 
-  // ************************************
-  // API CALLS
-  // ************************************
+  /*  
+  *************************************
+  * API Calls
+  *************************************
+  */
 
   // All Organisations (URL) (800ms on average)
   private getAllOrganisationsUrl =
@@ -72,15 +81,15 @@ export class OrganisationService {
   // http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByDistance/-35.276/149.13/300
 
 
-  // ************************************
-  // Methods that the Service returns
-  // ************************************
-
+  /*  
+  *************************************
+  * Methods that the Service returns
+  *************************************
+  */
+  
   // TODO - add other methods
-  // TODO - refactor the get.map.catch so it doesnt repeat for each method (DRY)
 
-  // Main Method called to get organisations list
-
+  // Public Method called to get organisations list
   searchOrgList(searchType, value1, value2) {
     this.getOrganisations(searchType, value1, value2).subscribe(
       result => this.orgListSource.next(result)
@@ -131,7 +140,7 @@ export class OrganisationService {
     }
   }
 
-  // Get a single Org
+  // Public method called to get a single Org
   getOrganisation(id: number): Observable<Organisation> {
     return this.getJsonFromAPI(this.getSingleOrganisationUrl + id);
   }
@@ -160,21 +169,7 @@ export class OrganisationService {
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
   }
+  
+  
 
-  // // BELOW IS FOR:
-  // //  TESTING COMMS USING A SERVICE RATHER THAN THROUGH TEMPLATE
-
-  // //
-  // private testCallCount: number = 0;
-
-  // // Observable string sources
-  // private testSource = new Subject<string>();
-
-  // // Observable string streams
-  // testSourceSteam$ = this.testSource.asObservable();
-
-  // // Service message commands
-  // testSourceStreamMethod(x) {
-  //   this.testCallCount += x;
-  //   this.testSource.next('test: ' + this.testCallCount);
 }
