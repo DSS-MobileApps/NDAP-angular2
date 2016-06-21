@@ -1,18 +1,13 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-// import { GeolocationService } from '../../shared/geolocation.service';
-
-import {ngSelectLocation, EmitterService} from '../../shared/ng2-location/browser-location';
-// import {nglocationService} from '../../shared/ng2-location/browser-location-service';
+import { GeolocationService } from '../../shared/geolocation.service';
 
 @Component({
   moduleId: module.id,
   selector: 'search-location',
   templateUrl: 'search-location.component.html',
   styleUrls: ['search-location.component.css'],
-  directives:[ngSelectLocation],
-  providers: [EmitterService]
 })
 export class SearchLocationComponent implements OnInit {
   radiuslist: number[];
@@ -21,15 +16,22 @@ export class SearchLocationComponent implements OnInit {
 
   public selectedCity:any;
 
+  // public location: Location;
+  locationPos: any;
+
+  opts = {
+    enableHighAccuracy: false,
+    timeout: 10000,
+    maximumAge: 0
+          }
+
 
   // Output that a provider type has been selected
   @Output() onSelectedRadius = new EventEmitter<string>();
 
   constructor(
     private router: Router,
-    private EmitterService: EmitterService
-    // private _ngLocation: nglocationService
-    // private geolocationService: GeolocationService
+    private geolocationService: GeolocationService
   ) {
 
   }
@@ -37,17 +39,12 @@ export class SearchLocationComponent implements OnInit {
   ngOnInit() {
     this.radiuslist = [20, 50, 100, 250, 500, 1000];
 
-    // this.geolocationService.getLocation(
-    //     // organisations => this.organisations = organisations,
-    //     returnPos => this.userPosition = returnPos,
-    //     error =>  this.errorMessage = <any>error);
-
-    EmitterService.get("selectedCity").subscribe(data =>{
-       this.selectedCity = data;
-       localStorage.setItem('city', data);
-    });
-
-
+    this.geolocationService.location$.subscribe(
+          (position) => {
+            console.log("search-location menu position updated: " + new Date());
+            this.locationPos = position;
+        },
+      error => console.log(error));
 
   }
 
@@ -58,5 +55,6 @@ export class SearchLocationComponent implements OnInit {
 
 
   }
+
 
 }

@@ -1,5 +1,6 @@
 import {Injectable, provide} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import { Subject }    from 'rxjs/Subject';
 
 const GEOLOCATION_ERRORS = {
 	'errors.location.unsupportedBrowser': 'Browser does not support location services',
@@ -24,40 +25,93 @@ export class GeolocationService {
 	 *                 If maximumAge is Infinity, any cached position is used, regardless of its age, and watchPosition only tries to obtain an updated position if no cached position data exists.
 	 * @returns {Observable} An observable sequence with the geographical location of the device running the client.
 	 */
-	public getLocation(opts): Observable<any> {
 
-		return Observable.create(observer => {
+	 public location = new Subject<any>() ;
+
+	 // Observable string streams
+	location$ = this.location.asObservable();
+
+	public getLocation(opts) {
+
+		// return Observable.create(observer => {
 
 			if (window.navigator && window.navigator.geolocation) {
 				window.navigator.geolocation.getCurrentPosition(
 					(position) => {
-						observer.next(position);
-            observer.complete();
+						console.group("Geolocation update");
+						console.log("position updated: " + new Date());
+						console.log(position);
+						console.groupEnd();
+
+						this.location.next(position);
+						// this.location.complete();
 					},
 					(error) => {
+						console.group("Geolocation error");
+						console.log("position error: " + new Date());
+						console.error(error);
+						console.groupEnd();
+
 						switch (error.code) {
 							case 1:
-								observer.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
+								this.location.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
 								break;
 							case 2:
-								observer.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
+								this.location.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
 								break;
 							case 3:
-								observer.error(GEOLOCATION_ERRORS['errors.location.timeout']);
+								this.location.error(GEOLOCATION_ERRORS['errors.location.timeout']);
 								break;
 						}
 					},
 					opts);
 			}
 			else {
-				observer.error(GEOLOCATION_ERRORS['errors.location.unsupportedBrowser']);
+				console.log("browser geoloation position not supported");
+				this.location.error(GEOLOCATION_ERRORS['errors.location.unsupportedBrowser']);
 			}
 
-		});
-
-
+		// });
 
 	}
+
+	// public getLocation(opts): Observable<any> {
+	//
+	// 	return Observable.create(observer => {
+	//
+	// 		if (window.navigator && window.navigator.geolocation) {
+	// 			window.navigator.geolocation.getCurrentPosition(
+	// 				(position) => {
+	// 					observer.next(position);
+  //           observer.complete();
+	// 				},
+	// 				(error) => {
+	// 					switch (error.code) {
+	// 						case 1:
+	// 							observer.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
+	// 							break;
+	// 						case 2:
+	// 							observer.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
+	// 							break;
+	// 						case 3:
+	// 							observer.error(GEOLOCATION_ERRORS['errors.location.timeout']);
+	// 							break;
+	// 					}
+	// 				},
+	// 				opts);
+	// 		}
+	// 		else {
+	// 			observer.error(GEOLOCATION_ERRORS['errors.location.unsupportedBrowser']);
+	// 		}
+	//
+	// 	});
+	//
+	// }
+
+	// public updatePosition (opts){
+	// 	this.getLocation(opts);
+	// }
+
 }
 
 export var geolocationServiceInjectables: Array<any> = [

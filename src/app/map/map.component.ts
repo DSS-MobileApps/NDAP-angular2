@@ -16,6 +16,9 @@ import { ANGULAR2_GOOGLE_MAPS_DIRECTIVES} from 'angular2-google-maps/core';
 import { OrganisationService } from '../organisations/organisation.service';
 import { Organisation } from '../organisations/organisation';
 
+import { GeolocationService } from '../shared/geolocation.service';
+
+
 @Component({
   moduleId: module.id,
   selector: 'map-component',
@@ -29,6 +32,8 @@ export class MapComponent implements OnInit {
   lat: number = -33.7711375;
   lng: number = 151.0802965;
 
+  locationPos: any;
+
   // Create an array of Organisations and initiate as empty
   organisations: Organisation[] = [];
 
@@ -39,7 +44,8 @@ export class MapComponent implements OnInit {
   selectedOrganisation: Organisation = null;
 
   constructor(
-    private organisationService: OrganisationService
+    private organisationService: OrganisationService,
+    private geolocationService: GeolocationService
     ) {}
 
   // When the component starts
@@ -47,9 +53,13 @@ export class MapComponent implements OnInit {
     // Subscribes to the list of search results of the providers
     this.subscribeToOrganisationListUpdates();
 
-    // Subscribes to any updates to the selected provider record 
+    // Subscribes to any updates to the selected provider record
     // These come from either the the marker on the map or the provider details tiles
     this.subscribeToSelectedOrganisationUpdates();
+
+    // Subscribes to the geolocation position updates
+    this.subscribeToPositionUpdates();
+
   }
 
   subscribeToOrganisationListUpdates() {
@@ -87,4 +97,14 @@ export class MapComponent implements OnInit {
       selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
       error =>  console.log(error));
     }
+
+  subscribeToPositionUpdates() {
+    this.geolocationService.location$.subscribe(
+          (position) => {
+            console.log("map position updated: " + new Date());
+            this.locationPos = position;
+        },
+      error => console.log(error));
+
+  }
 }

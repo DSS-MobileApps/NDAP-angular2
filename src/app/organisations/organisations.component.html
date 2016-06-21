@@ -1,7 +1,7 @@
 <!-- Search options -->
 <div class="row">
   <span *ngIf="selectedOrganisation" class="col-md-12 alert alert-info">Selected:  {{selectedOrganisation.Name}}</span>
-
+<button class="btn btn-default" (click)="refreshPosition()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh Position</button>
 </div>
 <div class="row" id="orgSearch">
     <div class="col-md-3">

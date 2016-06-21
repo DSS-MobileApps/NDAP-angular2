@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import {Location} from './location-interface';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * The {{#crossLink "GeolocationService"}}{{/crossLink}} class ,for getting  city name using HTML geolocation.
@@ -22,7 +23,11 @@ export class nglocationService {
       * @type {Location}
       *
       */
-    public location: Location ;
+    public location = new Subject<Location>() ;
+
+    // Observable string streams
+      location$ = this.location.asObservable();
+
     constructor( public http: Http) {}
 
     /**

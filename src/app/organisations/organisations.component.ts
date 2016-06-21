@@ -5,6 +5,8 @@ import { ProviderType } from '../search/search-categories/provider-type';
 import { Organisation } from './organisation';
 import { OrganisationService } from './organisation.service';
 
+import { GeolocationService } from '../shared/geolocation.service';
+
 import { SearchComponent } from '../search/search.component';
 
 import { MapComponent } from '../map/map.component';
@@ -23,11 +25,23 @@ export class OrganisationsComponent implements OnInit {
   organisations: Organisation[];
   selectedOrganisation: Organisation;
   errorMessage: string;
+  userPos: any;
+
+  opts = {
+    enableHighAccuracy: false,
+    timeout: 10000,
+    maximumAge: 0
+  }
+
 
   constructor(
     private router: Router,
-    private organisationService: OrganisationService
-  ) {}
+    private organisationService: OrganisationService,
+    private _geolocationService: GeolocationService
+  ) {
+
+
+  }
 
   // When the component starts,
   ngOnInit () {
@@ -61,6 +75,12 @@ export class OrganisationsComponent implements OnInit {
     .subscribe(
       selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
       error =>  console.log(error));
+    }
+
+
+    refreshPosition(){
+      this._geolocationService.getLocation(this.opts);
+
     }
 
 }

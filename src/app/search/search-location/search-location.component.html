@@ -1,7 +1,7 @@
 <!-- <h4>Near you</h4> -->
 <span style="color:red">{{errorMessage}}</span>
 <!-- <ngLocation></ngLocation> -->
-<span>location is {{selectedCity}}</span>
+<span *ngIf="locationPos">location is {{locationPos.coords.latitude}}, {{locationPos.coords.longitude}}</span>
 <!-- <div *ngIf="userLoc != ''"> -->
 
 <ul class="app-search-location" class="nav nav-tabs nav-stacked"  role="tablist">
