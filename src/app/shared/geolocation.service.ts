@@ -1,6 +1,8 @@
 import {Injectable, provide} from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
+import { GeoLocation }    from './geolocation-interface';
 
 const GEOLOCATION_ERRORS = {
 	'errors.location.unsupportedBrowser': 'Browser does not support location services',
@@ -26,10 +28,15 @@ export class GeolocationService {
 	 * @returns {Observable} An observable sequence with the geographical location of the device running the client.
 	 */
 
-	 public location = new Subject<any>() ;
+	 public location = new Subject<GeoLocation>() ;
 
 	 // Observable string streams
 	location$ = this.location.asObservable();
+
+	private loc: GeoLocation;
+
+
+	constructor( public http: Http) {}
 
 	public getLocation(opts) {
 
@@ -37,33 +44,8 @@ export class GeolocationService {
 
 			if (window.navigator && window.navigator.geolocation) {
 				window.navigator.geolocation.getCurrentPosition(
-					(position) => {
-						console.group("Geolocation update");
-						console.log("position updated: " + new Date());
-						console.log(position);
-						console.groupEnd();
-
-						this.location.next(position);
-						// this.location.complete();
-					},
-					(error) => {
-						console.group("Geolocation error");
-						console.log("position error: " + new Date());
-						console.error(error);
-						console.groupEnd();
-
-						switch (error.code) {
-							case 1:
-								this.location.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
-								break;
-							case 2:
-								this.location.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
-								break;
-							case 3:
-								this.location.error(GEOLOCATION_ERRORS['errors.location.timeout']);
-								break;
-						}
-					},
+					this.displayLocation,
+					this.positionErrorCallback,
 					opts);
 			}
 			else {
@@ -74,6 +56,81 @@ export class GeolocationService {
 		// });
 
 	}
+
+	positionSuccessCallback =	(position) => {
+			// this.location.next(position);
+			this.displayLocation(position);
+
+			// this.location.complete();
+		}
+
+		positionErrorCallback = (error) => {
+			console.group("Geolocation error");
+			console.log("position error: " + new Date());
+			console.error(error);
+			console.groupEnd();
+
+			switch (error.code) {
+				case 1:
+					this.location.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
+					break;
+				case 2:
+					this.location.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
+					break;
+				case 3:
+					this.location.error(GEOLOCATION_ERRORS['errors.location.timeout']);
+					break;
+			}
+		}
+
+		displayLocation = (position) => {
+
+			var loc = new GeoLocation();
+			loc.latitude = position.coords.latitude;
+			loc.longitude = position.coords.longitude;
+
+      this.http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+loc.latitude+','+loc.longitude+'&sensor=true')
+        .subscribe(
+          response => {
+
+              if(response.status == 200){
+                  let data = response.json();
+                  loc.address =  data.results[0].formatted_address
+
+                  let city = data.results[0].address_components.reduce((city, value) => {
+                     if (value.types[0] == "locality") {
+                           city = value.long_name;
+                           loc.city = city;
+                      }
+                     if (value.types[0] == "postal_code") {
+                            let postal_code = value.long_name;
+                            loc.postcode = postal_code;
+                        }
+                    // return loc;
+
+
+                  }, '');
+									console.group("Geolocation update");
+									console.log("position updated: " + new Date());
+									console.log(loc);
+									console.groupEnd();
+
+									this.location.next(loc);
+
+              }
+              // localStorage.setItem('location', JSON.stringify(location));
+              // EmitterService.get("selectedCity").emit(location['city']);
+
+      },
+        error => {
+        console.error(error.text());
+				this.location.next(loc);
+				// return loc;
+      }
+      );
+
+
+    };
 
 	// public getLocation(opts): Observable<any> {
 	//

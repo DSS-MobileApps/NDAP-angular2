@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GeolocationService } from '../../shared/geolocation.service';
+import { GeoLocation } from '../../shared/geolocation-interface';
 
 @Component({
   moduleId: module.id,
@@ -17,7 +18,7 @@ export class SearchLocationComponent implements OnInit {
   public selectedCity:any;
 
   // public location: Location;
-  locationPos: any;
+  locationPos: GeoLocation;
 
   opts = {
     enableHighAccuracy: false,
