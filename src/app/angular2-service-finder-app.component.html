@@ -1,8 +1,46 @@
-<div class="container">
-    <div class="row">
-        <h1>NDAP Service Finder</h1>
-    </div>
+  <div class="container-fluid">
+            <div class="row" id="header">
+                <div class="col-md-4">
+                    <img width="300" src="Logo.png" /> 
+                </div>
+                
+                <div class="col-md-8">
+                    <h1>Disability Advocacy Finder</h1> 
+                </div>
+                
+            </div>
+            
+            
+            <div class="row" id="mainBody">
+                
+                <!-- Tabs for the Mobile View -->
+                <div class="visible-xs visible-sm col-xs-12" id="tabsListOrMapView">
+                    <ul class="nav nav-tabs"> 
+                        <li class="active">
+                            <a href="#">List</a>
+                        </li>                         
 
-    <router-outlet></router-outlet>
+                        <li>
+                            <a href="#">Map</a>
+                        </li>                                                  
+                    </ul>                                          
+                </div>
+                
+                <!--Where the main body content shows -->
+                <div class="col-md-12">
+                <router-outlet></router-outlet>
+                </div>
 
-</div>
+
+
+            </div>
+            <div class="row" id="footer">
+                <div class="col-md-6">
+                    <p>Commonwealth of Australia 2016</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-right">Accessibility | Privacy | Copyright &amp; Disclaimer</p>
+                </div>
+            </div>
+        </div>
+    

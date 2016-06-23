@@ -1,17 +1,12 @@
-import { Component } from '@angular/core';
-import { Router, OnActivate, RouteSegment } from '@angular/router';
-
-import { Organisation } from './organisation';
-import { OrganisationService } from './organisation.service';
-
-@Component({
-  selector: 'my-organisation-detail',
-  template: `
-<div *ngIf="organisation">   
-    <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails">
-    <div id="detailsPanel">
-        <button class="btn btn-default" type="button"(click)="goBack()">Back to Results</button>
-        <hr>
+<div *ngIf="organisation">
+    <button (click)="goBack()">Back</button>
+      <h2>{{organisation.Name}} details!</h2>
+      <div><label>id: </label>{{organisation.Id}}</div>
+      <div>
+        <label>name: </label>
+        <input [(ngModel)]="organisation.Name" placeholder="name"/>
+      </div>
+      <ul>
         <li>Category: {{organisation.Category}}</li>
         <li>Address: {{organisation.StreetAddress}}<br/>{{organisation.Suburb}} {{organisation.Postcode}}<br/>{{organisation.State}}</li>
         <li>Email: {{organisation.Email}}</li>
@@ -21,6 +16,20 @@ import { OrganisationService } from './organisation.service';
         <li>Website: {{organisation.Website}}</li>
         <li>Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li>
         <li>Distance: {{organisation.Distance}}</li>
+      </ul>
+    </div>
+    
+    <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails">
+    <div id="detailsPanel">
+        <button class="btn btn-default" type="button">Back to Results</button>
+        <hr>
+        <p>Provider Name</p>
+        <p>Address of the Provider</p>
+        <p>SUBURB, STATE 9999</p>
+        <p>1800 888 999</p>
+        <p>info@info.org.au</p>
+        <p>08 2929 2929</p>
+        <button type="button" class="btn btn-default">More Details</button>
         <hr>
         <p>Advocacy Services</p>
         <p>Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider</p>
@@ -38,27 +47,3 @@ import { OrganisationService } from './organisation.service';
         </ul>
     </div>
 </div>
-  `
-})
-
-export class OrganisationDetailComponent implements OnActivate {
-  organisation: Organisation;
-
-  constructor(
-    private router: Router,
-    private organisationService: OrganisationService
-  ) {}
-
-  routerOnActivate(curr: RouteSegment): void {
-    // Grab the current ID from the URL
-    let id = +curr.getParam('id');
-
-    // Set organisation to the one returned
-    this.organisationService.getOrganisation(id)
-    .subscribe(organisation => this.organisation = organisation);
-  }
-
-  goBack() {
-    window.history.back();
-  }
-}

@@ -1,5 +1,9 @@
 #searchArea {background-color: lightblue}
 
 .selected {
-    background-color: lightcoral;
+    background-color: lightblue;
+}
+
+.btn {
+    white-space: normal;
 }
