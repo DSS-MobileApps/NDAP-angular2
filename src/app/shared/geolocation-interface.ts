@@ -6,4 +6,6 @@ export class GeoLocation {
   pincode: number;
   city: string;
   postcode: number;
+  valid: boolean;
+  error: string;
 }

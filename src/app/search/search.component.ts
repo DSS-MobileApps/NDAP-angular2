@@ -41,7 +41,9 @@ export class SearchComponent {
   //   this.organisationService.searchOrgList('byState', state, undefined);
   // }
 
+
   onPostCodeSearch (postCode) {
+    console.log('Org std Postcode search for postcode: ' + postCode);
     this.organisationService.searchOrgList('byPostCode', postCode, undefined);
   }
 

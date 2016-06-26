@@ -19,6 +19,7 @@ export class SearchLocationComponent implements OnInit {
 
   // public location: Location;
   locationPos: GeoLocation;
+  private locatingPosition: boolean;
 
   opts = {
     enableHighAccuracy: false,
@@ -29,6 +30,7 @@ export class SearchLocationComponent implements OnInit {
 
   // Output that a provider type has been selected
   @Output() onSelectedRadius = new EventEmitter<string>();
+  @Output() onLocationPostcodeSearch = new EventEmitter<any>();
 
   constructor(
     private router: Router,
@@ -44,9 +46,19 @@ export class SearchLocationComponent implements OnInit {
           (position) => {
             console.log("search-location menu position updated: " + new Date());
             this.locationPos = position;
+            this.locatingPosition = false;
         },
-      error => console.log(error));
+      error => {
+        console.log(error);
+        this.locatingPosition = false;
+      });
 
+  }
+
+  // Get location from browser / device
+  onGetCurrentLocation() {
+    this.locatingPosition = true;
+    this.geolocationService.getLocation(this.opts);
   }
 
   // When a radius is selected, tell the org list to filter by the radius selected
@@ -54,6 +66,13 @@ export class SearchLocationComponent implements OnInit {
     // emit the radius value e.g. "50"
     this.onSelectedRadius.emit(radius);
 
+
+  }
+
+  onCurrentPostcodeSearch (postCode) {
+    // this.organisationService.searchOrgList('byPostCode', postCode, undefined);
+    console.log('search for postcode: ' + postCode);
+    this.onLocationPostcodeSearch.emit(postCode);
 
   }
 

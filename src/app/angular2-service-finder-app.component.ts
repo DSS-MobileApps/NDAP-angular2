@@ -65,7 +65,7 @@ export class Angular2ServiceFinderAppComponent implements OnInit  {
               // ngLocation: nglocationService,
               private geolocationService: GeolocationService
             ) {
-              geolocationService.getLocation(this.opts);
+              // geolocationService.getLocation(this.opts);
 
             };
 

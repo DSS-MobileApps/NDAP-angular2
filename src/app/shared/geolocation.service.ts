@@ -70,22 +70,33 @@ export class GeolocationService {
 			console.error(error);
 			console.groupEnd();
 
+			var loc = new GeoLocation();
+			loc.valid = false;
+
 			switch (error.code) {
 				case 1:
-					this.location.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
+					// this.location.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
+					loc.error = GEOLOCATION_ERRORS['errors.location.permissionDenied'];
 					break;
 				case 2:
-					this.location.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
+					// this.location.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
+					loc.error = GEOLOCATION_ERRORS['errors.location.positionUnavailable'];
 					break;
 				case 3:
-					this.location.error(GEOLOCATION_ERRORS['errors.location.timeout']);
+					// this.location.error(GEOLOCATION_ERRORS['errors.location.timeout']);
+					loc.error = GEOLOCATION_ERRORS['errors.location.timeout'];
 					break;
 			}
+
+			this.location.next(loc);
+
 		}
 
 		displayLocation = (position) => {
 
 			var loc = new GeoLocation();
+			loc.valid = false;
+			loc.position = position;
 			loc.latitude = position.coords.latitude;
 			loc.longitude = position.coords.longitude;
 
@@ -105,6 +116,7 @@ export class GeolocationService {
                      if (value.types[0] == "postal_code") {
                             let postal_code = value.long_name;
                             loc.postcode = postal_code;
+														loc.valid = true;
                         }
                     // return loc;
 
@@ -124,6 +136,7 @@ export class GeolocationService {
       },
         error => {
         console.error(error.text());
+				loc.error = error;
 				this.location.next(loc);
 				// return loc;
       }
