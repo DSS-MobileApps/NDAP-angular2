@@ -1,10 +1,2 @@
 <!--Map Placeholder-->
-<sebm-google-map [latitude]="lat" [longitude]="lng">
-     <sebm-google-map-marker 
-        *ngFor="let organisation of organisations" 
-        [latitude]= "organisation.Lat"
-        [longitude]="organisation.Lng" 
-        [label]="'O'"
-        (markerClick)="clickedMarker(organisation)">
-     </sebm-google-map-marker>
-</sebm-google-map>
+<div ref-map class="map-container"></div>

@@ -1,3 +1,4 @@
+/// <reference path="../../../typings/index.d.ts" />
 /*
 
 This map component provides the Google Map UI
@@ -10,8 +11,7 @@ This component works as follows:
 
 */
 
-import { Component, OnInit } from '@angular/core';
-import { ANGULAR2_GOOGLE_MAPS_DIRECTIVES} from 'angular2-google-maps/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 
 import { OrganisationService } from '../organisations/organisation.service';
 import { Organisation } from '../organisations/organisation';
@@ -24,10 +24,15 @@ import { GeolocationService } from '../shared/geolocation.service';
   selector: 'map-component',
   templateUrl: 'map.component.html',
   styleUrls: ['map.component.css'],
-  directives: [ANGULAR2_GOOGLE_MAPS_DIRECTIVES]
+  //directives: [ANGULAR2_GOOGLE_MAPS_DIRECTIVES]
 })
 
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
+  @ViewChild('map') mapElement: ElementRef;
+  map: google.maps.Map;
+  mapOptions: google.maps.MapOptions;
+  currentMarker: google.maps.Marker;
+  currentMarkerOptions: google.maps.MarkerOptions;
   // default lat/long focus of the map
   lat: number = -33.7711375;
   lng: number = 151.0802965;
@@ -97,6 +102,24 @@ export class MapComponent implements OnInit {
       selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
       error =>  console.log(error));
     }
+
+  ngAfterViewInit() {
+    this.initMap();
+  }
+
+    initMap() {
+    this.mapOptions = {
+      center: {lat: 44.540, lng: -78.546},
+      zoom: 8
+    };
+    this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
+    
+   
+        this.currentMarker = new google.maps.Marker()
+    }
+
+    //this.markerService.createMarker(this.map);
+ 
 
   subscribeToPositionUpdates() {
     this.geolocationService.location$.subscribe(
