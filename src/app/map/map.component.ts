@@ -113,33 +113,13 @@ export class MapComponent implements OnInit, AfterViewInit {
       zoom: 8
     };
     this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
-
-    var myLatLng = {lat: 44.540, lng: -78.546};
-
-    var markerOptions = {
-        position: myLatLng,
-        map: this.map,
-        title: 'Hello'
-
-      };
-      var marker = new google.maps.Marker(markerOptions);
-
-
-    for (var org of this.organisations)
-    {
-      var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: this.map,
-        title: 'Hello'
-
-      });
     
-      }
+   
         this.currentMarker = new google.maps.Marker()
     }
 
     //this.markerService.createMarker(this.map);
-  }
+ 
 
   subscribeToPositionUpdates() {
     this.geolocationService.location$.subscribe(
