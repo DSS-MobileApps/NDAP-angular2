@@ -1,3 +1,4 @@
 /*the following line sets the height of the map - Important: if you don't set a height, you won't see a map!!*/
-.sebm-google-map-container {
+.map-container {
       height: 600px;
+}
