@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
 
+import { MapService } from './map/map.service';
 import { OrganisationService } from './organisations/organisation.service';
 import { OrganisationsComponent } from './organisations/organisations.component';
 import { OrganisationDetailComponent } from './organisations/organisation-detail.component';
@@ -15,7 +16,7 @@ import { GeolocationService } from './shared/geolocation.service';
   templateUrl: 'angular2-service-finder-app.component.html',
   styleUrls: ['angular2-service-finder-app.component.css'],
   directives: [ROUTER_DIRECTIVES],
-  providers: [OrganisationService, ProviderTypesService, GeolocationService]
+  providers: [OrganisationService, ProviderTypesService, GeolocationService, MapService]
 })
 
 @Routes([

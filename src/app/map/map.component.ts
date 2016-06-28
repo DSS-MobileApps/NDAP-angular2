@@ -13,6 +13,7 @@ This component works as follows:
 
 import { Component, OnInit, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 
+import { MapService } from './map.service';
 import { OrganisationService } from '../organisations/organisation.service';
 import { Organisation } from '../organisations/organisation';
 
@@ -50,7 +51,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(
     private organisationService: OrganisationService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private mapService: MapService
     ) {}
 
   // When the component starts
@@ -74,7 +76,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         // set the map.comp Org Array to match the results
         this.organisations = organisations;
         // convert the lat/lng to number for google api to work
-        this.convertOrgArrayLatLngStringToNum(organisations);
+        //this.convertOrgArrayLatLngStringToNum(organisations);
+        this.mapService.createMap(this.mapElement.nativeElement, this.organisations);
       },
       error =>  console.log(error));
   }
@@ -104,19 +107,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     }
 
   ngAfterViewInit() {
-    this.initMap();
+    //need to make sure the organisations are available...
+    //this.initMap();
   }
 
-    initMap() {
-    this.mapOptions = {
-      center: {lat: 44.540, lng: -78.546},
-      zoom: 8
-    };
-    this.map = new google.maps.Map(this.mapElement.nativeElement, this.mapOptions);
-    
-   
-        this.currentMarker = new google.maps.Marker()
-    }
+  initMap() {
+    this.mapService.createMap(this.mapElement.nativeElement, this.organisations);
+  }
 
     //this.markerService.createMarker(this.map);
  
