@@ -1,12 +1,21 @@
-<div *ngIf="organisation">
-    <button (click)="goBack()">Back</button>
-      <h2>{{organisation.Name}} details!</h2>
-      <div><label>id: </label>{{organisation.Id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="organisation.Name" placeholder="name"/>
-      </div>
-      <ul>
+<div id="mapitemcontainer">
+        <div ref-map id="mapitem" style="position: relative; overflow: hidden; transform: translateZ(0px); background-color: rgb(229, 227, 223);"></div>
+        <div id="expand-map">
+            <a class="btn btn-xs btn-default" data-bind="click: $root.expandDetailMap">
+                <span class="fa-stack">
+                    <i class="fa fa-square-o fa-stack-2x" style="margin-top:1px;"></i>
+                    <i class="fa fa-stack-1x fa-expand" data-bind="css: {'fa-compress': detailMapExpanded, ' fa-expand': !detailMapExpanded()}"></i>
+                </span>
+                <span data-bind="text: $root.expandDetailMapTitle"> Expand map</span>
+            </a>
+        </div>
+    </div>
+<div *ngIf="organisation">   
+    <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails">
+    
+    <div id="detailsPanel">
+        <button class="btn btn-default" type="button"(click)="goBack()">Back to Results</button>
+        <hr>
         <li>Category: {{organisation.Category}}</li>
         <li>Address: {{organisation.StreetAddress}}<br/>{{organisation.Suburb}} {{organisation.Postcode}}<br/>{{organisation.State}}</li>
         <li>Email: {{organisation.Email}}</li>
@@ -16,20 +25,6 @@
         <li>Website: {{organisation.Website}}</li>
         <li>Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li>
         <li>Distance: {{organisation.Distance}}</li>
-      </ul>
-    </div>
-    
-    <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails">
-    <div id="detailsPanel">
-        <button class="btn btn-default" type="button">Back to Results</button>
-        <hr>
-        <p>Provider Name</p>
-        <p>Address of the Provider</p>
-        <p>SUBURB, STATE 9999</p>
-        <p>1800 888 999</p>
-        <p>info@info.org.au</p>
-        <p>08 2929 2929</p>
-        <button type="button" class="btn btn-default">More Details</button>
         <hr>
         <p>Advocacy Services</p>
         <p>Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider</p>

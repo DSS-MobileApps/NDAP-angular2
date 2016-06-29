@@ -77,7 +77,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.organisations = organisations;
         // convert the lat/lng to number for google api to work
         //this.convertOrgArrayLatLngStringToNum(organisations);
-        this.mapService.createMap(this.mapElement.nativeElement, this.organisations);
+        this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
       },
       error =>  console.log(error));
   }
@@ -112,7 +112,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   initMap() {
-    this.mapService.createMap(this.mapElement.nativeElement, this.organisations);
+    this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
   }
 
     //this.markerService.createMarker(this.map);

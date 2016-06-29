@@ -1,4 +1,5 @@
-export class Organisation {
+import { NDAPMarker } from '../shared/ndap-marker-interface';
+export class Organisation implements NDAPMarker {
   Id: number;
   Name: string;
   Category: string;
