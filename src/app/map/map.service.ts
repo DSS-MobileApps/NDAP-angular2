@@ -6,12 +6,12 @@ import { NDAPMarker } from '../shared/ndap-marker-interface';
 
 @Injectable()
 export class MapService {
-  private map: google.maps.Map;
+  private areaMap: google.maps.Map;
+  private detailMap: google.maps.Map;
   private infoWindow: google.maps.InfoWindow;
   //private markerInfoSelectedSource = new Subject<string>();
   private markerSelectedSource = new Subject<string>();
-  private markers = Object.create(null);
-  //TODO: keep track of markers so we can do a lookup by Id
+  private areaMarkers = Object.create(null);
   //markerInfoSelected$ = this.markerInfoSelectedSource.asObservable();
   markerSelected$ = this.markerSelectedSource.asObservable();
 
@@ -21,54 +21,57 @@ export class MapService {
   }
 
   createAreaMap(mapDomElement: any, data: NDAPMarker[]) {
-    this.markers = Object.create(null);
-    this.map = new google.maps.Map(mapDomElement);
-    let bounds = this.addMarkers(this.map, data);
+    this.areaMarkers = Object.create(null);
+    this.areaMap = new google.maps.Map(mapDomElement);
+    let bounds = this.addAreaMarkers(this.areaMap, data);
 
-    this.map.fitBounds(bounds);
+    this.areaMap.fitBounds(bounds);
   }
 
   createDetailMap(mapDomElement: any, data: NDAPMarker) {
-    this.markers = Object.create(null);
-    this.map = new google.maps.Map(mapDomElement);
-    let bounds = this.addMarkers(this.map, [data]);
+    //this.markers = Object.create(null);
+    this.detailMap = new google.maps.Map(mapDomElement);
+    let bounds = this.addMarker(this.detailMap, data);
     let latLng = new google.maps.LatLng(data.Lat, data.Lng);
-    this.map.setCenter(latLng);
-    this.map.setZoom(15);
+    this.detailMap.setCenter(latLng);
+    this.detailMap.setZoom(15);
   }
 
   //TODO: Need to create an common interface for objects containing marker data, e.g. lat, lng, label, etc. Then we can get rid of 'any'
-  private addMarkers(map: google.maps.Map, data: any[]) : google.maps.LatLngBounds {
+  private addAreaMarkers(map: google.maps.Map, data: NDAPMarker[]) : google.maps.LatLngBounds {
     let bounds = new google.maps.LatLngBounds();
     let service = this;
     for (let item of data) {
-      let latLng = new google.maps.LatLng(item.Lat, item.Lng);
-      let markerOptions: google.maps.MarkerOptions = {position: latLng, map: map};
-      let result = new google.maps.Marker(markerOptions);
-      result.set('orgId', item.Id);
-      result.set('orgName', item.Name);
+      let result = this.addMarker(map, item);
       result.addListener('click', function() {
         service.selectMarkerInternal(result);
       });
-      this.markers[item.Id] = result;
-      bounds.extend(latLng);
+      this.areaMarkers[item.Id] = result;
+      bounds.extend(result.getPosition());
     }
     return bounds;
   }
 
-
+  private addMarker(map: google.maps.Map, item: NDAPMarker): google.maps.Marker {
+    let latLng = new google.maps.LatLng(item.Lat, item.Lng);
+    let markerOptions: google.maps.MarkerOptions = {position: latLng, map: map};
+    let result = new google.maps.Marker(markerOptions);
+    result.set('orgId', item.Id);
+    result.set('orgName', item.Name);
+    return result;
+  }
 
   selectMarker(id: string) {
-    let marker: google.maps.Marker = this.markers[id];
+    let marker: google.maps.Marker = this.areaMarkers[id];
     this.selectMarkerInternal(marker);
 
   }
 
   private selectMarkerInternal(marker: google.maps.Marker) {
-    // this.zone.run(() => {
-    //   this.markerSelectedSource.next(marker.get('orgId'));
-    //   this.showInfoWindow(marker);
-    // });
+    this.zone.run(() => {
+      this.markerSelectedSource.next(marker.get('orgId'));
+      this.showInfoWindow(marker);
+    });
   }
 
   private showInfoWindow(marker: google.maps.Marker) {
@@ -80,7 +83,7 @@ export class MapService {
       content: content,
       maxWidth: 200
     });
-    this.infoWindow.open(this.map, marker);
+    this.infoWindow.open(marker.getMap(), marker);
   }
 
   private loadAPI() {
