@@ -1,0 +1,13 @@
+
+<div class="panel panel-default" *ngFor="let organisation of organisations" [class.selected]="organisation.Id == selectedOrgId" (click)="onSelect(organisation)">
+    <div class="panel-body" >
+        <h5>{{organisation.Name}}</h5>
+        <p>{{organisation.Suburb}}, {{organisation.Id}}</p>
+    </div>
+    <div class="panel-footer">
+        <div class="btn-group listitem-actionbtn">
+            <a class="btn btn-sm btn-primary" href="#" tabindex="0"><i class="fa fa-map-marker"></i> View on map</a>
+            <a class="btn btn-sm btn-default" tabindex="-1" aria-controls="item" [routerLink]="['/organisation/', organisation.Id]"><i class="fa fa-info-circle"></i> More details</a>
+        </div>
+    </div>
+</div>

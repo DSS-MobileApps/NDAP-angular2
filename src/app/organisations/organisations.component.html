@@ -41,9 +41,6 @@
 <button class="btn btn-default" (click)="refreshPosition()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh Position</button>
 </div> -->
 <div class="row" id="orgSearch">
-  <button type="button" class="btn btn-primary btn-lg" id="searchOptionsBtn" data-toggle="modal" data-target="#myModal">
-    Launch demo modal
-  </button>
 
 
 
@@ -53,32 +50,27 @@
         <search-options></search-options>
     </div>
 
-      <div class="col-md-3" id="orgResult">
-        <p *ngIf="!organisations">Loading...</p>
-          <div class="panel panel-default"
-              *ngFor="let organisation of organisations"
-              (click)="onSelect(organisation)"
-              [class.selected]="organisation === selectedOrganisation">
-            <div class="panel-heading" role="presentation">
-                <h4 class="panel-title" role="presentation">{{organisation.Name}}</h4>
-            </div>
-            <div class="panel-body">
-                <!-- <p>ID: {{organisation.Id}} </p> -->
-                <p>{{organisation.Suburb}}</p>
-                <button (click)="onSelectDetailsButton(organisation)">Details</button>
-            </div>
-          </div>
-        </div>
+    <div class="col-md-3" id="orgResult">
+
+
+        <p *ngIf="!organisations" >Loading...</p>
+        <org-list [organisations]="organisations" [selectedOrgId]="selectedOrgId" (onSelectionChanged)="onSelect($event)"></org-list>
+<!--
+        <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
+        <h5>{{organisation.Name}}</h5>
+        <p>{{organisation.Suburb}}</p>
+        </button>-->
+    </div>
 
         <!-- <div id=""> -->
         <div class="col-md-9" id="orgResultDetail" @selectedState="selectedOrganisation != null">
-            <organisation-detail [organistion]="selectedOrganisation"></organisation-detail>
+            <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
         </div>
 
 
-    <!-- </div> -->
 
-            <div class="col-md-12">
-                <map-component>LOADING MAP...</map-component>
-            </div>
+    <div class="col-md-12">
+    <map-component>LOADING MAP...</map-component>
+</div>
+
 </div>

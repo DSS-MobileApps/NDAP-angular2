@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { ProviderType } from '../search/search-categories/provider-type';
 
 import { Organisation } from './organisation';
+import { OrganisationListComponent } from './organisation-list.component';
 import { OrganisationService } from './organisation.service';
-
+// import { OrganisationSummaryComponent } from './organisation-summary.component';
 import { GeolocationService } from '../shared/geolocation.service';
-
 import { SearchComponent } from '../search/search.component';
 import { RefinerComponent } from '../search/refiner.component';
-
-import { MapComponent } from '../map/map.component';
+import { MapComponent, MapService } from '../map/index';
 
 import { OrganisationDetailComponent } from './organisation-detail.component';
 
@@ -20,7 +19,7 @@ import { OrganisationDetailComponent } from './organisation-detail.component';
   selector: 'organisations',
   templateUrl: 'organisations.component.html',
   styleUrls: ['organisations.component.css'],
-  directives: [ SearchComponent, MapComponent, OrganisationDetailComponent, RefinerComponent ],
+  directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent ],
   /**
    * Define two states, "inactive" and "active", and the end
    * styles that apply whenever the element is in those states.
@@ -49,6 +48,7 @@ export class OrganisationsComponent implements OnInit {
   title = 'List of Organisations';
   organisations: Organisation[];
   selectedOrganisation: Organisation;
+  selectedOrgId: number;
   errorMessage: string;
   userPos: any;
 
@@ -62,25 +62,22 @@ export class OrganisationsComponent implements OnInit {
   constructor(
     private router: Router,
     private organisationService: OrganisationService,
-    private _geolocationService: GeolocationService
+    private _geolocationService: GeolocationService,
+    private mapService: MapService
   ) {
-
-
   }
 
   // When the component starts,
   ngOnInit () {
     // Subscribe to Org Search Results
-    this.organisationService.orgListSource$
-  .subscribe(
-    organisations => this.organisations = organisations,
-    error =>  this.errorMessage = <any>error);
+    this.subscribeToOrganisations();
+    this.subscribeToSelectedOrganisationUpdates();
 
     // Perform a default search for all orgs
     this.organisationService.searchOrgList('all', undefined, undefined);
 
     // Subscribe to Selected Org events
-    this.subscribeToSelectedOrganisationUpdates();
+
   }
 
   // When an Org is selected from the list, navigate to that record in a detail view
@@ -91,21 +88,42 @@ export class OrganisationsComponent implements OnInit {
 
     // When a marker is clicked, tell the Org Service
   onSelect(selectedOrg: Organisation) {
+    this.mapService.selectMarker(selectedOrg.Id.toString());
+    // this.selectedOrganisation = selectedOrg;
     this.organisationService.updateSelectedOrganisation(selectedOrg);
+
   };
 
   // Be notified when a organisation is selected
-  subscribeToSelectedOrganisationUpdates() {
-  this.organisationService.selectedOrganisation$
-    .subscribe(
-      selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
-      error =>  console.log(error));
-    }
+  private subscribeToSelectedOrganisationUpdates() {
+    this.mapService.markerSelected$
+      .subscribe(
+        selectedOrgId => this.updateSelected(+selectedOrgId),
+        error =>  console.log(error));
+    this.organisationService.selectedOrganisation$
+      .subscribe(
+        selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
+        error =>  console.log(error));
 
+  }
 
-    refreshPosition(){
-      this._geolocationService.getLocation(this.opts);
+  private subscribeToOrganisations() {
+    this.organisationService.orgListSource$
+      .subscribe(
+        // organisations => this.updateOrganisations(organisations),
+        organisations => this.organisations = organisations,
+        error =>  this.errorMessage = <any>error);
+  }
 
-    }
+  private updateSelected(id: number) {
+    this.selectedOrgId = id;
+  }
 
+  private updateOrganisations(organisations: Organisation[]) {
+    this.organisations = organisations
+  }
+
+  refreshPosition(){
+    this._geolocationService.getLocation(this.opts);
+  }
 }
