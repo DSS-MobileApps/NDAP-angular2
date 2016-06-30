@@ -10,12 +10,15 @@
 
 
     <div class="col-md-2" id="orgResult">
-        <p *ngIf="!organisations">Loading...</p>
-        <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)">
+        <p *ngIf="!organisations" >Loading...</p>
+        <org-list [organisations]="organisations" [selectedOrgId]="selectedOrgId" (onSelectionChanged)="onSelect($event)"></org-list>
+<!--        
+        <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
         <h5>{{organisation.Name}}</h5>
         <p>{{organisation.Suburb}}</p>
-        </button>
+        </button>-->
 
 
 
     </div>
+</div>

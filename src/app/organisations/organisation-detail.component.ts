@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, ViewChild  } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { Router, OnActivate, RouteSegment } from '@angular/router';
 
 import { MapService } from '../map/map.service';

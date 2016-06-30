@@ -1,5 +1,5 @@
 /// <reference path="../../../typings/index.d.ts" />
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, NgZone } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 import { NDAPMarker } from '../shared/ndap-marker-interface';
@@ -8,17 +8,20 @@ import { NDAPMarker } from '../shared/ndap-marker-interface';
 export class MapService {
   private map: google.maps.Map;
   private infoWindow: google.maps.InfoWindow;
+  //private markerInfoSelectedSource = new Subject<string>();
   private markerSelectedSource = new Subject<string>();
-  //private apiKey: string;
-
+  private markers = Object.create(null);
+  //TODO: keep track of markers so we can do a lookup by Id
+  //markerInfoSelected$ = this.markerInfoSelectedSource.asObservable();
   markerSelected$ = this.markerSelectedSource.asObservable();
 
-  constructor(private window: Window, private document: Document, @Inject('MAPS_API_KEY') private apiKey: string) {
+  constructor(private window: Window, private document: Document, @Inject('MAPS_API_KEY') private apiKey: string, private zone: NgZone) {
     //retrieve apikey
     this.loadAPI();
   } 
 
   createAreaMap(mapDomElement: any, data: NDAPMarker[]) {
+    this.markers = Object.create(null);
     this.map = new google.maps.Map(mapDomElement);
     let bounds = this.addMarkers(this.map, data);
     
@@ -26,6 +29,7 @@ export class MapService {
   }
 
   createDetailMap(mapDomElement: any, data: NDAPMarker) {
+    this.markers = Object.create(null);
     this.map = new google.maps.Map(mapDomElement);
     let bounds = this.addMarkers(this.map, [data]);
     let latLng = new google.maps.LatLng(data.Lat, data.Lng);
@@ -46,18 +50,24 @@ export class MapService {
       result.addListener('click', function() {
         service.selectMarkerInternal(result);
       });
+      this.markers[item.Id] = result;
       bounds.extend(latLng);
     }
     return bounds;
   }
 
+  
+
   selectMarker(id: string) {
-    this.markerSelectedSource.next(id);
+    let marker: google.maps.Marker = this.markers[id];
+    this.selectMarkerInternal(marker);
   }
 
   private selectMarkerInternal(marker: google.maps.Marker) {
-    this.selectMarker(marker.get('orgId'));
-    this.showInfoWindow(marker);
+    this.zone.run(() => {
+      this.markerSelectedSource.next(marker.get('orgId'));
+      this.showInfoWindow(marker);
+    });
   }
 
   private showInfoWindow(marker: google.maps.Marker) {

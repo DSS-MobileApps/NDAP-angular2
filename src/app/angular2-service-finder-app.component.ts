@@ -63,6 +63,7 @@ export class Angular2ServiceFinderAppComponent implements OnInit  {
 
   constructor(private router: Router,
               private providerTypesService: ProviderTypesService,
+              private organisationService: OrganisationService,
               // ngLocation: nglocationService,
               private geolocationService: GeolocationService,
               private mapService: MapService
