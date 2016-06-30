@@ -1,7 +1,20 @@
 <!-- <h4>By State</h4> -->
-<span style="color:red">{{errorMessage}}</span>
+<!-- <span style="color:red">{{errorMessage}}</span>
 <ul class="app-search-state nav nav-tabs nav-stacked" role="tablist">
   <li *ngFor="let state of statelist" role="presentation">
     <a (click)="onSelect(state)">{{ state.name }}</a>
   </li>
-</ul>
+</ul> -->
+<!-- Single button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    State <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li *ngFor="let state of statelist"><a href="#" (click)="onSelect(state)">{{ state.name }}</a></li>
+    <!-- <li><a href="#">NSW</a></li>
+    <li><a href="#">NT</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li> -->
+  </ul>
+</div>

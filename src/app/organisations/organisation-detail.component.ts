@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, ViewChild  } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Input  } from '@angular/core';
 import { Router, OnActivate, RouteSegment } from '@angular/router';
 
 import { MapService } from '../map/map.service';
@@ -7,26 +7,32 @@ import { OrganisationService } from './organisation.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'my-organisation-detail',
+  selector: 'organisation-detail',
   styleUrls: ['organisation-detail.component.css'],
-  templateUrl: 'organisation-detail.component.html'
+  templateUrl: 'organisation-detail.component.html',
+  host: {'class' : 'ng-animate orgDetailContainer'}
 })
 
 export class OrganisationDetailComponent implements OnActivate, AfterViewInit  {
   @ViewChild('map') mapElement: ElementRef;
-  organisation: Organisation;
+  @Input() organisation: Organisation;
 
   constructor(
     private router: Router,
     private organisationService: OrganisationService,
     private mapService: MapService
-  ) {}
+  ) {
+  }
 
-  routerOnActivate(curr: RouteSegment): void {
-    // Grab the current ID from the URL
-    let id = +curr.getParam('id');
+  getOrganisation(organisation: Organisation){
+    this.organisation = organisation;
+    if (this.organisation){
+      this.getOrganisationById(organisation.Id);
+    }
 
-    // Set organisation to the one returned
+  }
+
+  getOrganisationById(id){
     this.organisationService.getOrganisation(id)
     .subscribe((organisation) => {
       this.organisation = organisation;
@@ -34,8 +40,24 @@ export class OrganisationDetailComponent implements OnActivate, AfterViewInit  {
     });
   }
 
+  routerOnActivate(curr: RouteSegment): void {
+
+    if (!this.organisation){
+      // Grab the current ID from the URL
+      let id = +curr.getParam('id');
+
+      // Set organisation to the one returned
+      this.getOrganisationById(id);
+    }
+  }
+
   ngAfterViewInit() {
-    this.initMap();
+    // this.initMap();
+    this.organisationService.selectedOrganisation$
+      .subscribe(
+        selectedOrganisation => this.getOrganisation(selectedOrganisation),
+        error =>  console.log(error));
+
   }
 
   initMap() {
@@ -47,5 +69,8 @@ export class OrganisationDetailComponent implements OnActivate, AfterViewInit  {
 
   goBack() {
     window.history.back();
+  }
+  deselect() {
+    this.organisationService.updateSelectedOrganisation(null);
   }
 }

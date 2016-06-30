@@ -1,0 +1,37 @@
+<div class="row">
+<div class="col-xs-12 col-sm-3">
+    <span>Refine by:</span>
+</div>
+
+<div class="col-xs-12 col-sm-3">
+  <div class="input-group">
+   <input type="text" class="form-control" placeholder="Postcode" [(ngModel)]="postCode">
+   <span class="input-group-btn">
+     <button class="btn btn-default" type="button" (click)="onPostCodeSearch(postCode)">Go</button>
+   </span>
+ </div><!-- /input-group -->
+</div>
+
+<!-- <div class="col-xs-12 col-sm-3">
+  <search-state (onSelectedState)="onSelectedState($event)"></search-state>
+</div> -->
+
+<div class="col-xs-12 col-sm-3">
+  <!-- Single button -->
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Provider Type <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">All</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="#">Brain Injury</a></li>
+      <li><a href="#">Intellectual Disability</a></li>
+      <li><a href="#">People with Developmental Disability</a></li>
+    </ul>
+  </div>
+</div>
+
+
+  <!-- <div class="alert alert-danger visible-offline" data-bind="" role="alert"><i class="fa fa-exclamation-triangle fa-lg pull-left"></i> Searching cannot be done while offline.</div> -->
+</div>

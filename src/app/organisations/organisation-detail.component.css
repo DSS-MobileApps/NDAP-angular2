@@ -1,3 +1,25 @@
 #mapitem {
     height: 200px;
 }
+.my-organisation-detail {
+        height: 50vh;
+        background: #ff4d4d;
+    }
+
+    :host(.orgDetailContainer) {
+        /*position: fixed;
+        display: inline-block;
+        width: 100%;*/
+        /*right:100%;*/
+        -webkit-transition: all ease-in-out 0.5s;
+        transition: all ease-in-out 0.5s;
+    }
+
+    :host(.orgDetailContainer.ng-enter) {
+        /*transform: rotateZ(180deg)*/
+        /*transform: translate(-50%,0);*/
+    }
+
+    :host(.orgDetailContainer.ng-enter-active) {
+        /*transform: translate(-100%,0);*/
+    }

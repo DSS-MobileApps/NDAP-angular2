@@ -10,11 +10,14 @@
             </a>
         </div>
     </div>
-<div *ngIf="organisation">   
-    <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails">
-    
+<div *ngIf="organisation">
+    <!-- <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails"> -->
+    <div class="" id="leftSidePanelDetails">
+
     <div id="detailsPanel">
         <button class="btn btn-default" type="button"(click)="goBack()">Back to Results</button>
+        <button class="btn btn-default" type="button"(click)="deselect()">close</button>
+
         <hr>
         <li>Category: {{organisation.Category}}</li>
         <li>Address: {{organisation.StreetAddress}}<br/>{{organisation.Suburb}} {{organisation.Postcode}}<br/>{{organisation.State}}</li>
@@ -29,16 +32,16 @@
         <p>Advocacy Services</p>
         <p>Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider</p>
         <p>Provider Types</p>
-        <ul> 
-            <li>Lorem ipsum dolor sit amet</li>                             
-            <li>Consectetur adipiscing elit</li>                             
-            <li>Integer molestie lorem at massa</li>                             
+        <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Consectetur adipiscing elit</li>
+            <li>Integer molestie lorem at massa</li>
         </ul>
         <p>Service Areas</p>
-        <ul> 
-            <li>Lorem ipsum dolor sit amet</li>                             
-            <li>Consectetur adipiscing elit</li>                             
-            <li>Integer molestie lorem at massa</li>                             
+        <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Consectetur adipiscing elit</li>
+            <li>Integer molestie lorem at massa</li>
         </ul>
     </div>
 </div>

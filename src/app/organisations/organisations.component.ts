@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, transition, animate, style, state, trigger } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderType } from '../search/search-categories/provider-type';
 
@@ -8,15 +8,40 @@ import { OrganisationService } from './organisation.service';
 import { GeolocationService } from '../shared/geolocation.service';
 
 import { SearchComponent } from '../search/search.component';
+import { RefinerComponent } from '../search/refiner.component';
 
 import { MapComponent } from '../map/map.component';
+
+import { OrganisationDetailComponent } from './organisation-detail.component';
+
 
 @Component({
   moduleId: module.id,
   selector: 'organisations',
   templateUrl: 'organisations.component.html',
   styleUrls: ['organisations.component.css'],
-  directives: [ SearchComponent, MapComponent ]
+  directives: [ SearchComponent, MapComponent, OrganisationDetailComponent, RefinerComponent ],
+  /**
+   * Define two states, "inactive" and "active", and the end
+   * styles that apply whenever the element is in those states.
+   * Then define animations for transitioning between the states,
+   * one in each direction
+   */
+  animations: [
+    trigger('selectedState', [
+      state('false', style({
+        // backgroundColor: '#eee',
+        // transform: 'translate(-100%, 0)'
+      })),
+      state('true',   style({
+        // backgroundColor: '#cfd8dc',
+        transform: 'translate(100%, 0)'
+        // transform: 'translate(-33.3%, 0)'
+      })),
+      transition('false <=> true', animate('100ms ease-out')),
+      // transition('active => inactive', animate('100ms ease-out'))
+    ])
+  ]
 
 })
 

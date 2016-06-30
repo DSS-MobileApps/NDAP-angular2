@@ -7,3 +7,56 @@
 .btn {
     white-space: normal;
 }
+
+/*#results{
+  z-index: 4;
+
+  height: 500px;
+  position: absolute;
+
+
+}*/
+
+#searchOptionsBtn{
+  position: absolute;
+  left: 20px;
+  top:20px;
+  z-index: 10;
+}
+
+#orgResult {
+  z-index: 5;
+  position: absolute;
+  box-shadow: -5px 0px 25px 0px rgba(0,0,0,0.25);
+  height:600px;
+  overflow: scroll;
+  background-color: #fff;
+}
+
+#orgResultDetail{
+  background-color: #fff;
+  left:-50%;
+  height:600px;
+  overflow: scroll;
+  position: absolute;
+  z-index: 4;
+
+  -webkit-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s;
+  box-shadow: -10px 0px 15px 0px rgba(0,0,0,0.25);
+
+}
+
+
+
+#results #orgResult > .panel{
+  -webkit-transition: all ease-in-out 0.5s;
+  transition: all ease-in-out 0.5s;
+
+}
+#results .selected{
+  height: 100%;
+top: 0;
+position: absolute;
+width: 100%;
+}
