@@ -28,7 +28,7 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
-    "angular-cli": "0.0.*",
+    "angular-cli": "^1.0.0-beta.5",
     "angular2-google-maps": "0.10.0",
     "clang-format": "^1.0.35",
     "codelyzer": "0.0.14",
