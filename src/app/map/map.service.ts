@@ -4,15 +4,15 @@ import { Subject } from 'rxjs/Subject';
 
 import { NDAPMarker } from '../shared/ndap-marker-interface';
 
+declare var MarkerClusterer: any;
+
 @Injectable()
 export class MapService {
   private areaMap: google.maps.Map;
   private detailMap: google.maps.Map;
   private infoWindow: google.maps.InfoWindow;
-  //private markerInfoSelectedSource = new Subject<string>();
   private markerSelectedSource = new Subject<string>();
   private areaMarkers = Object.create(null);
-  //markerInfoSelected$ = this.markerInfoSelectedSource.asObservable();
   markerSelected$ = this.markerSelectedSource.asObservable();
 
   constructor(private window: Window, private document: Document, @Inject('MAPS_API_KEY') private apiKey: string, private zone: NgZone) {
@@ -24,12 +24,10 @@ export class MapService {
     this.areaMarkers = Object.create(null);
     this.areaMap = new google.maps.Map(mapDomElement);
     let bounds = this.addAreaMarkers(this.areaMap, data);
-
     this.areaMap.fitBounds(bounds);
   }
 
   createDetailMap(mapDomElement: any, data: NDAPMarker) {
-    //this.markers = Object.create(null);
     this.detailMap = new google.maps.Map(mapDomElement);
     let bounds = this.addMarker(this.detailMap, data);
     let latLng = new google.maps.LatLng(data.Lat, data.Lng);
@@ -37,18 +35,27 @@ export class MapService {
     this.detailMap.setZoom(15);
   }
 
-  //TODO: Need to create an common interface for objects containing marker data, e.g. lat, lng, label, etc. Then we can get rid of 'any'
   private addAreaMarkers(map: google.maps.Map, data: NDAPMarker[]) : google.maps.LatLngBounds {
     let bounds = new google.maps.LatLngBounds();
     let service = this;
+    let markers: google.maps.Marker[] = [];
     for (let item of data) {
-      let result = this.addMarker(map, item);
+      let latLng = new google.maps.LatLng(item.Lat, item.Lng);
+      let markerOptions: google.maps.MarkerOptions = {position: latLng};
+      let result = new google.maps.Marker(markerOptions);
+      result.set('orgId', item.Id);
+      result.set('orgName', item.Name);
       result.addListener('click', function() {
         service.selectMarkerInternal(result);
       });
       this.areaMarkers[item.Id] = result;
-      bounds.extend(result.getPosition());
+      markers.push(result);
+      bounds.extend(latLng);
     }
+    let options: any = {
+      imagePath: 'vendor/markerclustererplus/images/m'
+    }
+    var markerCluster = new MarkerClusterer(this.areaMap, markers, options);
     return bounds;
   }
 
