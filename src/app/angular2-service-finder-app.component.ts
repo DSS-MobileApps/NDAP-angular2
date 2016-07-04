@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
+// import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { MapService } from './map/map.service';
 import { OrganisationService } from './organisations/organisation.service';
@@ -19,35 +20,35 @@ import { GeolocationService } from './shared/geolocation.service';
   providers: [OrganisationService, ProviderTypesService, GeolocationService, MapService]
 })
 
-@Routes([
-  {
-    path: '/organisations/:id',
-    component: OrganisationsComponent
-  },
-  {
-    path: '/organisations',
-    component: OrganisationsComponent
-  },
-
-  {
-    path: '/organisation/:id',
-    component: OrganisationDetailComponent
-  },
-
-  // Root Url
-  {
-  path: '/',
-  component: OrganisationsComponent
-},
-
-// Catch all for any undefined URL
-  {
-  path: '*',
-  component: OrganisationsComponent
-  }
-
-
-])
+// @Routes([
+//   {
+//     path: '/organisations/:id',
+//     component: OrganisationsComponent
+//   },
+//   {
+//     path: '/organisations',
+//     component: OrganisationsComponent
+//   },
+//
+//   {
+//     path: '/organisation/:id',
+//     component: OrganisationDetailComponent
+//   },
+//
+//   // Root Url
+//   {
+//   path: '/',
+//   component: OrganisationsComponent
+// },
+//
+// // Catch all for any undefined URL
+//   {
+//   path: '*',
+//   component: OrganisationsComponent
+//   }
+//
+//
+// ])
 
 export class Angular2ServiceFinderAppComponent implements OnInit  {
   title = 'Disability Advocacy Finder';
@@ -61,7 +62,7 @@ export class Angular2ServiceFinderAppComponent implements OnInit  {
   public userLoc: string;
   // public userLocation: ngSelectLocation;
 
-  constructor(private router: Router,
+  constructor(
               private providerTypesService: ProviderTypesService,
               private organisationService: OrganisationService,
               // ngLocation: nglocationService,

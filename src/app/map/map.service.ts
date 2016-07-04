@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { NDAPMarker } from '../shared/ndap-marker-interface';
 
+import 'markerclustererplus';
 declare var MarkerClusterer: any;
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input  } from '@angular/core';
-import { Router, OnActivate, RouteSegment } from '@angular/router';
+// import { Router, OnActivate, RouteSegment } from '@angular/router';
 
 import { MapService } from '../map/map.service';
 import { Organisation } from './organisation';
@@ -13,12 +13,12 @@ import { OrganisationService } from './organisation.service';
   host: {'class' : 'ng-animate orgDetailContainer'}
 })
 
-export class OrganisationDetailComponent implements OnActivate, AfterViewInit  {
+export class OrganisationDetailComponent implements AfterViewInit  {
   @ViewChild('map') mapElement: ElementRef;
   @Input() organisation: Organisation;
 
   constructor(
-    private router: Router,
+    // private router: Router,
     private organisationService: OrganisationService,
     private mapService: MapService
   ) {
@@ -40,16 +40,16 @@ export class OrganisationDetailComponent implements OnActivate, AfterViewInit  {
     });
   }
 
-  routerOnActivate(curr: RouteSegment): void {
-
-    if (!this.organisation){
-      // Grab the current ID from the URL
-      let id = +curr.getParam('id');
-
-      // Set organisation to the one returned
-      this.getOrganisationById(id);
-    }
-  }
+  // routerOnActivate(curr: RouteSegment): void {
+  //
+  //   if (!this.organisation){
+  //     // Grab the current ID from the URL
+  //     let id = +curr.getParam('id');
+  //
+  //     // Set organisation to the one returned
+  //     this.getOrganisationById(id);
+  //   }
+  // }
 
   ngAfterViewInit() {
     // this.initMap();

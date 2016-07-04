@@ -3,6 +3,7 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  'markerclustererplus': 'vendor/markerclustererplus',
 };
 
 /** User packages configuration. */
@@ -10,6 +11,11 @@ const packages: any = {
   'angular2-google-maps': {
     defaultExtension: 'js',
   },
+  'markerclustererplus': {
+    defaultExtension: 'js',
+    main: 'dist/markerclusterer.min.js'
+  },
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,6 +35,7 @@ const barrels: string[] = [
 
   // Thirdparty barrels.
   'rxjs',
+  'markerclustererplus',
 
   // App specific barrels.
   'app',
@@ -52,6 +59,7 @@ System.config({
   map: {
     '@angular': 'vendor/@angular',
     'rxjs': 'vendor/rxjs',
+    'markerclustererplus': 'vendor/markerclustererplus',
     'main': 'main.js'
   },
   packages: cliSystemConfigPackages
