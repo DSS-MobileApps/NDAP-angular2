@@ -20,36 +20,6 @@ import { GeolocationService } from './shared/geolocation.service';
   providers: [OrganisationService, ProviderTypesService, GeolocationService, MapService]
 })
 
-// @Routes([
-//   {
-//     path: '/organisations/:id',
-//     component: OrganisationsComponent
-//   },
-//   {
-//     path: '/organisations',
-//     component: OrganisationsComponent
-//   },
-//
-//   {
-//     path: '/organisation/:id',
-//     component: OrganisationDetailComponent
-//   },
-//
-//   // Root Url
-//   {
-//   path: '/',
-//   component: OrganisationsComponent
-// },
-//
-// // Catch all for any undefined URL
-//   {
-//   path: '*',
-//   component: OrganisationsComponent
-//   }
-//
-//
-// ])
-
 export class Angular2ServiceFinderAppComponent implements OnInit  {
   title = 'Disability Advocacy Finder';
 

@@ -24,6 +24,7 @@ bootstrap(
     HTTP_PROVIDERS,
     provide(Window, {useValue: window}),
     provide(Document, {useValue: document}),
-    provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey})
+    provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey}),
+    provide('API_URL', {useValue: environment.apiHost})
   ]
 ).catch(err => console.error(err));

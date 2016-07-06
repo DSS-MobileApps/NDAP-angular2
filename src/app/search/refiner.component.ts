@@ -15,9 +15,9 @@ import { OrganisationService } from '../organisations/organisation.service'
   moduleId: module.id,
   selector: 'refiner-options',
   templateUrl: 'refiner.component.html',
-  directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent]
-  // templateUrl: 'provider-types.component.html',
-  // styleUrls: ['provider-types.component.css']
+  directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent],
+  styleUrls: ['refiner.component.css']
+
 })
 
 export class RefinerComponent {

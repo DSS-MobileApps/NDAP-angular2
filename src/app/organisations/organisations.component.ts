@@ -52,6 +52,8 @@ export class OrganisationsComponent implements OnInit {
   errorMessage: string;
   userPos: any;
 
+  searchMode=true;
+
   opts = {
     enableHighAccuracy: false,
     timeout: 10000,
@@ -110,8 +112,8 @@ export class OrganisationsComponent implements OnInit {
   private subscribeToOrganisations() {
     this.organisationService.orgListSource$
       .subscribe(
-        // organisations => this.updateOrganisations(organisations),
-        organisations => this.organisations = organisations,
+        organisations => this.updateOrganisations(organisations),
+        // organisations => this.organisations = organisations,
         error =>  this.errorMessage = <any>error);
   }
 
@@ -120,7 +122,22 @@ export class OrganisationsComponent implements OnInit {
   }
 
   private updateOrganisations(organisations: Organisation[]) {
-    this.organisations = organisations
+    this.organisations = organisations;
+    this.searchMode = false;
+
+
+  }
+
+  toggleSearchMode(){
+    console.log('toggle search mode');
+      this.searchMode = !this.searchMode;
+  }
+
+  get hasOrganisations(){
+    if (!this.organisations) {
+      return false
+    }
+    return this.organisations.length > 0;
   }
 
   refreshPosition(){

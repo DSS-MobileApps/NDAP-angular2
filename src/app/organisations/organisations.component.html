@@ -1,25 +1,44 @@
-<!-- Search options -->
-<div class="row">
-<div class="col-xs-9 col-sm-12 sidebar-offcanvas hidden-print" id="sidebar" role="navigation">
-    <div class="sidebar-navs row" role="navigation">
-      <!-- Button trigger modal -->
-          <refiner-options></refiner-options>
-    </div><!--/.sidebar-nav -->
-</div>
-</div>
+
+<div id="orgSearch" [class.has-results]="hasOrganisations" [class.search-mode]="searchMode">
+
+  <button (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="searchbtn" data-upgraded=",MaterialButton,MaterialRipple">
+              <!-- <i class="material-icons" role="presentation">search</i> -->
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#ffffff">
+
+              <circle fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" cx="21" cy="20" r="16"/>
+              <line fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" x1="32.229" y1="32.229" x2="45.5" y2="45.5"/>
+              </svg>
+              <span class="sr-only">Search</span>
+            <!-- <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span> -->
+      </button>
+
+  <!-- Search options -->
+  <div class="" id="search-area">
+  <!-- <div class="col-md-3"> -->
+      <search-options></search-options>
+  <!-- </div> -->
+  <div class="opaque"></div>
+  </div>
+
+
+    <!-- <div class="row">
+    <div class="col-xs-9 col-sm-12 sidebar-offcanvas hidden-print" id="sidebar" role="navigation">
+        <div class="sidebar-navs row" role="navigation">
+              <refiner-options></refiner-options>
+        </div>
+    </div>
+    </div> -->
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
         <h4 class="modal-title" id="myModalLabel">Find services by Postcode</h4>
       </div>
       <div class="modal-body">
         <div class="input-group input-group-lg">
-          <!-- <span class="input-group-addon" id="sizing-addon1">Postcode</span> -->
           <input type="text" class="form-control" placeholder="Postcode" aria-describedby="sizing-addon1">
           <span class="input-group-btn">
             <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></button>
@@ -29,48 +48,39 @@
           </span>
         </div>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div> -->
     </div>
   </div>
-</div>
+</div> -->
 <!-- <div class="row">
   <span *ngIf="selectedOrganisation" class="col-md-12 alert alert-info">Selected:  {{selectedOrganisation.Name}}</span>
 <button class="btn btn-default" (click)="refreshPosition()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh Position</button>
 </div> -->
-<div class="row" id="orgSearch">
+<div class="row">
 
 
+    <div class="col-md-12 blurry">
+      <div id="resultPanel" class="col-md-3">
+      <div id="orgResult">
 
 
-
-    <div class="col-md-3" *ngIf="!organisations">
-        <search-options></search-options>
+          <p *ngIf="!organisations" >Loading...</p>
+          <refiner-options></refiner-options>
+          <org-list [organisations]="organisations"
+            [selectedOrgId]="selectedOrgId"
+            (onSelectionChanged)="onSelect($event)"></org-list>
+  <!--
+          <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
+          <h5>{{organisation.Name}}</h5>
+          <p>{{organisation.Suburb}}</p>
+          </button>-->
+          <!-- <div class="opaque"></div> -->
+      </div>
+      <div id="orgResultDetail" class=""  @selectedState="selectedOrganisation != null">
+          <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
+      </div>
     </div>
-
-    <div class="col-md-3" id="orgResult">
-
-
-        <p *ngIf="!organisations" >Loading...</p>
-        <org-list [organisations]="organisations" [selectedOrgId]="selectedOrgId" (onSelectionChanged)="onSelect($event)"></org-list>
-<!--
-        <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
-        <h5>{{organisation.Name}}</h5>
-        <p>{{organisation.Suburb}}</p>
-        </button>-->
-    </div>
-
-        <!-- <div id=""> -->
-        <div class="col-md-9" id="orgResultDetail" @selectedState="selectedOrganisation != null">
-            <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
-        </div>
-
-
-
-    <div class="col-md-12">
     <map-component>LOADING MAP...</map-component>
 </div>
 
+</div>
 </div>

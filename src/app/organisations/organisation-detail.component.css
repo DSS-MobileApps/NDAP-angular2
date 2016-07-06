@@ -23,3 +23,12 @@
     :host(.orgDetailContainer.ng-enter-active) {
         /*transform: translate(-100%,0);*/
     }
+
+/*.scrollable{
+  height: 100%;
+}
+
+
+#leftSidePanelDetails{
+  overflow: scroll;
+}*/

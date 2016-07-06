@@ -1,4 +1,4 @@
-import { Injectable }     from '@angular/core';
+import { Injectable, Inject }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
@@ -22,9 +22,9 @@ export class OrganisationService {
     this.selectedOrganisation.next(selectedOrganisation);
   }
 
-  constructor (private http: Http) {}
+  constructor (private http: Http, @Inject('API_URL') private apiUrl: string) {}
 
-  /*  
+  /*
   *************************************
   * API Calls
   *************************************
@@ -32,67 +32,70 @@ export class OrganisationService {
 
   // All Organisations (URL) (800ms on average)
   private getAllOrganisationsUrl =
-    'http://finder.dss.gov.au/disability/ndap/api/provider/getall/all/NDAP';
+    '/api/provider/getall/all/NDAP';
 
   // Single Organisation (URL + id) (60ms on average)
   private getSingleOrganisationUrl =
-    'http://finder.dss.gov.au/disability/ndap/api/provider/';
+    '/api/provider/';
 
   // Organisation (URL + postcode) (60ms on average)
   private getOrganisationsInPostcodeUrlA =
-    'http://finder.dss.gov.au/disability/ndap/api/provider/getallbypostcode/'
+    '/api/provider/getallbypostcode/'
 
   private getOrganisationsInPostcodeUrlB =
     '/NDAP'
 
   // Get all by Provider Type
   private getOrganisationsFilteredByTypeUrlA =
-    'http://finder.dss.gov.au/disability/ndap/api/provider/getallbytype/';
+    '/api/provider/getallbytype/';
 
   private getOrganisationsFilteredByTypeUrlB =
       '/NDAP';
 
 
   private getOrganisationsByState =
-        'http://finder.dss.gov.au/disability/ndap/api/provider/getallbyState/'
+        '/api/provider/getallbyState/'
   private getOrganisationsByDistance =
-        'http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByDistance/'
+        '/api/provider/GetAllByDistance/'
 
   private getOrganisationsByKeyword =
-        'http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByKeyword/'
+        '/api/provider/GetAllByKeyword/'
 
   // Get suburbs from a postcode
-  // 'http://finder.dss.gov.au/disability/ndap/api/location/';
+  // '/api/location/';
 
   // Get by State
-  // http://finder.dss.gov.au/disability/ndap/api/provider/getallbystate/ACT/NDAP
+  // /api/provider/getallbystate/ACT/NDAP
 
   // Get Provider Types
-  // http://finder.dss.gov.au/disability/ndap/api/utilities/getallprovidertypes/NDAP
+  // /api/utilities/getallprovidertypes/NDAP
 
   // Get by name
   // ????
 
   // Get within a shape
-  // http://finder.dss.gov.au/disability/ndap/api/provider
+  // /api/provider
   // /GetAllWithinShape/-36.037825426409505/148.3338165283203/
 
   // Get within a distance
-  // http://finder.dss.gov.au/disability/ndap/api/provider/GetAllByDistance/-35.276/149.13/300
+  // /api/provider/GetAllByDistance/-35.276/149.13/300
 
 
-  /*  
+  /*
   *************************************
   * Methods that the Service returns
   *************************************
   */
-  
+
   // TODO - add other methods
 
   // Public Method called to get organisations list
   searchOrgList(searchType, value1, value2) {
     this.getOrganisations(searchType, value1, value2).subscribe(
-      result => this.orgListSource.next(result)
+      result => {
+        this.orgListSource.next(result);
+        this.selectedOrganisation.next(null);
+      }
     )
   }
 
@@ -107,42 +110,54 @@ export class OrganisationService {
 
     case "byRadius":
             return this.getJsonFromAPI(
-              this.getOrganisationsByDistance
+              this.apiUrl
+              + this.getOrganisationsByDistance
               + "-35.276/149.13/"
               + value1
               + this.getOrganisationsInPostcodeUrlB);
 
     case "byState":
             return this.getJsonFromAPI(
-              this.getOrganisationsByState
+              this.apiUrl
+              + this.getOrganisationsByState
               // + "-35.276/149.13/"
               + value1.code
               + this.getOrganisationsInPostcodeUrlB);
 
     case "byKeyword":
           return this.getJsonFromAPI(
-            this.getOrganisationsByKeyword
-            + "-35.276/149.13/"
+            this.apiUrl
+            + this.getOrganisationsByKeyword
             + value1
-            + this.getOrganisationsInPostcodeUrlB);
+            + "/-35.276/149.13/"
+            + "3000"
+            + this.getOrganisationsInPostcodeUrlB
+            + "/1");
 
     case "byPostCode":
         return this.getJsonFromAPI(
-          this.getOrganisationsInPostcodeUrlA
+          this.apiUrl
+          + this.getOrganisationsInPostcodeUrlA
           + value1
           + this.getOrganisationsInPostcodeUrlB);
 
     case "all":
-        return this.getJsonFromAPI(this.getAllOrganisationsUrl);
+        return this.getJsonFromAPI(
+          this.apiUrl
+          + this.getAllOrganisationsUrl);
 
     default:
-        return this.getJsonFromAPI(this.getAllOrganisationsUrl);
+        return this.getJsonFromAPI(
+          this.apiUrl
+          + this.getAllOrganisationsUrl);
     }
   }
 
   // Public method called to get a single Org
   getOrganisation(id: number): Observable<Organisation> {
-    return this.getJsonFromAPI(this.getSingleOrganisationUrl + id);
+    return this.getJsonFromAPI(
+      this.apiUrl
+      + this.getSingleOrganisationUrl + id);
   }
 
 
@@ -169,7 +184,7 @@ export class OrganisationService {
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
   }
-  
-  
+
+
 
 }

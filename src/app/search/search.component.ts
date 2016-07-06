@@ -15,14 +15,15 @@ import { OrganisationService } from '../organisations/organisation.service'
   moduleId: module.id,
   selector: 'search-options',
   templateUrl: 'search.component.html',
+  styleUrls: ['search.component.css'],
   directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent]
   // templateUrl: 'provider-types.component.html',
-  // styleUrls: ['provider-types.component.css']
 })
 
 export class SearchComponent {
   title = 'Search Options';
   postCode: number;
+  keyword: string;
 
   constructor(
     private router: Router,
@@ -52,9 +53,9 @@ export class SearchComponent {
 
   }
 
-  // onKeywordSearch (keywordEntry) {
-  //   this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
-  // }
+  onKeywordSearch (keywordEntry) {
+    this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
+  }
 
 
 

@@ -1,4 +1,10 @@
 /*the following line sets the height of the map - Important: if you don't set a height, you won't see a map!!*/
 .map-container {
       height: 600px;
+      /*position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    min-height: 100%;*/
 }

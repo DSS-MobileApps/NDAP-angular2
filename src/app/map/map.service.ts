@@ -16,14 +16,31 @@ export class MapService {
   private areaMarkers = Object.create(null);
   markerSelected$ = this.markerSelectedSource.asObservable();
 
+
+
   constructor(private window: Window, private document: Document, @Inject('MAPS_API_KEY') private apiKey: string, private zone: NgZone) {
     //retrieve apikey
     this.loadAPI();
   }
 
   createAreaMap(mapDomElement: any, data: NDAPMarker[]) {
+
+    var mapProp = {
+      // center: new google.maps.LatLng(51.508742,-0.120850),
+      zoom:7,
+      panControl:false,
+      zoomControl:true,
+      mapTypeControl:false,
+      scaleControl:false,
+      streetViewControl:false,
+      overviewMapControl:false,
+      rotateControl:false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+
     this.areaMarkers = Object.create(null);
-    this.areaMap = new google.maps.Map(mapDomElement);
+    this.areaMap = new google.maps.Map(mapDomElement, mapProp);
     let bounds = this.addAreaMarkers(this.areaMap, data);
     this.areaMap.fitBounds(bounds);
   }

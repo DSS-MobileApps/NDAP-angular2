@@ -1,44 +1,95 @@
-<div class="col-md-4 col-xs-12" id="leftSidePanelSearch">
-    <h2>Search for a Provider</h2>
+<div  id="panelSearch" class="center-block">
+<!-- <div class="row">
+  <div class="col-md-12 col-xs-12">
 
-
+      <h2>Search for a Provider</h2>
+  </div>
+</div> -->
+<!-- <div class="row">
+  <div class="col-md-12 col-xs-12">
 
       <search-location (onLocationPostcodeSearch)="onPostCodeSearch($event)"></search-location>
-
-      <hr>
+</div>
+    </div> -->
+    <div class="row">
+      <div class="col-md-offset-1 col-md-4 col-xs-12">
 
         <!--Enter a location-->
         <div class="form-group">
-        <label class="control-label" for="locationInput">Postcode</label>
+        <label class="control-label " for="locationInput">Postcode</label>
+        <div class="input-group">
         <input type="text"
-            class="form-control"
+            class="form-control input-lg"
             id="locationInput"
             placeholder="Enter a Postcode..."
             [(ngModel)]="postCode">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-lg"
+              (click)="onPostCodeSearch(postCode)">
+                  Find
+              </button>
+              <!-- <button type="button" class="btn btn-lg"
+              (click)="onPostCodeSearch(postCode)">
+                  Locate
+              </button> -->
+            </span>
+          </div>
+          </div>
+        </div>
 
+        <div class="col-md-2 col-xs-12">
+          <p class="lead text-center">or</p>
+        </div>
+        <div class="col-md-4 col-xs-12">
 
-        <button type="button" class="btn btn-primary"
-        (click)="onPostCodeSearch(postCode)">
-            Search
-        </button>
+          <!--Enter a location-->
+          <div class="form-group">
+          <label class="control-label" for="keywordInput">Keyword</label>
+          <div class="input-group">
+          <input type="text"
+              class="form-control input-lg"
+              id="keywordInput"
+              placeholder="Enter a Keyword..."
+              [(ngModel)]="keyword">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-lg"
+                (click)="onKeywordSearch(keyword)">
+                    Search
+                </button>
+                <!-- <button type="button" class="btn btn-lg"
+                (click)="onPostCodeSearch(postCode)">
+                    Locate
+                </button> -->
+              </span>
+            </div>
+            </div>
+          </div>
 
-    </div>
+  </div>
 
-    <hr>
-
-    <button type="button" class="btn btn-primary"
+  <!-- <div class="row">
+  <div class="col-md-offset-4 col-md-4 col-xs-12">
+    <span class="center-block">or</span>
+    <br/>
+    <button type="button" class="btn btn-lg center-block"
     (click)="onAllOrganisations()">
         View all Providers
     </button>
-    <hr>
+</div>
+</div> -->
+<hr/>
+<div class="row" id="disclaimer">
+  <div class="col-md-12 col-xs-12 center-block">
 
 
-    <h3>Disclaimer</h3>
-    <p>
+    <h3 class="text-center">Disclaimer</h3>
+    <p class="text-center">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fringilla lacinia libero,
         in viverra sem lobortis a. Phasellus varius tristique lectus.
         Interdum et malesuada fames ac ante ipsum primis in faucibus.
         Fusce urna ipsum, tristique quis ultrices in, vestibulum id ligula.
         Duis euismod lacus in libero dapibus fringilla.
     </p>
+</div>
+</div>
 </div>
