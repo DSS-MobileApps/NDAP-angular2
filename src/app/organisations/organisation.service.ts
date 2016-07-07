@@ -158,6 +158,8 @@ export class OrganisationService {
     return this.getJsonFromAPI(
       this.apiUrl
       + this.getSingleOrganisationUrl + id);
+      // return this.getJsonFromAPI("/data/detail-sample.json");
+
   }
 
 

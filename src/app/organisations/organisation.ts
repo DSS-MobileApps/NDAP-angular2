@@ -10,9 +10,17 @@ export class Organisation implements NDAPMarker {
   Email: string;
   Phone: string;
   PhoneAsE164: string;
+  AltTelephoneNumber: string;
   Fax: string;
   Website: string;
   Lng: number;
   Lat: number;
   Distance: string;
+  FurtherDetails: string;
+  BusinessHours: string;
+  ServiceAreas: string;
+  PostalStreetAddress: string;
+  PostalState: string;
+  PostalPostcode: string;
+  PostalSuburb: string;
 }

@@ -1,8 +1,9 @@
 <div class="panel panel-default" *ngIf="organisation">
   <div class="panel-heading">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="deselect()"><span aria-hidden="true">&times;</span></button>
     <h3 class="panel-title">{{organisation.Name}}</h3>
-    <button class="btn btn-default text-right" type="button"(click)="goBack()">Back to Results</button>
-    <button class="btn btn-default text-right" type="button"(click)="deselect()">close</button>
+    <!-- <button class="btn btn-default text-right" type="button"(click)="goBack()">Back to Results</button> -->
+    <!-- <button class="btn btn-default text-right" type="button"(click)="deselect()">close</button> -->
   </div>
   <div class="panel-body ">
 
@@ -10,7 +11,7 @@
 
     <div id="mapitemcontainer">
             <div ref-map id="mapitem" style="position: relative; overflow: hidden; transform: translateZ(0px); background-color: rgb(229, 227, 223);"></div>
-            <div id="expand-map">
+            <!-- <div id="expand-map">
                 <a class="btn btn-xs btn-default" data-bind="click: $root.expandDetailMap">
                     <span class="fa-stack">
                         <i class="fa fa-square-o fa-stack-2x" style="margin-top:1px;"></i>
@@ -18,36 +19,57 @@
                     </span>
                     <span data-bind="text: $root.expandDetailMapTitle"> Expand map</span>
                 </a>
-            </div>
+            </div> -->
         </div>
         <!-- <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails"> -->
-        <div id="detailsPanel">
+        <!-- <hr> -->
 
-            <hr>
-            <li>Category: {{organisation.Category}}</li>
-            <li>Address: {{organisation.StreetAddress}}<br/>{{organisation.Suburb}} {{organisation.Postcode}}<br/>{{organisation.State}}</li>
-            <li>Email: {{organisation.Email}}</li>
-            <li>Phone: {{organisation.Phone}}</li>
-            <li>PhoneE164: {{organisation.PhoneAsE164}}</li>
-            <li>Fax: {{organisation.Fax}}</li>
-            <li>Website: {{organisation.Website}}</li>
-            <li>Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li>
-            <li>Distance: {{organisation.Distance}}</li>
-            <hr>
-            <p>Advocacy Services</p>
-            <p>Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider,&nbsp;Text desciption from provider</p>
-            <p>Provider Types</p>
-            <ul>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Consectetur adipiscing elit</li>
-                <li>Integer molestie lorem at massa</li>
-            </ul>
-            <p>Service Areas</p>
-            <ul>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Consectetur adipiscing elit</li>
-                <li>Integer molestie lorem at massa</li>
-            </ul>
+        <div id="detailsPanel" class="row">
+
+          <div class="col-md-6 list-group">
+            <!-- <li class="list-group-item">Category: {{organisation.Category}}</li> -->
+            <a class="list-group-item"><h5>Email</h5>{{organisation.Email}}</a>
+            <a class="list-group-item"><h5>Phone</h5>{{organisation.Phone}}</a>
+            <a class="list-group-item"><h5>Alt. Phone</h5>{{organisation.AltTelephoneNumber}}</a>
+          </div>
+          <div class="col-md-6 list-group">
+            <a class="list-group-item"><h5>Fax</h5>{{organisation.Fax}}</a>
+            <a class="list-group-item"><h5>Website</h5>{{organisation.Website}}</a>
+            <!-- <li class="list-group-item">Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li> -->
+            <!-- <a class="list-group-item"><h5>Distance</h5>{{organisation.Distance}}</a> -->
+            <a class="list-group-item"><h5>Business Hours</h5>{{organisation.BusinessHours}}</a>
+          </div>
         </div>
+            <hr>
+            <ul class="list-group">
+              <a class="list-group-item">
+                <h5>Address</h5>
+                <p>{{organisation.StreetAddress}}<br/>{{organisation.Suburb}} {{organisation.Postcode}}<br/>{{organisation.State}}</p>
+              </a>
+
+              <li class="list-group-item">
+                <h5>Advocacy Services</h5>
+                <p>{{organisation.FurtherDetails}}</p>
+              </li>
+              <li class="list-group-item">
+                <h5>Provider Types</h5>
+                <p>{{organisation.Category}}</p>
+              </li>
+            <!-- <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Consectetur adipiscing elit</li>
+                <li>Integer molestie lorem at massa</li>
+            </ul> -->
+            <li class="list-group-item">
+              <h5>Service Areas</h5>
+              <p>{{organisation.ServiceAreas}}</p>
+            </li>
+            <!-- <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Consectetur adipiscing elit</li>
+                <li>Integer molestie lorem at massa</li>
+            </ul> -->
+          </ul>
+        <!-- </div> -->
     </div>
 </div>
