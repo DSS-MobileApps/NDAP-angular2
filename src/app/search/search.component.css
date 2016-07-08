@@ -12,6 +12,6 @@
 .btn-primary{
   background-color: #005A70;
 }
-.btn-default{
+:host >>> .btn-default{
   color: #005A70;
 }

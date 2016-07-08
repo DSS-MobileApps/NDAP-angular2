@@ -13,8 +13,8 @@
     </div> -->
 
     <div class="row">
-      <div class="col-xs-12">
-          <span class="lead center-block">Find Advocacy Providers that Service your area</span>
+      <div class="col-xs-12 text-center">
+          <span class="lead">Find Advocacy Providers that Service your area</span>
       </div>
     </div>
     <hr>
@@ -50,14 +50,8 @@
         </div>
 
         <div class="col-md-3 col-xs-12">
-          <div class="form-group">
-            <label class="control-label ">Use my location</label>
 
-            <button type="button" class="btn btn-default btn-lg"
-            (click)="onSelectedRadius(100)">
-                Get my current location
-            </button>
-          </div>
+          <search-location (onLocationPostcodeSearch)="onPostCodeSearch($event)"></search-location>
         </div>
 
       </div>

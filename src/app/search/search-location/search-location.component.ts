@@ -47,6 +47,7 @@ export class SearchLocationComponent implements OnInit {
             console.log("search-location menu position updated: " + new Date());
             this.locationPos = position;
             this.locatingPosition = false;
+            this.onCurrentPostcodeSearch(this.locationPos.postcode)
         },
       error => {
         console.log(error);
@@ -59,6 +60,10 @@ export class SearchLocationComponent implements OnInit {
   onGetCurrentLocation() {
     this.locatingPosition = true;
     this.geolocationService.getLocation(this.opts);
+  }
+
+  SearchCurrentLocation(){
+    this.onGetCurrentLocation();
   }
 
   // When a radius is selected, tell the org list to filter by the radius selected

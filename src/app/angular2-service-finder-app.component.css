@@ -10,7 +10,7 @@ header{
   position: relative;
   background-color: #fff;
   /*box-shadow: 0 5px 10px 0px rgba(0,0,0,0.25);*/
-  border-bottom: 1px solid #eee;
+  /*border-bottom: 1px solid #eee;*/
   /*width: 100%;*/
   /*margin: 0 -15px;*/
   overflow: hidden;
@@ -35,8 +35,11 @@ header h1{
 }
 
 .logo img {
-    width: 140px;
+    /*height: 100px;*/
+    max-height: 100px;
     padding: 20px 0;
+}
+.logo{
 }
 
 .mdl-layout__content {

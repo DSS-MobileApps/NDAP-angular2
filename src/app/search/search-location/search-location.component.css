@@ -8,6 +8,9 @@
   -o-transition: opacity 0.25s, width 0.25s;
   transition: opacity 0.25s, width 0.25s;
 }
+/*.btn-default{
+  color: #005A70;
+}*/
 
 .has-spinner.active {
   cursor:progress;

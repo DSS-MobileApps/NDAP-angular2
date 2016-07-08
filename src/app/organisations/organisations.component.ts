@@ -34,7 +34,7 @@ import { OrganisationDetailComponent } from './organisation-detail.component';
       })),
       state('true',   style({
         // backgroundColor: '#cfd8dc',
-        transform: 'translate(100%, 0)'
+        // transform: 'translate(100%, 0)'
         // transform: 'translate(-33.3%, 0)'
       })),
       transition('false <=> true', animate('100ms ease-out')),

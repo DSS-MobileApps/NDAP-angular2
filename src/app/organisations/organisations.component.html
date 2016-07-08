@@ -75,7 +75,7 @@
           </button>-->
           <!-- <div class="opaque"></div> -->
       </div>
-      <div id="orgResultDetail" class=""  @selectedState="selectedOrganisation != null">
+      <div id="orgResultDetail" class="" [class.detail-open]="selectedOrganisation != null"  > <!-- @selectedState="selectedOrganisation != null" -->
           <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
       </div>
     </div>

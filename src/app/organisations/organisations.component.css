@@ -96,17 +96,21 @@
   /*height:600px;*/
   top: 0;
   bottom: 0;
+  /*left: 25%;*/
   overflow: scroll;
   position: absolute;
   z-index: 1;
   padding: 50px 10px 10px 10px;
   margin-bottom: 10px;
-  -webkit-transition: all ease-in-out 0.2s;
-  transition: all ease-in-out 0.2s;
+  -webkit-transition: all ease-out 0.2s;
+  transition: all ease-out 0.2s;
   box-shadow: 5px 0px 10px 0px rgba(0,0,0,0.25);
+  /*display: none;*/
 
 }
-
+#orgResultDetail.detail-open{
+  transform: translate(100%, 0);
+}
 
 
 #results #orgResult > .panel{
@@ -176,7 +180,7 @@ width: 100%;
     transition: all ease-in-out 0.2s;
     position: absolute;
     right: 30px;
-     top: 90px;
+     top: 72px;
     /*top: 0;*/
     /*bottom: -30px;*/
     z-index: 999;
@@ -184,6 +188,11 @@ width: 100%;
 .search-mode #searchbtn  {
     /*transform: translate(-20px, 200px) scale(1.5);*/
      transform: translate(0, 450px);
+}
+
+button#searchbtn:focus, button#searchbtn:hover {
+     transform: scale(1.2) rotate(-15deg);
+
 }
 
 #searchbtn svg{
