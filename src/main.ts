@@ -22,8 +22,6 @@ bootstrap(
     // ROUTER_PROVIDERS,
     APP_ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
-    provide(Window, {useValue: window}),
-    provide(Document, {useValue: document}),
     provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey})
   ]
 ).catch(err => console.error(err));

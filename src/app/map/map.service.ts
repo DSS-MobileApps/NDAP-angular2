@@ -1,5 +1,6 @@
 /// <reference path="../../../typings/index.d.ts" />
 import { Injectable, Inject, NgZone } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 import { Subject } from 'rxjs/Subject';
 
 import { NDAPMarker } from '../shared/ndap-marker-interface';
@@ -16,7 +17,7 @@ export class MapService {
   private areaMarkers = Object.create(null);
   markerSelected$ = this.markerSelectedSource.asObservable();
 
-  constructor(private window: Window, private document: Document, @Inject('MAPS_API_KEY') private apiKey: string, private zone: NgZone) {
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject('MAPS_API_KEY') private apiKey: string, private zone: NgZone) {
     //retrieve apikey
     this.loadAPI();
   }
