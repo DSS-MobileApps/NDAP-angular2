@@ -34,9 +34,9 @@ export class SearchComponent {
   //   this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
   // }
 
-  // onSelectedRadius (radius) {
-  //   this.organisationService.searchOrgList('byRadius', radius, undefined);
-  // }
+  onSelectedRadius (radius) {
+    this.organisationService.searchOrgList('byRadius', radius, undefined);
+  }
 
   // onSelectedState (state: StateType) {
   //   this.organisationService.searchOrgList('byState', state, undefined);

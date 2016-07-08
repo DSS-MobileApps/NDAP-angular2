@@ -11,6 +11,14 @@
       <search-location (onLocationPostcodeSearch)="onPostCodeSearch($event)"></search-location>
 </div>
     </div> -->
+
+    <div class="row">
+      <div class="col-xs-12">
+          <span class="lead center-block">Find Advocacy Providers that Service your area</span>
+      </div>
+    </div>
+    <hr>
+
     <div class="row">
       <div class="col-md-offset-1 col-md-4 col-xs-12">
 
@@ -40,7 +48,26 @@
         <div class="col-md-2 col-xs-12">
           <p class="lead text-center">or</p>
         </div>
-        <div class="col-md-4 col-xs-12">
+
+        <div class="col-md-3 col-xs-12">
+          <div class="form-group">
+            <label class="control-label ">Use my location</label>
+
+            <button type="button" class="btn btn-default btn-lg"
+            (click)="onSelectedRadius(100)">
+                Get my current location
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <hr/>
+      <div class="row">
+
+        <!-- <div class="col-md-1 col-xs-12">
+          <p class="lead text-center">or</p>
+        </div> -->
+        <div class="col-md-offset-4 col-md-4 col-xs-12">
 
           <!--Enter a location-->
           <div class="form-group">
