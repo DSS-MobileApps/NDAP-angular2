@@ -8,10 +8,3 @@
   color: #666;
 
 }
-
-.btn-primary{
-  background-color: #005A70;
-}
-:host >>> .btn-default{
-  color: #005A70;
-}

@@ -15,7 +15,7 @@ import { GeolocationService } from './shared/geolocation.service';
   moduleId: module.id,
   selector: 'angular2-service-finder-app',
   templateUrl: 'angular2-service-finder-app.component.html',
-  styleUrls: ['angular2-service-finder-app.component.css'],
+  styleUrls: ['angular2-service-finder-app.component.css', 'common.css'],
   directives: [ROUTER_DIRECTIVES],
   providers: [OrganisationService, ProviderTypesService, GeolocationService, MapService]
 })

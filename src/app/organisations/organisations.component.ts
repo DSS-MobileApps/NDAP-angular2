@@ -1,4 +1,4 @@
-import { Component, OnInit, transition, animate, style, state, trigger } from '@angular/core';
+import { Component, OnInit, transition, animate, style, state, trigger, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProviderType } from '../search/search-categories/provider-type';
 
@@ -44,13 +44,17 @@ import { OrganisationDetailComponent } from './organisation-detail.component';
 
 })
 
-export class OrganisationsComponent implements OnInit {
+export class OrganisationsComponent implements OnInit, AfterViewInit {
   title = 'List of Organisations';
   organisations: Organisation[];
   selectedOrganisation: Organisation;
   selectedOrgId: number;
   errorMessage: string;
   userPos: any;
+
+  width = 100;
+  height = 100;
+  // height: number;
 
   searchMode=true;
 
@@ -65,7 +69,8 @@ export class OrganisationsComponent implements OnInit {
     private router: Router,
     private organisationService: OrganisationService,
     private _geolocationService: GeolocationService,
-    private mapService: MapService
+    private mapService: MapService,
+    private elementRef: ElementRef
   ) {
   }
 
@@ -80,7 +85,44 @@ export class OrganisationsComponent implements OnInit {
 
     // Subscribe to Selected Org events
 
+
+
   }
+
+  ngAfterViewInit() {
+
+    setTimeout(_=> this.setMapHeight());
+    }
+
+    private setMapHeight(){
+      let currentHeight = this.elementRef.nativeElement.getElementsByTagName('div')[0].offsetHeight;
+      let windowHeight = this.elementRef.nativeElement.ownerDocument.defaultView.innerHeight;
+      let headerHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('header')[0].offsetHeight;
+      let footerHeight = this.elementRef.nativeElement.ownerDocument.getElementById('footer').offsetHeight;
+
+
+
+      console.log('current height=' + currentHeight + ' : window=' + windowHeight + ' : header=' + headerHeight + ' : footer=' + footerHeight);
+
+      // this.elementRef.nativeElement.getElementsByTagName('div')[0].style.height = windowHeight - headerHeight - footerHeight;
+      this.height = windowHeight - headerHeight - footerHeight;
+     //collapsable only if the contents make container exceed the max height
+      // if (currentHeight > this.maxHeight) {
+      //     this.isCollapsed = true;
+      //     this.isCollapsable = true;
+      // }
+
+    }
+
+  onResize(event) {
+      // // this.width += 100;
+      // // this.height += 100;
+      // let currentHeight = this.elementRef.nativeElement.getElementsByTagName('div')[0].offsetHeight;
+      //
+      // console.log("window resized to width:" + this.width + " - height: " + this.height);
+      this.setMapHeight();
+
+    }
 
   // When an Org is selected from the list, navigate to that record in a detail view
   onSelectDetailsButton(organisation: Organisation) {
