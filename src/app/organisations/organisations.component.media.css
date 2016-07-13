@@ -1,0 +1,87 @@
+/* BS3 */
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media(max-width:767px){
+}
+
+/* Small devices (tablets, 768px and up) */
+@media(min-width:768px){
+  #search-area{
+    height: 75%;
+    /*bottom: 0;*/
+    background-color: transparent;
+    transform: translate(0, -100%);
+  }
+
+  #searchbtn {
+      right: 20px;
+       top: 72px;
+       bottom: initial;
+      /*top: 0;*/
+      /*bottom: -30px;*/
+      /*min-width: 20px;
+      width: 30px;
+      height: 30px;*/
+  }
+  .search-mode #searchbtn  {
+      /*transform: translate(-20px, 200px) scale(1.5);*/
+       transform: translate(0, 460px);
+       /*transform: translate(0, 100%);*/
+
+  }
+
+  #results{
+    width: initial;
+    float: none;
+  }
+
+  #listPanel {
+    z-index: 2;
+    position: absolute;
+    box-shadow: 5px 0px 10px 0px rgba(0,0,0,0.25);
+    /*top:2.5%;
+    height: 95%;*/
+    top:0;
+    height: 100%;
+    background-color: #fff;
+    background-color: hsla(100, 100%, 100%, 0.35);
+  }
+
+  #orgResult{
+    z-index: 2;
+    position: absolute;
+    overflow: scroll;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    padding-top: 10px;
+    /*background-color: #fff;*/
+  }
+  #orgResultDetail{
+    /*width: 290%;
+    left:-190%;
+    top: 0;
+    bottom: 0;
+    overflow: scroll;
+    position: absolute;
+    z-index: 1;
+    padding: 50px 10px 10px 10px;
+    margin-bottom: 10px;
+    -webkit-transition: all ease-out 0.2s;
+    transition: all ease-out 0.2s;
+    box-shadow: 5px 0px 10px 0px rgba(0,0,0,0.25);*/
+    z-index: 5;
+  }
+  #orgResultDetail.detail-open{
+    /*transform: translate(100%, 0);*/
+  }
+
+}
+/* Medium devices (desktops, 992px and up) */
+@media(min-width:992px){
+
+}
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1200px){}

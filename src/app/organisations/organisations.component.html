@@ -1,5 +1,5 @@
 
-<div id="orgSearch" [class.has-results]="hasOrganisations" [class.search-mode]="searchMode">
+<div id="orgSearch" [class.has-results]="hasOrganisations" [class.search-mode]="searchMode" [class.detail-open]="selectedOrganisation != null">
 
   <button (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="searchbtn" data-upgraded=",MaterialButton,MaterialRipple">
               <!-- <i class="material-icons" role="presentation">search</i> -->
@@ -21,66 +21,57 @@
   </div>
 
 
-    <!-- <div class="row">
-    <div class="col-xs-9 col-sm-12 sidebar-offcanvas hidden-print" id="sidebar" role="navigation">
-        <div class="sidebar-navs row" role="navigation">
-              <refiner-options></refiner-options>
-        </div>
-    </div>
-    </div> -->
-
-
-<!-- Modal -->
-<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Find services by Postcode</h4>
-      </div>
-      <div class="modal-body">
-        <div class="input-group input-group-lg">
-          <input type="text" class="form-control" placeholder="Postcode" aria-describedby="sizing-addon1">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></button>
-          </span>
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- <div class="row">
-  <span *ngIf="selectedOrganisation" class="col-md-12 alert alert-info">Selected:  {{selectedOrganisation.Name}}</span>
-<button class="btn btn-default" (click)="refreshPosition()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh Position</button>
-</div> -->
 <div class="row">
 
 
-    <div class="col-md-12 blurry"  [style.height.px]="height">
-      <div id="resultPanel" class="col-md-3">
-      <div id="orgResult" (window:resize)="onResize($event)">
+
+    <div class="blurry" id="results" >
 
 
-          <p *ngIf="!organisations" >Loading...</p>
-          <refiner-options></refiner-options>
-          <org-list [organisations]="organisations"
-            [selectedOrgId]="selectedOrgId"
-            (onSelectionChanged)="onSelect($event)"></org-list>
-  <!--
-          <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
-          <h5>{{organisation.Name}}</h5>
-          <p>{{organisation.Suburb}}</p>
-          </button>-->
-          <!-- <div class="opaque"></div> -->
+
+
+      <div id="listPanel"  role="tabpanel" class="col-xs-6 col-sm-3 active">
+        <div id="orgResult" (window:resize)="onResize($event)" [style.height.px]="height">
+
+
+            <p *ngIf="!organisations" >Loading...</p>
+            <refiner-options></refiner-options>
+            <org-list [organisations]="organisations"
+              [selectedOrgId]="selectedOrgId"
+              (onSelectionChanged)="onSelect($event)"></org-list>
+    <!--
+            <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
+            <h5>{{organisation.Name}}</h5>
+            <p>{{organisation.Suburb}}</p>
+            </button>-->
+            <!-- <div class="opaque"></div> -->
+        </div>
       </div>
-      <div id="orgResultDetail" class="" [class.detail-open]="selectedOrganisation != null"  > <!-- @selectedState="selectedOrganisation != null" -->
-          <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
+      <div id="mapPanel" role="tabpanel" class="col-xs-6 col-sm-12" [style.height.px]="height">
+        <map-component>LOADING MAP...</map-component>
       </div>
     </div>
-    <map-component>LOADING MAP...</map-component>
-</div>
+  </div>
+  <div class="row">
+    <div id="orgResultDetail" [style.height.px]="height" class="" [class.detail-open]="selectedOrganisation != null"  > <!-- @selectedState="selectedOrganisation != null" -->
+        <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
+    </div>
+  </div>
 
-</div>
+  <!-- Tabs for the Mobile View -->
+  <div class="visible-xs col-xs-12" id="tabsListOrMapView">
+      <ul class="nav nav-tabs text-center" role="tablist">
+        <!-- <li class="" role="presentation">
+            <a href="#search-area" aria-controls="search-area" role="tab" data-toggle="tab">Search</a>
+        </li> -->
+          <li class="active" role="presentation">
+              <a href="#listPanel" aria-controls="listPanel" role="tab" data-toggle="tab">List</a>
+          </li>
+
+          <li class="" role="presentation">
+              <a href="#mapPanel" aria-controls="mapPanel" role="tab" data-toggle="tab">Map</a>
+          </li>
+      </ul>
+  </div>
+
 </div>

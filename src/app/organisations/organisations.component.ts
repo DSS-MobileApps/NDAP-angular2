@@ -18,7 +18,8 @@ import { OrganisationDetailComponent } from './organisation-detail.component';
   moduleId: module.id,
   selector: 'organisations',
   templateUrl: 'organisations.component.html',
-  styleUrls: ['organisations.component.css'],
+  styleUrls: ['organisations.component.css',
+            'organisations.component.media.css'],
   directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent ],
   /**
    * Define two states, "inactive" and "active", and the end
@@ -99,13 +100,14 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
       let windowHeight = this.elementRef.nativeElement.ownerDocument.defaultView.innerHeight;
       let headerHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('header')[0].offsetHeight;
       let footerHeight = this.elementRef.nativeElement.ownerDocument.getElementById('footer').offsetHeight;
+      let tabsHeight = this.elementRef.nativeElement.ownerDocument.getElementById('tabsListOrMapView').offsetHeight;
 
 
 
-      console.log('current height=' + currentHeight + ' : window=' + windowHeight + ' : header=' + headerHeight + ' : footer=' + footerHeight);
+      console.log('current height=' + currentHeight + ' : window=' + windowHeight + ' : header=' + headerHeight  + ' : tabs=' + tabsHeight + ' : footer=' + footerHeight);
 
       // this.elementRef.nativeElement.getElementsByTagName('div')[0].style.height = windowHeight - headerHeight - footerHeight;
-      this.height = windowHeight - headerHeight - footerHeight;
+      this.height = windowHeight - headerHeight - tabsHeight - footerHeight;
      //collapsable only if the contents make container exceed the max height
       // if (currentHeight > this.maxHeight) {
       //     this.isCollapsed = true;

@@ -2,7 +2,7 @@
 #orgSearch{
   overflow: hidden;
   /*background-color: #b3d9ff;*/
-  background-color: #ddd;
+  background-color: #f5f5f5;
   /*position: absolute;
   top: 0;
   left: 0;
@@ -30,7 +30,7 @@
 }*/
 
 
-#search-area, #searchbtn, #refiners, #results, #list, #resultPanel, #orgDetailContainer{
+#search-area, #searchbtn, #refiners, #results, #list, #listPanel, #orgDetailContainer{
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
 
@@ -42,12 +42,24 @@
   /*background-color: #fff;*/
   z-index: 3;
   /* top: 0; */
-  height: 450px;
+  /*height: 450px;*/
+  height: 100%;
   padding:20px;
   box-shadow: 0 5px 10px 0px rgba(0,0,0,0.25);
-  transform: translate(0, -450px);
+  /*transform: translate(0, -450px);*/
+  transform: translate(0, 100%);
+background-color: #fff;
 
 }
+
+.search-mode #listPanel{
+  /*transform: translate3d(0, 100%, 0);*/
+}
+
+.search-mode #search-area{
+  transform: translate(0, 0);
+}
+
 
 #searchOptionsBtn{
   position: absolute;
@@ -56,61 +68,44 @@
   z-index: 10;
 }
 
-#resultPanel {
-  z-index: 2;
+
+#tabsListOrMapView{
   position: absolute;
-  box-shadow: 5px 0px 10px 0px rgba(0,0,0,0.25);
-  /*top:2.5%;
-  height: 95%;*/
-  top:0;
-  height: 100%;
+  bottom: 0;
   background-color: #fff;
-  background-color: hsla(100, 100%, 100%, 0.35);
+  box-shadow: 0px 5px 10px 7px rgba(0,0,0,0.25);
+
 }
 
-
-.search-mode #resultPanel{
-  transform: translate3d(0, 100%, 0);
+#results{
+  width: 200%;
+  float: left;
 }
-
-.search-mode #search-area{
-  transform: translate(0, 0);
-}
-
 
 #orgResult{
-  z-index: 2;
-  position: absolute;
   overflow: scroll;
-  left: 5px;
-  right: 5px;
-  top: 5px;
-  bottom: 5px;
-  padding-top: 10px;
-  /*background-color: #fff;*/
+  padding: 0 15px;
 }
-#orgResultDetail{
-  /*background-color: #fff;*/
-  width: 290%;
-  left:-190%;
-  /*height:600px;*/
-  top: 0;
-  bottom: 0;
-  /*left: 25%;*/
-  overflow: scroll;
-  position: absolute;
-  z-index: 1;
-  padding: 50px 10px 10px 10px;
-  margin-bottom: 10px;
-  -webkit-transition: all ease-out 0.2s;
-  transition: all ease-out 0.2s;
-  box-shadow: 5px 0px 10px 0px rgba(0,0,0,0.25);
-  /*display: none;*/
 
+#listPanel{
+  /*overflow: scroll;*/
+      transform: translateX(-100%);
 }
-#orgResultDetail.detail-open{
-  transform: translate(100%, 0);
+#listPanel.active {
+    transform: translateX(0);
 }
+#mapPanel.active {
+    /* left: 0; */
+    transform: translateX(-100%);
+}
+
+
+#mapPanel, #listPanel {
+    transition: all 0.2s ease-in;
+    margin-left: 0;
+    margin-right: 0;
+}
+
 
 
 #results #orgResult > .panel{
@@ -118,42 +113,65 @@
   transition: all ease-in-out 0.5s;
 
 }
-#results .selected{
+/*#results .selected{
   height: 100%;
 top: 0;
 position: absolute;
 width: 100%;
-}
+}*/
 
 
 #searchbtn {
     transition: all ease-in-out 0.2s;
     position: absolute;
-    right: 30px;
-     top: 72px;
+    right: 20px;
+     /*top: 72px;*/
+     bottom: 20px;
     /*top: 0;*/
     /*bottom: -30px;*/
     z-index: 999;
+    /*min-width: 20px;
+    width: 30px;
+    height: 30px;*/
 }
 .search-mode #searchbtn  {
     /*transform: translate(-20px, 200px) scale(1.5);*/
-     transform: translate(0, 450px);
+     /*transform: translate(0, 450px);*/
+
 }
 
 button#searchbtn:focus, button#searchbtn:hover {
-     transform: scale(1.2) rotate(-15deg);
+     /*transform: scale(1.2) rotate(-15deg);*/
+     transform: rotate(-15deg);
 
 }
 
 #searchbtn svg{
   width:60%;
+  height: 60%;
   /*height: 30px;*/
-  margin-top: 5%;
+  margin-top: 15%;
 }
 
 
 #orgSearch >>> .map-container{
   height: 100%;
+}
+
+#orgResultDetail{
+  /*position: absolute;*/
+    /* top: 0; */
+    left: 0;
+    width: 100%;
+    top: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in;
+    padding: 0 15px;
+    overflow: scroll;
+}
+#orgResultDetail.detail-open {
+    /* left: 0; */
+    transform: translate(0, -100%);
 }
 
 

@@ -1,11 +1,11 @@
-<div class="panel panel-default" *ngIf="organisation">
-  <div class="panel-heading">
+<div class="panel panel-default">
+  <div class="panel-heading" *ngIf="organisation">
     <button type="button" class="close pull-right" aria-label="Close" (click)="deselect()"><span aria-hidden="true">&times;</span></button>
     <h3 class="panel-title">{{organisation.Name}}</h3>
     <!-- <button class="btn btn-default text-right" type="button"(click)="goBack()">Back to Results</button> -->
     <!-- <button class="btn btn-default text-right" type="button"(click)="deselect()">close</button> -->
   </div>
-  <div class="panel-body ">
+  <div class="panel-body " *ngIf="organisation">
 
     <div class="" id="leftSidePanelDetails">
 
