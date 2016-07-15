@@ -1,7 +1,17 @@
 <div class="panel panel-default">
   <div class="panel-heading" *ngIf="organisation">
-    <button type="button" class="close pull-right" aria-label="Close" (click)="deselect()"><span aria-hidden="true">&times;</span></button>
-    <h3 class="panel-title">{{organisation.Name}}</h3>
+    <button type="button" id="close-details" class="close pull-left" aria-label="Close" (click)="deselect()">
+      <!-- <span aria-hidden="true">&times;</span> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#999999">
+      <polygon fill="none" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="  18,42 32,42 25,49 "/>
+      <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="15" x2="48" y2="15"/>
+      <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="25" x2="48" y2="25"/>
+      <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="25" x2="48" y2="25"/>
+      <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="35" x2="48" y2="35"/>
+      <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="35" x2="48" y2="35"/>
+      </svg>
+    </button>
+    <h3 class="">{{organisation.Name}}</h3>
     <!-- <button class="btn btn-default text-right" type="button"(click)="goBack()">Back to Results</button> -->
     <!-- <button class="btn btn-default text-right" type="button"(click)="deselect()">close</button> -->
   </div>
@@ -26,18 +36,18 @@
 
         <div id="detailsPanel" class="row">
 
-          <div class="col-md-6 list-group">
+          <div class=" list-group">
             <!-- <li class="list-group-item">Category: {{organisation.Category}}</li> -->
-            <a class="list-group-item"><h5>Email</h5>{{organisation.Email}}</a>
-            <a class="list-group-item"><h5>Phone</h5>{{organisation.Phone}}</a>
-            <a class="list-group-item"><h5>Alt. Phone</h5>{{organisation.AltTelephoneNumber}}</a>
-          </div>
-          <div class="col-md-6 list-group">
-            <a class="list-group-item"><h5>Fax</h5>{{organisation.Fax}}</a>
-            <a class="list-group-item"><h5>Website</h5>{{organisation.Website}}</a>
+            <a class="col-sm-6 list-group-item"><h5>Email</h5>{{organisation.Email}}</a>
+            <a class="col-sm-6 list-group-item"><h5>Phone</h5>{{organisation.Phone}}</a>
+            <a class="col-sm-6 list-group-item"><h5>Alt. Phone</h5>{{organisation.AltTelephoneNumber}}</a>
+          <!-- </div>
+          <div class="col-md-6 list-group"> -->
+            <a class="col-sm-6 list-group-item"><h5>Fax</h5>{{organisation.Fax}}</a>
+            <a class="col-sm-6 list-group-item"><h5>Website</h5>{{organisation.Website}}</a>
             <!-- <li class="list-group-item">Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li> -->
             <!-- <a class="list-group-item"><h5>Distance</h5>{{organisation.Distance}}</a> -->
-            <a class="list-group-item"><h5>Business Hours</h5>{{organisation.BusinessHours}}</a>
+            <a class="col-sm-6 list-group-item"><h5>Business Hours</h5>{{organisation.BusinessHours}}</a>
           </div>
         </div>
             <hr>

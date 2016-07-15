@@ -100,14 +100,15 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
       let windowHeight = this.elementRef.nativeElement.ownerDocument.defaultView.innerHeight;
       let headerHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('header')[0].offsetHeight;
       let footerHeight = this.elementRef.nativeElement.ownerDocument.getElementById('footer').offsetHeight;
-      let tabsHeight = this.elementRef.nativeElement.ownerDocument.getElementById('tabsListOrMapView').offsetHeight;
+      let tabsHeight = this.elementRef.nativeElement.ownerDocument.getElementById('tabs-list-map-view').offsetHeight;
 
 
 
       console.log('current height=' + currentHeight + ' : window=' + windowHeight + ' : header=' + headerHeight  + ' : tabs=' + tabsHeight + ' : footer=' + footerHeight);
 
       // this.elementRef.nativeElement.getElementsByTagName('div')[0].style.height = windowHeight - headerHeight - footerHeight;
-      this.height = windowHeight - headerHeight - tabsHeight - footerHeight;
+      // this.height = windowHeight - headerHeight - tabsHeight - footerHeight;
+      this.height = windowHeight - headerHeight - footerHeight;
      //collapsable only if the contents make container exceed the max height
       // if (currentHeight > this.maxHeight) {
       //     this.isCollapsed = true;

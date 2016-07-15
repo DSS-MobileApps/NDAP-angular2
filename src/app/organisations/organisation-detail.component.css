@@ -1,5 +1,5 @@
 #mapitem {
-    height: 200px;
+    height: 100px;
 }
 .my-organisation-detail {
         height: 50vh;
@@ -24,6 +24,19 @@
         /*transform: translate(-100%,0);*/
     }
 
+#leftSidePanelDetails .list-group-item{
+  border:0;
+}
+
+#close-details{
+  margin: 15px 10px 0 0;
+  opacity: 1;
+}
+#close-details svg{
+  width: 30px;
+}
+
+
 /*.scrollable{
   height: 100%;
 }
@@ -32,3 +45,21 @@
 #leftSidePanelDetails{
   overflow: scroll;
 }*/
+
+/*BS3 */
+@media(max-width:767px){
+}
+
+/* Small devices (tablets, 768px and up) */
+@media(min-width:768px){
+
+  #mapitem {
+      height: 200px;
+  }
+}
+/* Medium devices (desktops, 992px and up) */
+@media(min-width:992px){
+
+}
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1200px){}

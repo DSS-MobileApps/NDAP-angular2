@@ -1,7 +1,6 @@
+<div id="org-search-container"  [style.height.px]="height" [class.has-results]="hasOrganisations" [class.search-mode]="searchMode" [class.detail-open]="selectedOrganisation != null">
 
-<div id="orgSearch" [class.has-results]="hasOrganisations" [class.search-mode]="searchMode" [class.detail-open]="selectedOrganisation != null">
-
-  <button (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="searchbtn" data-upgraded=",MaterialButton,MaterialRipple">
+  <button id="searchbtn" (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" data-upgraded=",MaterialButton,MaterialRipple">
               <!-- <i class="material-icons" role="presentation">search</i> -->
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#ffffff">
 
@@ -12,66 +11,84 @@
             <!-- <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span> -->
       </button>
 
-  <!-- Search options -->
-  <div class="" id="search-area">
-  <!-- <div class="col-md-3"> -->
-      <search-options></search-options>
-  <!-- </div> -->
-  <div class="opaque"></div>
+
+  <div id="org-search">
+
+
+
+    <!-- Search options -->
+  <div class="row" id="search-area" [style.height.px]="height">
+    <div class="col-xs-12">
+        <search-options></search-options>
+    </div>
+    <div class="opaque"></div>
   </div>
 
 
-<div class="row">
+  <div class="row" id="results"  [style.height.px]="height">
 
 
 
-    <div class="blurry" id="results" >
+      <!-- <div class="blurry"> -->
 
 
 
+        <div id="list-panel"  role="tabpanel" class="col-xs-6 col-sm-3 active">
+          <div id="org-result" (window:resize)="onResize($event)">
 
-      <div id="listPanel"  role="tabpanel" class="col-xs-6 col-sm-3 active">
-        <div id="orgResult" (window:resize)="onResize($event)" [style.height.px]="height">
 
-
-            <p *ngIf="!organisations" >Loading...</p>
-            <refiner-options></refiner-options>
-            <org-list [organisations]="organisations"
-              [selectedOrgId]="selectedOrgId"
-              (onSelectionChanged)="onSelect($event)"></org-list>
-    <!--
-            <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
-            <h5>{{organisation.Name}}</h5>
-            <p>{{organisation.Suburb}}</p>
-            </button>-->
-            <!-- <div class="opaque"></div> -->
+              <p *ngIf="!organisations" >Loading...</p>
+              <refiner-options></refiner-options>
+              <org-list [organisations]="organisations"
+                [selectedOrgId]="selectedOrgId"
+                (onSelectionChanged)="onSelect($event)"></org-list>
+      <!--
+              <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
+              <h5>{{organisation.Name}}</h5>
+              <p>{{organisation.Suburb}}</p>
+              </button>-->
+              <!-- <div class="opaque"></div> -->
+          </div>
         </div>
-      </div>
-      <div id="mapPanel" role="tabpanel" class="col-xs-6 col-sm-12" [style.height.px]="height">
-        <map-component>LOADING MAP...</map-component>
+        <div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-9" >
+          <map-component>LOADING MAP...</map-component>
+        </div>
+      <!-- </div> -->
+
+
+
+
+
+    </div>
+
+
+    <div class="row"  id="result-detail" [style.height.px]="height">
+      <div class="col-xs-12" [class.detail-open]="selectedOrganisation != null"  > <!-- @selectedState="selectedOrganisation != null" -->
+          <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div id="orgResultDetail" [style.height.px]="height" class="" [class.detail-open]="selectedOrganisation != null"  > <!-- @selectedState="selectedOrganisation != null" -->
-        <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
-    </div>
-  </div>
 
-  <!-- Tabs for the Mobile View -->
-  <div class="visible-xs col-xs-12" id="tabsListOrMapView">
-      <ul class="nav nav-tabs text-center" role="tablist">
-        <!-- <li class="" role="presentation">
-            <a href="#search-area" aria-controls="search-area" role="tab" data-toggle="tab">Search</a>
-        </li> -->
-          <li class="active" role="presentation">
-              <a href="#listPanel" aria-controls="listPanel" role="tab" data-toggle="tab">List</a>
-          </li>
 
-          <li class="" role="presentation">
-              <a href="#mapPanel" aria-controls="mapPanel" role="tab" data-toggle="tab">Map</a>
-          </li>
-      </ul>
+
+
   </div>
 
+
+                    <!-- Tabs for the Mobile View -->
+                    <div class="visible-xs col-xs-12" id="tabs-list-map-view">
+                      <!-- <div class=""> -->
+                          <ul class="nav nav-tabs text-center" role="tablist">
+                            <!-- <li class="" role="presentation">
+                                <a href="#search-area" aria-controls="search-area" role="tab" data-toggle="tab">Search</a>
+                            </li> -->
+                              <li class="active" role="presentation">
+                                  <a href="#list-panel" aria-controls="list-panel" role="tab" data-toggle="tab">List</a>
+                              </li>
+
+                              <li class="" role="presentation">
+                                  <a href="#map-panel" aria-controls="map-panel" role="tab" data-toggle="tab">Map</a>
+                              </li>
+                          </ul>
+                      <!-- </div> -->
+                    </div>
 </div>
