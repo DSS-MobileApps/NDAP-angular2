@@ -6,8 +6,10 @@ import { SearchLocationComponent } from './search-location/search-location.compo
 import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
 import { SearchStateComponent } from './search-state/search-state.component';
 
-// import { ProviderType } from './search-categories/provider-type';
+import { ProviderType } from './search-categories/provider-type';
 // import { StateType } from './../shared/state-type';
+
+// import {ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, ProviderType} from './index';
 
 import { OrganisationService } from '../organisations/organisation.service'
 
@@ -17,7 +19,6 @@ import { OrganisationService } from '../organisations/organisation.service'
   templateUrl: 'search.component.html',
   styleUrls: ['search.component.css'],
   directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent]
-  // templateUrl: 'provider-types.component.html',
 })
 
 export class SearchComponent {
@@ -30,9 +31,9 @@ export class SearchComponent {
     private organisationService: OrganisationService
   ) {}
 
-  // onSelectedProviderType (selectedProviderType: ProviderType) {
-  //   this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
-  // }
+  onSelectedProviderType (selectedProviderType: ProviderType) {
+    this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
+  }
 
   onSelectedRadius (radius) {
     this.organisationService.searchOrgList('byRadius', radius, undefined);

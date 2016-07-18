@@ -18,11 +18,17 @@ export class OrganisationService {
   selectedOrganisation = new Subject<Organisation>();
   selectedOrganisation$ = this.selectedOrganisation.asObservable();
 
+  private dataStore: {  // This is where we will store our data in memory
+      organisations: Organisation[]
+    };
+
   updateSelectedOrganisation (selectedOrganisation){
     this.selectedOrganisation.next(selectedOrganisation);
   }
 
-  constructor (private http: Http, @Inject('API_URL') private apiUrl: string) {}
+  constructor (private http: Http, @Inject('API_URL') private apiUrl: string) {
+      this.dataStore = { organisations: [] };
+  }
 
   /*
   *************************************
@@ -90,9 +96,25 @@ export class OrganisationService {
   // TODO - add other methods
 
   // Public Method called to get organisations list
+  refineOrgList(refineField, value) {
+    console.log(refineField, value);
+
+    console.log(this.dataStore.organisations.filter((item) => item.Category === value))
+
+    this.orgListSource.next(
+        this.dataStore.organisations
+        .filter((item) => item.Category === value)
+      );
+
+  }
+
+
+
+  // Public Method called to get organisations list
   searchOrgList(searchType, value1, value2) {
     this.getOrganisations(searchType, value1, value2).subscribe(
       result => {
+        this.dataStore.organisations = result;
         this.orgListSource.next(result);
         this.selectedOrganisation.next(null);
       }
@@ -104,7 +126,8 @@ export class OrganisationService {
 
     case "byProviderType":
       return this.getJsonFromAPI(
-        this.getOrganisationsFilteredByTypeUrlA
+        this.apiUrl
+        + this.getOrganisationsFilteredByTypeUrlA
         + value1.Code
         + this.getOrganisationsFilteredByTypeUrlB);
 

@@ -17,7 +17,7 @@ export class ProviderTypesComponent implements OnInit {
   selectedProviderType: ProviderType;
 
   // Output that a provider type has been selected
-  @Output() onSelectedProviderType = new EventEmitter<ProviderType>();
+  @Output() onSelectedProviderType = new EventEmitter<any>();
 
   constructor(
     private router: Router,
@@ -40,8 +40,9 @@ export class ProviderTypesComponent implements OnInit {
 
   // When a provider type is selected, tell the org list to filter by the type selected
   // This event is captured through the organisation.component html template
-  onSelect(providerType: ProviderType) {
+  onSelect(providerType) {
     // emit the provider value e.g. "All Disability"
+    console.log(providerType);
     this.onSelectedProviderType.emit(providerType);
   }
 

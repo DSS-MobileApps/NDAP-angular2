@@ -6,8 +6,11 @@ import { SearchLocationComponent } from './search-location/search-location.compo
 import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
 import { SearchStateComponent } from './search-state/search-state.component';
 
-// import { ProviderType } from './search-categories/provider-type';
+import { ProviderType } from './search-categories/provider-type';
 // import { StateType } from './../shared/state-type';
+
+// import {ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, ProviderType} from './index';
+
 
 import { OrganisationService } from '../organisations/organisation.service'
 
@@ -29,9 +32,10 @@ export class RefinerComponent {
     private organisationService: OrganisationService
   ) {}
 
-  // onSelectedProviderType (selectedProviderType: ProviderType) {
-  //   this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
-  // }
+  onRefineProviderType (selectedProviderType: ProviderType) {
+    console.log('filter provider type: ' + selectedProviderType.Value);
+    this.organisationService.refineOrgList('byProviderType', selectedProviderType.Value);
+  }
 
   // onSelectedRadius (radius) {
   //   this.organisationService.searchOrgList('byRadius', radius, undefined);

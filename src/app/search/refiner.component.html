@@ -20,7 +20,7 @@
     <div class="col-xs-12">
       <label for="filterType" class="control-label">Refine:</label>
       <!-- Single button -->
-      <div class="btn-group pull-right">
+      <!-- <div class="btn-group pull-right">
         <button type="button" id="filterType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Provider Type <span class="caret"></span>
         </button>
@@ -31,7 +31,8 @@
           <li><a href="#">Intellectual Disability</a></li>
           <li><a href="#">People with Developmental Disability</a></li>
         </ul>
-      </div>
+      </div> -->
+      <provider-types (onSelectedProviderType)="onRefineProviderType($event)"></provider-types>
     </div>
 
 
