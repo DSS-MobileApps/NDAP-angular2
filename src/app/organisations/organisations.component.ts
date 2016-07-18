@@ -27,21 +27,21 @@ import { OrganisationDetailComponent } from './organisation-detail.component';
    * Then define animations for transitioning between the states,
    * one in each direction
    */
-  animations: [
-    trigger('selectedState', [
-      state('false', style({
-        // backgroundColor: '#eee',
-        // transform: 'translate(-100%, 0)'
-      })),
-      state('true',   style({
-        // backgroundColor: '#cfd8dc',
-        // transform: 'translate(100%, 0)'
-        // transform: 'translate(-33.3%, 0)'
-      })),
-      transition('false <=> true', animate('100ms ease-out')),
-      // transition('active => inactive', animate('100ms ease-out'))
-    ])
-  ]
+  // animations: [
+  //   trigger('selectedState', [
+  //     state('false', style({
+  //       // backgroundColor: '#eee',
+  //       // transform: 'translate(-100%, 0)'
+  //     })),
+  //     state('true',   style({
+  //       // backgroundColor: '#cfd8dc',
+  //       // transform: 'translate(100%, 0)'
+  //       // transform: 'translate(-33.3%, 0)'
+  //     })),
+  //     transition('false <=> true', animate('100ms ease-out')),
+  //     // transition('active => inactive', animate('100ms ease-out'))
+  //   ])
+  // ]
 
 })
 
