@@ -16,6 +16,7 @@
   #searchbtn {
       right: 20px;
        top: 72px;
+       bottom:auto;
        bottom: initial;
   }
   .search-mode #searchbtn  {
@@ -23,6 +24,7 @@
   }
 
   #results{
+    width: auto;
     width: initial;
     /*float: none;*/
   }
