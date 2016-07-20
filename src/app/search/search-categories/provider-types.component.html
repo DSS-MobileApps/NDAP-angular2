@@ -9,9 +9,9 @@
   <button type="button" id="filterType" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Provider Type <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">All</a></li>
-    <li role="separator" class="divider"></li>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <!-- <li><a href="#">All</a></li>
+    <li role="separator" class="divider"></li> -->
     <li *ngFor="let providerType of providerTypes">
       <a (click)="onSelect(providerType)">{{providerType.Value}}</a>
     </li>

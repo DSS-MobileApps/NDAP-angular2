@@ -1,27 +1,36 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input  } from '@angular/core';
-// import { Router, OnActivate, RouteSegment } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { MapService } from '../map/map.service';
 import { Organisation } from './organisation';
 import { OrganisationService } from './organisation.service';
+import { EmailLink, PhoneLink, CommaSplitList, WebLink } from '../shared/index';
 
 @Component({
   moduleId: module.id,
   selector: 'organisation-detail',
   styleUrls: ['organisation-detail.component.css'],
   templateUrl: 'organisation-detail.component.html',
+  pipes: [EmailLink, PhoneLink, CommaSplitList, WebLink],
   host: {'class' : 'ng-animate orgDetailContainer'}
 })
 
 export class OrganisationDetailComponent implements AfterViewInit  {
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('mapdetail') mapElement: ElementRef;
   @Input() organisation: Organisation;
+  private sub: any;
 
   constructor(
-    // private router: Router,
+    private router: Router,
+    private route: ActivatedRoute,
     private organisationService: OrganisationService,
     private mapService: MapService
   ) {
+  }
+
+
+  ngOnInit() {
+
   }
 
   getOrganisation(organisation: Organisation){
@@ -40,19 +49,21 @@ export class OrganisationDetailComponent implements AfterViewInit  {
     });
   }
 
-  // routerOnActivate(curr: RouteSegment): void {
-  //
-  //   if (!this.organisation){
-  //     // Grab the current ID from the URL
-  //     let id = +curr.getParam('id');
-  //
-  //     // Set organisation to the one returned
-  //     this.getOrganisationById(id);
-  //   }
-  // }
+
 
   ngAfterViewInit() {
     // this.initMap();
+    this.sub = this.route
+      .params
+      .subscribe(params => {
+        let id = +params['id'];
+        if (id > 0){
+          console.log('id is ' + id);
+          // Set organisation to the one returned
+          this.getOrganisationById(id);
+        }
+      });
+
     this.organisationService.selectedOrganisation$
       .subscribe(
         selectedOrganisation => this.getOrganisation(selectedOrganisation),

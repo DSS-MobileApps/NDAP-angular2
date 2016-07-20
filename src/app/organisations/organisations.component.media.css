@@ -20,7 +20,7 @@
        bottom: initial;
   }
   .search-mode #searchbtn  {
-       transform: translate(0, 460px);
+       /*transform: translate(0, 460px);*/
   }
 
   #results{

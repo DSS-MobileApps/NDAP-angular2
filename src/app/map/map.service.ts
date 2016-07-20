@@ -17,6 +17,19 @@ export class MapService {
   private areaMarkers = Object.create(null);
   markerSelected$ = this.markerSelectedSource.asObservable();
 
+  private mapProp = {
+        // center: new google.maps.LatLng(51.508742,-0.120850),
+        zoom:7,
+        panControl:false,
+        zoomControl:true,
+        mapTypeControl:false,
+        scaleControl:false,
+        streetViewControl:false,
+        overviewMapControl:false,
+        rotateControl:false,
+        // mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
   constructor(@Inject(DOCUMENT) private document: Document, @Inject('MAPS_API_KEY') private apiKey: string, private zone: NgZone) {
     //retrieve apikey
     this.loadAPI();
@@ -24,28 +37,16 @@ export class MapService {
 
   createAreaMap(mapDomElement: any, data: NDAPMarker[]) {
 
-    var mapProp = {
-      // center: new google.maps.LatLng(51.508742,-0.120850),
-      zoom:7,
-      panControl:false,
-      zoomControl:true,
-      mapTypeControl:false,
-      scaleControl:false,
-      streetViewControl:false,
-      overviewMapControl:false,
-      rotateControl:false,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
 
 
     this.areaMarkers = Object.create(null);
-    this.areaMap = new google.maps.Map(mapDomElement, mapProp);
+    this.areaMap = new google.maps.Map(mapDomElement, this.mapProp);
     let bounds = this.addAreaMarkers(this.areaMap, data);
     this.areaMap.fitBounds(bounds);
   }
 
   createDetailMap(mapDomElement: any, data: NDAPMarker) {
-    this.detailMap = new google.maps.Map(mapDomElement);
+    this.detailMap = new google.maps.Map(mapDomElement, this.mapProp);
     let bounds = this.addMarker(this.detailMap, data);
     let latLng = new google.maps.LatLng(data.Lat, data.Lng);
     this.detailMap.setCenter(latLng);

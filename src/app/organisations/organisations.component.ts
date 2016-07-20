@@ -11,6 +11,8 @@ import { SearchComponent } from '../search/search.component';
 import { RefinerComponent } from '../search/refiner.component';
 import { MapComponent, MapService } from '../map/index';
 
+import {RemoveSpaces} from '../shared/';
+
 import { OrganisationDetailComponent } from './organisation-detail.component';
 
 
@@ -21,6 +23,7 @@ import { OrganisationDetailComponent } from './organisation-detail.component';
   styleUrls: ['organisations.component.css',
             'organisations.component.media.css'],
   directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent ],
+
   /**
    * Define two states, "inactive" and "active", and the end
    * styles that apply whenever the element is in those states.

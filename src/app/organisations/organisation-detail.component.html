@@ -2,25 +2,26 @@
   <div class="panel-heading" *ngIf="organisation">
     <button type="button" id="close-details" class="close pull-left" aria-label="Close" (click)="deselect()">
       <!-- <span aria-hidden="true">&times;</span> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#999999">
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#999999">
       <polygon fill="none" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="  32,8 18,8 25,1 "/>
       <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="15" x2="48" y2="15"/>
       <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="25" x2="48" y2="25"/>
       <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="25" x2="48" y2="25"/>
       <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="35" x2="48" y2="35"/>
       <line fill="none" stroke="#999999" stroke-width="2" stroke-linejoin="round" stroke-miterlimit="10" x1="2" y1="35" x2="48" y2="35"/>
-      </svg>
+      </svg> -->
+      <span class="lnr lnr-chevron-up"></span>
     </button>
     <h3 class="">{{organisation.Name}}</h3>
     <!-- <button class="btn btn-default text-right" type="button"(click)="goBack()">Back to Results</button> -->
     <!-- <button class="btn btn-default text-right" type="button"(click)="deselect()">close</button> -->
   </div>
-  <div class="panel-body " *ngIf="organisation">
+  <div class="panel-body ">
 
     <div class="" id="leftSidePanelDetails">
 
     <div id="mapitemcontainer">
-            <div ref-map id="mapitem" style="position: relative; overflow: hidden; transform: translateZ(0px); background-color: rgb(229, 227, 223);"></div>
+            <div ref-mapdetail id="mapitem"></div>
             <!-- <div id="expand-map">
                 <a class="btn btn-xs btn-default" data-bind="click: $root.expandDetailMap">
                     <span class="fa-stack">
@@ -34,44 +35,49 @@
         <!-- <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails"> -->
         <!-- <hr> -->
 
-        <div id="detailsPanel" class="row">
+        <div id="detailsPanel" *ngIf="organisation" class="row">
 
-          <div class=" list-group">
+          <div class=" list-group contact">
             <!-- <li class="list-group-item">Category: {{organisation.Category}}</li> -->
-            <a class="col-sm-6 list-group-item"><h5>Email</h5>{{organisation.Email}}</a>
-            <a class="col-sm-6 list-group-item"><h5>Phone</h5>{{organisation.Phone}}</a>
-            <a class="col-sm-6 list-group-item"><h5>Alt. Phone</h5>{{organisation.AltTelephoneNumber}}</a>
-          <!-- </div>
-          <div class="col-md-6 list-group"> -->
-            <a class="col-sm-6 list-group-item"><h5>Fax</h5>{{organisation.Fax}}</a>
-            <a class="col-sm-6 list-group-item"><h5>Website</h5>{{organisation.Website}}</a>
+            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-phone-handset"></span>Phone</h5><a  href="{{organisation.Phone | phoneLink}}">{{organisation.Phone}}</a></li>
+            <li class="col-sm-6 col-md-4 list-group-item" ><h5><span class="lnr lnr-envelope"></span>Email</h5><a href="{{organisation.Email | emailLink}}">{{organisation.Email}}</a></li>
+            <div class="visible-sm-block clearfix"></div>
+            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-earth"></span>Website</h5><a href="{{organisation.Website | webLink}}" target="_blank">{{organisation.Website}}</a></li>
+            <div class="hidden-sm clearfix"></div>
+            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-clock"></span>Business Hours</h5>{{organisation.BusinessHours}}</li>
+          <div class="visible-sm-block clearfix"></div>
+          <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-phone"></span>Alt. Phone</h5><a href="{{organisation.AltTelephoneNumber | phoneLink}}">{{organisation.AltTelephoneNumber}}</a></li>
+            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-printer"></span>Fax</h5>{{organisation.Fax}}</li>
             <!-- <li class="list-group-item">Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li> -->
             <!-- <a class="list-group-item"><h5>Distance</h5>{{organisation.Distance}}</a> -->
-            <a class="col-sm-6 list-group-item"><h5>Business Hours</h5>{{organisation.BusinessHours}}</a>
           </div>
-        </div>
-            <hr>
+            <hr class="list-group col-xs-12">
             <ul class="list-group">
-              <a class="list-group-item">
-                <h5>Address</h5>
-                <p>{{organisation.StreetAddress}}<br/>{{organisation.Suburb}} {{organisation.Postcode}}<br/>{{organisation.State}}</p>
-              </a>
-
-              <li class="list-group-item">
-                <h5>Advocacy Services</h5>
-                <p>{{organisation.FurtherDetails}}</p>
+              <li class="list-group-item col-xs-12 col-sm-6">
+                <h5>
+                  <span class="lnr lnr-map-marker"></span>
+                  Address</h5>
+                <a><span [innerHTML]="organisation.StreetAddress"></span><br/>{{organisation.Suburb}} {{organisation.Postcode}}<br/>{{organisation.State}}</a>
               </li>
-              <li class="list-group-item">
-                <h5>Provider Types</h5>
-                <p>{{organisation.Category}}</p>
+
+              <li class="list-group-item col-xs-12 col-sm-6">
+                <h5><span class="lnr lnr-store"></span>Advocacy Services</h5>
+                <p style="white-space: pre-wrap;">{{organisation.FurtherDetails}}</p>
+              </li>
+
+              <div class="hidden-xs clearfix"></div>
+
+              <li class="list-group-item col-xs-12 col-sm-6">
+                <h5><span class="lnr lnr-tag"></span>Provider Types</h5>
+                <ul [innerHTML]="organisation.Category | commaSplitList"></ul>
               </li>
             <!-- <ul>
                 <li>Lorem ipsum dolor sit amet</li>
                 <li>Consectetur adipiscing elit</li>
                 <li>Integer molestie lorem at massa</li>
             </ul> -->
-            <li class="list-group-item">
-              <h5>Service Areas</h5>
+            <li class="list-group-item col-xs-12 col-sm-6">
+              <h5><span class="lnr lnr-map"></span>Service Areas</h5>
               <p>{{organisation.ServiceAreas}}</p>
             </li>
             <!-- <ul>
@@ -81,5 +87,7 @@
             </ul> -->
           </ul>
         <!-- </div> -->
+      </div>
+
     </div>
 </div>

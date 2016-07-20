@@ -24,6 +24,19 @@
         /*transform: translate(-100%,0);*/
     }
 
+
+  .panel-default {
+        border: 0;
+        border-bottom: 1px solid #eee;
+        box-shadow: none;
+    }
+  .panel-heading{
+      background-color: transparent;
+    }
+.panel-heading h3{
+  display: -webkit-box;
+}
+
 #leftSidePanelDetails .list-group-item{
   border:0;
 }
@@ -36,15 +49,30 @@
   width: 30px;
 }
 
-
-/*.scrollable{
-  height: 100%;
+#mapitem{
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0px);
+  background-color: rgb(229, 227, 223);
+  margin: -15px -15px 0;
 }
 
+.contact .list-group-item h5{
+  /*font-size: 1.2em;*/
+}
+.contact .list-group-item{
+  font-size: 1.2em;
+}
 
-#leftSidePanelDetails{
-  overflow: scroll;
-}*/
+/* Add the following CSS block to your own
+stylesheet. */
+.lnr {
+  color: #666;
+  font-size: 1.2em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
 
 /*BS3 */
 @media(max-width:767px){
