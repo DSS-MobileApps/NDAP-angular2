@@ -79,9 +79,11 @@ export class OrganisationDetailComponent implements AfterViewInit  {
   }
 
   goBack() {
+    // this.router.navigate(['/']);
     window.history.back();
   }
   deselect() {
     this.organisationService.updateSelectedOrganisation(null);
+    this.router.navigate(['/']);
   }
 }

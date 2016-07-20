@@ -131,8 +131,10 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     }
 
   // When an Org is selected from the list, navigate to that record in a detail view
-  onSelectDetailsButton(organisation: Organisation) {
-    this.router.navigate(['/organisation', organisation.Id]);
+  onSelectDetailsButton(selectedOrg: Organisation) {
+    this.organisationService.updateSelectedOrganisation(selectedOrg);
+    this.mapService.selectMarker(selectedOrg.Id.toString());
+    this.router.navigate(['/organisation', selectedOrg.Id]);
     // this.selectedOrganisation = organisation;
   }
 

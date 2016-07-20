@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
 
-import { ProviderType } from '../search/search-categories/provider-type';
+import { ProviderType, Refiner } from '../search/index';
 
 import { Organisation }   from './organisation';
 
@@ -18,8 +18,13 @@ export class OrganisationService {
   selectedOrganisation = new Subject<Organisation>();
   selectedOrganisation$ = this.selectedOrganisation.asObservable();
 
+  // Observable for Organisation Search Results
+  private refinerList = new Subject<Refiner[]>();
+  refinerList$ = this.refinerList.asObservable();
+
   private dataStore: {  // This is where we will store our data in memory
-      organisations: Organisation[]
+      organisations: Organisation[],
+      refiners: Refiner[]
     };
 
   updateSelectedOrganisation (selectedOrganisation){
@@ -27,7 +32,7 @@ export class OrganisationService {
   }
 
   constructor (private http: Http, @Inject('API_URL') private apiUrl: string) {
-      this.dataStore = { organisations: [] };
+      this.dataStore = { organisations: [], refiners: [] };
   }
 
   /*
@@ -95,23 +100,73 @@ export class OrganisationService {
 
   // TODO - add other methods
 
+  replaceRefiner(refineField, value){
+    // if (refine)
+  }
+
   // Public Method called to get organisations list
-  refineOrgList(refineField, value) {
-    console.log(refineField, value);
+  refineOrgList(refineField, value, singleRefiner = false) {
+    console.info(refineField, value);
 
-    console.log(this.dataStore.organisations.filter((item) => item.Category === value))
+    var newRef: Refiner = {type: refineField, value: value, summary: refineField + " refined by " + value};
 
+    if (singleRefiner){
+      this.dataStore.refiners = this.dataStore.refiners
+        .filter((refiner) => refiner.type !== refineField);
+      }
+      // this.dataStore.refiners
+      // .map((refiner) => {
+      //   if (refiner.type === refineField
+      //       && refiner.value !== value)
+      //   {
+      //     refiner.value = value
+      //   }
+      // })
+      this.dataStore.refiners.push(newRef);
+
+
+    console.info(this.dataStore.refiners);
+
+    // console.info(this.dataStore.organisations.filter((item) => item.Category === value))
     this.orgListSource.next(
         this.dataStore.organisations
         .filter((item) => item.Category === value)
       );
 
+      this.refinerList.next(this.dataStore.refiners);
+
   }
 
+  // Public Method called to get organisations list
+  clearRefinerProperty(refineField) {
+
+    this.dataStore.refiners = this.dataStore.refiners
+      .filter((refiner) => refiner.type !== refineField);
+
+
+      console.info(this.dataStore.refiners);
+
+    switch (refineField) {
+
+      case "byProviderType":
+      this.orgListSource.next(
+          this.dataStore.organisations
+          // .filter((item) => item.Category === value)
+        );
+      default:
+    }
+
+    this.refinerList.next(this.dataStore.refiners);
+
+  }
 
 
   // Public Method called to get organisations list
   searchOrgList(searchType, value1, value2) {
+
+    // clear refiners
+    this.dataStore.refiners = [];
+
     this.getOrganisations(searchType, value1, value2).subscribe(
       result => {
         this.dataStore.organisations = result;

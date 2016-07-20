@@ -6,7 +6,7 @@ import { SearchLocationComponent } from './search-location/search-location.compo
 import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
 import { SearchStateComponent } from './search-state/search-state.component';
 
-import { ProviderType } from './search-categories/provider-type';
+import { ProviderType, Refiner } from './index';
 // import { StateType } from './../shared/state-type';
 
 // import {ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, ProviderType} from './index';
@@ -26,15 +26,39 @@ import { OrganisationService } from '../organisations/organisation.service'
 export class RefinerComponent {
   title = 'Refiner Options';
   postCode: number;
+  refiners: Refiner[];
+
 
   constructor(
     private router: Router,
     private organisationService: OrganisationService
   ) {}
 
+  ngOnInit(){
+    this.subscribeToRefiners();
+
+  }
+
+  private subscribeToRefiners() {
+    this.organisationService.refinerList$
+      .subscribe(
+        refiners => this.updateRefiners(refiners),
+        error =>  console.error(<any>error));
+  }
+
+  private updateRefiners(refiners: Refiner[]) {
+    this.refiners = refiners;
+    console.log('refiners updates - Refiner component');
+  }
+
   onRefineProviderType (selectedProviderType: ProviderType) {
-    console.log('filter provider type: ' + selectedProviderType.Value);
-    this.organisationService.refineOrgList('byProviderType', selectedProviderType.Value);
+    if (selectedProviderType != null){
+      console.log('filter provider type: ' + selectedProviderType.Value);
+      this.organisationService.refineOrgList('byProviderType', selectedProviderType.Value, true);
+    }else{
+      console.log('cleared filter provider type');
+      this.organisationService.clearRefinerProperty('byProviderType');
+    }
   }
 
   // onSelectedRadius (radius) {

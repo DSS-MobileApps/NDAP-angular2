@@ -1,0 +1,7 @@
+span.btn-title {
+    max-width: 90%;
+    overflow: auto;
+    display: inline-block;
+    text-overflow: ellipsis;
+        vertical-align: bottom;
+}

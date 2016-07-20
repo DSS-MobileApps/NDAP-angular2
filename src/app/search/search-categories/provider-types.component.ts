@@ -43,6 +43,7 @@ export class ProviderTypesComponent implements OnInit {
   onSelect(providerType) {
     // emit the provider value e.g. "All Disability"
     console.log(providerType);
+    this.selectedProviderType = providerType;
     this.onSelectedProviderType.emit(providerType);
   }
 
