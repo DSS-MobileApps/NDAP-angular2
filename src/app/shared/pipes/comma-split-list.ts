@@ -6,7 +6,7 @@ import {Pipe} from "@angular/core";
 
 export class CommaSplitList{
 	transform(value){
-		if (value.length > 0) {
+		if (value != null && value.length > 0) {
 			var arrayOfStrings = value.split(',').map(element => {
 			  return "<li>" + element.trim() + "</li>";
 			});

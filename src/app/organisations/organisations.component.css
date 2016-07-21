@@ -46,7 +46,7 @@ button#searchbtn:focus, button#searchbtn:hover {
   height: 100%;
 }
 #search-area, #result-detail{
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -61,7 +61,7 @@ button#searchbtn:focus, button#searchbtn:hover {
 }
 
 #list-panel{
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-left: 10px;
   padding-right: 10px;
@@ -81,7 +81,7 @@ button#searchbtn:focus, button#searchbtn:hover {
 }
 
 #result-detail{
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 

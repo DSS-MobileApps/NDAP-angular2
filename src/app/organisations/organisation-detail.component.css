@@ -68,14 +68,21 @@
 stylesheet. */
 .lnr {
   color: #666;
+  vertical-align: middle;
   font-size: 1.2em;
   margin-right: 8px;
-  vertical-align: middle;
 }
 
 
 /*BS3 */
 @media(max-width:767px){
+  .panel-heading h3{
+      font-size: 1.8rem;
+    }
+    .close .lnr{
+      font-size: 1em;
+      margin-right: 0;
+    }
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -84,6 +91,7 @@ stylesheet. */
   #mapitem {
       height: 200px;
   }
+
 }
 /* Medium devices (desktops, 992px and up) */
 @media(min-width:992px){
