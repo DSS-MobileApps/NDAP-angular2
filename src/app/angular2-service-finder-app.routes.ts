@@ -3,6 +3,8 @@ import { provideRouter, RouterConfig }  from '@angular/router';
 import { OrganisationsComponent } from './organisations/organisations.component';
 import { OrganisationDetailComponent } from './organisations/organisation-detail.component';
 
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 
 export const routes: RouterConfig = [
   {
@@ -18,6 +20,17 @@ export const routes: RouterConfig = [
     path: 'organisation/:id',
     component: OrganisationDetailComponent
   },
+
+  {
+    path: 'about',
+    component: AboutComponent
+  },
+
+  {
+    path: 'contact',
+    component: ContactComponent
+  },
+
 
   // Root Url
   {
