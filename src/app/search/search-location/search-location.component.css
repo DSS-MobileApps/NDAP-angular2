@@ -37,7 +37,7 @@
     width: 19px;
 }
 
-.glyphicon.spinning {
+.glyphicon.spinning, .lnr.spinning  {
     animation: spin 1s infinite linear;
     -webkit-animation: spin2 1s infinite linear;
 }

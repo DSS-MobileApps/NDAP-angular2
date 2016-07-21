@@ -4,3 +4,7 @@
 .panel{
   cursor: pointer;
 }
+
+.panel-body a{
+  color:#000;
+}

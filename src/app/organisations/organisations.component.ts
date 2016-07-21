@@ -85,7 +85,7 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     this.subscribeToSelectedOrganisationUpdates();
 
     // Perform a default search for all orgs
-    this.organisationService.searchOrgList('all', undefined, undefined);
+    // this.organisationService.searchOrgList('all', undefined, undefined);
 
     // Subscribe to Selected Org events
 

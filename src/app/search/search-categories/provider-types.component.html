@@ -10,10 +10,10 @@
     <span class="btn-title">{{selectedProviderType?.Value || "Provider Type"}}</span> <span class="caret"></span>
   </button>
   <ul class="dropdown-menu dropdown-menu-right">
-    <li><a (click)="onSelect()">All</a></li>
+    <li><a href="#" (click)="onSelect()">All</a></li>
     <li role="separator" class="divider"></li>
     <li *ngFor="let providerType of providerTypes" [class.active]="providerType === selectedProviderType">
-      <a (click)="onSelect(providerType)">{{providerType.Value}}</a>
+      <a href="#" (click)="onSelect(providerType)">{{providerType.Value}}</a>
     </li>
   </ul>
 </div>

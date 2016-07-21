@@ -17,23 +17,25 @@
 
 
     <!-- Search options -->
-  <div class="row" id="search-area" [style.height.px]="height">
+  <div class="row" id="search-area" [style.height.px]="height" [attr.aria-hidden]="!searchMode">
     <div class="col-xs-12">
+      <h2 class="sr-only">Search options</h2>
         <search-options></search-options>
     </div>
     <div class="opaque"></div>
   </div>
 
 
-  <div class="row" id="results"  [style.height.px]="height">
+  <div class="row" id="results"  [style.height.px]="height" [attr.aria-hidden]="searchMode">
 
 
-
+    <h2 class="sr-only">Search results</h2>
       <!-- <div class="blurry"> -->
 
 
 
         <div id="list-panel"  role="tabpanel" class="col-xs-6 col-sm-4 col-lg-3 active">
+          <h3 class="sr-only">List view</h3>
           <div id="org-result" (window:resize)="onResize($event)">
 
 
@@ -50,7 +52,8 @@
               <!-- <div class="opaque"></div> -->
           </div>
         </div>
-        <div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-8 col-lg-9" >
+        <div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-8 col-lg-9" aria-hidden="true">
+          <h3 class="sr-only">Map view</h3>
           <map-component>LOADING MAP...</map-component>
         </div>
       <!-- </div> -->
@@ -62,7 +65,7 @@
     </div>
 
 
-    <div class="row"  id="result-detail" [style.height.px]="height">
+    <div class="row"  id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
       <div class="col-xs-12" [class.detail-open]="selectedOrganisation != null"  > <!-- @selectedState="selectedOrganisation != null" -->
           <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
       </div>
