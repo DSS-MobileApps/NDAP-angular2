@@ -103,7 +103,7 @@ export class MapService {
     if (this.infoWindow) {
       this.infoWindow.close();
     }
-    let content = '<div class="infowindow-html"><a class="col-xs-11 col-xs-push-1" >' + marker.get('orgName') + '</a><a class="btn btn-link btn-xs col-xs-1 col-xs-pull-11"><i class="fa fa-info-circle fa-lg"></i></a></div>';
+    let content = '<div class="infowindow-html"><h4><a href="/organisation/' + marker.get('orgId') + '" class="" >' + marker.get('orgName') + '</a></h4><!--<a class="btn btn-link btn-xs col-xs-1 col-xs-pull-11"><span class="lnr lnr-apartment"></span></a>--></div>';
     this.infoWindow = new google.maps.InfoWindow({
       content: content,
       maxWidth: 200
