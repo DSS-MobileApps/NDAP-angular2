@@ -1,1 +1,1 @@
-export { SearchStateComponent } from './search-state.component';
+export * from './search-state.component';

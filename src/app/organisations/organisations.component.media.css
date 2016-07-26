@@ -3,6 +3,10 @@
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 @media(max-width:767px){
+  /* show search toggle button on search mode if you already have a set of results */
+  .search-mode:not(.has-results)  #searchbtn{
+    opacity: 0;
+  }
 }
 
 /* Small devices (tablets, 768px and up) */

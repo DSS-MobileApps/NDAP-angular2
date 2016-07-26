@@ -1,16 +1,22 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ProviderTypesComponent } from './search-categories/provider-types.component';
+import { ProviderTypesComponent } from './search-categories/index';
 import { SearchLocationComponent } from './search-location/search-location.component';
 import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
 import { SearchStateComponent } from './search-state/search-state.component';
 
-import { ProviderType, Refiner } from './index';
+// import { ProviderType, Refiner } from './index';
 // import { StateType } from './../shared/state-type';
 
-// import {ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, ProviderType} from './index';
-
+import {
+          // ProviderTypesComponent,
+          // SearchLocationComponent,
+          // SearchKeywordComponent,
+          // SearchStateComponent,
+          ProviderType,
+          Refiner
+        } from './index';
 
 import { OrganisationService } from '../organisations/organisation.service'
 

@@ -99,6 +99,14 @@ export class OrganisationService {
   */
 
   // TODO - add other methods
+  // Public Method called to get organisations list
+  getCachedList() {
+    console.info(this.dataStore.organisations);
+    this.orgListSource.next(
+        this.dataStore.organisations
+      );
+  }
+
 
   replaceRefiner(refineField, value){
     // if (refine)
@@ -172,6 +180,7 @@ export class OrganisationService {
         this.dataStore.organisations = result;
         this.orgListSource.next(result);
         this.selectedOrganisation.next(null);
+        this.refinerList.next(this.dataStore.refiners);
       }
     )
   }

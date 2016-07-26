@@ -40,9 +40,10 @@ const barrels: string[] = [
   // App specific barrels.
   'app',
   'app/shared',
-  'app/search-location',
-  'app/search-keyword',
-  'app/search-state',
+  'app/search/search-location',
+  'app/search/search-keyword',
+  'app/search/search-state',
+  'app/search/search-summary',
   /** @cli-barrel */
 ];
 

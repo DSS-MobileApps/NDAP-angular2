@@ -1,19 +1,19 @@
 import { Component, OnInit, transition, animate, style, state, trigger, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProviderType } from '../search/search-categories/provider-type';
+// import { ProviderType } from '../search/search-categories/provider-type';
 
 import { Organisation } from './organisation';
-import { OrganisationListComponent } from './organisation-list.component';
-import { OrganisationService } from './organisation.service';
+import { OrganisationListComponent, OrganisationDetailComponent, OrganisationService } from './index';
+// import { OrganisationService } from './organisation.service';
 // import { OrganisationSummaryComponent } from './organisation-summary.component';
 import { GeolocationService } from '../shared/geolocation.service';
-import { SearchComponent } from '../search/search.component';
-import { RefinerComponent } from '../search/refiner.component';
+import { ProviderType, SearchComponent, SearchSummaryComponent, RefinerComponent } from '../search/index';
+// import { RefinerComponent } from '../search/refiner.component';
 import { MapComponent, MapService } from '../map/index';
 
 import {RemoveSpaces} from '../shared/';
 
-import { OrganisationDetailComponent } from './organisation-detail.component';
+// import { OrganisationDetailComponent } from './organisation-detail.component';
 
 
 @Component({
@@ -22,7 +22,7 @@ import { OrganisationDetailComponent } from './organisation-detail.component';
   templateUrl: 'organisations.component.html',
   styleUrls: ['organisations.component.css',
             'organisations.component.media.css'],
-  directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent ],
+  directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent, SearchSummaryComponent ],
 
   /**
    * Define two states, "inactive" and "active", and the end
@@ -86,6 +86,8 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
     // Perform a default search for all orgs
     // this.organisationService.searchOrgList('all', undefined, undefined);
+
+    // this.organisationService.getCachedList();
 
     // Subscribe to Selected Org events
 

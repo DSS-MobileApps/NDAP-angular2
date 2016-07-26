@@ -30,8 +30,8 @@
     <!-- <div class="btn-group"> -->
         <button type="button" class="btn btn-default btn-lg btn-block has-spinner" [class.active]="locatingPosition"
         (click)="onGetCurrentLocation()">
-          <span *ngIf="locatingPosition" class="btn-spinner"><i class='glyphicon glyphicon-refresh spinning'></i> </span>
-          <span *ngIf="!locatingPosition"><span class="lnr lnr-map-marker"></span> </span>
+          <span [class.hidden]="!locatingPosition" class="btn-spinner"><i class='glyphicon glyphicon-refresh spinning'></i> </span>
+          <span [class.hidden]="locatingPosition"><span class="lnr lnr-map-marker"></span> </span>
             Search near me
         </button>
         <!-- <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
