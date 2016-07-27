@@ -187,10 +187,21 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
   get hasOrganisations(){
     if (!this.organisations) {
-      return false
+      return false;
     }
+
     return this.organisations.length > 0;
   }
+
+  get hasResults(){
+    if (!this.organisations) {
+      return false;
+    }
+
+    return this.organisations.length > 0;
+  }
+
+
 
   refreshPosition(){
     this._geolocationService.getLocation(this.opts);

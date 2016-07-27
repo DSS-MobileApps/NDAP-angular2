@@ -69,7 +69,11 @@
 
               <li class="list-group-item col-xs-12 col-sm-6">
                 <h5><span class="lnr lnr-tag"></span>Provider Types</h5>
-                <ul [innerHTML]="organisation?.Category | commaSplitList"></ul>
+                <!-- <ul [innerHTML]="organisation?.Category | commaSplitList"></ul> -->
+                <div class="tags">
+                  <span *ngFor="let category of organisation?.Category | commaSplitArray" class="label label-default">{{category}}</span>
+                </div>
+
               </li>
             <!-- <ul>
                 <li>Lorem ipsum dolor sit amet</li>

@@ -120,7 +120,10 @@ button#searchbtn:focus, button#searchbtn:hover {
     border: 0;
     border-bottom: 1px solid #eee;
     box-shadow: none;
+    margin-bottom: 0px;
 }
+
+
 
 #map-panel >>> .infowindow-html h4{
   font-size: 1.2em;

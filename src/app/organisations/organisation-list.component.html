@@ -5,7 +5,10 @@
     </div> -->
     <div class="panel-body" >
         <h4><a href="#">{{organisation.Name}}</a></h4>
-        <p>{{organisation.Suburb}}, {{organisation.Id}}</p>
+        <span class="pull-left"><span class="lnr lnr-map-marker"></span>{{organisation.Suburb}}, {{organisation.Id}}</span>
+        <span *ngFor="let category of organisation.Category | commaSplitArray" class="label label-default pull-right">{{category}}</span>
+
+
     </div>
     <!-- <div class="panel-footer">
         <div class="btn-group listitem-actionbtn">

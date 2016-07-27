@@ -5,10 +5,15 @@
   margin: 10px 0;
 }
 #refiner-zone >>> #filterType {
-  max-width: 22rem;
+  /*max-width: 22rem;*/
+  max-width: 100%;
 }
 #refiner-zone >>> .dropdown-menu>li>a {
     white-space: normal;
     min-width: 22rem;
     margin-bottom: 5px;
+}
+
+#refiner-zone >>> .btn-group {
+  width:100%;
 }

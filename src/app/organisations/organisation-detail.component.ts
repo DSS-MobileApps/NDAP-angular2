@@ -4,14 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MapService } from '../map/map.service';
 import { Organisation } from './organisation';
 import { OrganisationService } from './organisation.service';
-import { EmailLink, PhoneLink, CommaSplitList, WebLink } from '../shared/index';
+import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from '../shared/index';
 
 @Component({
   moduleId: module.id,
   selector: 'organisation-detail',
   styleUrls: ['organisation-detail.component.css'],
   templateUrl: 'organisation-detail.component.html',
-  pipes: [EmailLink, PhoneLink, CommaSplitList, WebLink],
+  pipes: [EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink],
   host: {'class' : 'ng-animate orgDetailContainer'}
 })
 

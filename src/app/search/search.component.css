@@ -15,7 +15,7 @@
 /* Small devices (tablets, 768px and up) */
 @media(min-width:768px){
   .lead{
-    font-size: 30px;
+    font-size: 2.5rem;
   }
 
   .main-title{

@@ -19,26 +19,26 @@ export class SearchSummaryComponent implements OnInit {
 
 
   constructor(
-    private router: Router,
-    private organisationService: OrganisationService
+    // private router: Router,
+    // private organisationService: OrganisationService
   ) {}
 
   ngOnInit(){
-    this.subscribeToRefiners();
+    // this.subscribeToRefiners();
 
   }
 
-  private subscribeToRefiners() {
-    this.organisationService.refinerList$
-      .subscribe(
-        refiners => this.updateRefiners(refiners),
-        error =>  console.error(<any>error));
-  }
-
-  private updateRefiners(refiners: Refiner[]) {
-    this.refiners = refiners;
-    console.log('refiners updates - Summary component');
-  }
+  // private subscribeToRefiners() {
+  //   this.organisationService.refinerList$
+  //     .subscribe(
+  //       refiners => this.updateRefiners(refiners),
+  //       error =>  console.error(<any>error));
+  // }
+  //
+  // private updateRefiners(refiners: Refiner[]) {
+  //   this.refiners = refiners;
+  //   console.log('refiners updates - Summary component');
+  // }
 
 
 }

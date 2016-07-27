@@ -68,11 +68,20 @@
 stylesheet. */
 .lnr {
   color: #666;
-  vertical-align: middle;
-  font-size: 1.2em;
+  vertical-align: baseline;
+  /*font-size: 1.2em;*/
   margin-right: 8px;
 }
 
+.tags {
+  display: inline-block;
+
+}
+.tags .label{
+  margin-top: 5px;
+  margin-left: 5px;
+
+}
 
 /*BS3 */
 @media(max-width:767px){
@@ -80,7 +89,7 @@ stylesheet. */
       font-size: 1.8rem;
     }
     .close .lnr{
-      font-size: 1em;
+      font-size: 0.8em;
       margin-right: 0;
     }
 }

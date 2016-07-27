@@ -30,7 +30,7 @@
     <!-- <div class="btn-group"> -->
         <button type="button" class="btn btn-default btn-lg btn-block has-spinner" [class.active]="locatingPosition"
         (click)="onGetCurrentLocation()">
-          <span [class.hidden]="!locatingPosition" class="btn-spinner"><i class='glyphicon glyphicon-refresh spinning'></i> </span>
+          <span [class.hidden]="!locatingPosition" class="btn-spinner"><i class='lnr lnr-sync spinning'></i> </span>
           <span [class.hidden]="locatingPosition"><span class="lnr lnr-map-marker"></span> </span>
             Search near me
         </button>
@@ -48,11 +48,11 @@
 
   <div *ngIf="locationPos">
     <div *ngIf="!locationPos.valid">
-      <span class="text-muted">Sorry, could not determine your current location</span>
+      <span class="text-danger">Sorry, could not determine your current location</span>
     </div>
 
     <div *ngIf="locationPos.valid && locationPos.postcode != ''">
-      <span class="lead text-info">{{locationPos.city}}, {{locationPos.postcode}}</span>
+      <span class="lead text-primary">{{locationPos.city}}, {{locationPos.postcode}}</span>
       <button class="btn btn-default btn-lg" (click)="onCurrentPostcodeSearch(locationPos.postcode)">Search</button>
     </div>
   </div>
