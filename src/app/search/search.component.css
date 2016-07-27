@@ -1,11 +1,23 @@
 #panelSearch{
 }
+#primary-search-row{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+#primary-search-row btn-primary.disabled,
+#primary-search-row .btn-primary[disabled] {
+    opacity: 0.3;
+}
 
 #disclaimer h3, #disclaimer p{
   font-size: 80%;
   color: #666;
 
 }
+#view-all-btn{
+  margin-top: 24px;
+}
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 @media(max-width:767px){
@@ -14,6 +26,10 @@
 
 /* Small devices (tablets, 768px and up) */
 @media(min-width:768px){
+  #primary-search-row{
+    padding-bottom: 50px;
+  }
+
   .lead{
     font-size: 2.5rem;
   }
@@ -21,12 +37,26 @@
   .main-title{
     margin: 30px 15px;
   }
+  input#locationInput {
+      font-size: 24px;
+  }
 
 }
 /* Medium devices (desktops, 992px and up) */
 @media(min-width:992px){
+  #primary-search-row{
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
 
 
 }
 /* Large devices (large desktops, 1200px and up) */
-@media(min-width:1200px){}
+@media(min-width:1200px){
+  #primary-search-row{
+    padding-top: 60px;
+    padding-bottom: 100px;
+  }
+
+
+}

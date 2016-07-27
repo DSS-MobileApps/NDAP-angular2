@@ -7,6 +7,16 @@
   .search-mode:not(.has-results)  #searchbtn{
     opacity: 0;
   }
+  #tabs-list-map-view{
+    padding: 0;
+  }
+  #tabs-list-map-view .nav-tabs>li {
+      width: 40%;
+  }
+  #tabs-list-map-view .nav-tabs>li>a {
+      font-size: 16px;
+      text-transform: uppercase;
+  }
 }
 
 /* Small devices (tablets, 768px and up) */

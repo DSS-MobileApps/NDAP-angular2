@@ -58,6 +58,31 @@ export class SearchComponent {
     this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
   }
 
+  onLocationIdentified (postCode) {
+    console.log('Org std Postcode search for postcode: ' + postCode);
+    // this.organisationService.searchOrgList('byPostCode', postCode, undefined);
+    this.postCode = postCode;
+    this.organisationService.searchOrgList('byPostCode', postCode, undefined);
+  }
+
+  get postcodeValid(){
+    return this.postCode != null &&
+            this.postCode.toString().length >= 3 &&
+            !isNaN(this.postCode);
+  }
+
+  get postcodeWarning(){
+    return this.postCode != null &&
+          ((this.postCode.toString().length > 0 && this.postCode.toString().length < 3) ||
+            isNaN(this.postCode));
+  }
+
+  get postcodeError(){
+    return this.postCode != null &&
+          this.postCode.toString().length > 3 &&
+            (this.postCode.toString().length < 3 ||
+            isNaN(this.postCode));
+  }
 
 
 }

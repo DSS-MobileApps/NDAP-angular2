@@ -1,49 +1,14 @@
-<!-- <h4>Near you</h4> -->
-<!-- <h3>Use my location</h3> -->
-
-<!-- <span style="color:red">{{errorMessage}}</span> -->
-<!-- <ngLocation></ngLocation> -->
-<!-- <span *ngIf="locationPos">location is {{locationPos.latitude}}, {{locationPos.longitude}} ({{locationPos.city}}, {{locationPos.postcode}})</span> -->
-<!-- <div *ngIf="userLoc != ''"> -->
-<!-- <div *ngIf="!locationPos">
-  <button class="btn btn-default has-spinner active" (click)="onGetCurrentLocation()">
-    <div *ngIf="locatingPosition" class="btn-spinner"><i class='glyphicon glyphicon-refresh spinning'></i></div>
-    Get my current location
-  </button>
-
-</div>
-<div *ngIf="locationPos">
-  <div *ngIf="!locationPos.valid">
-    <span class="text-muted">Sorry, could not determine your current location</span>
-  </div>
-
-  <div *ngIf="locationPos.valid && locationPos.postcode != ''">
-    <span class="text-info">{{locationPos.city}}, {{locationPos.postcode}}</span>
-    <button class="btn btn-primary" (click)="onCurrentPostcodeSearch(locationPos.postcode)">Search</button>
-  </div>
-</div> -->
-
-<div class="form-group">
+<!-- <div class="form-group">
   <label class="control-label ">Use my location</label>
 
   <div *ngIf="!locationPos">
-    <!-- <div class="btn-group"> -->
         <button type="button" class="btn btn-default btn-lg btn-block has-spinner" [class.active]="locatingPosition"
         (click)="onGetCurrentLocation()">
           <span [class.hidden]="!locatingPosition" class="btn-spinner"><i class='lnr lnr-sync spinning'></i> </span>
           <span [class.hidden]="locatingPosition"><span class="lnr lnr-map-marker"></span> </span>
             Search near me
         </button>
-        <!-- <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-right">
-        <li role="presentation" *ngFor="let radiusi of radiuslist" >
-          <a (click)="SearchCurrentLocation(radiusi)" class="">within {{radiusi}}kms</a>
-        </li>
-      </ul>
-    </div> -->
+
   </div>
 
   <div *ngIf="locationPos">
@@ -56,13 +21,12 @@
       <button class="btn btn-default btn-lg" (click)="onCurrentPostcodeSearch(locationPos.postcode)">Search</button>
     </div>
   </div>
-</div>
+</div> -->
 
-
-<!-- <ul class="app-search-location" class="nav nav-tabs nav-stacked"  role="tablist">
-  <li role="presentation" *ngFor="let radiusi of radiuslist" >
-    <a (click)="onSelect(radiusi)" class="">within {{radiusi}}kms</a>
-  </li>
-
-</ul> -->
-<!-- </div> -->
+<button type="button" class="btn btn-default btn-lg has-spinner" [class.active]="locatingPosition"
+ data-toggle="tooltip" data-placement="top" title="Find your current location" data-original-title="Find your current location"
+(click)="onGetCurrentLocation()">
+  <span [class.hidden]="!locatingPosition" class="btn-spinner"><i class='lnr lnr-sync spinning'></i> </span>
+  <span [class.hidden]="locatingPosition"><span class="lnr lnr-location"></span> </span>
+  <span class="sr-only">Near me</span>
+</button>
