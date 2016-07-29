@@ -86,4 +86,20 @@ export class OrganisationDetailComponent implements AfterViewInit  {
     this.organisationService.updateSelectedOrganisation(null);
     this.router.navigate(['/']);
   }
+
+  get googleMapsLink(){
+    if (this.organisation != null){
+      return "https://www.google.com/maps/place/"
+            + this.organisation.Name
+            + "/@"
+            + this.organisation.Lat
+            + ","
+            + this.organisation.Lng
+            + ",18z/";
+    }else{
+      return "#";
+    }
+
+
+  }
 }
