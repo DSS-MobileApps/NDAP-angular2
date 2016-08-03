@@ -19,9 +19,9 @@
   <div class="panel-body ">
 
     <div class="" id="leftSidePanelDetails">
-      <a id="google-maps-link" [attr.href]="googleMapsLink" target="_blank" class="btn btn-info">
+      <a id="google-maps-link" [attr.href]="googleMapsLink" target="_blank" class="btn btn-info btn-sm">
         <!-- <span class="lnr lnr-exit"></span>  -->
-        Google Maps
+        View in Google Maps
       </a>
 
     <div id="mapitemcontainer">
@@ -61,7 +61,18 @@
                 <h5>
                   <span class="lnr lnr-map-marker"></span>
                   Address</h5>
-                <a><span [innerHTML]="organisation?.StreetAddress"></span><br/>{{organisation?.Suburb}} {{organisation?.Postcode}}<br/>{{organisation?.State}}</a>
+                  <address>
+                    <a [attr.href]="googleMapsLink" target="_blank"><span [innerHTML]="organisation?.StreetAddress" ></span><br/>{{organisation?.Suburb}} {{organisation?.Postcode}} {{organisation?.State}}</a>
+                  </address>
+
+                <a [attr.href]="googleMapsLink" target="_blank" class="btn btn-link btn-sm">
+                  <!-- <span class="lnr lnr-exit"></span>  -->
+                  View in Google Maps
+                </a> |
+                <a [attr.href]="googleMapsDirections" target="_blank" class="btn btn-link btn-sm">
+                  <!-- <span class="lnr lnr-exit"></span>  -->
+                  Directions
+                </a>
               </li>
 
               <li class="list-group-item col-xs-12 col-sm-6">

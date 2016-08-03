@@ -90,7 +90,7 @@ export class OrganisationDetailComponent implements AfterViewInit  {
   get googleMapsLink(){
     if (this.organisation != null){
       return "https://www.google.com/maps/place/"
-            + this.organisation.Name
+            + this.organisation.Lat + "," + this.organisation.Lng
             + "/@"
             + this.organisation.Lat
             + ","
@@ -99,7 +99,20 @@ export class OrganisationDetailComponent implements AfterViewInit  {
     }else{
       return "#";
     }
-
-
   }
+
+  get googleMapsDirections(){
+    if (this.organisation != null){
+      return "https://www.google.com/maps/dir//"
+            + this.organisation.Lat + "," + this.organisation.Lng
+            + "/@"
+            + this.organisation.Lat
+            + ","
+            + this.organisation.Lng
+            + ",18z/";
+    }else{
+      return "#";
+    }
+  }
+
 }
