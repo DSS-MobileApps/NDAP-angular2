@@ -2,6 +2,8 @@ import { Component, ElementRef, AfterViewInit, ViewChild, Input  } from '@angula
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MapService } from '../map/map.service';
+import {GeolocationService, GeoLocation} from '../shared/index';
+
 import { Organisation } from './organisation';
 import { OrganisationService } from './organisation.service';
 import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from '../shared/index';
@@ -19,12 +21,15 @@ export class OrganisationDetailComponent implements AfterViewInit  {
   @ViewChild('mapdetail') mapElement: ElementRef;
   @Input() organisation: Organisation;
   private sub: any;
+  locationPos: GeoLocation;
+  googleMapsDirections: string;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private organisationService: OrganisationService,
-    private mapService: MapService
+    private mapService: MapService,
+    private geolocationService: GeolocationService
   ) {
   }
 
@@ -32,24 +37,6 @@ export class OrganisationDetailComponent implements AfterViewInit  {
   ngOnInit() {
 
   }
-
-  getOrganisation(organisation: Organisation){
-    this.organisation = organisation;
-    if (this.organisation){
-      this.getOrganisationById(organisation.Id);
-    }
-
-  }
-
-  getOrganisationById(id){
-    this.organisationService.getOrganisation(id)
-    .subscribe((organisation) => {
-      this.organisation = organisation;
-      this.initMap();
-    });
-  }
-
-
 
   ngAfterViewInit() {
     // this.initMap();
@@ -69,6 +56,15 @@ export class OrganisationDetailComponent implements AfterViewInit  {
         selectedOrganisation => this.getOrganisation(selectedOrganisation),
         error =>  console.log(error));
 
+        this.geolocationService.location$.subscribe(
+              (loc) => {
+                this.locationPos = loc;
+                this.googleMapsDirections = this.getDirectionsUrl();
+            },
+          error => {
+            console.log(error);
+          });
+
   }
 
   initMap() {
@@ -77,6 +73,27 @@ export class OrganisationDetailComponent implements AfterViewInit  {
       this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
     }
   }
+
+
+    getOrganisation(organisation: Organisation){
+      this.organisation = organisation;
+      if (this.organisation){
+        this.getOrganisationById(organisation.Id);
+        this.googleMapsDirections = this.getDirectionsUrl();
+      }
+
+    }
+
+    getOrganisationById(id){
+      this.organisationService.getOrganisation(id)
+      .subscribe((organisation) => {
+        this.organisation = organisation;
+        this.initMap();
+      });
+    }
+
+
+
 
   goBack() {
     // this.router.navigate(['/']);
@@ -89,6 +106,8 @@ export class OrganisationDetailComponent implements AfterViewInit  {
 
   get googleMapsLink(){
     if (this.organisation != null){
+      // console.info('maps link url update');
+
       return "https://www.google.com/maps/place/"
             + this.organisation.Lat + "," + this.organisation.Lng
             + "/@"
@@ -101,15 +120,22 @@ export class OrganisationDetailComponent implements AfterViewInit  {
     }
   }
 
-  get googleMapsDirections(){
+ getDirectionsUrl(){
     if (this.organisation != null){
-      return "https://www.google.com/maps/dir//"
-            + this.organisation.Lat + "," + this.organisation.Lng
+      let url = "https://www.google.com/maps/dir/";
+      if (this.locationPos) {
+        url = url +  this.locationPos.latitude + "," + this.locationPos.longitude;
+      }
+            url = url + "/" + this.organisation.Lat + "," + this.organisation.Lng
             + "/@"
             + this.organisation.Lat
             + ","
             + this.organisation.Lng
-            + ",18z/";
+            + "/";
+            console.info('directions url is ' + url);
+            return url;
+            // window.location.href= url;
+
     }else{
       return "#";
     }

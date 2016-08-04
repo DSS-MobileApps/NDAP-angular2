@@ -4,6 +4,8 @@ import {Observable} from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
 import { GeoLocation }    from './geolocation-interface';
 
+import {Locker, LockerConfig} from 'angular2-locker'
+
 const GEOLOCATION_ERRORS = {
 	'errors.location.unsupportedBrowser': 'Browser does not support location services',
 	'errors.location.permissionDenied': 'You have rejected access to your location',
@@ -35,20 +37,71 @@ export class GeolocationService {
 
 	private loc: GeoLocation;
 
+	opts = {
+    enableHighAccuracy: false,
+    timeout: 10000,
+    maximumAge: 0
+  }
 
-	constructor( public http: Http) {}
+	constructor(
+		public http: Http,
+		private locker: Locker) {}
 
-	public getLocation(opts) {
+
+	get hasUserEnabled(){
+		console.info('checked location')
+		if (window.navigator && window.navigator.geolocation && this.locker.get('allowGeolocation')) {
+			return true;
+		}
+		return false;
+	}
+
+	// public hasRequested(){
+	// 	console.log('checked location')
+	// 	if (window.navigator && window.navigator.geolocation && this.locker.get('allowGeolocation')) {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// }
+
+	public enableLocation(allow){
+		console.log('set allow location to ' + allow);
+		if (allow){
+			this.locker.set('allowGeolocation', true);
+			// this.getLocation(this.opts);
+			return true;
+		}else{
+			this.locker.set('allowGeolocation', false);
+			return false;
+		}
+	}
+
+	// public enableLocationSearch(allow){
+	// 	if (this.enableLocation(allow)){
+	//
+	// 		this.getLocation(this.opts);
+	// 			return true;
+	// 	} else{
+	// 		return false
+	// 	}
+	// }
+
+	// public getLocation() {
+	// 	this.getLocation()
+	// }
+	public getLocation(options?) {
 
 		// return Observable.create(observer => {
 
 			if (window.navigator && window.navigator.geolocation) {
+				this.enableLocation(true);
 				window.navigator.geolocation.getCurrentPosition(
 					this.displayLocation,
 					this.positionErrorCallback,
-					opts);
+					options);
 			}
 			else {
+				this.enableLocation(false);
 				console.log("browser geoloation position not supported");
 				this.location.error(GEOLOCATION_ERRORS['errors.location.unsupportedBrowser']);
 			}
@@ -94,7 +147,7 @@ export class GeolocationService {
 
 		displayLocation = (position) => {
 
-			var loc = new GeoLocation();
+			let loc = new GeoLocation();
 			loc.valid = false;
 			loc.position = position;
 			loc.latitude = position.coords.latitude;

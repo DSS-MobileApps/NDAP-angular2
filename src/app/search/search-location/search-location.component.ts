@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { GeolocationService } from '../../shared/geolocation.service';
-import { GeoLocation } from '../../shared/geolocation-interface';
+// import { GeolocationService } from '../../shared/geolocation.service';
+// import { GeoLocation } from '../../shared/geolocation-interface';
+import {GeolocationService, GeoLocation} from '../../shared/index';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +20,7 @@ export class SearchLocationComponent implements OnInit {
 
   // public location: Location;
   locationPos: GeoLocation;
-  private locatingPosition: boolean;
+  @Input() locatingPosition: boolean = false;
 
   opts = {
     enableHighAccuracy: false,
@@ -40,14 +41,14 @@ export class SearchLocationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.radiuslist = [20, 50, 100, 250, 500, 1000];
+    // this.radiuslist = [20, 50, 100, 250, 500, 1000];
 
     this.geolocationService.location$.subscribe(
           (position) => {
             console.log("search-location menu position updated: " + new Date());
             this.locationPos = position;
             this.locatingPosition = false;
-            this.onCurrentPostcodeSearch(this.locationPos.postcode)
+            // this.onCurrentPostcodeSearch(this.locationPos.postcode)
         },
       error => {
         console.log(error);

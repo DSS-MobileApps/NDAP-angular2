@@ -15,6 +15,7 @@ module.exports = function(defaults) {
       'es6-shim/es6-shim.js',
       'reflect-metadata/**/*.+(ts|js|js.map)',
       'rxjs/**/*.+(js|js.map)',
+      'angular2-locker/**/*.+(js|js.map)',
       'markerclustererplus/dist/markerclusterer.min.js',
       'markerclustererplus/images/*.png',
       '@angular/**/*.+(js|js.map)'

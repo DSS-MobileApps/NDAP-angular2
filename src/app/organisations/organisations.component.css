@@ -52,8 +52,9 @@ button#searchbtn:focus, button#searchbtn:hover {
 
 #search-area{
   padding: 10px;
-
+/*min-height: 500px;*/
 }
+
 
 #results{
   margin-left: 0;

@@ -57,7 +57,7 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
   userPos: any;
 
   width = 100;
-  height = 100;
+  height = 500;
   // height: number;
 
   searchMode=true;
@@ -101,24 +101,26 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     }
 
     private setMapHeight(){
-      let currentHeight = this.elementRef.nativeElement.getElementsByTagName('div')[0].offsetHeight;
-      let windowHeight = this.elementRef.nativeElement.ownerDocument.defaultView.innerHeight;
-      let headerHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('header')[0].offsetHeight;
-      let footerHeight = this.elementRef.nativeElement.ownerDocument.getElementById('footer').offsetHeight;
-      let tabsHeight = this.elementRef.nativeElement.ownerDocument.getElementById('tabs-list-map-view').offsetHeight;
+      // let currentHeight = this.elementRef.nativeElement.getElementsByTagName('div')[0].offsetHeight;
+      // let windowHeight = this.elementRef.nativeElement.ownerDocument.defaultView.innerHeight;
+      // let headerHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('header')[0].offsetHeight;
+      // let footerHeight = this.elementRef.nativeElement.ownerDocument.getElementById('footer').offsetHeight;
+      // let tabsHeight = this.elementRef.nativeElement.ownerDocument.getElementById('tabs-list-map-view').offsetHeight;
+      //
+      //
+      //
+      // console.log('current height=' + currentHeight + ' : window=' + windowHeight + ' : header=' + headerHeight  + ' : tabs=' + tabsHeight + ' : footer=' + footerHeight);
+      //
+      // this.height = windowHeight - headerHeight - footerHeight;
 
 
+       let mainHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('main')[0].offsetHeight;
+      if (mainHeight >= 0){
+        console.log('current main flexbox height=' + mainHeight);
+        this.height = mainHeight;
+      }
 
-      console.log('current height=' + currentHeight + ' : window=' + windowHeight + ' : header=' + headerHeight  + ' : tabs=' + tabsHeight + ' : footer=' + footerHeight);
 
-      // this.elementRef.nativeElement.getElementsByTagName('div')[0].style.height = windowHeight - headerHeight - footerHeight;
-      // this.height = windowHeight - headerHeight - tabsHeight - footerHeight;
-      this.height = windowHeight - headerHeight - footerHeight;
-     //collapsable only if the contents make container exceed the max height
-      // if (currentHeight > this.maxHeight) {
-      //     this.isCollapsed = true;
-      //     this.isCollapsable = true;
-      // }
 
     }
 

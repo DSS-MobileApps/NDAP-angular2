@@ -1,5 +1,6 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { enableProdMode, provide, OpaqueToken } from '@angular/core';
+import {Locker, LockerConfig} from 'angular2-locker'
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -25,6 +26,8 @@ bootstrap(
     provide(Window, {useValue: window}),
     provide(Document, {useValue: document}),
     provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey}),
-    provide('API_URL', {useValue: environment.apiHost})
+    provide('API_URL', {useValue: environment.apiHost}),
+    provide(LockerConfig, { useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)}),
+    Locker
   ]
 ).catch(err => console.error(err));

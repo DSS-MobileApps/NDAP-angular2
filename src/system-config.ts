@@ -15,6 +15,11 @@ const packages: any = {
     defaultExtension: 'js',
     main: 'dist/markerclusterer.min.js'
   },
+  'angular2-locker': {
+    defaultExtension: 'js',
+    main: 'dist/locker.js'
+  },
+
 
 };
 
@@ -36,6 +41,7 @@ const barrels: string[] = [
   // Thirdparty barrels.
   'rxjs',
   'markerclustererplus',
+  // 'angular2-locker',
 
   // App specific barrels.
   'app',
@@ -61,6 +67,7 @@ System.config({
     '@angular': 'vendor/@angular',
     'rxjs': 'vendor/rxjs',
     'markerclustererplus': 'vendor/markerclustererplus',
+    'angular2-locker': 'vendor/angular2-locker',
     'main': 'main.js'
   },
   packages: cliSystemConfigPackages
