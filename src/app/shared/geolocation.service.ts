@@ -48,7 +48,15 @@ export class GeolocationService {
 		private locker: Locker) {}
 
 
-	get hasUserEnabled(){
+	get hasUserAgreed(){
+		console.info('checked location')
+		if (this.locker.has('allowGeolocation')) {
+			return true;
+		}
+		return false;
+	}
+
+	get locationCapable(){
 		console.info('checked location')
 		if (window.navigator && window.navigator.geolocation && this.locker.get('allowGeolocation')) {
 			return true;
@@ -89,6 +97,7 @@ export class GeolocationService {
 	// public getLocation() {
 	// 	this.getLocation()
 	// }
+
 	public getLocation(options?) {
 
 		// return Observable.create(observer => {
@@ -123,7 +132,7 @@ export class GeolocationService {
 			console.error(error);
 			console.groupEnd();
 
-			var loc = new GeoLocation();
+			let loc = new GeoLocation();
 			loc.valid = false;
 
 			switch (error.code) {
@@ -142,6 +151,7 @@ export class GeolocationService {
 			}
 
 			this.location.next(loc);
+			// this.location.error(error);
 
 		}
 

@@ -47,7 +47,7 @@
               (click)="onPostCodeSearch(postCode)">
                   <span class="lnr lnr-location"></span> Near me
               </button> -->
-              <search-location (onLocationPostcodeSearch)="onLocationTriggered($event)" [locatingPosition]="locatingPosition"></search-location>
+              <search-location [class.hidden]="!locationAllowed" (onLocationPostcodeSearch)="onLocationTriggered($event)" [locatingPosition]="locatingPosition"></search-location>
               <button type="submit" class="btn btn-primary btn-lg"
               (click)="onPostCodeSearch(postCode)"
               [class.disabled]="!postcodeValid"
@@ -58,9 +58,17 @@
 
             </span>
           </div>
+          <div [class.hidden]="locationPos == null || locationPos?.valid" class="error alert alert-warning alert-dismissible" [attr.aria-hidden]="locationPos == null || locationPos?.valid" role="alert">
+            <!-- alert-dismissable -->
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Cannot access your location: </strong><br/>{{locationPos?.error}}
+          </div>
+
           </div>
         </form>
         </div>
+
+
 
         <!-- <div class="col-sm-2 col-xs-12">
           <p class="lead text-center">or</p>

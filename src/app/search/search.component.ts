@@ -28,6 +28,7 @@ export class SearchComponent implements OnInit {
   postCode: number;
   keyword: string;
   locationChecked: boolean;
+  locationAllowed: boolean = false;
   locationPos: GeoLocation;
   textPlaceholder = "Enter a Postcode...";
   private locatingPosition: boolean;
@@ -39,9 +40,10 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit(){
-    this.locationChecked = this.geolocationService.hasUserEnabled;
+    this.locationChecked = this.geolocationService.hasUserAgreed;
     if (this.locationChecked){
-      this.enableLocation(true);
+      this.locationAllowed = this.geolocationService.locationCapable;
+
     }
 
     this.geolocationService.location$.subscribe(
@@ -51,8 +53,14 @@ export class SearchComponent implements OnInit {
             this.locatingPosition = false;
             this.textPlaceholder = "Enter a postcode...";
 
-            this.onLocationIdentified(loc.postcode);
-            // this.onCurrentPostcodeSearch(this.locationPos.postcode)
+            if (this.locationPos.valid){
+              this.onLocationIdentified(loc.postcode);
+              // this.onCurrentPostcodeSearch(this.locationPos.postcode)
+            }else{
+              //error
+
+            }
+
         },
       error => {
         console.log(error);
@@ -86,7 +94,8 @@ export class SearchComponent implements OnInit {
   }
 
   onKeywordSearch (keywordEntry) {
-    this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
+    // this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
+    this.organisationService.getByKeyword(keywordEntry);
   }
 
   onLocationIdentified (postCode) {
@@ -113,6 +122,17 @@ export class SearchComponent implements OnInit {
       this.geolocationService.enableLocation(false);
     }
 
+  }
+
+  // get locationCapable(){
+  //   return this.locationChecked &&
+  //           this.locationPos;
+  // }
+
+  get locationError(){
+    return this.locationChecked &&
+            this.locationPos &&
+            !this.locationPos.valid;
   }
 
   get postcodeValid(){
