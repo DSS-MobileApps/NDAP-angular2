@@ -26,11 +26,6 @@ export class OrganisationService {
       organisations: Organisation[],
       refiners: Refiner[]
     };
-
-  updateSelectedOrganisation (selectedOrganisation){
-    this.selectedOrganisation.next(selectedOrganisation);
-  }
-
   constructor (private http: Http, @Inject('API_URL') private apiUrl: string) {
       this.dataStore = { organisations: [], refiners: [] };
   }
@@ -168,6 +163,28 @@ export class OrganisationService {
 
   }
 
+  // Public Method called to get organisations list
+  getByKeyword(keyword) {
+
+    // clear refiners
+    this.dataStore.refiners = [];
+
+    this.getOrganisations("all", null, null).subscribe(
+      result => {
+        let kLower = keyword.toLowerCase();
+        this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
+        this.orgListSource.next(this.dataStore.organisations);
+        this.selectedOrganisation.next(null);
+        this.refinerList.next(this.dataStore.refiners);
+      }
+    )
+  }
+
+  keywordMatch(kLower, item){
+      return (item.Name != null && item.Name.toLowerCase().includes(kLower)) ||
+      // (item.FurtherDetails != null && item.FurtherDetails.toLowerCase().includes(kLower)) ||
+      (item.Category != null && item.Category.toLowerCase().includes(kLower))
+    }
 
   // Public Method called to get organisations list
   searchOrgList(searchType, value1, value2) {
@@ -248,6 +265,11 @@ export class OrganisationService {
       // return this.getJsonFromAPI("/data/detail-sample.json");
 
   }
+
+    updateSelectedOrganisation (selectedOrganisation){
+      this.selectedOrganisation.next(selectedOrganisation);
+    }
+
 
 
   // Using the url, get the response from the API,
