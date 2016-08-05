@@ -1,0 +1,31 @@
+{
+  "crawl": false,
+  "customTests": [],
+  "dest": "/PATH/TO/modernizr-output.js",
+  "tests": [
+    "applicationcache",
+    "eventlistener",
+    "geolocation",
+    "hiddenscroll",
+    "history",
+    "indexeddb",
+    "serviceworker",
+    "svg",
+    "flexbox",
+    "mediaqueries",
+    "opacity",
+    "csspositionsticky",
+    "cssremunit",
+    "csstransforms",
+    "csstransitions",
+    "localstorage",
+    "svgasimg",
+    "svgfilters",
+    "inlinesvg"
+  ],
+  "options": [
+    "mq",
+    "setClasses"
+  ],
+  "uglify": true
+}

@@ -1,0 +1,28 @@
+{
+  "minify": true,
+  "options": [
+    "mq",
+    "setClasses"
+  ],
+  "feature-detects": [
+    "test/applicationcache",
+    "test/eventlistener",
+    "test/geolocation",
+    "test/hiddenscroll",
+    "test/history",
+    "test/indexeddb",
+    "test/serviceworker",
+    "test/svg",
+    "test/css/flexbox",
+    "test/css/mediaqueries",
+    "test/css/opacity",
+    "test/css/positionsticky",
+    "test/css/remunit",
+    "test/css/transforms",
+    "test/css/transitions",
+    "test/storage/localstorage",
+    "test/svg/asimg",
+    "test/svg/filters",
+    "test/svg/inline"
+  ]
+}
