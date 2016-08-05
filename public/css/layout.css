@@ -147,7 +147,8 @@ html, body{
     padding: 0 15px;
     height: 100%;
     flex: 1;
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
+    overflow-y: auto;
     align-self: stretch;
 
   }
