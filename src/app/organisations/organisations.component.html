@@ -1,4 +1,4 @@
-<div id="org-search-container"   [class.has-results]="organisations" [class.search-mode]="searchMode" [class.detail-open]="selectedOrganisation != null">
+<div id="org-search-container"  [style.max-height.px]="height" [class.has-results]="organisations" [class.search-mode]="searchMode" [class.detail-open]="selectedOrganisation != null">
 <!-- [style.height.px]="height" -->
   <button id="searchbtn" (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" data-upgraded=",MaterialButton,MaterialRipple">
               <!-- <i class="material-icons" role="presentation">search</i> -->

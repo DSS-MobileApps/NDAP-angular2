@@ -60,7 +60,7 @@
     position: absolute;
     z-index: 10;
     right: 20px;
-    margin-top: 10px;
+    margin-top: 90px;
 
 }
 #google-maps-link .lnr {
@@ -73,6 +73,9 @@
 .contact .list-group-item{
   font-size: 1.2em;
 }
+.list-group-item > *:not(h5):not(.btn) {
+    margin-left: 30px;
+}
 
 /* Add the following CSS block to your own
 stylesheet. */
@@ -84,13 +87,14 @@ stylesheet. */
 }
 
 .tags {
-  display: inline-block;
+  display: flex;
+  flex-wrap: wrap;
 
 }
 .tags .label{
   margin-top: 5px;
   margin-left: 5px;
-
+  white-space: normal;
 }
 
 /*BS3 */
@@ -102,6 +106,9 @@ stylesheet. */
       font-size: 0.8em;
       margin-right: 0;
     }
+    .list-group.contact {
+      margin-top: 20px;
+  }
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -110,6 +117,11 @@ stylesheet. */
   #mapitem {
       height: 200px;
   }
+
+  #google-maps-link{
+    margin-top: 10px;
+  }
+
 
 }
 /* Medium devices (desktops, 992px and up) */
