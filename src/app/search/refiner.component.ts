@@ -24,7 +24,7 @@ import { OrganisationService } from '../organisations/organisation.service'
   moduleId: module.id,
   selector: 'refiner-options',
   templateUrl: 'refiner.component.html',
-  directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent],
+  directives: [ProviderTypesComponent],//, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent],
   styleUrls: ['refiner.component.css']
 
 })
@@ -34,6 +34,7 @@ export class RefinerComponent {
   postCode: number;
   refiners: Refiner[];
 
+  private subRefiners: any;
 
   constructor(
     private router: Router,
@@ -45,8 +46,12 @@ export class RefinerComponent {
 
   }
 
+  ngOnDestroy(){
+    if (this.subRefiners) { this.subRefiners.unsubscribe();}
+  }
+
   private subscribeToRefiners() {
-    this.organisationService.refinerList$
+    this.subRefiners = this.organisationService.refinerList$
       .subscribe(
         refiners => this.updateRefiners(refiners),
         error =>  console.error(<any>error));

@@ -18,6 +18,8 @@ export class SearchLocationComponent implements OnInit {
 
   public selectedCity:any;
 
+  private subLocation: any;
+
   // public location: Location;
   locationPos: GeoLocation;
   @Input() locatingPosition: boolean = false;
@@ -43,7 +45,7 @@ export class SearchLocationComponent implements OnInit {
   ngOnInit() {
     // this.radiuslist = [20, 50, 100, 250, 500, 1000];
 
-    this.geolocationService.location$.subscribe(
+    this.subLocation = this.geolocationService.location$.subscribe(
           (position) => {
             console.log("search-location menu position updated: " + new Date());
             this.locationPos = position;
@@ -55,6 +57,10 @@ export class SearchLocationComponent implements OnInit {
         this.locatingPosition = false;
       });
 
+  }
+
+  ngOnDestroy(){
+    if (this.subLocation) { this.subLocation.unsubscribe();}
   }
 
   // Get location from browser / device

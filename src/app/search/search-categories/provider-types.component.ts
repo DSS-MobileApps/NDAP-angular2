@@ -16,6 +16,8 @@ export class ProviderTypesComponent implements OnInit {
   providerTypes: ProviderType[];
   selectedProviderType: ProviderType;
 
+  private subTypes: any;
+
   // Output that a provider type has been selected
   @Output() onSelectedProviderType = new EventEmitter<any>();
 
@@ -29,10 +31,14 @@ export class ProviderTypesComponent implements OnInit {
     this.getProviderTypes();
   }
 
+  ngOnDestroy(){
+    if (this.subTypes) { this.subTypes.unsubscribe();}
+  }
+
   // Get provider types from the provider service,
   // then assigned the observable result to the Provider Types Array
   getProviderTypes() {
-    this.providerTypesService.getProviderTypes()
+    this.subTypes = this.providerTypesService.getProviderTypes()
       .subscribe(
         providerTypes => this.providerTypes = providerTypes,
         error =>  console.log(error));

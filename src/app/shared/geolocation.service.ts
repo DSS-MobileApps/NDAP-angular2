@@ -49,7 +49,7 @@ export class GeolocationService {
 
 
 	get hasUserAgreed(){
-		console.info('checked location')
+		console.info('check if user agreed to geolocation')
 		if (this.locker.has('allowGeolocation')) {
 			return true;
 		}
@@ -57,7 +57,7 @@ export class GeolocationService {
 	}
 
 	get locationCapable(){
-		console.info('checked location')
+		console.info('checking if location capable device and user has agreed')
 		if (window.navigator && window.navigator.geolocation && this.locker.get('allowGeolocation')) {
 			return true;
 		}

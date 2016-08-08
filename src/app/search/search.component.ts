@@ -33,6 +33,11 @@ export class SearchComponent implements OnInit {
   textPlaceholder = "Enter a Postcode...";
   private locatingPosition: boolean;
 
+  private subLocation: any;
+
+  @Output() onSearch = new EventEmitter<any>();
+
+
   constructor(
     private router: Router,
     private organisationService: OrganisationService,
@@ -46,7 +51,7 @@ export class SearchComponent implements OnInit {
 
     }
 
-    this.geolocationService.location$.subscribe(
+    this.subLocation = this.geolocationService.location$.subscribe(
           (loc) => {
             console.log("search menu position updated: " + new Date());
             this.locationPos = loc;
@@ -70,12 +75,20 @@ export class SearchComponent implements OnInit {
 
   }
 
+  ngOnDestroy(){
+    this.subLocation.unsubscribe();
+  }
+
   onSelectedProviderType (selectedProviderType: ProviderType) {
     this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
+    this.onSearch.emit(selectedProviderType);
+
   }
 
   onSelectedRadius (radius) {
     this.organisationService.searchOrgList('byRadius', radius, undefined);
+    this.onSearch.emit(radius);
+
   }
 
   // onSelectedState (state: StateType) {
@@ -86,20 +99,24 @@ export class SearchComponent implements OnInit {
   onPostCodeSearch (postCode) {
     console.log('Org std Postcode search for postcode: ' + postCode);
     this.organisationService.searchOrgList('byPostCode', postCode, undefined);
+    this.onSearch.emit(postCode);
+
   }
 
   onAllOrganisations() {
     this.organisationService.searchOrgList('all', undefined, undefined);
+    this.onSearch.emit('all');
 
   }
 
   onKeywordSearch (keywordEntry) {
     // this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
     this.organisationService.getByKeyword(keywordEntry);
+    this.onSearch.emit(keywordEntry);
   }
 
   onLocationIdentified (postCode) {
-    console.log('Org std Postcode for postcode: ' + postCode);
+    console.log('Postcode identified: ' + postCode);
     // if (this.postCode.toString().length == 0){
       this.postCode = postCode;
     // }

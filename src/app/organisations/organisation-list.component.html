@@ -1,10 +1,12 @@
 
-<div class="panel panel-default" *ngFor="let organisation of organisations" [class.selected]="organisation.Id == selectedOrgId" (click)="onSelect(organisation)">
+<div class="panel panel-default" *ngFor="let organisation of organisations"
+      [class.selected]="organisation.Id == selectedOrgId"
+      (click)="onSelect(organisation)">
   <!-- <div class="panel-heading" >
       <h5 class="panel-title">{{organisation.Name}}</h5>
     </div> -->
     <div class="panel-body" >
-        <h4><a href="#">{{organisation.Name}}</a></h4>
+        <h4><a (click)="onSelect(organisation)">{{organisation.Name}}</a></h4>
         <span class="pull-left"><span class="lnr lnr-map-marker"></span>{{organisation.Suburb}}, {{organisation.Id}}</span>
         <span *ngFor="let category of organisation.Category | commaSplitArray" class="label label-default pull-right">{{category}}</span>
 

@@ -1,12 +1,12 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, Input  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MapService } from '../map/map.service';
-import {GeolocationService, GeoLocation} from '../shared/index';
+import { MapService } from '../../map/map.service';
+import {GeolocationService, GeoLocation} from '../../shared/index';
 
-import { Organisation } from './organisation';
-import { OrganisationService } from './organisation.service';
-import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from '../shared/index';
+import { Organisation } from '../organisation';
+import { OrganisationService } from '../organisation.service';
+import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from '../../shared/index';
 
 @Component({
   moduleId: module.id,
@@ -21,6 +21,7 @@ export class OrganisationDetailComponent implements AfterViewInit  {
   @ViewChild('mapdetail') mapElement: ElementRef;
   @Input() organisation: Organisation;
   private sub: any;
+  private subLocation: any;
   locationPos: GeoLocation;
   googleMapsDirections: string;
 
@@ -35,28 +36,12 @@ export class OrganisationDetailComponent implements AfterViewInit  {
 
 
   ngOnInit() {
-
-  }
-
-  ngAfterViewInit() {
-    // this.initMap();
-    this.sub = this.route
-      .params
-      .subscribe(params => {
-        let id = +params['id'];
-        if (id > 0){
-          console.log('id is ' + id);
-          // Set organisation to the one returned
-          this.getOrganisationById(id);
-        }
-      });
-
-    this.organisationService.selectedOrganisation$
+    this.sub = this.organisationService.selectedOrganisation$
       .subscribe(
         selectedOrganisation => this.getOrganisation(selectedOrganisation),
         error =>  console.log(error));
 
-        this.geolocationService.location$.subscribe(
+    this.subLocation = this.geolocationService.location$.subscribe(
               (loc) => {
                 this.locationPos = loc;
                 this.googleMapsDirections = this.getDirectionsUrl();
@@ -64,7 +49,34 @@ export class OrganisationDetailComponent implements AfterViewInit  {
           error => {
             console.log(error);
           });
+  }
 
+
+  ngAfterViewInit() {
+    // this.initMap();
+    // this.sub = this.route
+    //   .params
+    //   .subscribe(params => {
+    //     let id = +params['id'];
+    //     if (id > 0){
+    //       console.log('id is ' + id);
+    //       // Set organisation to the one returned
+    //       this.getOrganisationById(id);
+    //     }
+    //   });
+    //
+    // this.organisationService.selectedOrganisation$
+    //   .subscribe(
+    //     selectedOrganisation => this.getOrganisation(selectedOrganisation),
+    //     error =>  console.log(error));
+
+
+
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+    this.subLocation.unsubscribe();
   }
 
   initMap() {
@@ -101,7 +113,8 @@ export class OrganisationDetailComponent implements AfterViewInit  {
   }
   deselect() {
     this.organisationService.updateSelectedOrganisation(null);
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
+    // this.goBack();
   }
 
   get googleMapsLink(){

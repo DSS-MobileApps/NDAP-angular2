@@ -169,6 +169,8 @@ export class OrganisationService {
     // clear refiners
     this.dataStore.refiners = [];
 
+    console.info('subscribe to get all Orgs refining by keyword - check perf')
+
     this.getOrganisations("all", null, null).subscribe(
       result => {
         let kLower = keyword.toLowerCase();
@@ -191,6 +193,8 @@ export class OrganisationService {
 
     // clear refiners
     this.dataStore.refiners = [];
+
+    console.info('subscribe to get Orgs - check perf')
 
     this.getOrganisations(searchType, value1, value2).subscribe(
       result => {

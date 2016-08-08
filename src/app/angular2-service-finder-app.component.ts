@@ -5,8 +5,8 @@ import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { MapService } from './map/map.service';
 import { OrganisationService } from './organisations/organisation.service';
-import { OrganisationsComponent } from './organisations/organisations.component';
-import { OrganisationDetailComponent } from './organisations/organisation-detail.component';
+// import { OrganisationsComponent } from './organisations/organisations.component';
+// import { OrganisationDetailComponent } from './organisations/organisation-detail.component';
 
 import { ProviderTypesService } from './search/search-categories/provider-types.service';
 import { GeolocationService } from './shared/geolocation.service';

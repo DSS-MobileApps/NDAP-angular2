@@ -40,6 +40,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   locationPos: any;
 
+  private subOrgs: any;
+  private subSelected: any;
+  private subLocation: any;
+
   // Create an array of Organisations and initiate as empty
   organisations: Organisation[] = [];
 
@@ -57,6 +61,8 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   // When the component starts
   ngOnInit () {
+    console.info('INIT MapComponent');
+
     // Subscribes to the list of search results of the providers
     this.subscribeToOrganisationListUpdates();
 
@@ -69,8 +75,14 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   }
 
+  ngOnDestroy(){
+    if (this.subOrgs) {this.subOrgs.unsubscribe();}
+    if (this.subSelected) {this.subSelected.unsubscribe();}
+    if (this.subLocation) {this.subSelected.unsubscribe();}
+  }
+
   subscribeToOrganisationListUpdates() {
-    this.organisationService.orgListSource$
+    this.subOrgs = this.organisationService.orgListSource$
     .subscribe(
       organisations => {
         // set the map.comp Org Array to match the results
@@ -100,7 +112,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   // Be notified when a organisation is selected
   subscribeToSelectedOrganisationUpdates() {
-  this.organisationService.selectedOrganisation$
+  this.subSelected = this.organisationService.selectedOrganisation$
     .subscribe(
       selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
       error =>  console.log(error));
@@ -116,10 +128,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
     //this.markerService.createMarker(this.map);
- 
+
 
   subscribeToPositionUpdates() {
-    this.geolocationService.location$.subscribe(
+    this.subLocation = this.geolocationService.location$.subscribe(
           (position) => {
             console.log("map position updated: " + new Date());
             this.locationPos = position;

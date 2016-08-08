@@ -2,27 +2,32 @@ import { Component, OnInit, transition, animate, style, state, trigger, ElementR
 import { Router } from '@angular/router';
 // import { ProviderType } from '../search/search-categories/provider-type';
 
-import { Organisation } from './organisation';
-import { OrganisationListComponent, OrganisationDetailComponent, OrganisationService } from './index';
-// import { OrganisationService } from './organisation.service';
-// import { OrganisationSummaryComponent } from './organisation-summary.component';
-import { GeolocationService } from '../shared/geolocation.service';
-import { ProviderType, SearchComponent, SearchSummaryComponent, RefinerComponent } from '../search/index';
-// import { RefinerComponent } from '../search/refiner.component';
-import { MapComponent, MapService } from '../map/index';
+import { Organisation } from '../../organisations/organisation';
+import { OrganisationService } from '../../organisations/index';
 
-import {RemoveSpaces} from '../shared/';
+import { OrganisationListComponent } from '../../organisations/organisation-list.component';
+
+import { GeolocationService } from '../../shared/geolocation.service';
+import { ProviderType } from '../search-categories/index';
+import { SearchComponent } from '../search.component';
+import { SearchSummaryComponent } from '../search-summary/index';
+
+import { RefinerComponent } from '../refiner.component';
+
+import { MapComponent, MapService } from '../../map/index';
+
+import {RemoveSpaces} from '../../shared/';
 
 // import { OrganisationDetailComponent } from './organisation-detail.component';
 
 
 @Component({
   moduleId: module.id,
-  selector: 'organisations',
-  templateUrl: 'organisations.component.html',
-  styleUrls: ['organisations.component.css',
-            'organisations.component.media.css'],
-  directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent, SearchSummaryComponent ],
+  selector: 'search-results',
+  templateUrl: 'search-results.component.html',
+  styleUrls: ['search-results.component.css',
+            'search-results.component.media.css'],
+  directives: [ MapComponent, OrganisationListComponent, RefinerComponent, SearchSummaryComponent ],
 
   /**
    * Define two states, "inactive" and "active", and the end
@@ -48,8 +53,8 @@ import {RemoveSpaces} from '../shared/';
 
 })
 
-export class OrganisationsComponent implements OnInit, AfterViewInit {
-  title = 'List of Organisations';
+export class SearchResultsComponent implements OnInit, AfterViewInit {
+  title = 'Organisation search results';
   organisations: Organisation[];
   selectedOrganisation: Organisation;
   selectedOrgId: number;
@@ -84,6 +89,8 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
   // When the component starts,
   ngOnInit () {
+    console.info('INIT SearchResultsComponent');
+
     // Subscribe to Org Search Results
     this.subscribeToOrganisations();
     this.subscribeToSelectedOrganisationUpdates();
@@ -91,7 +98,7 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     // Perform a default search for all orgs
     // this.organisationService.searchOrgList('all', undefined, undefined);
 
-    // this.organisationService.getCachedList();
+    this.organisationService.getCachedList();
 
     // Subscribe to Selected Org events
 
@@ -154,9 +161,10 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
     // When a marker is clicked, tell the Org Service
   onSelect(selectedOrg: Organisation) {
-    this.mapService.selectMarker(selectedOrg.Id.toString());
+    // this.mapService.selectMarker(selectedOrg.Id.toString());
     // this.selectedOrganisation = selectedOrg;
     this.organisationService.updateSelectedOrganisation(selectedOrg);
+    this.router.navigate(['/organisation', selectedOrg.Id]);
 
   };
 
@@ -192,17 +200,18 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
   }
 
-  toggleSearchMode(){
-    console.log('toggle search mode');
-      this.searchMode = !this.searchMode;
+  goToSearch(){
+    console.log('back to search mode');
+      // this.searchMode = !this.searchMode;
+      this.router.navigateByUrl('/search');
   }
 
   get hasOrganisations(){
-    if (!this.organisations) {
-      return false;
+    if (this.organisations && this.organisations.length > 0) {
+      return true;
     }
 
-    return this.organisations.length > 0;
+    return false;
   }
 
   get hasResults(){

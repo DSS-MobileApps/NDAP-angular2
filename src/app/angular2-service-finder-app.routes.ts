@@ -1,7 +1,9 @@
 import { provideRouter, RouterConfig }  from '@angular/router';
 
 import { OrganisationsComponent } from './organisations/organisations.component';
-import { OrganisationDetailComponent } from './organisations/organisation-detail.component';
+import { OrganisationComponent } from './organisations/organisation/organisation.component';
+
+import { SearchAreaComponent, SearchResultsComponent } from './search/index';
 
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
@@ -9,16 +11,21 @@ import { ContactComponent } from './contact/contact.component';
 export const routes: RouterConfig = [
   {
     path: 'organisations/:id',
-    component: OrganisationsComponent
+    component: SearchResultsComponent //OrganisationsComponent
   },
   {
     path: 'organisations',
-    component: OrganisationsComponent
+    component: SearchResultsComponent // OrganisationsComponent
   },
 
   {
     path: 'organisation/:id',
-    component: OrganisationDetailComponent
+    component: OrganisationComponent
+  },
+
+  {
+    path: 'search',
+    component: SearchAreaComponent
   },
 
   {

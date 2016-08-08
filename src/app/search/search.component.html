@@ -32,7 +32,7 @@
       <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
 
         <!--Enter a location-->
-        <form>
+        <form (ngSubmit)="onPostCodeSearch(postCode)" #postcodeForm="ngForm">
         <div class="form-group" [class.has-warning]="postcodeWarning" [class.has-error]="postcodeError">
         <label class="control-label " for="locationInput">Postcode</label>
         <div class="input-group">
@@ -49,7 +49,7 @@
               </button> -->
               <search-location [class.hidden]="!locationAllowed" (onLocationPostcodeSearch)="onLocationTriggered($event)" [locatingPosition]="locatingPosition"></search-location>
               <button type="submit" class="btn btn-primary btn-lg"
-              (click)="onPostCodeSearch(postCode)"
+              
               [class.disabled]="!postcodeValid"
               [disabled]="!postcodeValid">
                   <!-- <span class="lnr lnr-magnifier"></span>  -->

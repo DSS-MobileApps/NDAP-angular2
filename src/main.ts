@@ -1,5 +1,7 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { enableProdMode, provide, OpaqueToken } from '@angular/core';
+// import { disableDeprecatedForms, provideForms } from '@angular/forms';
+
 import {Locker, LockerConfig} from 'angular2-locker'
 
 import 'rxjs/add/operator/map';
@@ -23,6 +25,8 @@ bootstrap(
     // ROUTER_PROVIDERS,
     APP_ROUTER_PROVIDERS,
     HTTP_PROVIDERS,
+    // disableDeprecatedForms(),
+    // provideForms(),
     provide(Window, {useValue: window}),
     provide(Document, {useValue: document}),
     provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey}),

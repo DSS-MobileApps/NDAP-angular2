@@ -50,6 +50,7 @@ const barrels: string[] = [
   'app/search/search-keyword',
   'app/search/search-state',
   'app/search/search-summary',
+  'app/organisations/organisation',
   /** @cli-barrel */
 ];
 

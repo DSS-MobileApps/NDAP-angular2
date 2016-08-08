@@ -1,0 +1,5 @@
+<div class="row"  id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
+  <div class="col-xs-12" [class.detail-open]="selectedOrganisation != null"  >
+      <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
+  </div>
+</div>

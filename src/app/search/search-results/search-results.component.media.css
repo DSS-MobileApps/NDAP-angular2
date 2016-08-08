@@ -1,0 +1,84 @@
+/* BS3 */
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media(max-width:767px){
+  /* show search toggle button on search mode if you already have a set of results */
+  .search-mode:not(.has-results)  #searchbtn{
+    opacity: 0;
+  }
+  #tabs-list-map-view{
+    padding: 0;
+  }
+  #tabs-list-map-view .nav-tabs>li {
+      width: 40%;
+  }
+  #tabs-list-map-view .nav-tabs>li>a {
+      font-size: 16px;
+      text-transform: uppercase;
+  }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media(min-width:768px){
+  /*#search-area{
+    height: 75%;
+    background-color: transparent;
+    transform: translate(0, -100%);
+  }*/
+
+  #searchbtn {
+      right: 20px;
+       top: 72px;
+       bottom:auto;
+       bottom: initial;
+  }
+  .search-mode #searchbtn  {
+       /*transform: translate(0, 460px);*/
+  }
+
+  #results{
+    width: auto;
+    width: initial;
+    /*float: none;*/
+  }
+  #list-panel, #map-panel{
+    padding-bottom: 0;
+  }
+
+
+  /*
+
+  #listPanel {
+    z-index: 2;
+    position: absolute;
+    box-shadow: 5px 0px 10px 0px rgba(0,0,0,0.25);
+    top:0;
+    height: 100%;
+    background-color: #fff;
+    background-color: hsla(100, 100%, 100%, 0.35);
+  }
+
+  #orgResult{
+    z-index: 2;
+    position: absolute;
+    overflow: scroll;
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    padding-top: 10px;
+  }
+  #orgResultDetail{
+    z-index: 5;
+  }
+  #orgResultDetail.detail-open{
+  }*/
+
+}
+/* Medium devices (desktops, 992px and up) */
+@media(min-width:992px){
+
+}
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1200px){}
