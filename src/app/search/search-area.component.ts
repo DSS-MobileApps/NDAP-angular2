@@ -23,6 +23,7 @@ import { SearchComponent } from './index';
   templateUrl: 'search-area.component.html',
   styleUrls: ['search-area.component.css'],
   directives: [ SearchComponent ],
+  // host: {'class' : 'ng-animate searchContainer'},
 
   /**
    * Define two states, "inactive" and "active", and the end
@@ -45,6 +46,24 @@ import { SearchComponent } from './index';
   //     // transition('active => inactive', animate('100ms ease-out'))
   //   ])
   // ]
+  /* The element here always has the state "in" when it
+   * is present. We animate two transitions: From void
+   * to in and from in to void, to achieve an animated
+   * enter and leave transition. The element enters from
+   * the left and leaves to the right using translateX.
+   */
+  animations: [
+    trigger('enterLeave', [
+      state('in', style({transform: 'translateY(0)'})),
+      transition('void => *', [
+        style({transform: 'translateY(-100%)'}),
+        animate(200)
+      ]),
+      transition('* => void', [
+        animate(200, style({transform: 'translateY(100%)'}))
+      ])
+    ])
+  ]
 
 })
 

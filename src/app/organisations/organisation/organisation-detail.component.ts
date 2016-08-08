@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, ViewChild, Input  } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, Input  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MapService } from '../../map/map.service';
@@ -17,17 +17,18 @@ import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from '
   host: {'class' : 'ng-animate orgDetailContainer'}
 })
 
-export class OrganisationDetailComponent implements AfterViewInit  {
+export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   @ViewChild('mapdetail') mapElement: ElementRef;
   @Input() organisation: Organisation;
   private sub: any;
   private subLocation: any;
+  private subOrgId: any;
   locationPos: GeoLocation;
   googleMapsDirections: string;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
+    // private router: Router,
+    // private route: ActivatedRoute,
     private organisationService: OrganisationService,
     private mapService: MapService,
     private geolocationService: GeolocationService
@@ -36,24 +37,31 @@ export class OrganisationDetailComponent implements AfterViewInit  {
 
 
   ngOnInit() {
-    this.sub = this.organisationService.selectedOrganisation$
-      .subscribe(
-        selectedOrganisation => this.getOrganisation(selectedOrganisation),
-        error =>  console.log(error));
 
-    this.subLocation = this.geolocationService.location$.subscribe(
-              (loc) => {
-                this.locationPos = loc;
-                this.googleMapsDirections = this.getDirectionsUrl();
-            },
-          error => {
-            console.log(error);
-          });
+    // if (this.organisation){
+    //   console.log(this.organisation);
+    // }else{
+    //   console.log('org detail input org is empty');
+    // }
   }
 
 
   ngAfterViewInit() {
     // this.initMap();
+        this.sub = this.organisationService.selectedOrganisation$
+          .subscribe(
+            selectedOrganisation => this.getOrganisation(selectedOrganisation),
+            error =>  console.log(error));
+        //
+        // this.subLocation = this.geolocationService.location$.subscribe(
+        //           (loc) => {
+        //             this.locationPos = loc;
+        //             this.googleMapsDirections = this.getDirectionsUrl();
+        //         },
+        //       error => {
+        //         console.log(error);
+        //       });
+
     // this.sub = this.route
     //   .params
     //   .subscribe(params => {
@@ -75,11 +83,23 @@ export class OrganisationDetailComponent implements AfterViewInit  {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
-    this.subLocation.unsubscribe();
+    if (this.sub) {this.sub.unsubscribe();}
+    if (this.subLocation) {this.subLocation.unsubscribe();}
   }
 
+  ngOnChanges(changes) {
+
+  		// console.log('Change detected:', changes);
+      if (changes.organisation){
+        console.log('Organisation Change detected:', changes.organisation);
+        if (this.organisation){
+          this.initMap();
+        }
+      }
+  	}
+
   initMap() {
+    console.debug('org detail - init map');
     if (this.mapElement != null && this.organisation != null)
     {
       this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
@@ -88,7 +108,11 @@ export class OrganisationDetailComponent implements AfterViewInit  {
 
 
     getOrganisation(organisation: Organisation){
+
       this.organisation = organisation;
+      console.log('get organisation');
+      console.log(this.organisation);
+
       if (this.organisation){
         this.getOrganisationById(organisation.Id);
         this.googleMapsDirections = this.getDirectionsUrl();
@@ -97,20 +121,22 @@ export class OrganisationDetailComponent implements AfterViewInit  {
     }
 
     getOrganisationById(id){
-      this.organisationService.getOrganisation(id)
+      console.log('get organisation by id: ' + id);
+      this.subOrgId = this.organisationService.getOrganisation(id)
       .subscribe((organisation) => {
         this.organisation = organisation;
         this.initMap();
+        this.subOrgId.unsubscribe();
       });
     }
 
 
 
 
-  goBack() {
-    // this.router.navigate(['/']);
-    window.history.back();
-  }
+  // goBack() {
+  //   // this.router.navigate(['/']);
+  //   window.history.back();
+  // }
   deselect() {
     this.organisationService.updateSelectedOrganisation(null);
     // this.router.navigate(['/']);

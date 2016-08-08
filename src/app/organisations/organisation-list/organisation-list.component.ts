@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Organisation } from './organisation';
-import { CommaSplitArray } from '../shared/index';
+import { Organisation } from '../organisation';
+import { CommaSplitArray } from '../../shared/index';
 
 @Component({
   moduleId: module.id,

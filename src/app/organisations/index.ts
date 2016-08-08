@@ -1,5 +1,5 @@
 export { Organisation } from './organisation';
 export { OrganisationService } from './organisation.service';
 export { OrganisationsComponent } from './organisations.component';
-export { OrganisationListComponent } from './organisation-list.component';
+export * from './organisation-list/index';
 export * from './organisation/index';

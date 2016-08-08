@@ -76,7 +76,7 @@ button#searchbtn:focus, button#searchbtn:hover {
   padding-bottom: 42px;
 }
 
-#org-search >>> .map-container{
+#map-panel >>> .map-container{
   height: 100%;
 
 }

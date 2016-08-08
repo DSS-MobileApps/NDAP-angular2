@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Organisation } from '../../organisations/organisation';
 import { OrganisationService } from '../../organisations/index';
 
-import { OrganisationListComponent } from '../../organisations/organisation-list.component';
+import { OrganisationListComponent } from '../../organisations/index';
 
 import { GeolocationService } from '../../shared/geolocation.service';
 import { ProviderType } from '../search-categories/index';
@@ -29,27 +29,24 @@ import {RemoveSpaces} from '../../shared/';
             'search-results.component.media.css'],
   directives: [ MapComponent, OrganisationListComponent, RefinerComponent, SearchSummaryComponent ],
 
-  /**
-   * Define two states, "inactive" and "active", and the end
-   * styles that apply whenever the element is in those states.
-   * Then define animations for transitioning between the states,
-   * one in each direction
+  /* The element here always has the state "in" when it
+   * is present. We animate two transitions: From void
+   * to in and from in to void, to achieve an animated
+   * enter and leave transition. The element enters from
+   * the left and leaves to the right using translateX.
    */
-  // animations: [
-  //   trigger('selectedState', [
-  //     state('false', style({
-  //       // backgroundColor: '#eee',
-  //       // transform: 'translate(-100%, 0)'
-  //     })),
-  //     state('true',   style({
-  //       // backgroundColor: '#cfd8dc',
-  //       // transform: 'translate(100%, 0)'
-  //       // transform: 'translate(-33.3%, 0)'
-  //     })),
-  //     transition('false <=> true', animate('100ms ease-out')),
-  //     // transition('active => inactive', animate('100ms ease-out'))
-  //   ])
-  // ]
+  animations: [
+    trigger('enterLeave', [
+      state('in', style({transform: 'translateY(0)'})),
+      transition('void => *', [
+        style({transform: 'translateY(100%)'}),
+        animate(200)
+      ]),
+      transition('* => void', [
+        animate(200, style({transform: 'translateY(-100%)'}))
+      ])
+    ])
+  ]
 
 })
 
@@ -90,6 +87,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   // When the component starts,
   ngOnInit () {
     console.info('INIT SearchResultsComponent');
+    setTimeout(_=> this.setMapHeight());
 
     // Subscribe to Org Search Results
     this.subscribeToOrganisations();
@@ -108,7 +106,6 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    setTimeout(_=> this.setMapHeight());
     }
 
     private setMapHeight(){
@@ -161,6 +158,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
     // When a marker is clicked, tell the Org Service
   onSelect(selectedOrg: Organisation) {
+    console.log('selected ' + selectedOrg.Name);
     // this.mapService.selectMarker(selectedOrg.Id.toString());
     // this.selectedOrganisation = selectedOrg;
     this.organisationService.updateSelectedOrganisation(selectedOrg);

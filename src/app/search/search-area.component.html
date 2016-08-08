@@ -1,12 +1,8 @@
-<div id="org-search-container">
+<!-- <div id="org-search-container">
+    <div id="org-search"> -->
 
-
-  <div id="org-search">
-
-
-
-    <!-- Search options -->
-  <div class="row" id="search-area" [attr.aria-hidden]="!searchMode">
+<!-- Search options -->
+  <div @enterLeave="'in'" class="row" id="search-area" [attr.aria-hidden]="!searchMode">
     <div class="col-xs-12">
       <h2 class="sr-only">Search options</h2>
         <search-options (onSearch)="onSearchTriggered($event)"></search-options>
@@ -14,9 +10,5 @@
     <div class="opaque"></div>
   </div>
 
-
-
-  </div>
-
-
-</div>
+  <!-- </div>
+</div> -->

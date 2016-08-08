@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, transition, animate, style, state, trigger } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Organisation } from '../index';
 import { OrganisationDetailComponent } from './organisation-detail.component';
@@ -12,7 +12,26 @@ import { OrganisationService } from '../organisation.service';
   templateUrl: 'organisation.component.html',
   styleUrls: ['organisation.component.css'],
   directives: [ OrganisationDetailComponent ],
-  host: {'class' : 'ng-animate orgContainer'}
+  // host: {'class' : 'ng-animate orgContainer'}
+
+  /* The element here always has the state "in" when it
+   * is present. We animate two transitions: From void
+   * to in and from in to void, to achieve an animated
+   * enter and leave transition. The element enters from
+   * the left and leaves to the right using translateX.
+   */
+  animations: [
+    trigger('enterLeave', [
+      state('in', style({transform: 'translateY(0)'})),
+      transition('void => *', [
+        style({transform: 'translateY(100%)'}),
+        animate(200)
+      ]),
+      transition('* => void', [
+        animate(200, style({transform: 'translateY(-100%)'}))
+      ])
+    ])
+  ]
 })
 export class OrganisationComponent implements OnInit, AfterViewInit {
   @Input() selectedOrganisation: Organisation;

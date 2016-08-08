@@ -1,4 +1,7 @@
-#org-search-container{
+
+
+
+/*#org-search-container{
   overflow: hidden;
 }
 #org-search{
@@ -14,10 +17,10 @@
 }
 .search-mode #org-search{
   transform: translate3d(0, 0, 0);
-}
+}*/
 
 
-#searchbtn {
+/*#searchbtn {
     transition: all ease-in-out 0.2s;
     position: absolute;
     right: 10px;
@@ -40,7 +43,7 @@ button#searchbtn:focus, button#searchbtn:hover {
   width:60%;
   height: 60%;
   margin-top: 15%;
-}
+}*/
 
 #search-area, #results, #result-detail{
   height: 100%;
@@ -55,78 +58,24 @@ button#searchbtn:focus, button#searchbtn:hover {
 
 }
 
-#results{
-  margin-left: 0;
-  margin-right: 0;
+:host(.searchContainer) #search-area{
+    /*position: fixed;
+    display: inline-block;
+    width: 100%;*/
+    /*right:100%;*/
+
+    -webkit-transition: all ease-in-out 2s;
+    transition: all ease-in-out 2s;
+    transform: translate(0,0);
 }
 
-#list-panel{
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-#map-panel{
-  padding-left: 0;
-  padding-right: 0;
-}
-#list-panel, #map-panel{
-  height: 100%;
-  padding-bottom: 42px;
-}
-
-#org-search >>> .map-container{
-  height: 100%;
+:host(.searchContainer.ng-enter) #search-area{
+    /*transform: rotateZ(180deg)*/
+    transform: translate(0, 100%);
 
 }
 
-#result-detail{
-  overflow-y: auto;
-}
-
-
-#tabs-list-map-view{
-  transition: all ease 0.1s;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 5;
-  background-color: #fff;
-  box-shadow: 0px 5px 10px 7px rgba(0,0,0,0.25);
-  opacity: 0;
-
-}
-
-.has-results:not(.detail-open):not(.search-mode) #tabs-list-map-view{
-  opacity: 1;
-}
-
-#results{
-  width: 200%;
-  /*float: left;*/
-}
-
-#list-panel{
-      transform: translateX(-100%);
-}
-#list-panel.active {
-    transform: translateX(0);
-}
-#map-panel.active {
-    transform: translateX(-100%);
-}
-
-#list-panel >>> .panel-default {
-    border: 0;
-    border-bottom: 1px solid #eee;
-    box-shadow: none;
-    margin-bottom: 0px;
-}
-
-
-
-#map-panel >>> .infowindow-html h4{
-  font-size: 1.2em;
-  font-weight: 100;
-  margin: 0;
+:host(.searchContainer.ng-enter-active)  #search-area{
+  transform: translate(0, -50%);
+    /*transform: translate(-100%,0);*/
 }
