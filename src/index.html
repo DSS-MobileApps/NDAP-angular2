@@ -4,9 +4,16 @@
 <!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
   <title>NDAP Service Finder</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="author" content="Department of Social Services">
+  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
   <base href="/">
+
+
 
   <!-- Bootstrap styles CDN -->
   <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -14,6 +21,13 @@
   <link href="css/bs/paper/bootstrap.min.css" rel="stylesheet">
 
   <link href="css/layout.css" rel="stylesheet">
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <link type="text/css" rel="stylesheet" href="css/ndap-ie8.css" />
+  <![endif]-->
+  <!--[if lt IE 8]>
+      <link type="text/css" rel="stylesheet" href="css/ndap-ie7below.css" />
+  <![endif]-->
 
   <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
@@ -26,7 +40,45 @@
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"> -->
 <!-- Cool spinners from http://tobiasahlin.com/spinkit/ -->
 
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+  <!-- page icons -->
+  <link rel="shortcut icon" type="image/x-icon" href="webpageIcons/DSS/icons/favicon.ico" />
+    <link rel="shortcut icon" href="webpageIcons/DSS/icons/favicon-lg.png" />
+    <link rel="apple-touch-icon" href="webpageIcons/DSS/icons/Icon-60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="webpageIcons/DSS/icons/Icon-76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="webpageIcons/DSS/icons/Icon-60@2x.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="webpageIcons/DSS/icons/Icon-76@2x.png">
+
+    <!-- iPhone 3 and 4 Non-Retina -->
+    <link rel="apple-touch-startup-image" media="(device-width: 320px)" href="webpageIcons/DSS/Startup/ios-startup-320x460.png">
+    <!-- iPhone 4 Retina -->
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" href="webpageIcons/DSS/Startup/ios-startup-640x920.png">
+    <!-- iPhone 5 Retina -->
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="webpageIcons/DSS/Startup/ios-startup-640x1096.png">
+
+    <!-- iPad Non-Retina Portrait -->
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait)" href="webpageIcons/DSS/Startup/ios-startup-768x1004.png">
+    <!-- iPad Non-Retina Landscape -->
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape)" href="webpageIcons/DSS/Startup/ios-startup-1024x748.png">
+    <!-- iPad Retina Portrait -->
+    <link rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="webpageIcons/DSS/Startup/ios-startup-1536x2008.png">
+    <!-- iPad Retina Landscape -->
+    <link rel="apple-touch-startup-image" media="(device-width: 1536px)  and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="webpageIcons/DSS/Startup/ios-startup-2048x1496.png">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- MS 8.1 Tiles-->
+    <!-- <meta name="application-name" content="&nbsp;" /> -->
+    <meta name="application-name" content="Disability Advocacy Finder" />
+    <meta name="msapplication-TileColor" content="#0da6ab" />
+    <!-- <meta name="msapplication-square70x70logo" content="webpageIcons/windows/tiny.png" />
+    <meta name="msapplication-square150x150logo" content="webpageIcons/windows/square.png" />
+    <meta name="msapplication-wide310x150logo" content="webpageIcons/windows/wide.png" />
+    <meta name="msapplication-square310x310logo" content="webpageIcons/windows/large.png" /> -->
+
+
+
 </head>
 <body>
   <angular2-service-finder-app>

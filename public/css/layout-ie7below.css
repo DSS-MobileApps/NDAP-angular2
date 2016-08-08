@@ -1,0 +1,68 @@
+/*#main-content{
+    margin:0 -10px 0 0 ;
+    padding:0;
+    overflow:hidden;
+}
+
+#resultlisting, #item, #mapcont {
+    padding:0 0 0 0;
+}
+.detail {
+}
+
+#list{
+    width:33%;
+    padding-left:0;
+    margin-left:0;
+}
+
+#item{
+
+}
+#results #item, #results .item-details {
+}
+
+#listitems{
+    margin-left:0;
+    background-color:transparent;
+}
+#listitems > li{
+    padding:0;
+    clear:none;
+    z-index:900;
+    position:static;
+}
+#listitems dl {
+    clear:both;
+}
+#listitems > li.selected{
+    -webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+
+    left:0;
+
+}
+.listitem-actionbtn{clear:left;display:inline-block}
+.listitem-actionbtn > *{
+
+}
+
+
+#findby-splash{
+    z-index:10000;
+    position:relative;
+
+}
+#findby-splash .nav > li {
+        z-index: 9000;
+        position:relative;
+}
+#findby-splash .nav > .overlap {
+        z-index: 9001;
+        position:relative;
+}
+
+.input-group .form-control{
+    width:auto;
+}*/

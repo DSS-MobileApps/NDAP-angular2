@@ -1,0 +1,25 @@
+#banner {
+    /*background: #01B0C5 url(../images/wireballs.png) no-repeat right 0px;*/
+    /*background: #01B0C5  no-repeat right 0px;*/
+}
+
+/*.container {width: 1170px !important;}*/
+
+/*#intro-area{
+    top:-999em;
+}*/
+
+/*nav*/
+/* left menu slide-out */
+@media screen and (max-width: 979px) {
+
+  }
+}
+#results {
+}
+.detail {
+    /*margin-left:-100%;*/
+}
+#results #item, #results .item-details {
+    /*right: 0;*/
+}
