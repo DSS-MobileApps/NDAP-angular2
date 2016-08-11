@@ -2,7 +2,7 @@
     <div id="org-search"> -->
 
 <!-- Search options -->
-  <div @enterLeave="'in'" class="row" id="search-area" [attr.aria-hidden]="!searchMode">
+  <div [@enterLeave]="'in'" class="row" id="search-area" [attr.aria-hidden]="!searchMode">
     <div class="col-xs-12">
       <h2 class="sr-only">Search options</h2>
         <search-options (onSearch)="onSearchTriggered($event)"></search-options>

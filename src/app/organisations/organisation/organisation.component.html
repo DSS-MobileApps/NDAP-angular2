@@ -1,4 +1,4 @@
-<div class="row"  @enterLeave="'in'" id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
+<div class="row"  [@enterLeave]="'in'" id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
   <div class="col-xs-12"  >
       <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
   </div>

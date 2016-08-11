@@ -39,6 +39,7 @@
         <input type="tel"
             class="form-control input-lg"
             id="locationInput"
+            name="locationInput"
             min="200" max="9999" maxlength="4" autocomplete="off"
             [placeholder]="textPlaceholder"
             [(ngModel)]="postCode">
@@ -49,7 +50,7 @@
               </button> -->
               <search-location [class.hidden]="!locationAllowed" (onLocationPostcodeSearch)="onLocationTriggered($event)" [locatingPosition]="locatingPosition"></search-location>
               <button type="submit" class="btn btn-primary btn-lg"
-              
+
               [class.disabled]="!postcodeValid"
               [disabled]="!postcodeValid">
                   <!-- <span class="lnr lnr-magnifier"></span>  -->
