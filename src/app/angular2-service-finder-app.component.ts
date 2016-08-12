@@ -11,6 +11,9 @@ import { OrganisationService } from './organisations/organisation.service';
 import { ProviderTypesService } from './search/search-categories/provider-types.service';
 import { GeolocationService } from './shared/geolocation.service';
 
+import '../modernizr-custom.js';
+
+
 @Component({
   moduleId: module.id,
   selector: 'angular2-service-finder-app',
