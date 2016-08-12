@@ -43,6 +43,9 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
     // }else{
     //   console.log('org detail input org is empty');
     // }
+
+    this._initMapInstance(this.mapElement.nativeElement);
+
   }
 
 
@@ -82,6 +85,12 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
 
   }
 
+  private _initMapInstance(el: any) {
+    console.log('init detail map');
+
+      this.mapService.createDetailMap(el);
+  }
+
   ngOnDestroy() {
     if (this.sub) {this.sub.unsubscribe();}
     if (this.subLocation) {this.subLocation.unsubscribe();}
@@ -102,7 +111,8 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
     console.debug('org detail - init map');
     if (this.mapElement != null && this.organisation != null)
     {
-      this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
+      // this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
+      this.mapService.addDetailMarker(this.organisation);
     }
   }
 

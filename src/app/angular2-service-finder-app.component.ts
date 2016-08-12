@@ -22,7 +22,7 @@ import '../modernizr-custom.js';
       'angular2-service-finder-app.component.css',
       'angular2-service-finder-app.component.media.css'],
   directives: [ROUTER_DIRECTIVES],
-  providers: [OrganisationService, ProviderTypesService, GeolocationService, MapService]
+  providers: [OrganisationService, ProviderTypesService, GeolocationService]
 })
 
 export class Angular2ServiceFinderAppComponent implements OnInit  {

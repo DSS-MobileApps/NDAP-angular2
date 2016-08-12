@@ -63,6 +63,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngOnInit () {
     console.info('INIT MapComponent');
 
+    this._initMapInstance(this.mapElement.nativeElement);
+
     // Subscribes to the list of search results of the providers
     this.subscribeToOrganisationListUpdates();
 
@@ -81,6 +83,26 @@ export class MapComponent implements OnInit, AfterViewInit {
     if (this.subLocation) {this.subSelected.unsubscribe();}
   }
 
+  private _initMapInstance(el: any) {
+    console.log('init main map');
+
+      this.mapService.createMap(el
+      //   {
+      //   center: {lat: this.latitude || 0, lng: this.longitude || 0},
+      //   zoom: this.zoom,
+      //   disableDefaultUI: this.disableDefaultUI,
+      //   backgroundColor: this.backgroundColor,
+      //   draggableCursor: this.draggableCursor,
+      //   draggingCursor: this.draggingCursor,
+      //   keyboardShortcuts: this.keyboardShortcuts,
+      //   zoomControl: this.zoomControl,
+      //   styles: this.styles,
+      //   streetViewControl: this.streetViewControl,
+      //   scaleControl: this.scaleControl
+      // }
+    );
+  }
+
   subscribeToOrganisationListUpdates() {
     this.subOrgs = this.organisationService.orgListSource$
     .subscribe(
@@ -88,8 +110,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         // set the map.comp Org Array to match the results
         this.organisations = organisations;
         // convert the lat/lng to number for google api to work
-        //this.convertOrgArrayLatLngStringToNum(organisations);
-        this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
+        // this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
+        this.mapService.AddMarkers(this.organisations);
       },
       error =>  console.log(error));
   }
@@ -124,7 +146,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   initMap() {
-    this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
+    // this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
   }
 
     //this.markerService.createMarker(this.map);

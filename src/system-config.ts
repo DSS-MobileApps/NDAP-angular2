@@ -8,9 +8,9 @@ const map: any = {
 
 /** User packages configuration. */
 const packages: any = {
-  'angular2-google-maps': {
-    defaultExtension: 'js',
-  },
+  // 'angular2-google-maps': {
+  //   defaultExtension: 'js',
+  // },
   'markerclustererplus': {
     defaultExtension: 'js',
     main: 'dist/markerclusterer.min.js'
