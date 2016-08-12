@@ -60,7 +60,7 @@ export class nglocationService {
 
     displayLocation = (latitude,longitude) => {
 
-      this.http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true')
+      this.http.get('//maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true')
         .subscribe(
           response => {
 

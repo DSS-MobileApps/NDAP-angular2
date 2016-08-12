@@ -163,7 +163,7 @@ export class GeolocationService {
 			loc.latitude = position.coords.latitude;
 			loc.longitude = position.coords.longitude;
 
-      this.http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+loc.latitude+','+loc.longitude+'&sensor=true')
+      this.http.get('//maps.googleapis.com/maps/api/geocode/json?latlng='+loc.latitude+','+loc.longitude+'&sensor=true')
         .subscribe(
           response => {
 

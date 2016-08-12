@@ -1,4 +1,4 @@
-import { Injectable }     from '@angular/core';
+import { Injectable, Inject }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 
@@ -7,9 +7,10 @@ import { ProviderType }   from './provider-type';
 @Injectable()
 export class ProviderTypesService {
 
-  constructor (private http: Http) {}
+  constructor (private http: Http,
+    @Inject('API_URL') private apiUrl: string) {}
 
-  /*  
+  /*
   *************************************
   * API Calls
   *************************************
@@ -17,10 +18,10 @@ export class ProviderTypesService {
 
   // All Provider Types (URL) (800ms on average)
   private getAllProviderTypesUrl =
-    'http://finder.dss.gov.au/disability/ndap/api/utilities/getallprovidertypes/NDAP';
+    '/api/utilities/getallprovidertypes/NDAP';
 
 
-  /*  
+  /*
   *************************************
   * Methods that the Service returns
   *************************************
@@ -28,7 +29,7 @@ export class ProviderTypesService {
 
   // Get all Types
   getProviderTypes(): Observable<ProviderType[]> {
-    return this.http.get(this.getAllProviderTypesUrl)
+    return this.http.get(this.apiUrl + this.getAllProviderTypesUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
   }

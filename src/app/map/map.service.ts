@@ -140,11 +140,12 @@ export class MapService {
   }
 
   private loadAPI() {
+    console.log('load Google Maps API');
     const script = this.document.createElement('script');
     script.type = 'text/javascript';
     script.async = true;
     script.defer = true;
-    script.src = "https://maps.googleapis.com/maps/api/js?key=" + this.apiKey;
+    script.src = "//maps.googleapis.com/maps/api/js?key=" + this.apiKey;
     this.document.body.appendChild(script);
   }
 }
