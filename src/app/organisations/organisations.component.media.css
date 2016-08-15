@@ -17,6 +17,10 @@
       font-size: 16px;
       text-transform: uppercase;
   }
+  #tabs-list-map-view li .lnr{
+    margin-right: 10px;
+
+  }
 }
 
 /* Small devices (tablets, 768px and up) */

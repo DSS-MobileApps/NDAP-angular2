@@ -23,4 +23,5 @@ export class Organisation implements NDAPMarker {
   PostalState: string;
   PostalPostcode: string;
   PostalSuburb: string;
+  Funding: string;
 }

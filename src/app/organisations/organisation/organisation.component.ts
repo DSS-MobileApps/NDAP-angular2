@@ -78,7 +78,8 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
     if (this.selectedOrganisation){
       this.getOrganisationById(organisation.Id);
     }else{
-      this.goBack();
+      // this.goBack();
+      this.onUnselect(null);
     }
 
   }
@@ -97,13 +98,18 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
 
   }
 
-  goBack() {
-    // this.router.navigate(['/']);
-    window.history.back();
-  }
-  deselect() {
-    this.organisationService.updateSelectedOrganisation(null);
-    this.router.navigate(['/']);
+  // goBack() {
+  //   // this.router.navigate(['/']);
+  //   window.history.back();
+  // }
+  // deselect() {
+  //   this.organisationService.updateSelectedOrganisation(null);
+  //   this.router.navigate(['/']);
+  // }
+  onUnselect(selectedOrg: any) {
+    // this.organisationService.updateSelectedOrganisation(null);
+    this.router.navigate(['/organisations']);
+    // this.goBack();
   }
 
 }

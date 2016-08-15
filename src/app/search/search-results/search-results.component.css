@@ -98,6 +98,11 @@ button#searchbtn:focus, button#searchbtn:hover {
 
 }
 
+#tabs-list-map-view li .lnr{
+  margin-right: 10px;
+
+}
+
 /*.has-results:not(.detail-open):not(.search-mode) #tabs-list-map-view{
   opacity: 1;
 }*/

@@ -213,9 +213,15 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     return this.organisations.length > 0;
   }
 
-
-
   refreshPosition(){
     this._geolocationService.getLocation(this.opts);
   }
+
+  onUnselect(selectedOrg: any) {
+    // this.organisationService.updateSelectedOrganisation(null);
+    // this.router.navigate(['/organisations']);
+    // this.goBack();
+  }
+
+
 }

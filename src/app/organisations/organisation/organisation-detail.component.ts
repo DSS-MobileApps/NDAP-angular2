@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, Input  } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter  } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MapService } from '../../map/map.service';
@@ -20,6 +20,9 @@ import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from '
 export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   @ViewChild('mapdetail') mapElement: ElementRef;
   @Input() organisation: Organisation;
+  @Output() onUnselected = new EventEmitter<any>();
+
+
   private sub: any;
   private subLocation: any;
   private subOrgId: any;
@@ -149,8 +152,20 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   // }
   deselect() {
     this.organisationService.updateSelectedOrganisation(null);
+    this.onUnselected.emit(null);
     // this.router.navigate(['/']);
     // this.goBack();
+  }
+
+  get fundingSource(){
+    if (this.organisation.Funding == "Commonwealth"){
+      return "Commonwealth funded";
+    }
+    else if (this.organisation.Funding == "State"){
+      return "State funded";
+    }
+    return "";
+
   }
 
   get googleMapsLink(){

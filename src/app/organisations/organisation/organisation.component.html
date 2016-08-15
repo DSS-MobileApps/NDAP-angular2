@@ -1,5 +1,5 @@
 <div class="row"  [@enterLeave]="'in'" id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
   <div class="col-xs-12"  >
-      <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
+      <organisation-detail [organisation]="selectedOrganisation" (onUnselected)="onUnselect($event)"></organisation-detail>
   </div>
 </div>
