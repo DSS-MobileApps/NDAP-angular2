@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProviderTypesComponent } from './search-categories/index';
@@ -33,6 +33,7 @@ export class RefinerComponent {
   title = 'Refiner Options';
   postCode: number;
   refiners: Refiner[];
+  @ViewChild(ProviderTypesComponent) private refinerComponent: ProviderTypesComponent;
 
   private subRefiners: any;
 
@@ -59,7 +60,14 @@ export class RefinerComponent {
 
   private updateRefiners(refiners: Refiner[]) {
     this.refiners = refiners;
-    console.log('refiners updates - Refiner component');
+    if (this.refiners && this.refiners.length > 0){
+      // update existing refiner value
+      console.log('refiners updates - Refiner component');
+    }else{
+      console.log('refiners updates - no refiners');
+        this.refinerComponent.selectedProviderType = null;
+    }
+
   }
 
   onRefineProviderType (selectedProviderType: ProviderType) {

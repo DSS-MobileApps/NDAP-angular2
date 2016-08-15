@@ -20,12 +20,15 @@ export class MapService {
   private infoWindow: google.maps.InfoWindow;
   private markerSelectedSource = new Subject<string>();
   private areaMarkers = Object.create(null);
+  // private areaMarkers = [];
   markerSelected$ = this.markerSelectedSource.asObservable();
 
   private _map: Promise<google.maps.Map>;
   private _mapResolver: (value?: google.maps.Map) => void;
   private _detailmap: Promise<google.maps.Map>;
   private _detailmapResolver: (value?: google.maps.Map) => void;
+  private _markers: google.maps.Marker[];
+  private _markerCluster: any;
 
   private mapProp = {
         // center: new google.maps.LatLng(51.508742,-0.120850),
@@ -49,7 +52,7 @@ export class MapService {
 
       this._map = new Promise<google.maps.Map>((resolve: () => void) => { this._mapResolver = resolve; });
       this._detailmap = new Promise<google.maps.Map>((resolve: () => void) => { this._detailmapResolver = resolve; });
-
+      this._markers = [];
     //retrieve apikey
     // this.loadAPI();
     // this.styledMapType = new google.maps.StyledMapType([{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e9e9e9"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":21}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}]);
@@ -95,7 +98,7 @@ export class MapService {
   AddMarkers(data: NDAPMarker[]) {
 
     this._map.then((map: google.maps.Map) => {
-
+      this.clearAllMarkers();
       this.addAreaMarkers(data);
       // let bounds = this.addAreaMarkers(data);
       // map.fitBounds(bounds);
@@ -158,12 +161,27 @@ export class MapService {
     });
 }
 
+private clearAllMarkers() {
+  console.debug('clear all markers');
+  // Clear marker cluster
+  if (this._markerCluster) {
+    this._markerCluster.setMap(null);
+  }
+
+  //Clear markers
+  if (this._markers){
+    this._markers.map( marker => marker.setMap(null) );
+  }
+  this._markers = [];
+
+}
 
   private addAreaMarkers(data: NDAPMarker[]) {
     this._map.then((map: google.maps.Map) => {
       let bounds = new google.maps.LatLngBounds();
       let service = this;
-      let markers: google.maps.Marker[] = [];
+      // let markers: google.maps.Marker[] = [];
+      this._markers = [];
       var isIE11 = !!(navigator.userAgent.match(/Trident/) && navigator.userAgent.match(/rv[ :]11/));
       for (let item of data) {
         let latLng = new google.maps.LatLng(item.Lat, item.Lng);
@@ -182,13 +200,14 @@ export class MapService {
           service.selectMarkerInternal(result);
         });
         this.areaMarkers[item.Id] = result;
-        markers.push(result);
+        // markers.push(result);
+        this._markers.push(result);
         bounds.extend(latLng);
       }
       let options: any = {
         imagePath: 'vendor/markerclustererplus/images/m'
       }
-      var markerCluster = new MarkerClusterer(map, markers, options);
+      this._markerCluster = new MarkerClusterer(map, this._markers, options);
       map.fitBounds(bounds);
       return bounds;
     });

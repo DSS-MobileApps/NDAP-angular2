@@ -2,6 +2,8 @@ import { Injectable, Inject }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 import { ProviderType, Refiner } from '../search/index';
 
@@ -298,6 +300,7 @@ export class OrganisationService {
     let errMsg = error.message || error.statusText || 'Server error';
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
+    // error.json().error || 'Server error'
   }
 
 

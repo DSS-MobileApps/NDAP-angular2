@@ -157,11 +157,11 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
     // this.goBack();
   }
 
-  get fundingSource(){
-    if (this.organisation.Funding == "Commonwealth"){
+  get fundingSourceFormatted(){
+    if (this.organisation.FundingSource == "Commonwealth"){
       return "Commonwealth funded";
     }
-    else if (this.organisation.Funding == "State"){
+    else if (this.organisation.FundingSource == "State"){
       return "State funded";
     }
     return "";

@@ -46,6 +46,10 @@
               <h5><span class="lnr lnr-store"></span>Advocacy Services</h5>
               <p style="white-space: pre-wrap;">{{organisation?.FurtherDetails}}</p>
             </li>
+            <li *ngIf="organisation?.Comments" class="list-group-item col-xs-12">
+              <h5><span class="lnr lnr-question-circle"></span>Additional information</h5>
+              <p style="white-space: pre-wrap;">{{organisation?.Comments}}</p>
+            </li>
             <!-- <li class="list-group-item">Category: {{organisation.Category}}</li> -->
             <li class="list-group-item col-xs-12 col-sm-6">
               <h5><span class="lnr lnr-tag"></span>Provider Types</h5>
@@ -95,7 +99,7 @@
                 Directions
               </a>
             </li>
-            <li class="col-xs-12 col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-license"></span>Funded by</h5><span>{{organisation?.Funding}}</span></li>
+            <li class="col-xs-12 col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-license"></span>Funded by</h5><span>{{organisation?.FundingSource}}</span></li>
 
           </ul>
             <!-- <hr class="list-group col-xs-12"> -->
