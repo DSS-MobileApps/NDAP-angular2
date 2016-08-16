@@ -17,16 +17,24 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { APP_ROUTER_PROVIDERS } from './angular2-service-finder-app.routes';
 
+import { SearchAreaComponent, SearchResultsComponent } from './search/index';
+import { OrganisationComponent } from './organisations/organisation/organisation.component';
+
+
 import { environment } from './';
 
 
 @NgModule({
-    declarations: [Angular2ServiceFinderAppComponent],
+    declarations: [Angular2ServiceFinderAppComponent, SearchAreaComponent],
     imports:      [BrowserModule,
                   // Router
                   RouterModule,//.forRoot(config),
                   // Forms
                   FormsModule,
+                  RouterModule.forChild([
+                      { path: 'organisations', component: SearchResultsComponent },
+                      { path: 'organisation/:id', component: OrganisationComponent }
+                    ])
                   ],
     providers:    [// ROUTER_PROVIDERS,
                     APP_ROUTER_PROVIDERS,

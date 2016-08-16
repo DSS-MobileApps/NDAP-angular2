@@ -115,11 +115,11 @@ stylesheet. */
 @media(min-width:768px){
 
   #mapitem {
-      height: 200px;
+      height: 100px;
   }
 
   #google-maps-link{
-    margin-top: 10px;
+    margin-top: -15px;
   }
 
 
@@ -127,6 +127,23 @@ stylesheet. */
 /* Medium devices (desktops, 992px and up) */
 @media(min-width:992px){
 
+
 }
 /* Large devices (large desktops, 1200px and up) */
-@media(min-width:1200px){}
+@media(min-width:1200px){
+  #mapitem {
+      height: 120px;
+  }
+  #google-maps-link{
+    margin-top: 5px;
+  }
+}
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1600px){
+  #mapitem {
+      height: 200px;
+  }
+  #google-maps-link{
+    margin-top: 10px;
+  }
+}

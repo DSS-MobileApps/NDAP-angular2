@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
   locationChecked: boolean;
   locationAllowed: boolean = false;
   locationPos: GeoLocation;
-  textPlaceholder = "Enter a Postcode...";
+  textPlaceholder = "Type...";
   private locatingPosition: boolean;
 
   private subLocation: any;
@@ -56,7 +56,7 @@ export class SearchComponent implements OnInit {
             console.log("search menu position updated: " + new Date());
             this.locationPos = loc;
             this.locatingPosition = false;
-            this.textPlaceholder = "Enter a postcode...";
+            this.textPlaceholder = "Type...";
 
             if (this.locationPos.valid){
               this.onLocationIdentified(loc.postcode);
@@ -70,7 +70,8 @@ export class SearchComponent implements OnInit {
       error => {
         console.log(error);
         this.locatingPosition = false;
-        this.textPlaceholder = "Enter a postcode...";
+        this.textPlaceholder = "Type...";
+        // this.textPlaceholder = "Enter a postcode...";
       });
 
   }
@@ -133,7 +134,7 @@ export class SearchComponent implements OnInit {
     this.locationChecked = true;
     if (allowed){
       this.locatingPosition = true;
-      this.textPlaceholder = "Locating postcode...";
+      this.textPlaceholder = "Locating...";
       this.geolocationService.getLocation(null);
     }else{
       this.geolocationService.enableLocation(false);

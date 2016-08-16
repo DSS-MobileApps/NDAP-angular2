@@ -34,7 +34,7 @@
         <!--Enter a location-->
         <form (ngSubmit)="onPostCodeSearch(postCode)" #postcodeForm="ngForm">
         <div class="form-group" [class.has-warning]="postcodeWarning" [class.has-error]="postcodeError">
-        <label class="control-label " for="locationInput">Postcode</label>
+        <label class="control-label " for="locationInput">Your Postcode</label>
         <div class="input-group">
         <input type="tel"
             class="form-control input-lg"
@@ -82,7 +82,7 @@
 
       </div>
 
-      <a href="#collapseAdvanced" class="btn btn-link pull-right"
+      <a href="#collapseAdvanced" class="btn btn-link pull-right more-link"
        data-toggle="collapse" aria-expanded="false" aria-controls="collapseAdvanced">more options</a>
 
       <div class="row collapse" id="collapseAdvanced">
