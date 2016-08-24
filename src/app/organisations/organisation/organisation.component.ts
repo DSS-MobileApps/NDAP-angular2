@@ -48,17 +48,22 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
       }
 
   ngOnInit() {
-    // this.initMap();
-    this.subRoute = this.route
-      .params
-      .subscribe(params => {
-        let id = +params['id'];
-        if (id > 0){
-          console.log('id is ' + id);
-          // Set organisation to the one returned
-          this.getOrganisationById(id);
-        }
-      });
+/** Use this subscribe if changing params within this same component */
+    // this.subRoute = this.route
+    //   .params
+    //   .subscribe(params => {
+    //     let id = +params['id'];
+    //     if (id > 0){
+    //       console.log('id is ' + id);
+    //       // Set organisation to the one returned
+    //       this.getOrganisationById(id);
+    //     }
+    //   });
+
+    /** Use this if params never change in same component  ie. no router link to same component */
+      // (+) converts string 'id' to a number
+      let id = +this.route.snapshot.params['id'];
+      this.getOrganisationById(id);
 
     this.sub = this.organisationService.selectedOrganisation$
       .subscribe(
@@ -68,7 +73,7 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.subRoute.unsubscribe();
+    // this.subRoute.unsubscribe();
     this.sub.unsubscribe();
   }
 
@@ -79,7 +84,7 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
       this.getOrganisationById(organisation.Id);
     }else{
       // this.goBack();
-      this.onUnselect(null);
+      // this.onUnselect(null);
     }
 
   }
@@ -106,9 +111,16 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
   //   this.organisationService.updateSelectedOrganisation(null);
   //   this.router.navigate(['/']);
   // }
-  onUnselect(selectedOrg: any) {
+  onUnselect(selectedOrg: Organisation) {
     // this.organisationService.updateSelectedOrganisation(null);
-    this.router.navigate(['/organisations']);
+    console.group('Unselect Org:');
+    console.log(selectedOrg);
+    if (selectedOrg){
+      this.router.navigate(['/organisations', {o: selectedOrg.Id}]);
+    }else{
+      this.router.navigate(['/organisations']);
+    }
+    console.groupEnd();
     // this.goBack();
   }
 

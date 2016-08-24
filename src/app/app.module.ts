@@ -32,6 +32,7 @@ import { environment } from './';
                   // Forms
                   FormsModule,
                   RouterModule.forChild([
+                    { path: 'search', component: SearchAreaComponent },
                       { path: 'organisations', component: SearchResultsComponent },
                       { path: 'organisation/:id', component: OrganisationComponent }
                     ])

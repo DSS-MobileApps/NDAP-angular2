@@ -6,7 +6,7 @@
       <h5 class="panel-title">{{organisation.Name}}</h5>
     </div> -->
     <div class="panel-body" >
-        <h4><a (click)="onSelect(organisation)">{{organisation.Name}}</a></h4>
+        <h4><a href="#" (click)="onSelect(organisation)">{{organisation.Name}}</a></h4>
         <span class="pull-left"><span class="lnr lnr-map-marker"></span>{{organisation.Suburb}}, {{organisation.Postcode}}</span>
         <span *ngFor="let category of organisation.Category | commaSplitArray" class="label label-default pull-right">{{category}}</span>
 

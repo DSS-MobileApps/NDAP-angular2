@@ -151,8 +151,8 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   //   window.history.back();
   // }
   deselect() {
+    this.onUnselected.emit(this.organisation);
     this.organisationService.updateSelectedOrganisation(null);
-    this.onUnselected.emit(null);
     // this.router.navigate(['/']);
     // this.goBack();
   }

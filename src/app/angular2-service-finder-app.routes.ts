@@ -9,33 +9,38 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 
 export const routes: RouterConfig = [
-  {
-    path: 'organisations/:id',
-    component: SearchResultsComponent //OrganisationsComponent
-  },
+  // {
+  //   path: 'organisations/:id',
+  //   component: SearchResultsComponent //OrganisationsComponent
+  // },
   {
     path: 'organisations',
-    component: SearchResultsComponent // OrganisationsComponent
+    // component: SearchResultsComponent, // OrganisationsComponent
+    loadChildren: 'app/search/search-results/search-results.component#SearchResultsComponent' //crisis-center.module#CrisisCenterModule'
   },
 
   {
     path: 'organisation/:id',
-    component: OrganisationComponent
-  },
+    // component: OrganisationComponent
+    loadChildren: 'app/organisations/organisation/organisation.component#OrganisationComponent'
+},
 
   {
     path: 'search',
-    component: SearchAreaComponent
+    // component: SearchAreaComponent
+    loadChildren: 'app/search/search-area.component#SearchAreaComponent'
   },
 
   {
     path: 'about',
-    component: AboutComponent
+    // component: AboutComponent
+    loadChildren: 'app/about/about.component#AboutComponent'
   },
 
   {
     path: 'contact',
-    component: ContactComponent
+    // component: ContactComponent
+    loadChildren: 'app/contact/contact.component#ContactComponent' 
   },
 
 
@@ -44,10 +49,15 @@ export const routes: RouterConfig = [
   path: '',
   component: OrganisationsComponent
 },
+// {
+//   path: '',
+//   redirectTo: '/search',
+//   pathMatch: 'full'
+// },
 
 // Catch all for any undefined URL
   {
-  path: '*',
+  path: '**',
   component: OrganisationsComponent
   }
 ];

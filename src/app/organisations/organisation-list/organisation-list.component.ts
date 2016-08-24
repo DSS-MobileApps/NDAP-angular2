@@ -24,6 +24,7 @@ export class OrganisationListComponent implements OnInit {
 
   onSelect(org: Organisation) {
     this.onSelectionChanged.emit(org);
+    return false;
   }
 
 }
