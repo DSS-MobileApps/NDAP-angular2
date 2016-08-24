@@ -12,6 +12,214 @@ html, body{
 }
 
 
+
+
+  #header, #footer
+  {
+      background: #ffffff;
+      color: #005A70;
+  }
+
+  header{
+    z-index: 10;
+    position: relative;
+    background-color: #fff;
+  }
+  #header{
+    box-shadow: 0 1px 10px 0px rgba(0,0,0,0.25);
+
+  }
+
+  a{
+    color: #005A70;
+  }
+
+  #layout.container-fluid{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding: 0;
+  }
+
+
+
+  header{
+    /*height: 120px;*/
+    padding: 0 15px;
+  }
+  main{
+    padding: 0 15px;
+    height: 100%;
+    flex: 1;
+    /*overflow-y: hidden;*/
+    overflow-y: auto;
+    align-self: stretch;
+
+  }
+  footer{
+    padding: 0 15px;
+    max-height: 50px;
+  }
+
+
+
+  header h1{
+    /*font-family: helvetica;*/
+    color: #005A70;
+    font-size: 1.2em;
+  }
+
+  .navbar{
+    margin-bottom: 0;
+  }
+  .navbar-toggle .icon-bar{
+    background-color: #005A70;
+
+  }
+
+  a{
+    color: #005A70;
+  }
+
+  .sideBar
+  {
+      background: #ffffff;
+  }
+
+  .logo img {
+      max-height: 100px;
+      padding: 20px 0;
+  }
+  .logo{
+  }
+
+  .page-container{
+    padding: 10px 30px;
+  }
+
+  #footer{
+  /*box-shadow: 0px 5px 10px 7px rgba(0,0,0,0.25);*/
+  border-top: 1px solid #eee;
+  /*#005A70;*/
+  padding-top: 5px;
+
+  }
+
+
+  .launch main{
+    /*padding-top: 50px;*/
+    height: 100%;
+    /*background-color: #eee;*/
+
+  }
+
+
+
+
+.mdl-button {
+    background: 0 0;
+    border: none;
+    border-radius: 2px;
+    color: #000;
+    position: relative;
+    height: 36px;
+    margin: 0;
+    min-width: 64px;
+    padding: 0 16px;
+    display: inline-block;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    overflow: hidden;
+    will-change: box-shadow;
+    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+}
+
+.mdl-button--fab {
+    border-radius: 50%;
+    font-size: 24px;
+    height: 56px;
+    margin: auto;
+    min-width: 56px;
+    width: 56px;
+    padding: 0;
+    overflow: hidden;
+    background: rgba(158,158,158,.2);
+    box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+    position: relative;
+    line-height: normal;
+}
+.mdl-shadow--4dp {
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+}
+.mdl-shadow--8dp {
+    box-shadow: 0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12),0 5px 5px -3px rgba(0,0,0,.2);
+}
+.mdl-color--accent {
+    background-color: #005A70 !important;
+}
+.mdl-button--fab.mdl-button--colored {
+    color: #fff;
+}
+
+.btn-primary{
+  background-color: #005A70;
+}
+.btn-default{
+  color: #005A70;
+}
+
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:focus,
+.dropdown-menu>.active>a:hover{
+  background-color: #005A70;
+}
+
+.nav-tabs>li>a.active:hover,
+.nav-tabs>li>a.active:focus:hover {
+    color: #005A70;
+}
+
+.nav-tabs>li>a.active,
+.nav-tabs>li>a.active:focus {
+    -webkit-box-shadow: inset 0 -2px 0 #005A70;
+    box-shadow: inset 0 -2px 0 #005A70;
+    color: #005A70;
+}
+
+
+.text-primary {
+    color: #005A70;
+}
+
+textarea:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+[type=text].form-control:focus,
+[type=password].form-control:focus,
+[type=email].form-control:focus,
+[type=tel].form-control:focus,
+[contenteditable].form-control:focus {
+    -webkit-box-shadow: inset 0 -2px 0 #005A70;
+    box-shadow: inset 0 -2px 0 #005A70;
+}
+
+
+
+/*Spinner */
 #loading{
   padding: 100px 30px;
   font-size:2em;
@@ -122,206 +330,44 @@ html, body{
 }
 
 
-  #header, #footer
-  {
-      background: #ffffff;
-      color: #005A70;
-  }
+/*BS4*/
+/*
+@media(min-width:34em){}
+@media(min-width:48em){}
+@media(min-width:62em){}
+@media(min-width:75em){}*/
 
-  header{
-    z-index: 10;
-    position: relative;
-    background-color: #fff;
-  }
-  #header{
-    box-shadow: 0 1px 10px 0px rgba(0,0,0,0.25);
+/* BS3 */
 
-  }
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media(max-width:767px){
 
+}
 
-  #layout.container-fluid{
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    padding: 0;
-  }
-
-
-
-  header{
-    /*height: 120px;*/
-    padding: 0 15px;
-  }
-  main{
-    padding: 0 15px;
-    height: 100%;
-    flex: 1;
-    /*overflow-y: hidden;*/
-    overflow-y: auto;
-    align-self: stretch;
-
-  }
-  footer{
-    padding: 0 15px;
-    max-height: 50px;
-  }
-
-
-
+/* Small devices (tablets, 768px and up) */
+@media(min-width:768px){
   header h1{
-    /*font-family: helvetica;*/
+    margin-top: 3rem;
+
+    font-size: 2em;
+  }
+  #global-navbar .navbar-nav a{
     color: #005A70;
-    font-size: 1.2em;
+    padding: 5px 10px;
   }
-
-  .navbar{
-    margin-bottom: 0;
-  }
-  .navbar-toggle .icon-bar{
-    background-color: #005A70;
+  #global-navbar .navbar-nav a.active {
+    border-bottom: 3px solid #005A70;
 
   }
 
-  a{
-    color: #005A70;
-  }
-
-  .sideBar
-  {
-      background: #ffffff;
-  }
-
-  .logo img {
-      max-height: 100px;
-      padding: 20px 0;
-  }
-  .logo{
-  }
-
-  #footer{
-  /*box-shadow: 0px 5px 10px 7px rgba(0,0,0,0.25);*/
-  border-top: 1px solid #eee;
-  /*#005A70;*/
-  padding-top: 5px;
-
-  }
-
-
-  .launch main{
-    /*padding-top: 50px;*/
-    height: 100%;
-    /*background-color: #eee;*/
-
-  }
-
-  /*BS4*/
-  /*
-  @media(min-width:34em){}
-  @media(min-width:48em){}
-  @media(min-width:62em){}
-  @media(min-width:75em){}*/
-
-  /* BS3 */
-
-  /* Extra small devices (phones, less than 768px) */
-  /* No media query since this is the default in Bootstrap */
-  @media(max-width:767px){
-
-  }
-
-  /* Small devices (tablets, 768px and up) */
-  @media(min-width:768px){
-    header h1{
-      margin-top: 3rem;
-
-      font-size: 2em;
-    }
-    #global-navbar .navbar-nav a{
-      color: #005A70;
-      padding: 5px 10px;
-    }
-    #global-navbar .navbar-nav .active a{
-      border-bottom: 3px solid #005A70;
-
-    }
-
-  }
-  /* Medium devices (desktops, 992px and up) */
-  @media(min-width:992px){
-    header h1{
-      font-size: 2.5em;
-    }
-
-  }
-  /* Large devices (large desktops, 1200px and up) */
-  @media(min-width:1200px){}
-
-
-  #header, #footer
-  {
-  }
-  header{
-  }
-
-
-
-.mdl-button {
-    background: 0 0;
-    border: none;
-    border-radius: 2px;
-    color: #000;
-    position: relative;
-    height: 36px;
-    margin: 0;
-    min-width: 64px;
-    padding: 0 16px;
-    display: inline-block;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0;
-    overflow: hidden;
-    will-change: box-shadow;
-    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
-    outline: none;
-    cursor: pointer;
-    text-decoration: none;
-    text-align: center;
-    line-height: 36px;
-    vertical-align: middle;
 }
+/* Medium devices (desktops, 992px and up) */
+@media(min-width:992px){
+  header h1{
+    font-size: 2.5em;
+  }
 
-.mdl-button--fab {
-    border-radius: 50%;
-    font-size: 24px;
-    height: 56px;
-    margin: auto;
-    min-width: 56px;
-    width: 56px;
-    padding: 0;
-    overflow: hidden;
-    background: rgba(158,158,158,.2);
-    box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
-    position: relative;
-    line-height: normal;
 }
-.mdl-shadow--4dp {
-    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
-}
-.mdl-shadow--8dp {
-    box-shadow: 0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12),0 5px 5px -3px rgba(0,0,0,.2);
-}
-.mdl-color--accent {
-    background-color: #005A70 !important;
-}
-.mdl-button--fab.mdl-button--colored {
-    color: #fff;
-}
-
-.btn-primary{
-  background-color: #005A70;
-}
-.btn-default{
-  color: #005A70;
-}
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1200px){}
