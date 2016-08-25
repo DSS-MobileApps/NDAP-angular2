@@ -19,7 +19,8 @@ import { APP_ROUTER_PROVIDERS } from './angular2-service-finder-app.routes';
 
 import { SearchAreaComponent, SearchResultsComponent } from './search/index';
 import { OrganisationComponent } from './organisations/organisation/organisation.component';
-
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
 
 import { environment } from './';
 
@@ -32,9 +33,12 @@ import { environment } from './';
                   // Forms
                   FormsModule,
                   RouterModule.forChild([
-                    { path: 'search', component: SearchAreaComponent },
+                      { path: 'search', component: SearchAreaComponent },
                       { path: 'organisations', component: SearchResultsComponent },
-                      { path: 'organisation/:id', component: OrganisationComponent }
+                      { path: 'organisation/:id', component: OrganisationComponent },
+                      { path: 'about', component: AboutComponent },
+                      { path: 'contact', component: ContactComponent }
+
                     ])
                   ],
     providers:    [// ROUTER_PROVIDERS,
