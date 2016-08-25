@@ -75,9 +75,9 @@
             <div class="visible-sm-block clearfix"></div>
             <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-earth"></span>Website</h5><a href="{{organisation?.Website | webLink}}" target="_blank">{{organisation?.Website}}</a></li>
             <div class="hidden-sm clearfix"></div>
+            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-phone"></span>Alt. Phone</h5><a href="{{organisation?.AltTelephoneNumber | phoneLink}}">{{organisation?.AltTelephoneNumber}}</a></li>
             <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-clock"></span>Business Hours</h5><span>{{organisation?.BusinessHours}}</span></li>
           <div class="visible-sm-block clearfix"></div>
-          <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-phone"></span>Alt. Phone</h5><a href="{{organisation?.AltTelephoneNumber | phoneLink}}">{{organisation?.AltTelephoneNumber}}</a></li>
             <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-printer"></span>Fax</h5><span>{{organisation?.Fax}}</span></li>
             <!-- <li class="list-group-item">Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li> -->
             <!-- <a class="list-group-item"><h5>Distance</h5>{{organisation.Distance}}</a> -->
