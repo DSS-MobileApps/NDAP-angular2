@@ -13,10 +13,13 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 
 import { HTTP_PROVIDERS } from '@angular/http';
-import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
+// Router
+import { RouterModule } from '@angular/router';
 import { APP_ROUTER_PROVIDERS } from './angular2-service-finder-app.routes';
 
+// Components for Router
 import { SearchAreaComponent, SearchResultsComponent } from './search/index';
 import { OrganisationComponent } from './organisations/organisation/organisation.component';
 import { AboutComponent } from './about/about.component';
