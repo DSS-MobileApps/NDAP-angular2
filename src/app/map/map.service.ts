@@ -15,6 +15,11 @@ declare var google: any;
 
 @Injectable()
 export class MapService {
+
+  private defaultCentreLat = -29;
+  private defaultCentreLng = 135;
+  private defaultZoom = 4;
+  
   private areaMap: google.maps.Map;
   private detailMap: google.maps.Map;
   private infoWindow: google.maps.InfoWindow;
@@ -179,6 +184,7 @@ private clearAllMarkers() {
   private addAreaMarkers(data: NDAPMarker[]) {
     this._map.then((map: google.maps.Map) => {
       let bounds = new google.maps.LatLngBounds();
+
       let service = this;
       // let markers: google.maps.Marker[] = [];
       this._markers = [];
@@ -209,6 +215,12 @@ private clearAllMarkers() {
       }
       this._markerCluster = new MarkerClusterer(map, this._markers, options);
       map.fitBounds(bounds);
+      if (data.length < 1){
+        map.setCenter({lat: this.defaultCentreLat, lng: this.defaultCentreLng});
+        map.setZoom(this.defaultZoom);
+      }else if (data.length == 1){
+        map.setZoom(16);
+      }
       return bounds;
     });
   }
