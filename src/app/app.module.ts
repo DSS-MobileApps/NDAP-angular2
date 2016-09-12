@@ -12,6 +12,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 
+import { AppState } from './app.service';
+
 import { HTTP_PROVIDERS } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
@@ -57,6 +59,7 @@ import { environment } from './';
                       return config;
                     }}),
                     MapService,
+                    AppState,
                     provide(Window, {useValue: window}),
                     provide(Document, {useValue: document}),
                     provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey}),

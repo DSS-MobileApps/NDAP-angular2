@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 // import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
+import { AppState } from './app.service';
+
 import { MapService } from './map/map.service';
 import { OrganisationService } from './organisations/organisation.service';
 // import { OrganisationsComponent } from './organisations/organisations.component';
@@ -42,7 +44,8 @@ export class Angular2ServiceFinderAppComponent implements OnInit  {
               private organisationService: OrganisationService,
               // ngLocation: nglocationService,
               private geolocationService: GeolocationService,
-              private mapService: MapService
+              private mapService: MapService,
+              public appState: AppState
             ) {
               // geolocationService.getLocation(this.opts);
 
@@ -50,6 +53,7 @@ export class Angular2ServiceFinderAppComponent implements OnInit  {
 
   ngOnInit() {
     // this.router.navigate(['/organisations']);
+    console.log('Initial App State', this.appState.state);
   }
 
     getSearchResults(){

@@ -8,6 +8,7 @@ import 'rxjs/add/observable/throw';
 import { ProviderType, Refiner } from '../search/index';
 
 import { Organisation }   from './organisation';
+import { AppState } from '../app.service';
 
 @Injectable()
 export class OrganisationService {
@@ -28,7 +29,9 @@ export class OrganisationService {
       organisations: Organisation[],
       refiners: Refiner[]
     };
-  constructor (private http: Http, @Inject('API_URL') private apiUrl: string) {
+  constructor (private http: Http,
+              @Inject('API_URL') private apiUrl: string,
+              public appState: AppState) {
       this.dataStore = { organisations: [], refiners: [] };
   }
 
@@ -137,6 +140,7 @@ export class OrganisationService {
         this.dataStore.organisations
         .filter((item) => item.Category === value)
       );
+      
 
       this.refinerList.next(this.dataStore.refiners);
 
@@ -167,6 +171,8 @@ export class OrganisationService {
 
   // Public Method called to get organisations list
   getByKeyword(keyword) {
+    this.appState.set('searchType', 'keyword');
+    this.appState.set('searchValue1', keyword);
 
     // clear refiners
     this.dataStore.refiners = [];
@@ -178,6 +184,8 @@ export class OrganisationService {
         let kLower = keyword.toLowerCase();
         this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
         this.orgListSource.next(this.dataStore.organisations);
+        this.appState.set('results', this.dataStore.organisations);
+
         this.selectedOrganisation.next(null);
         this.refinerList.next(this.dataStore.refiners);
       }
@@ -192,18 +200,22 @@ export class OrganisationService {
 
   // Public Method called to get organisations list
   searchOrgList(searchType, value1, value2) {
-
+    this.appState.set('searchType', searchType);
+    this.appState.set('searchValue1', value1);
+    this.appState.set('searchValue2', value2);
     // clear refiners
     this.dataStore.refiners = [];
 
     console.info('subscribe to get Orgs - check perf')
 
     this.getOrganisations(searchType, value1, value2).subscribe(
-      result => {
-        this.dataStore.organisations = result;
-        this.orgListSource.next(result);
+      results => {
+        this.dataStore.organisations = results;
+        this.orgListSource.next(results);
         this.selectedOrganisation.next(null);
         this.refinerList.next(this.dataStore.refiners);
+        this.appState.set('results', results);
+
       }
     )
   }
@@ -274,6 +286,8 @@ export class OrganisationService {
 
     updateSelectedOrganisation (selectedOrganisation){
       this.selectedOrganisation.next(selectedOrganisation);
+      this.appState.set('selectedOrganisation', selectedOrganisation);
+
     }
 
 
