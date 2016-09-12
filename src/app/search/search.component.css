@@ -43,6 +43,36 @@ input#locationInput {
 }
 
 
+
+
+.search-card-wide.mdl-card {
+  width: 100%;
+}
+.search-card-wide > .mdl-card__title {
+  color: #fff;
+  min-height: 100px;
+  background: #005A70;
+   /*url('../assets/demos/welcome_card.jpg') center / cover;*/
+}
+.search-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.search-card-wide > .mdl-card__supporting-text{
+  padding:40px 20px 20px;
+}
+
+.search-postcode{
+  max-width: 300px;
+}
+.search-postcode input.form-control {
+    min-width: 90px;
+}
+
+#collapseAdvanced{
+  padding-top: 10px;
+}
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 @media(max-width:767px){
@@ -62,6 +92,12 @@ input#locationInput {
   .main-title{
     margin: 30px 15px;
   }
+
+  .search-card-wide.mdl-card {
+    width: 500px;
+  }
+
+
 
 }
 /* Medium devices (desktops, 992px and up) */
@@ -88,10 +124,14 @@ input#locationInput {
   #primary-search-row .input-lg {
     height: 72px;
   }
-.more-link{
-  font-size: 2rem;
-  margin-bottom: 40px;
-}
+  .more-link{
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+  .search-postcode{
+    max-width: 400px;
+  }
+
 
 }
 /* Large devices (large desktops, 1200px and up) */
@@ -103,6 +143,7 @@ input#locationInput {
   .more-link{
 
   }
+
 
 
 }

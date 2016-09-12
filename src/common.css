@@ -16,7 +16,8 @@ html, body{
 
   #header, #footer
   {
-      background: #ffffff;
+      /*background: #ffffff;*/
+      background: #f6f6f6;
       color: #005A70;
   }
 

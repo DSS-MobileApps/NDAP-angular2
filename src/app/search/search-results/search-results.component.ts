@@ -38,13 +38,13 @@ import {RemoveSpaces} from '../../shared/';
   animations: [
     trigger('enterLeave', [
       state('in', style({transform: 'translateY(0)'})),
-      transition('void => *', [
-        style({transform: 'translateY(100%)'}),
-        animate(200)
-      ]),
-      transition('* => void', [
-        animate(200, style({transform: 'translateY(-100%)'}))
-      ])
+      // transition('void => *', [
+      //   style({transform: 'translateY(100%)'}),
+      //   animate(200)
+      // ]),
+      // transition('* => void', [
+      //   animate(200, style({transform: 'translateY(-100%)'}))
+      // ])
     ])
   ]
 
