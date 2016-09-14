@@ -126,7 +126,7 @@ button#searchbtn:focus, button#searchbtn:hover {
     border: 0;
     border-bottom: 1px solid #eee;
     box-shadow: none;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
 }
 
 
