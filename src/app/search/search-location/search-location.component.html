@@ -23,10 +23,17 @@
   </div>
 </div> -->
 
-<button type="button" class="btn btn-default btn-lg has-spinner" [class.active]="locatingPosition"
+<!-- <button type="button" class="btn btn-default btn-lg has-spinner" [class.active]="locatingPosition"
  data-toggle="tooltip" data-placement="top" title="Find your current location and find providers servicing this area" data-original-title="Find your current location"
 (click)="onGetCurrentLocation()">
   <span [class.hidden]="!locatingPosition" class="btn-spinner"><i class='lnr lnr-sync spinning'></i> </span>
   <span [class.hidden]="locatingPosition"><span class="lnr lnr-location"></span> </span>
+  <span class="sr-only">Find your current location and find providers servicing this area</span>
+</button> -->
+<button type="button" class="btn btn-link has-spinner" [class.active]="locatingPosition"
+ data-toggle="tooltip" data-placement="top" title="Find your current location and find providers servicing this area" data-original-title="Find your current location"
+(click)="onGetCurrentLocation()">
+  <span [class.hidden]="!locatingPosition" class="btn-spinner"><i class='lnr lnr-sync spinning'></i> Locating</span>
+  <span [class.hidden]="locatingPosition">Use my current location </span>
   <span class="sr-only">Find your current location and find providers servicing this area</span>
 </button>

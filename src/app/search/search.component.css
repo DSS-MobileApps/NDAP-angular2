@@ -35,8 +35,21 @@
 }
 
 input#locationInput {
-    font-size: 30px;
+    font-size: 42px;
 }
+
+
+#primary-search-row .btn-lg,
+>>> #primary-search-row .btn-group-lg .btn {
+    padding: 18px 14px;
+  font-size: 20px;
+
+}
+#primary-search-row .input-lg {
+  height: 64px;
+}
+
+
 
 .main-title .lead{
   font-size: 1.6em;
@@ -59,11 +72,11 @@ input#locationInput {
 }
 
 .search-card-wide > .mdl-card__supporting-text{
-  padding:40px 20px 20px;
+  padding:40px 5px 20px;
 }
 
 .search-postcode{
-  max-width: 300px;
+  max-width: 240px;
 }
 .search-postcode input.form-control {
     min-width: 90px;
@@ -95,6 +108,9 @@ input#locationInput {
 
   .search-card-wide.mdl-card {
     width: 500px;
+  }
+  .search-card-wide > .mdl-card__supporting-text{
+    padding:40px 20px 20px;
   }
 
 
@@ -129,7 +145,7 @@ input#locationInput {
     margin-bottom: 40px;
   }
   .search-postcode{
-    max-width: 400px;
+    max-width: 300px;
   }
 
 

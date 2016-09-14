@@ -27,8 +27,14 @@ html, body{
     background-color: #fff;
   }
   #header{
-    box-shadow: 0 1px 10px 0px rgba(0,0,0,0.25);
+    /*box-shadow: 0 1px 10px 0px rgba(0,0,0,0.25);*/
+    /*box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);*/
 
+  }
+  .navbar{
+    box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
+
+    min-height: 50px;
   }
 
   a{
@@ -60,6 +66,8 @@ html, body{
   footer{
     padding: 0 15px;
     max-height: 50px;
+
+    display: none;
   }
 
 
@@ -78,7 +86,7 @@ html, body{
 
   }
 
-  a{
+  a, .btn-link{
     color: #005A70;
   }
 
@@ -292,12 +300,14 @@ html, body{
 }
 
 .nav-tabs>li>a.active,
-.nav-tabs>li>a.active:focus {
+.nav-tabs>li>a.active:focus,
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus:hover {
     -webkit-box-shadow: inset 0 -2px 0 #005A70;
     box-shadow: inset 0 -2px 0 #005A70;
     color: #005A70;
 }
-
 
 .text-primary {
     color: #005A70;
@@ -429,6 +439,62 @@ input[type=number]:focus,
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
   }
+}
+
+
+.btn-spinner {
+  display: inline-block;
+  opacity: 0;
+  width: 0;
+
+  -webkit-transition: opacity 0.25s, width 0.25s;
+  -moz-transition: opacity 0.25s, width 0.25s;
+  -o-transition: opacity 0.25s, width 0.25s;
+  transition: opacity 0.25s, width 0.25s;
+}
+/*.btn-default{
+  color: #005A70;
+}*/
+
+.has-spinner.active {
+  cursor:progress;
+}
+
+.has-spinner.active .btn-spinner {
+  opacity: 1;
+  width: auto; /* This doesn't work, just fix for unkown width elements */
+}
+
+.has-spinner.btn-mini.active .btn-spinner {
+    width: 10px;
+}
+
+.has-spinner.btn-small.active .btn-spinner {
+    width: 13px;
+}
+
+.has-spinner.btn.active .btn-spinner {
+    /*width: 16px;*/
+}
+
+.has-spinner.btn-large.active .btn-spinner {
+    width: 19px;
+}
+
+.glyphicon.spinning, .lnr.spinning  {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+    display: inline-block;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
 }
 
 

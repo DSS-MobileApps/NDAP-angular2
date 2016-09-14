@@ -9,7 +9,7 @@ import {GeolocationService, GeoLocation} from '../../shared/index';
   moduleId: module.id,
   selector: 'search-location',
   templateUrl: 'search-location.component.html',
-  styleUrls: ['search-location.component.css'],
+  // styleUrls: ['search-location.component.css'],
 })
 export class SearchLocationComponent implements OnInit {
   radiuslist: number[];
