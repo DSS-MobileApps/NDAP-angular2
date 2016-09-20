@@ -312,6 +312,11 @@ html, body{
     color: #fff;
 }
 
+.nav>li>a:hover,
+.nav>li>a:focus {
+    background-color: transparent;
+}
+
 .text-primary {
     color: #005A70;
 }
@@ -521,7 +526,7 @@ input[type=number]:focus,
   header h1{
     margin-top: 3rem;
 
-    font-size: 2em;
+    font-size: 1.8em;
   }
   #global-navbar .navbar-nav a{
     color: #fff;
