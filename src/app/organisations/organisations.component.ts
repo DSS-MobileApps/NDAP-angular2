@@ -9,20 +9,20 @@ import { OrganisationListComponent, OrganisationDetailComponent, OrganisationSer
 import { GeolocationService } from '../shared/geolocation.service';
 import { ProviderType, SearchComponent, SearchSummaryComponent, RefinerComponent } from '../search/index';
 // import { RefinerComponent } from '../search/refiner.component';
-import { MapComponent, MapService } from '../map/index';
+import { MapService } from '../map/index';
 
-import {RemoveSpaces} from '../shared/';
+// import {RemoveSpaces} from '../shared/';
 
 // import { OrganisationDetailComponent } from './organisation-detail.component';
 
 
 @Component({
-  moduleId: module.id,
+
   selector: 'organisations',
   templateUrl: 'organisations.component.html',
   styleUrls: ['organisations.component.css',
             'organisations.component.media.css'],
-  directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent, SearchSummaryComponent ],
+  // directives: [ SearchComponent, MapComponent, OrganisationListComponent, OrganisationDetailComponent, RefinerComponent, SearchSummaryComponent ],
 
   /**
    * Define two states, "inactive" and "active", and the end

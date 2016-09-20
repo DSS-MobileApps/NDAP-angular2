@@ -5,7 +5,7 @@ import { StateType } from './../../shared/state-type';
 
 
 @Component({
-  moduleId: module.id,
+  
   selector: 'search-state',
   templateUrl: 'search-state.component.html',
   styleUrls: ['search-state.component.css']

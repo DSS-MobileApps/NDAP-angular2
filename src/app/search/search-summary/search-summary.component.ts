@@ -5,11 +5,11 @@ import { Organisation, OrganisationService, Refiner } from '../../index'
 
 
 @Component({
-  moduleId: module.id,
+
   selector: 'search-summary',
   templateUrl: 'search-summary.component.html',
   styleUrls: ['search-summary.component.css'],
-  directives: [],
+  // directives: [],
 
 })
 export class SearchSummaryComponent implements OnInit {

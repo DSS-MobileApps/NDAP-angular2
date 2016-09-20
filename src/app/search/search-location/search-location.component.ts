@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import {GeolocationService, GeoLocation} from '../../shared/index';
 
 @Component({
-  moduleId: module.id,
+  
   selector: 'search-location',
   templateUrl: 'search-location.component.html',
   styleUrls: ['search-location.component.css'],

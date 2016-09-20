@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AppState } from './app.service';
 
@@ -17,13 +17,13 @@ import '../modernizr-custom.js';
 
 
 @Component({
-  moduleId: module.id,
+
   selector: 'angular2-service-finder-app',
   templateUrl: 'angular2-service-finder-app.component.html',
   styleUrls: [
       'angular2-service-finder-app.component.css',
       'angular2-service-finder-app.component.media.css'],
-  directives: [ROUTER_DIRECTIVES],
+  // directives: [ROUTER_DIRECTIVES],
   providers: [OrganisationService, ProviderTypesService, GeolocationService]
 })
 

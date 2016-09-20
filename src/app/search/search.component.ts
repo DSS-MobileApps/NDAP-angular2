@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ProviderTypesComponent } from './search-categories/provider-types.component';
-import { SearchLocationComponent } from './search-location/search-location.component';
-import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
-import { SearchStateComponent } from './search-state/search-state.component';
+// import { ProviderTypesComponent } from './search-categories/provider-types.component';
+// import { SearchLocationComponent } from './search-location/search-location.component';
+// import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
+// import { SearchStateComponent } from './search-state/search-state.component';
 
 import { ProviderType } from './search-categories/provider-type';
 import {GeolocationService, GeoLocation} from '../shared/index';
@@ -16,11 +16,11 @@ import {GeolocationService, GeoLocation} from '../shared/index';
 import { OrganisationService } from '../organisations/organisation.service'
 
 @Component({
-  moduleId: module.id,
+
   selector: 'search-options',
   templateUrl: 'search.component.html',
   styleUrls: ['search.component.css'],
-  directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent]
+  // directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent]
 })
 
 export class SearchComponent implements OnInit {

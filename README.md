@@ -1,40 +1,31 @@
-# NDAP - Angular 2 Prototype
+# NdapAngularMigrate
 
-## Todo list
+This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.15.
 
-- Highlight map markers that are selected
-- keep results list when navigating to the details view of an organisation
-- change styling to match the current implementation
-- change the maps shown area to allow all the markers to be visible on a search result refresh
+## Development server
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## General Structure of the Application
-The main component of the app is `organisations` with `search` and `map` splitting off that.
-The `search` component provides a single point of communication between the types of searching and the `organisation` component 
-which shows the results (thus `provider-type` is a child of `search`)
+## Code scaffolding
 
-## How the Search Component interacts with the Organisations List
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
 
-Using Observables the following happens:
-- The Organisation Service creates an observable called "orgListSource"
-- When the Organisation Comp initiates, it subscribes to this observable
-- Then the Organisation Comp calls the service method "searchOrgList" with the "all" parameters which in turn calls the http request method "getOrganisations"
-- The http result is then pushed back to the "orgListSource"
-- Because the Org Comp is subscribed to this, it is notified of the updated list and changes its result from NULL to all
-- The Search Comp calls the same method on the Org Service, "SearchOrgList", with different parameters based on what search has been chosen
+## Build
 
-## Google Maps
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-I (Daniel H) have imported the google maps package from https://angular-maps.com/ 
-and followed the following guide :https://angular-maps.com/docs/getting-started.html
+## Running unit tests
 
-There were no docs on how to add the api key so the last step below is how i added it though it doesn't seem like the best way to do it, 
-though it works i would like to do something as follows: https://github.com/SebastianM/angular2-google-maps/issues/177
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-I modified the following files:
-* npm install --save angular2-google-maps
-* index.html - added a src import at the bottom
-* updated angular-cli-build - User packages configuration.
-* updated system-config.ts
-* added the provider to main.ts
-* imported into map.component.ts
-* added APIkey to /node_modules/angular2-google-maps/bundles/angular2-google-maps.js (personal key)
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/). 
+Before running the tests make sure you are serving the app via `ng serve`.
+
+## Deploying to Github Pages
+
+Run `ng github-pages:deploy` to deploy to Github Pages.
+
+## Further help
+
+To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

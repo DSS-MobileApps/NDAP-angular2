@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'about',
   templateUrl: 'about.component.html',
   styleUrls: ['about.component.css'],

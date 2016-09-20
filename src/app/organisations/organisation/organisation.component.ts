@@ -7,11 +7,11 @@ import { MapService } from '../../map/map.service';
 import { OrganisationService } from '../organisation.service';
 
 @Component({
-  moduleId: module.id,
+
   selector: 'organisation',
   templateUrl: 'organisation.component.html',
   styleUrls: ['organisation.component.css'],
-  directives: [ OrganisationDetailComponent ],
+  // directives: [ OrganisationDetailComponent ],
   // host: {'class' : 'ng-animate orgContainer'}
 
   /* The element here always has the state "in" when it

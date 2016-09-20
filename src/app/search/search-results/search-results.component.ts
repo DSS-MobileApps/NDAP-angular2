@@ -5,29 +5,29 @@ import { Router } from '@angular/router';
 import { Organisation } from '../../organisations/organisation';
 import { OrganisationService } from '../../organisations/index';
 
-import { OrganisationListComponent } from '../../organisations/index';
+// import { OrganisationListComponent } from '../../organisations/index';
 
 import { GeolocationService } from '../../shared/geolocation.service';
 import { ProviderType } from '../search-categories/index';
-import { SearchComponent } from '../search.component';
-import { SearchSummaryComponent } from '../search-summary/index';
+// import { SearchComponent } from '../search.component';
+// import { SearchSummaryComponent } from '../search-summary/index';
 
-import { RefinerComponent } from '../refiner.component';
+// import { RefinerComponent } from '../refiner.component';
 
-import { MapComponent, MapService } from '../../map/index';
+import {  MapService } from '../../map/index';
 
-import {RemoveSpaces} from '../../shared/';
+// import {RemoveSpaces} from '../../shared/';
 
 // import { OrganisationDetailComponent } from './organisation-detail.component';
 
 
 @Component({
-  moduleId: module.id,
+
   selector: 'search-results',
   templateUrl: 'search-results.component.html',
   styleUrls: ['search-results.component.css',
             'search-results.component.media.css'],
-  directives: [ MapComponent, OrganisationListComponent, RefinerComponent, SearchSummaryComponent ],
+  // directives: [ MapComponent, OrganisationListComponent, RefinerComponent, SearchSummaryComponent ],
 
   /* The element here always has the state "in" when it
    * is present. We animate two transitions: From void

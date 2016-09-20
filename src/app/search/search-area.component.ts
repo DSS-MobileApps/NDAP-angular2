@@ -8,7 +8,7 @@ import { Organisation } from '../organisations/organisation';
 // import { OrganisationSummaryComponent } from './organisation-summary.component';
 import { GeolocationService } from '../shared/geolocation.service';
 
-import { SearchComponent } from './index';
+// import { SearchComponent } from './index';
 // import { RefinerComponent } from '../search/refiner.component';
 // import { MapComponent, MapService } from '../map/index';
 
@@ -18,11 +18,11 @@ import { SearchComponent } from './index';
 
 
 @Component({
-  moduleId: module.id,
+
   selector: 'search-area',
   templateUrl: 'search-area.component.html',
   styleUrls: ['search-area.component.css'],
-  directives: [ SearchComponent ],
+  // directives: [ SearchComponent ],
   // host: {'class' : 'ng-animate searchContainer'},
 
   /**
