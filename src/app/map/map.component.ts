@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/index.d.ts" />
+// / <reference path="../../../typings/index.d.ts" />
 /*
 
 This map component provides the Google Map UI
@@ -21,7 +21,7 @@ import { GeolocationService } from '../shared/geolocation.service';
 
 
 @Component({
-  moduleId: module.id,
+
   selector: 'map-component',
   templateUrl: 'map.component.html',
   styleUrls: ['map.component.css'],

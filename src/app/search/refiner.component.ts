@@ -2,9 +2,9 @@ import { Component, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProviderTypesComponent } from './search-categories/index';
-import { SearchLocationComponent } from './search-location/search-location.component';
-import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
-import { SearchStateComponent } from './search-state/search-state.component';
+// import { SearchLocationComponent } from './search-location/search-location.component';
+// import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
+// import { SearchStateComponent } from './search-state/search-state.component';
 
 // import { ProviderType, Refiner } from './index';
 // import { StateType } from './../shared/state-type';
@@ -21,10 +21,10 @@ import {
 import { OrganisationService } from '../organisations/organisation.service'
 
 @Component({
-  moduleId: module.id,
+
   selector: 'refiner-options',
   templateUrl: 'refiner.component.html',
-  directives: [ProviderTypesComponent],//, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent],
+  // directives: [ProviderTypesComponent],//, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent],
   styleUrls: ['refiner.component.css']
 
 })

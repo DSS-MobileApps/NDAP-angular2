@@ -5,7 +5,6 @@
 /tmp
 
 # dependencies
-/false
 /node_modules
 /bower_components
 

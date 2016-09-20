@@ -1,9 +1,11 @@
-export class Angular2ServiceFinderPage {
+import { browser, element, by } from 'protractor/globals';
+
+export class NdapAngularMigratePage {
   navigateTo() {
     return browser.get('/');
   }
 
   getParagraphText() {
-    return element(by.css('angular2-service-finder-app h1')).getText();
+    return element(by.css('app-root h1')).getText();
   }
 }

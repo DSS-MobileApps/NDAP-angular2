@@ -1,4 +1,4 @@
-import { NgModule, provide }       from '@angular/core';
+import { NgModule }       from '@angular/core';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Angular2ServiceFinderAppComponent }   from './angular2-service-finder-app.component';
 
@@ -12,59 +12,88 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 
+// import 'markerclustererplus';
+
+
 import { AppState } from './app.service';
 
-import { HTTP_PROVIDERS } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 // Router
 import { RouterModule } from '@angular/router';
-import { APP_ROUTER_PROVIDERS } from './angular2-service-finder-app.routes';
+// import { APP_ROUTER_PROVIDERS } from './angular2-service-finder-app.routes';
+import { routing } from './angular2-service-finder-app.routes';
 
 // Components for Router
-import { SearchAreaComponent, SearchResultsComponent } from './search/index';
-import { OrganisationComponent } from './organisations/organisation/organisation.component';
+// import { SearchAreaComponent, SearchResultsComponent } from './search/index';
+// import { OrganisationComponent } from './organisations/organisation/organisation.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 
-import { environment } from './';
+import { OrganisationsComponent, OrganisationComponent, OrganisationListComponent, OrganisationDetailComponent } from './organisations/index';
+
+import { SearchAreaComponent, SearchResultsComponent, SearchComponent, SearchSummaryComponent, RefinerComponent, ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent } from './search/index';
+import { MapComponent } from './map/index';
+
+
+import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from './shared/pipes/';
+
+import { environment } from '../environments/';
 
 
 @NgModule({
-    declarations: [Angular2ServiceFinderAppComponent, SearchAreaComponent],
+    declarations: [Angular2ServiceFinderAppComponent,
+                  SearchAreaComponent, SearchComponent, SearchResultsComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, RefinerComponent, SearchSummaryComponent, ProviderTypesComponent,
+                  EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink,
+                  OrganisationsComponent, OrganisationComponent, OrganisationDetailComponent,OrganisationListComponent, OrganisationDetailComponent,
+                  MapComponent,
+                  AboutComponent,
+                  ContactComponent],
     imports:      [BrowserModule,
                   // Router
-                  RouterModule,//.forRoot(config),
+                  // RouterModule,//.forRoot(config),
                   // Forms
                   FormsModule,
-                  RouterModule.forChild([
-                      { path: 'search', component: SearchAreaComponent },
-                      { path: 'organisations', component: SearchResultsComponent },
-                      { path: 'organisation/:id', component: OrganisationComponent },
-                      { path: 'about', component: AboutComponent },
-                      { path: 'contact', component: ContactComponent }
-
-                    ])
+                  HttpModule,
+                  routing,
+                  // RouterModule.forChild([
+                  //     { path: 'search', component: SearchAreaComponent },
+                  //     { path: 'organisations', component: SearchResultsComponent },
+                  //     { path: 'organisation/:id', component: OrganisationComponent },
+                  //     { path: 'about', component: AboutComponent },
+                  //     { path: 'contact', component: ContactComponent }
+                  //
+                  //   ])
                   ],
-    providers:    [// ROUTER_PROVIDERS,
-                    APP_ROUTER_PROVIDERS,
-                    HTTP_PROVIDERS,
-                    // disableDeprecatedForms(),
+    providers:    [  // disableDeprecatedForms(),
                     // provideForms(),
                     BROWSER_GLOBALS_PROVIDERS,
-                    provide(MapsAPILoader, {useClass: LazyMapsAPILoader}),
-                    provide(LazyMapsAPILoaderConfig, {useFactory: () => {
+                    { provide: MapsAPILoader, useClass: LazyMapsAPILoader},
+                    // provide(MapsAPILoader, {useClass: LazyMapsAPILoader}),
+                    { provide: LazyMapsAPILoaderConfig,
+                      useFactory: () => {
                       let config = new LazyMapsAPILoaderConfig();
                       config.apiKey = 'AIzaSyBKnx4o9xTn2A0GhR_4qatHOnNLOnDf1rs';
                       return config;
-                    }}),
+                    }},
+                    // provide(LazyMapsAPILoaderConfig, {useFactory: () => {
+                    //   let config = new LazyMapsAPILoaderConfig();
+                    //   config.apiKey = 'AIzaSyBKnx4o9xTn2A0GhR_4qatHOnNLOnDf1rs';
+                    //   return config;
+                    // }}),
                     MapService,
                     AppState,
-                    provide(Window, {useValue: window}),
-                    provide(Document, {useValue: document}),
-                    provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey}),
-                    provide('API_URL', {useValue: environment.apiHost}),
-                    provide(LockerConfig, { useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)}),
+                    { provide: Window, useValue: window},
+                    // provide(Window, {useValue: window}),
+                    { provide: Document, useValue: document},
+                    // provide(Document, {useValue: document}),
+                    { provide: 'MAPS_API_KEY', useValue: environment.googleMapsAPIkey},
+                    // provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey}),
+                    { provide: 'API_URL', useValue: environment.apiHost},
+                    // provide('API_URL', {useValue: environment.apiHost}),
+                    { provide: LockerConfig,  useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)},
+                    // provide(LockerConfig, { useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)}),
                     Locker],
     bootstrap:    [Angular2ServiceFinderAppComponent],
 })

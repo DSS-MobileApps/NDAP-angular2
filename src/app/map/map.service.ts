@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/index.d.ts" />
+// / <reference path="../../../typings/index.d.ts" />
 import { Injectable, Inject, NgZone } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Subject } from 'rxjs/Subject';
@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { NDAPMarker } from '../shared/ndap-marker-interface';
 import {MapsAPILoader} from './loading/maps-api-loader';
 
-import 'markerclustererplus';
+// import 'markerclustererplus';
 declare var MarkerClusterer: any;
 
 // todo: add types for this
@@ -19,7 +19,7 @@ export class MapService {
   private defaultCentreLat = -29;
   private defaultCentreLng = 135;
   private defaultZoom = 4;
-  
+
   private areaMap: google.maps.Map;
   private detailMap: google.maps.Map;
   private infoWindow: google.maps.InfoWindow;
@@ -194,7 +194,7 @@ private clearAllMarkers() {
         let markerOptions: google.maps.MarkerOptions = {
           position: latLng,
           icon: {
-            url: isIE11 ? "images/map/Infos_info.png" : "images/map/Infos_info.svg",
+            url: isIE11 ? "assets/images/map/Infos_info.png" : "assets/images/map/Infos_info.svg",
             scaledSize: new google.maps.Size(48, 48)
           }};
         // let markerOptions: google.maps.MarkerOptions = this.markerOpt;
@@ -211,7 +211,7 @@ private clearAllMarkers() {
         bounds.extend(latLng);
       }
       let options: any = {
-        imagePath: 'vendor/markerclustererplus/images/m'
+        imagePath: 'assets/images/markerplus/m'
       }
       this._markerCluster = new MarkerClusterer(map, this._markers, options);
       map.fitBounds(bounds);
@@ -233,7 +233,7 @@ private clearAllMarkers() {
           position: latLng,
           map: map,
           icon: {
-            url: isIE11 ? "images/map/Infos_default.png" : "images/map/Infos_default.svg",
+            url: isIE11 ? "assets/images/map/Infos_default.png" : "assets/images/map/Infos_default.svg",
             scaledSize: new google.maps.Size(64, 64)
           }};
         let result = new google.maps.Marker(markerOptions);

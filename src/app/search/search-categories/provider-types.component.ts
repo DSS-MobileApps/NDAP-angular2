@@ -5,7 +5,7 @@ import { ProviderType } from './provider-type';
 import { ProviderTypesService } from './provider-types.service';
 
 @Component({
-  moduleId: module.id,
+  
   selector: 'provider-types',
   templateUrl: 'provider-types.component.html',
   styleUrls: ['provider-types.component.css']

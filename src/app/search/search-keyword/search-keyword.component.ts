@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  moduleId: module.id,
+  
   selector: 'search-keyword',
   templateUrl: 'search-keyword.component.html',
   styleUrls: ['search-keyword.component.css']

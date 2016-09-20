@@ -1,10 +1,10 @@
-import { Angular2ServiceFinderPage } from './app.po';
+import { NdapAngularMigratePage } from './app.po';
 
-describe('angular2-service-finder App', function() {
-  let page: Angular2ServiceFinderPage;
+describe('ndap-angular-migrate App', function() {
+  let page: NdapAngularMigratePage;
 
   beforeEach(() => {
-    page = new Angular2ServiceFinderPage();
+    page = new NdapAngularMigratePage();
   });
 
   it('should display message saying app works', () => {
