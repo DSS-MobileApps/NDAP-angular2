@@ -1,6 +1,6 @@
 import { NgModule }       from '@angular/core';
 import { BrowserModule  } from '@angular/platform-browser';
-import { Angular2ServiceFinderAppComponent }   from './angular2-service-finder-app.component';
+import { AppComponent }   from './app.component';
 
 import {Locker, LockerConfig} from 'angular2-locker'
 import { MapService } from './map/map.service';
@@ -23,7 +23,7 @@ import { FormsModule } from '@angular/forms';
 // Router
 import { RouterModule } from '@angular/router';
 // import { APP_ROUTER_PROVIDERS } from './angular2-service-finder-app.routes';
-import { routing } from './angular2-service-finder-app.routes';
+import { routing } from './app.routes';
 
 // Components for Router
 // import { SearchAreaComponent, SearchResultsComponent } from './search/index';
@@ -43,7 +43,7 @@ import { environment } from '../environments/';
 
 
 @NgModule({
-    declarations: [Angular2ServiceFinderAppComponent,
+    declarations: [AppComponent,
                   SearchAreaComponent, SearchComponent, SearchResultsComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, RefinerComponent, SearchSummaryComponent, ProviderTypesComponent,
                   EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink,
                   OrganisationsComponent, OrganisationComponent, OrganisationDetailComponent,OrganisationListComponent, OrganisationDetailComponent,
@@ -95,6 +95,6 @@ import { environment } from '../environments/';
                     { provide: LockerConfig,  useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)},
                     // provide(LockerConfig, { useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)}),
                     Locker],
-    bootstrap:    [Angular2ServiceFinderAppComponent],
+    bootstrap:    [AppComponent],
 })
 export class AppModule {}

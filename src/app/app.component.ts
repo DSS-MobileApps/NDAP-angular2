@@ -19,15 +19,15 @@ import '../modernizr-custom.js';
 @Component({
 
   selector: 'angular2-service-finder-app',
-  templateUrl: 'angular2-service-finder-app.component.html',
-  // styleUrls: [
-  //     'angular2-service-finder-app.component.css',
-  //     'angular2-service-finder-app.component.media.css'],
+  templateUrl: 'app.component.html',
+  styleUrls: [
+      'app.component.css',
+      'app.component.media.css'],
   // directives: [ROUTER_DIRECTIVES],
   providers: [OrganisationService, ProviderTypesService, GeolocationService]
 })
 
-export class Angular2ServiceFinderAppComponent implements OnInit  {
+export class AppComponent implements OnInit  {
   title = 'Disability Advocacy Finder';
 
   opts = {
