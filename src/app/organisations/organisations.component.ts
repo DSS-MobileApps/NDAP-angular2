@@ -9,7 +9,7 @@ import { OrganisationListComponent, OrganisationDetailComponent, OrganisationSer
 import { GeolocationService } from '../shared/geolocation.service';
 import { ProviderType, SearchComponent, SearchSummaryComponent, RefinerComponent } from '../search/index';
 // import { RefinerComponent } from '../search/refiner.component';
-import { MapService } from '../map/index';
+// import { MapService } from '../map/index';
 
 // import {RemoveSpaces} from '../shared/';
 
@@ -77,7 +77,6 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private organisationService: OrganisationService,
     private _geolocationService: GeolocationService,
-    private mapService: MapService,
     private elementRef: ElementRef
   ) {
   }
@@ -129,9 +128,9 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     }
 
     ngOnDestroy() {
-    this.subMarker.unsubscribe();
-    this.subSelected.unsubscribe();
-    this.subOrgs.unsubscribe();
+    if (this.subMarker) {this.subMarker.unsubscribe();}
+    if (this.subSelected){this.subSelected.unsubscribe();}
+    if (this.subOrgs){this.subOrgs.unsubscribe();}
   }
 
   onResize(event) {
@@ -147,14 +146,14 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
   // When an Org is selected from the list, navigate to that record in a detail view
   onSelectDetailsButton(selectedOrg: Organisation) {
     this.organisationService.updateSelectedOrganisation(selectedOrg);
-    this.mapService.selectMarker(selectedOrg.Id.toString());
+    // this.mapService.selectMarker(selectedOrg.Id.toString());
     this.router.navigate(['/organisation', selectedOrg.Id]);
     // this.selectedOrganisation = organisation;
   }
 
     // When a marker is clicked, tell the Org Service
   onSelect(selectedOrg: Organisation) {
-    this.mapService.selectMarker(selectedOrg.Id.toString());
+    // this.mapService.selectMarker(selectedOrg.Id.toString());
     // this.selectedOrganisation = selectedOrg;
     this.organisationService.updateSelectedOrganisation(selectedOrg);
 
@@ -162,10 +161,10 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
   // Be notified when a organisation is selected
   private subscribeToSelectedOrganisationUpdates() {
-    this.subMarker = this.mapService.markerSelected$
-      .subscribe(
-        selectedOrgId => this.updateSelected(+selectedOrgId),
-        error =>  console.log(error));
+    // this.subMarker = this.mapService.markerSelected$
+    //   .subscribe(
+    //     selectedOrgId => this.updateSelected(+selectedOrgId),
+    //     error =>  console.log(error));
     this.subSelected = this.organisationService.selectedOrganisation$
       .subscribe(
         selectedOrganisation => this.selectedOrganisation = selectedOrganisation,

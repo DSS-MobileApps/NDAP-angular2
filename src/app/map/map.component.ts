@@ -56,7 +56,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor(
     private organisationService: OrganisationService,
     private geolocationService: GeolocationService,
-    private mapService: MapService
+    // private mapService: MapService
     ) {}
 
   // When the component starts
@@ -86,21 +86,21 @@ export class MapComponent implements OnInit, AfterViewInit {
   private _initMapInstance(el: any) {
     console.log('init main map');
 
-      this.mapService.createMap(el
-      //   {
-      //   center: {lat: this.latitude || 0, lng: this.longitude || 0},
-      //   zoom: this.zoom,
-      //   disableDefaultUI: this.disableDefaultUI,
-      //   backgroundColor: this.backgroundColor,
-      //   draggableCursor: this.draggableCursor,
-      //   draggingCursor: this.draggingCursor,
-      //   keyboardShortcuts: this.keyboardShortcuts,
-      //   zoomControl: this.zoomControl,
-      //   styles: this.styles,
-      //   streetViewControl: this.streetViewControl,
-      //   scaleControl: this.scaleControl
-      // }
-    );
+    //   this.mapService.createMap(el
+    //   //   {
+    //   //   center: {lat: this.latitude || 0, lng: this.longitude || 0},
+    //   //   zoom: this.zoom,
+    //   //   disableDefaultUI: this.disableDefaultUI,
+    //   //   backgroundColor: this.backgroundColor,
+    //   //   draggableCursor: this.draggableCursor,
+    //   //   draggingCursor: this.draggingCursor,
+    //   //   keyboardShortcuts: this.keyboardShortcuts,
+    //   //   zoomControl: this.zoomControl,
+    //   //   styles: this.styles,
+    //   //   streetViewControl: this.streetViewControl,
+    //   //   scaleControl: this.scaleControl
+    //   // }
+    // );
   }
 
   subscribeToOrganisationListUpdates() {
@@ -111,7 +111,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         this.organisations = organisations;
         // convert the lat/lng to number for google api to work
         // this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
-        this.mapService.AddMarkers(this.organisations);
+        // this.mapService.AddMarkers(this.organisations);
       },
       error =>  console.log(error));
   }

@@ -18,8 +18,8 @@ import { OrganisationService } from '../organisation.service';
 })
 
 export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
-  @ViewChild('mapdetail') mapElement: ElementRef;
-  @Input() organisation: Organisation;
+  // @ViewChild('mapdetail') mapElement: ElementRef;
+  @Input() organisation: Organisation = null;
   @Output() onUnselected = new EventEmitter<any>();
 
 
@@ -33,7 +33,6 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
     // private router: Router,
     // private route: ActivatedRoute,
     private organisationService: OrganisationService,
-    private mapService: MapService,
     private geolocationService: GeolocationService
   ) {
   }
@@ -41,23 +40,25 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
 
   ngOnInit() {
 
+    this.sub = this.organisationService.selectedOrganisation$
+      .subscribe(
+        selectedOrganisation => this.getOrganisation(selectedOrganisation),
+        error =>  console.log(error));
+
     // if (this.organisation){
     //   console.log(this.organisation);
     // }else{
     //   console.log('org detail input org is empty');
     // }
 
-    this._initMapInstance(this.mapElement.nativeElement);
+    // this._initMapInstance(this.mapElement.nativeElement);
 
   }
 
 
   ngAfterViewInit() {
     // this.initMap();
-        this.sub = this.organisationService.selectedOrganisation$
-          .subscribe(
-            selectedOrganisation => this.getOrganisation(selectedOrganisation),
-            error =>  console.log(error));
+
         //
         // this.subLocation = this.geolocationService.location$.subscribe(
         //           (loc) => {
@@ -91,7 +92,7 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   private _initMapInstance(el: any) {
     console.log('init detail map');
 
-      this.mapService.createDetailMap(el);
+      // this.mapService.createDetailMap(el);
   }
 
   ngOnDestroy() {
@@ -112,11 +113,11 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
 
   initMap() {
     console.debug('org detail - init map');
-    if (this.mapElement != null && this.organisation != null)
-    {
-      // this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
-      this.mapService.addDetailMarker(this.organisation);
-    }
+    // if (this.mapElement != null && this.organisation != null)
+    // {
+    //   // this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
+    //   this.mapService.addDetailMarker(this.organisation);
+    // }
   }
 
 

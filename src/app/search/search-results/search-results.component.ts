@@ -14,11 +14,13 @@ import { ProviderType } from '../search-categories/index';
 
 // import { RefinerComponent } from '../refiner.component';
 
-import {  MapService } from '../../map/index';
+// import {  MapService } from '../../map/index';
 
 // import {RemoveSpaces} from '../../shared/';
 
 // import { OrganisationDetailComponent } from './organisation-detail.component';
+
+import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
 
 @Component({
@@ -79,15 +81,16 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private organisationService: OrganisationService,
     private _geolocationService: GeolocationService,
-    private mapService: MapService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private _wrapper: GoogleMapsAPIWrapper
   ) {
   }
 
   // When the component starts,
   ngOnInit () {
     console.info('INIT SearchResultsComponent');
-    setTimeout(_=> this.setMapHeight());
+    // setTimeout(_=> this.setMapHeight());
+    this.setMapHeight();
 
     // Subscribe to Org Search Results
     this.subscribeToOrganisations();
@@ -133,9 +136,9 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     }
 
     ngOnDestroy() {
-    this.subMarker.unsubscribe();
-    this.subSelected.unsubscribe();
-    this.subOrgs.unsubscribe();
+    if (this.subMarker) {this.subMarker.unsubscribe();}
+    if (this.subSelected) {this.subSelected.unsubscribe();}
+    if (this.subOrgs) {this.subOrgs.unsubscribe();}
   }
 
   onResize(event) {
@@ -151,7 +154,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   // When an Org is selected from the list, navigate to that record in a detail view
   onSelectDetailsButton(selectedOrg: Organisation) {
     this.organisationService.updateSelectedOrganisation(selectedOrg);
-    this.mapService.selectMarker(selectedOrg.Id.toString());
+    // this.mapService.selectMarker(selectedOrg.Id.toString());
     this.router.navigate(['/organisation', selectedOrg.Id]);
     // this.selectedOrganisation = organisation;
   }
@@ -168,10 +171,10 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
   // Be notified when a organisation is selected
   private subscribeToSelectedOrganisationUpdates() {
-    this.subMarker = this.mapService.markerSelected$
-      .subscribe(
-        selectedOrgId => this.updateSelected(+selectedOrgId),
-        error =>  console.log(error));
+    // this.subMarker = this.mapService.markerSelected$
+    //   .subscribe(
+    //     selectedOrgId => this.updateSelected(+selectedOrgId),
+    //     error =>  console.log(error));
     this.subSelected = this.organisationService.selectedOrganisation$
       .subscribe(
         selectedOrganisation => this.selectedOrganisation = selectedOrganisation,

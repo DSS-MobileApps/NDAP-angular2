@@ -25,7 +25,8 @@
       </a>
 
     <div id="mapitemcontainer">
-            <div ref-mapdetail id="mapitem"></div>
+            <!-- <div ref-mapdetail id="mapitem"></div> -->
+            <app-smap-container [selectedOrganisation]="organisation" id="mapitem">Loading...</app-smap-container>
             <!-- <div id="expand-map">
                 <a class="btn btn-xs btn-default" data-bind="click: $root.expandDetailMap">
                     <span class="fa-stack">

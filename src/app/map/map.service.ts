@@ -5,6 +5,8 @@ import { Subject } from 'rxjs/Subject';
 
 import { NDAPMarker } from '../shared/ndap-marker-interface';
 import {MapsAPILoader} from './loading/maps-api-loader';
+import * as mapTypes from 'angular2-google-maps/core/services/google-maps-types';
+
 
 // import 'markerclustererplus';
 declare var MarkerClusterer: any;
@@ -115,6 +117,8 @@ export class MapService {
 
     });
   }
+
+
 
   /**
    * Creates a google map marker with the map context

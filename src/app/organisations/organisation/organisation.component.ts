@@ -42,7 +42,7 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
       private router: Router,
       private route: ActivatedRoute,
       private organisationService: OrganisationService,
-    private mapService: MapService) {
+  ) {
 
 
       }
