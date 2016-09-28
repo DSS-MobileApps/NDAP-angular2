@@ -222,6 +222,7 @@ export class SmapComponent implements OnInit, OnChanges {
           for (let item of data) {
 
             this.markers.push({
+                Id: Number(item.Id),
                 Lat: Number(item.Lat),
                 Lng: Number(item.Lng),
                 Name: item.Name,
@@ -340,6 +341,7 @@ export class SmapComponent implements OnInit, OnChanges {
 
 // just an interface for type safety.
 interface marker {
+	Id?: number;
 	Lat: number;
 	Lng: number;
 	Name?: string;
