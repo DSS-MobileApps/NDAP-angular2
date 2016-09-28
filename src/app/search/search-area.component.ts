@@ -90,13 +90,7 @@ export class SearchAreaComponent implements OnInit {
   }
 
 
-  constructor(
-    private router: Router
-    // private organisationService: OrganisationService,
-    // private _geolocationService: GeolocationService
-    // private mapService: MapService,
-    // private elementRef: ElementRef
-  ) {
+  constructor(private router: Router) {
   }
 
   // When the component starts,

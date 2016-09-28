@@ -42,9 +42,7 @@ export class AppComponent implements OnInit  {
   constructor(
               private providerTypesService: ProviderTypesService,
               private organisationService: OrganisationService,
-              // ngLocation: nglocationService,
               private geolocationService: GeolocationService,
-              private mapService: MapService,
               public appState: AppState
             ) {
               // geolocationService.getLocation(this.opts);

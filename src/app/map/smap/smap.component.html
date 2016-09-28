@@ -1,0 +1,32 @@
+<!-- <sebm-google-map #map [latitude]="defaultCentreLat"
+                  [longitude]="defaultCentreLng"
+                  [zoom]="defaultZoom"
+                  [fitBounds]="mapBounds"
+                  (mapClick)="mapClicked($event)"
+                  class="map-container"> -->
+  <sebm-google-map-marker #markers
+          *ngFor="let m of markers; let i = index"
+          (markerClick)="clickedMarker(m.Name, i)"
+          [latitude]="m.Lat"
+          [longitude]="m.Lng"
+          [draggable]="false"
+          [iconUrl]="iconUrl">
+          <sebm-google-map-info-window #window
+              [maxWidth]="200">
+            <div class="infowindow-html">
+              <h4><a [href]="'/organisation/' + m.Id" class="" >{{m.Name}}</a></h4>
+              <!--<a class="btn btn-link btn-xs col-xs-1 col-xs-pull-11"><span class="lnr lnr-apartment"></span></a>-->
+            </div>
+          </sebm-google-map-info-window>
+      </sebm-google-map-marker>
+      <!-- <sebm-google-map-info-window  #window
+          *ngIf="selectedMarker"
+          [latitude]="selectedMarker.Lat"
+          [longitude]="selectedMarker.Lng"
+          [isOpen]="selectedMarker">
+        <div class="infowindow-html">
+          <h4><a [href]="'/organisation/' + selectedMarker.Id" class="" >{{selectedMarker.Name}}</a></h4>
+        </div>
+      </sebm-google-map-info-window> -->
+
+<!-- </sebm-google-map> -->

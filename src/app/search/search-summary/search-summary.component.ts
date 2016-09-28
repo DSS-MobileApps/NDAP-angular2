@@ -18,10 +18,7 @@ export class SearchSummaryComponent implements OnInit {
   refiners: Refiner[];
 
 
-  constructor(
-    // private router: Router,
-    // private organisationService: OrganisationService
-  ) {}
+  constructor(  ) {}
 
   ngOnInit(){
     // this.subscribeToRefiners();

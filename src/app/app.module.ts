@@ -3,10 +3,12 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { AppComponent }   from './app.component';
 
 import {Locker, LockerConfig} from 'angular2-locker'
-import { MapService } from './map/map.service';
-import {LazyMapsAPILoader, LazyMapsAPILoaderConfig} from './map/loading/lazy-maps-api-loader';
-import {MapsAPILoader} from './map/loading/maps-api-loader';
-import {BROWSER_GLOBALS_PROVIDERS} from './map/loading/browser-globals';
+// import { MapService } from './map/map.service';
+// import {LazyMapsAPILoader, LazyMapsAPILoaderConfig} from './map/loading/lazy-maps-api-loader';
+// import {MapsAPILoader} from './map/loading/maps-api-loader';
+// import {BROWSER_GLOBALS_PROVIDERS} from './map/loading/browser-globals';
+
+import { AgmCoreModule, GoogleMapsAPIWrapper, SebmGoogleMapMarker } from 'angular2-google-maps/core';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -40,6 +42,7 @@ import { MapComponent } from './map/index';
 import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from './shared/pipes/';
 
 import { environment } from '../environments/';
+import { SmapContainerComponent, SmapComponent } from './map/smap/index';
 
 
 @NgModule({
@@ -49,13 +52,18 @@ import { environment } from '../environments/';
                   OrganisationsComponent, OrganisationComponent, OrganisationDetailComponent,OrganisationListComponent, OrganisationDetailComponent,
                   MapComponent,
                   AboutComponent,
-                  ContactComponent],
+                  ContactComponent,
+                  // SebmGoogleMapMarker,
+                  SmapComponent, SmapContainerComponent],
     imports:      [BrowserModule,
                   // Router
                   // RouterModule,//.forRoot(config),
                   // Forms
                   FormsModule,
                   HttpModule,
+                  AgmCoreModule.forRoot({
+                    apiKey: environment.googleMapsAPIkey
+                  }),
                   routing,
                   // RouterModule.forChild([
                   //     { path: 'search', component: SearchAreaComponent },
@@ -68,32 +76,22 @@ import { environment } from '../environments/';
                   ],
     providers:    [  // disableDeprecatedForms(),
                     // provideForms(),
-                    BROWSER_GLOBALS_PROVIDERS,
-                    { provide: MapsAPILoader, useClass: LazyMapsAPILoader},
-                    // provide(MapsAPILoader, {useClass: LazyMapsAPILoader}),
-                    { provide: LazyMapsAPILoaderConfig,
-                      useFactory: () => {
-                      let config = new LazyMapsAPILoaderConfig();
-                      config.apiKey = 'AIzaSyBKnx4o9xTn2A0GhR_4qatHOnNLOnDf1rs';
-                      return config;
-                    }},
-                    // provide(LazyMapsAPILoaderConfig, {useFactory: () => {
+                    // BROWSER_GLOBALS_PROVIDERS,
+                    // { provide: MapsAPILoader, useClass: LazyMapsAPILoader},
+                    // { provide: LazyMapsAPILoaderConfig,
+                    //   useFactory: () => {
                     //   let config = new LazyMapsAPILoaderConfig();
-                    //   config.apiKey = 'AIzaSyBKnx4o9xTn2A0GhR_4qatHOnNLOnDf1rs';
+                    //   config.apiKey = environment.googleMapsAPIkey;
                     //   return config;
-                    // }}),
-                    MapService,
+                    // }},
+                    // MapService,
+                    GoogleMapsAPIWrapper,
                     AppState,
                     { provide: Window, useValue: window},
-                    // provide(Window, {useValue: window}),
                     { provide: Document, useValue: document},
-                    // provide(Document, {useValue: document}),
                     { provide: 'MAPS_API_KEY', useValue: environment.googleMapsAPIkey},
-                    // provide('MAPS_API_KEY', {useValue: environment.googleMapsAPIkey}),
                     { provide: 'API_URL', useValue: environment.apiHost},
-                    // provide('API_URL', {useValue: environment.apiHost}),
                     { provide: LockerConfig,  useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)},
-                    // provide(LockerConfig, { useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)}),
                     Locker],
     bootstrap:    [AppComponent],
 })
