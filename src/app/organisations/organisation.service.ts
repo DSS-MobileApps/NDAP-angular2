@@ -51,7 +51,8 @@ export class OrganisationService {
 
   // Organisation (URL + postcode) (60ms on average)
   private getOrganisationsInPostcodeUrlA =
-    '/api/provider/getallbypostcode/'
+    // '/api/provider/getallbypostcode/'
+    '/api/provider/getallbyserviceareapostcode/'
 
   private getOrganisationsInPostcodeUrlB =
     '/NDAP'
@@ -138,7 +139,8 @@ export class OrganisationService {
     // console.info(this.dataStore.organisations.filter((item) => item.Category === value))
     this.orgListSource.next(
         this.dataStore.organisations
-        .filter((item) => item.Category === value)
+        // .filter((item) => item.Category === value)
+        .filter((item) => item.Category.indexOf(value) != -1)
       );
       
 
@@ -261,7 +263,8 @@ export class OrganisationService {
           this.apiUrl
           + this.getOrganisationsInPostcodeUrlA
           + value1
-          + this.getOrganisationsInPostcodeUrlB);
+          + this.getOrganisationsInPostcodeUrlB 
+          +  "/-35.276/149.13/1/1");
 
     case "all":
         return this.getJsonFromAPI(

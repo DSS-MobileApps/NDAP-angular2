@@ -29,3 +29,12 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+
+## IIS Setup
+
+IIS 7 does not include SVG Mime type by default. to add see [Adding IIS7 Mime type Setting](http://www.iis.net/learn/manage/managing-your-configuration-settings/adding-ie-9-mime-types-to-iis)
+Add new Mime type in IIS
+File Name extension     .svg
+MIME tyoe	            image/svg+xml

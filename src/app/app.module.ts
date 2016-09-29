@@ -1,6 +1,10 @@
 import { NgModule }       from '@angular/core';
 import { BrowserModule  } from '@angular/platform-browser';
 import { AppComponent }   from './app.component';
+import {
+  LocationStrategy,
+  HashLocationStrategy
+} from '@angular/common';
 
 import {Locker, LockerConfig} from 'angular2-locker'
 // import { MapService } from './map/map.service';
@@ -85,6 +89,7 @@ import { SmapContainerComponent, SmapComponent } from './map/smap/index';
                     //   return config;
                     // }},
                     // MapService,
+                    {provide: LocationStrategy, useClass: HashLocationStrategy},
                     GoogleMapsAPIWrapper,
                     AppState,
                     { provide: Window, useValue: window},
