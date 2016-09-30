@@ -90,7 +90,7 @@ import { SmapContainerComponent, SmapComponent } from './map/smap/index';
                     //   return config;
                     // }},
                     // MapService,
-                    {provide: LocationStrategy, useClass: HashLocationStrategy},
+                    // {provide: LocationStrategy, useClass: HashLocationStrategy},
                     GoogleMapsAPIWrapper,
                     AppState,
                     { provide: Window, useValue: window},
