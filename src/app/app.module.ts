@@ -41,6 +41,7 @@ import { OrganisationsComponent, OrganisationComponent, OrganisationListComponen
 
 import { SearchAreaComponent, SearchResultsComponent, SearchComponent, SearchSummaryComponent, RefinerComponent, ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent } from './search/index';
 import { MapComponent } from './map/index';
+import { MapsModule, mapsModuleWithProviders } from './app.maps';
 
 
 import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from './shared/pipes/';

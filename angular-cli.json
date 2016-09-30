@@ -23,8 +23,10 @@
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
+        "devint": "environments/environment.devint.ts",
         "prod": "environments/environment.prod.ts",
-        "sit": "environments/environment.sit.ts"
+        "sit": "environments/environment.sit.ts",
+        "st": "environments/environment.st.ts"
       }
     }
   ],
