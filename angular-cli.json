@@ -15,7 +15,7 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "common.css"
+        "common.scss"
       ],
       "scripts": [
         "../node_modules/markerclustererplus/dist/markerclusterer.min.js"
