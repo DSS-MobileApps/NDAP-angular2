@@ -12,8 +12,8 @@
             <feGaussianBlur stdDeviation="2.07261029" in="SourceGraphic"></feGaussianBlur>
         </filter>
         <linearGradient x1="50%" y1="-25.3637695%" x2="50%" y2="115.036621%" id="linearGradient-3">
-            <stop stop-color="#0595B6" stop-opacity="0.995952219" offset="0%"></stop>
-            <stop stop-color="#00718C" offset="100%"></stop>
+            <stop stop-color="#9C27B0" stop-opacity="0.995952219" offset="0%"></stop>
+            <stop stop-color="#9825AB" offset="100%"></stop>
         </linearGradient>
         <path d="M23.6321839,29.1666667 L20.045977,40 L16.4597701,29.1666667 L9.00170731,29.1666667 C4.03020164,29.1666667 0,25.1417888 0,20.1578097 L0,9.00885696 C0,4.03340265 4.03700043,0 9.00170731,0 L30.9982927,0 C35.9697984,0 40,4.02487783 40,9.00885696 L40,20.1578097 C40,25.133264 35.9629996,29.1666667 30.9982927,29.1666667 L23.6321839,29.1666667 Z" id="path-4"></path>
         <mask id="mask-5" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="40" height="40" fill="white">

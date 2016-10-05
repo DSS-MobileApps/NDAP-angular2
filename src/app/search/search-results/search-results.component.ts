@@ -1,5 +1,7 @@
 import { Component, OnInit, transition, animate, style, state, trigger, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppState } from '../../app.service';
+
 // import { ProviderType } from '../search/search-categories/provider-type';
 
 import { Organisation } from '../../organisations/organisation';
@@ -82,13 +84,20 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     private organisationService: OrganisationService,
     private _geolocationService: GeolocationService,
     private elementRef: ElementRef,
-    private _wrapper: GoogleMapsAPIWrapper
+    private _wrapper: GoogleMapsAPIWrapper,
+    public appState: AppState
   ) {
   }
 
   // When the component starts,
   ngOnInit () {
-    console.info('INIT SearchResultsComponent');
+    console.info('INIT SearchResultsComponent: state is ', this.appState.get('searchType'));
+
+
+    if (this.appState.get('searchType') == null){
+      this.router.navigateByUrl("/search");
+    }
+
     // setTimeout(_=> this.setMapHeight());
     this.setMapHeight();
 

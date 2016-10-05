@@ -49,12 +49,16 @@
   width: 30px;
 }
 
+#mapitemcontainer {
+  margin-top:-15px;
+}
+
 #mapitem {
   position: relative;
   overflow: hidden;
   transform: translateZ(0px);
   background-color: rgb(229, 227, 223);
-  margin: -15px -15px 0;
+  /*margin: -15px -15px 0;*/
 }
 #google-maps-link {
     position: absolute;
@@ -95,6 +99,14 @@ stylesheet. */
   margin-top: 5px;
   margin-left: 5px;
   white-space: normal;
+}
+
+.list-group-item p{
+  margin-bottom: 0;
+}
+
+hr.list-group{
+  margin:5px 0;
 }
 
 /*BS3 */

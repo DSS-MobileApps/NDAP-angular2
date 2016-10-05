@@ -49,7 +49,7 @@
             </li>
             <li *ngIf="organisation?.Comments" class="list-group-item col-xs-12">
               <h5><span class="lnr lnr-question-circle"></span>Additional information</h5>
-              <p style="white-space: pre-wrap;">{{organisation?.Comments}}</p>
+              <span style="white-space: pre-wrap;">{{organisation?.Comments}}</span>
             </li>
             <!-- <li class="list-group-item">Category: {{organisation.Category}}</li> -->
             <li class="list-group-item col-xs-12 col-sm-6">
@@ -63,7 +63,7 @@
 
           <li class="list-group-item col-xs-12 col-sm-6">
             <h5><span class="lnr lnr-map"></span>Service Areas</h5>
-            <p>{{organisation?.ServiceAreas}}</p>
+            <span>{{organisation?.ServiceAreas}}</span>
           </li>
 
           <hr class="list-group col-xs-12">
