@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 // import { ProviderTypesComponent } from './search-categories/provider-types.component';
@@ -23,7 +23,7 @@ import { OrganisationService } from '../organisations/organisation.service'
   // directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent]
 })
 
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
   title = 'Search Options';
   postCode: number;
   keyword: string;
@@ -36,6 +36,7 @@ export class SearchComponent implements OnInit {
   private subLocation: any;
 
   @Output() onSearch = new EventEmitter<any>();
+  @ViewChild('locationInput') locInput: ElementRef;
 
 
   constructor(
@@ -75,6 +76,13 @@ export class SearchComponent implements OnInit {
       });
 
   }
+
+  
+   ngAfterViewInit() {            
+      if (this.locInput && this.locInput.nativeElement){
+        this.locInput.nativeElement.focus();
+      }
+    }
 
   ngOnDestroy(){
     this.subLocation.unsubscribe();
