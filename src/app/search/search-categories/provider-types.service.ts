@@ -37,6 +37,21 @@ export class ProviderTypesService {
                     .catch(this.handleError);
   }
 
+  // Sort types by Value
+  sortProviderTypes(providerTypes: ProviderType[], descending?: boolean): ProviderType[]{
+
+    if (descending){
+      return providerTypes.sort(function(a, b) {
+                          return b.Value.localeCompare(a.Value);
+                      });
+    }else{
+      return providerTypes.sort(function(a, b) {
+                          return a.Value.localeCompare(b.Value);
+                      });
+    }
+
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body || { };

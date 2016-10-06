@@ -151,7 +151,7 @@ export class SmapComponent implements OnInit, OnChanges {
     .then( (map: mapTypes.GoogleMap)=> {
       console.log("getNativeMap() resolved");
       // this.myConsole.log(`google.map, keys=${Object.keys(map)}`);
-      console.log('native map promise resolved')
+      // console.log('native map promise resolved')
 
       return this._googMap = map;
     })
@@ -182,7 +182,7 @@ export class SmapComponent implements OnInit, OnChanges {
 
         this.getNativeMap()
           .then((map: mapTypes.GoogleMap) => {
-            console.log('Add Markers for found orgs', data);
+            // console.log('Add Markers for found orgs', data);
             
             this.clearAllMarkers();
             this.addAreaMarkers(map, data);
@@ -239,7 +239,7 @@ export class SmapComponent implements OnInit, OnChanges {
 
 
           this.ref.detectChanges();
-          console.log('markers after adding', this.children.toArray());
+          // console.log('markers after adding', this.children.toArray());
 
           // // Marker cluster
           // let options: any = {

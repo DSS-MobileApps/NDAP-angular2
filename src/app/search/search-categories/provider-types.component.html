@@ -6,14 +6,14 @@
 </ul> -->
 <!-- Single button -->
 <div class="btn-group">
-  <button type="button" id="filterType" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <button type="button" id="filterType" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [class.btn-info]="selectedProviderType">
     <span class="btn-title">{{selectedProviderType?.Value || "Refine: Provider Type"}}</span> <span class="caret"></span>
   </button>
   <ul class="dropdown-menu dropdown-menu-right">
-    <li><a (click)="onSelect()">All</a></li>
+    <li><a (click)="onSelect()" href="javascript:void(0);" >All</a></li>
     <li role="separator" class="divider"></li>
-    <li *ngFor="let providerType of providerTypes" [class.active]="providerType === selectedProviderType">
-      <a (click)="onSelect(providerType)">{{providerType.Value}}</a>
+    <li *ngFor="let providerType of filteredTypes" [class.active]="providerType === selectedProviderType">
+      <a (click)="onSelect(providerType)" href="javascript:void(0);" name="{{providerType.Code}}">{{providerType.Value}}</a>
     </li>
   </ul>
 </div>

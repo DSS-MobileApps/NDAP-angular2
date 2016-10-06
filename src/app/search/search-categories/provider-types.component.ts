@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { ProviderType } from './provider-type';
 import { ProviderTypesService } from './provider-types.service';
 
+import { Organisation } from '../../organisations/organisation';
+import { OrganisationService } from '../../organisations/index';
+
+
 @Component({
   
   selector: 'provider-types',
@@ -14,35 +18,74 @@ import { ProviderTypesService } from './provider-types.service';
 export class ProviderTypesComponent implements OnInit {
   title = 'List of Provider Types';
   providerTypes: ProviderType[];
+  filteredTypes: ProviderType[];
   selectedProviderType: ProviderType;
+  organisations: Organisation[];
 
   private subTypes: any;
+  private subOrgs: any;
 
   // Output that a provider type has been selected
   @Output() onSelectedProviderType = new EventEmitter<any>();
 
   constructor(
     private router: Router,
-    private providerTypesService: ProviderTypesService
+    private providerTypesService: ProviderTypesService,
+    private organisationService: OrganisationService
   ) {}
 
   // When the component starts, get the organisations
   ngOnInit () {
-    this.getProviderTypes();
+    this.subscribeToProviderTypes();
+
+    // Subscribe to Org Search Results
+    this.subscribeToOrganisations();
+    
   }
 
   ngOnDestroy(){
     if (this.subTypes) { this.subTypes.unsubscribe();}
+    if (this.subOrgs) { this.subOrgs.unsubscribe();}
   }
 
   // Get provider types from the provider service,
   // then assigned the observable result to the Provider Types Array
-  getProviderTypes() {
+  private subscribeToProviderTypes() {
     this.subTypes = this.providerTypesService.getProviderTypes()
       .subscribe(
-        providerTypes => this.providerTypes = providerTypes,
+        providerTypes => {
+          this.providerTypes = this.providerTypesService.sortProviderTypes(providerTypes);
+          this.filteredTypes = this.providerTypes;
+        },
         error =>  console.log(error));
   }
+
+private subscribeToOrganisations() {
+    this.subOrgs = this.organisationService.orgListSource$
+      .subscribe(
+        organisations => {
+          this.organisations = organisations;
+          this.filterTypes(this.organisations);
+        },
+        error =>  console.error(error)
+      );
+  }
+
+
+
+  private filterTypes(orgs: Organisation[]){
+
+    // console.log("filter types contained in Orgs: ", this.providerTypes);
+
+    this.filteredTypes = this.providerTypes.filter( function( el ) {
+      // console.log("filtering type: ", el,  orgs.filter(o => o.Category.includes(el.Value) ))
+      return orgs.filter(o => o.Category.includes(el.Value) ).length > 0;
+    } );
+
+    console.log("filter types after reduced ", this.filteredTypes);
+  }
+
+  
 
   // When a provider type is selected, tell the org list to filter by the type selected
   // This event is captured through the organisation.component html template
@@ -51,6 +94,7 @@ export class ProviderTypesComponent implements OnInit {
     console.log(providerType);
     this.selectedProviderType = providerType;
     this.onSelectedProviderType.emit(providerType);
+
   }
 
 }
