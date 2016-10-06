@@ -91,14 +91,13 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
   // When the component starts,
   ngOnInit () {
-    console.info('INIT SearchResultsComponent: state is ', this.appState.get('searchType'));
+    console.info('INIT SearchResultsComponent: state is ', this.appState.get().searchType);
 
 
-    if (this.appState.get('searchType') == null){
+    if (this.appState.get().searchType == null){
       this.router.navigateByUrl("/search");
-    }
-
-    // setTimeout(_=> this.setMapHeight());
+    }else{
+// setTimeout(_=> this.setMapHeight());
     this.setMapHeight();
 
     // Subscribe to Org Search Results
@@ -112,6 +111,9 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
     // Subscribe to Selected Org events
 
+    }
+
+    
 
 
   }
