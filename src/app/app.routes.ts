@@ -48,7 +48,8 @@ export const routes: Routes = [
   // Root Url
   {
   path: '',
-  component: OrganisationsComponent
+  // component: OrganisationsComponent
+  component: SearchAreaComponent
 },
 // {
 //   path: '',
