@@ -137,12 +137,13 @@ export class SearchComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  onLocationTriggered (postCode) {
-    console.log('Org std Postcode search for postcode: ' + postCode);
-    // this.organisationService.searchOrgList('byPostCode', postCode, undefined);
-    this.postCode = postCode;
-    this.organisationService.searchOrgList('byPostCode', postCode, undefined);
-  }
+  // onLocationTriggered (postCode) {
+  //   console.log('Org std Postcode search for postcode: ' + postCode);
+  //   // this.organisationService.searchOrgList('byPostCode', postCode, undefined);
+  //   this.postCode = postCode;
+  //   this.organisationService.searchOrgList('byPostCode', postCode, undefined);
+
+  // }
 
   enableLocation(allowed){
     this.locationChecked = true;

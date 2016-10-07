@@ -49,18 +49,25 @@ export class GeolocationService {
 
 
 	get hasUserAgreed(){
-		console.info('check if user agreed to geolocation')
 		if (this.locker.has('allowGeolocation')) {
+			console.info('user has set geolocation preference');
 			return true;
 		}
+		console.info('user has not set geolocation preference');
 		return false;
 	}
 
 	get locationCapable(){
-		console.info('checking if location capable device and user has agreed')
-		if (window.navigator && window.navigator.geolocation && this.locker.get('allowGeolocation')) {
-			return true;
+		if (window.navigator && window.navigator.geolocation) {
+			if (this.locker.get('allowGeolocation')){
+				console.info('device is geolocation capable and user has agreed');
+				return true;
+			}else{
+				console.info('device is geolocation capable and user has not set agreement preference');
+				return false;
+			}
 		}
+		console.info('device not geolocation capable');
 		return false;
 	}
 
@@ -73,7 +80,7 @@ export class GeolocationService {
 	// }
 
 	public enableLocation(allow){
-		console.log('set allow location to ' + allow);
+		console.log('set allow geolocation preference to ' + allow);
 		if (allow){
 			this.locker.set('allowGeolocation', true);
 			// this.getLocation(this.opts);
@@ -185,10 +192,10 @@ export class GeolocationService {
 
 
                   }, '');
-									console.group("Geolocation update");
-									console.log("position updated: " + new Date());
-									console.log(loc);
-									console.groupEnd();
+									// console.group("Geolocation update");
+									console.log("Geolocation position updated: ",new Date(), loc);
+									// console.log(loc);
+									// console.groupEnd();
 
 									this.location.next(loc);
 

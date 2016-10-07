@@ -36,10 +36,11 @@ export class ProviderTypesComponent implements OnInit {
 
   // When the component starts, get the organisations
   ngOnInit () {
+    // Subscribe to Org Search Results
+    this.subscribeToUnfilteredOrganisations();
+    
     this.subscribeToProviderTypes();
 
-    // Subscribe to Org Search Results
-    this.subscribeToOrganisations();
     
   }
 
@@ -54,21 +55,27 @@ export class ProviderTypesComponent implements OnInit {
     this.subTypes = this.providerTypesService.getProviderTypes()
       .subscribe(
         providerTypes => {
+          console.log('providerTypes returned from API', providerTypes);
+          
           this.providerTypes = this.providerTypesService.sortProviderTypes(providerTypes);
           this.filteredTypes = this.providerTypes;
         },
         error =>  console.log(error));
   }
 
-private subscribeToOrganisations() {
-    this.subOrgs = this.organisationService.orgListSource$
+private subscribeToUnfilteredOrganisations() {
+  // this.organisationService.getCachedList();
+
+    this.subOrgs = this.organisationService.orgListFull$
       .subscribe(
         organisations => {
+          console.log('full orgs list updated:', organisations);
           this.organisations = organisations;
           this.filterTypes(this.organisations);
         },
         error =>  console.error(error)
       );
+      
   }
 
 

@@ -113,7 +113,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     // Perform a default search for all orgs
     // this.organisationService.searchOrgList('all', undefined, undefined);
 
-    this.organisationService.getCachedList();
+    // this.organisationService.getCachedList();
 
     // Subscribe to Selected Org events
 
@@ -178,7 +178,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
     // When a marker is clicked, tell the Org Service
   onSelect(selectedOrg: Organisation) {
-    console.log('selected ' + selectedOrg.Name);
+    console.log('selected ', selectedOrg);
     // this.mapService.selectMarker(selectedOrg.Id.toString());
     // this.selectedOrganisation = selectedOrg;
     this.organisationService.updateSelectedOrganisation(selectedOrg);
@@ -202,9 +202,13 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   private subscribeToOrganisations() {
     this.subOrgs = this.organisationService.orgListSource$
       .subscribe(
-        organisations => this.updateOrganisations(organisations),
-        // organisations => this.organisations = organisations,
-        error =>  this.errorMessage = <any>error);
+        organisations => {
+          this.updateOrganisations(organisations)
+        },
+        error =>  {
+          console.error('Search results error:', error);
+          this.errorMessage = <any>error;
+        });
   }
 
   private updateSelected(id: number) {
@@ -254,7 +258,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
 
 
-  refreshPosition(){
-    this._geolocationService.getLocation(this.opts);
-  }
+  // refreshPosition(){
+  //   this._geolocationService.getLocation(this.opts);
+  // }
 }

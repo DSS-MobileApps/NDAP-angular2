@@ -25,21 +25,42 @@
           <div id="org-result" (window:resize)="onResize($event)">
 
 
-              <p *ngIf="!organisations" >Loading...</p>
+                <div *ngIf="!organisations" class="loading">
+                  <p class="text-info text-center">Retrieving search results</p>
+                  <div class="spinner">
+                      <div class="rect1"></div>
+                      <div class="rect2"></div>
+                      <div class="rect3"></div>
+                      <div class="rect4"></div>
+                      <div class="rect5"></div>
+                  </div>
+                </div>
+                    
 
-              <search-summary [organisations]="organisations"></search-summary>
+              <div *ngIf="organisations">
+                <search-summary [organisations]="organisations"></search-summary>
 
-              <refiner-options></refiner-options>
+                <refiner-options *ngIf="organisations?.length > 0"></refiner-options>
 
 
-              <org-list [organisations]="organisations"
-                [selectedOrgId]="selectedOrgId"
-                (onSelectionChanged)="onSelect($event)"></org-list>
-              <div [class.hidden]="hasOrganisations" class="text-center">
-                <p class="lead text-danger" >Sorry, no results were found for your search.</p>
-                <hr />
-                <p>Try another location, or remove the filters.</p>
+                <org-list [organisations]="organisations"
+                  [selectedOrgId]="selectedOrgId"
+                  (onSelectionChanged)="onSelect($event)"></org-list>
+                <div *ngIf="organisations?.length == 0" class="text-center">
+                  <p class="lead text-danger" >Sorry, no results were found for your search.</p>
+                  <hr />
+                  <p>Try another location, or remove the filters.</p>
+                </div>
+
               </div>
+
+              <div *ngIf="errorMessage" class="text-center">
+                  <p class="lead text-danger" >Oh noes, something went wrong!</p>
+                  <hr />
+                  <p>Would you like to try again?</p>
+                  <p>Fear not, this issue has been reported and our techies are looking into it!</p>
+              </div>
+
 
           </div>
         </div>
