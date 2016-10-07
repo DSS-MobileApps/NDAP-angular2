@@ -9,7 +9,7 @@ import { OrganisationService } from '../../organisations/index';
 
 // import { OrganisationListComponent } from '../../organisations/index';
 
-import { GeolocationService } from '../../shared/geolocation.service';
+import { GeolocationService, AnalyticsService } from '../../shared/index';
 import { ProviderType } from '../search-categories/index';
 // import { SearchComponent } from '../search.component';
 // import { SearchSummaryComponent } from '../search-summary/index';
@@ -66,6 +66,9 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   private subSelected: any;
   private subOrgs: any;
 
+  private startTime;
+
+
   width = 100;
   height = 500;
   // height: number;
@@ -82,19 +85,22 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private organisationService: OrganisationService,
-    private _geolocationService: GeolocationService,
+    // private _geolocationService: GeolocationService,
     private elementRef: ElementRef,
     private _wrapper: GoogleMapsAPIWrapper,
-    public appState: AppState
+    public appState: AppState,
+    private analytics: AnalyticsService
   ) {
+      this.startTime = new Date();
   }
 
   // When the component starts,
   ngOnInit () {
-    console.info('INIT SearchResultsComponent: state is ', this.appState.get().searchType);
+    // console.info('INIT SearchResultsComponent: state is ', this.appState.get().searchType);
 
 
     if (this.appState.get().searchType == null){
+      console.info('No search state detected, redirect to search page');
       this.router.navigateByUrl("/search");
     }else{
 // setTimeout(_=> this.setMapHeight());
@@ -119,8 +125,8 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    }
+    this.sendFinishedLoadTime();
+  }
 
     private setMapHeight(){
       // let currentHeight = this.elementRef.nativeElement.getElementsByTagName('div')[0].offsetHeight;
@@ -208,15 +214,27 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   private updateOrganisations(organisations: Organisation[]) {
     this.organisations = organisations;
     this.searchMode = false;
+    this.errorMessage = null;
 
+    console.info('orgs updated: ', organisations);
 
   }
 
   goToSearch(){
-    console.log('back to search mode');
+    // console.log('back to search mode');
       // this.searchMode = !this.searchMode;
       this.router.navigateByUrl('/search');
+      this.analytics.sendUIEvent('Search again', 'From search icon button');
+
   }
+
+  sendFinishedLoadTime(){
+      var endTime = new Date();
+      var milliseconds = (endTime.getTime() - this.startTime.getTime());
+      console.info('SearchResultsComponent loaded:', milliseconds);
+      this.analytics.sendComponentLoaded('SearchResultsComponent', milliseconds);
+  }
+
 
   get hasOrganisations(){
     if (this.organisations && this.organisations.length > 0) {

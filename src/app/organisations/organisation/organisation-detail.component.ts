@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, Input, Output,
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MapService } from '../../map/map.service';
-import {GeolocationService, GeoLocation} from '../../shared/index';
+import {GeolocationService, GeoLocation, AnalyticsService} from '../../shared/index';
 
 import { Organisation } from '../organisation';
 import { OrganisationService } from '../organisation.service';
@@ -29,12 +29,16 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   locationPos: GeoLocation;
   googleMapsDirections: string;
 
+  private startTime;
+
   constructor(
     // private router: Router,
     // private route: ActivatedRoute,
     private organisationService: OrganisationService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private analytics: AnalyticsService
   ) {
+    this.startTime = new Date();
   }
 
 
@@ -57,6 +61,8 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
 
 
   ngAfterViewInit() {
+
+          this.sendFinishedLoadTime();
     // this.initMap();
 
         //
@@ -118,6 +124,13 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
     //   // this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
     //   this.mapService.addDetailMarker(this.organisation);
     // }
+  }
+
+  sendFinishedLoadTime(){
+      var endTime = new Date();
+      var milliseconds = (endTime.getTime() - this.startTime.getTime());
+      console.info('OrganisationDetailComponent loaded:', milliseconds);
+      this.analytics.sendComponentLoaded('OrganisationDetailComponent', milliseconds);
   }
 
 

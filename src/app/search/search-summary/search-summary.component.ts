@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Organisation, OrganisationService, Refiner } from '../../index'
+import { AnalyticsService } from '../../shared/index'
 
 
 @Component({
@@ -18,11 +19,16 @@ export class SearchSummaryComponent implements OnInit {
   refiners: Refiner[];
 
 
-  constructor(  ) {}
+  constructor( private analytics: AnalyticsService ) {}
 
   ngOnInit(){
     // this.subscribeToRefiners();
 
+  }
+
+  searchAgain(){
+    console.log('search again from summary component');
+    this.analytics.sendUIEvent('Search again', 'From search summary');
   }
 
   // private subscribeToRefiners() {

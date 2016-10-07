@@ -14,6 +14,7 @@ import {GeolocationService, GeoLocation} from '../shared/index';
 // import {ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, ProviderType} from './index';
 
 import { OrganisationService } from '../organisations/organisation.service'
+import { AnalyticsService } from '../shared/analytics.service';
 
 @Component({
 
@@ -42,7 +43,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private organisationService: OrganisationService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    public analytics: AnalyticsService
   ) {}
 
   ngOnInit(){
@@ -82,6 +84,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
       if (this.locInput && this.locInput.nativeElement){
         this.locInput.nativeElement.focus();
       }
+
+      this.analytics.sendPageLoaded('SearchComponent');
+
+
     }
 
   ngOnDestroy(){
@@ -144,8 +150,11 @@ export class SearchComponent implements OnInit, AfterViewInit {
       this.locatingPosition = true;
       this.textPlaceholder = "Locating...";
       this.geolocationService.getLocation(null);
+      this.analytics.sendEvent('Location', 'Geolocation', 'User Opted In');
     }else{
       this.geolocationService.enableLocation(false);
+      this.analytics.sendEvent('Location', 'Geolocation', 'User Opted Out');
+
     }
 
   }

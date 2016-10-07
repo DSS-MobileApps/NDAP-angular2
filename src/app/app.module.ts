@@ -49,6 +49,7 @@ import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from '
 import { environment } from '../environments/';
 import { SmapContainerComponent, SmapComponent } from './map/smap/index';
 
+import { AnalyticsService } from './shared/analytics.service';
 
 @NgModule({
     declarations: [AppComponent,
@@ -91,6 +92,7 @@ import { SmapContainerComponent, SmapComponent } from './map/smap/index';
                     // }},
                     // MapService,
                     // {provide: LocationStrategy, useClass: HashLocationStrategy},
+                    AnalyticsService,
                     GoogleMapsAPIWrapper,
                     AppState,
                     { provide: Window, useValue: window},

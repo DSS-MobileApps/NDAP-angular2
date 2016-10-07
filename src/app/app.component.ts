@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 // import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Router } from '@angular/router';
+import { Router, Event, NavigationEnd } from '@angular/router';
 
 import { AppState } from './app.service';
 
@@ -12,6 +12,7 @@ import { OrganisationService } from './organisations/organisation.service';
 
 import { ProviderTypesService } from './search/search-categories/provider-types.service';
 import { GeolocationService } from './shared/geolocation.service';
+import { AnalyticsService } from './shared/analytics.service';
 
 import '../modernizr-custom.js';
 
@@ -43,10 +44,19 @@ export class AppComponent implements OnInit  {
               private providerTypesService: ProviderTypesService,
               private organisationService: OrganisationService,
               private geolocationService: GeolocationService,
-              public appState: AppState
+              public appState: AppState,
+              public router: Router,
+              public analytics: AnalyticsService
             ) {
               // geolocationService.getLocation(this.opts);
-
+                this.router.events.subscribe(
+                        (event:Event) => {
+                            if (event instanceof NavigationEnd) {
+                              // console.log("routing", event.url, event.urlAfterRedirects);
+                                // ga('send', 'pageview', event.urlAfterRedirects);
+                                this.analytics.sendPageView(event.urlAfterRedirects);
+                            }
+                        });
             };
 
   ngOnInit() {

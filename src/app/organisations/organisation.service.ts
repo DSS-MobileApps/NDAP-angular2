@@ -4,11 +4,15 @@ import { Observable }     from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
 
 import { ProviderType, Refiner } from '../search/index';
 
 import { Organisation }   from './organisation';
 import { AppState } from '../app.service';
+
+import { AnalyticsService } from '../shared/analytics.service';
+
 
 @Injectable()
 export class OrganisationService {
@@ -16,6 +20,10 @@ export class OrganisationService {
   // Observable for Organisation Search Results
   private orgListSource = new Subject<Organisation[]>();
   orgListSource$ = this.orgListSource.asObservable();
+
+  // Observable for Unfiltered Organisation Search Results
+  private orgListFull = new Subject<Organisation[]>();
+  orgListFull$ = this.orgListFull.asObservable();
 
   // Observable for selected organisation record
   selectedOrganisation = new Subject<Organisation>();
@@ -31,7 +39,8 @@ export class OrganisationService {
     };
   constructor (private http: Http,
               @Inject('API_URL') private apiUrl: string,
-              public appState: AppState) {
+              public appState: AppState,
+              public analytics: AnalyticsService) {
       this.dataStore = { organisations: [], refiners: [] };
   }
 
@@ -102,10 +111,9 @@ export class OrganisationService {
   // TODO - add other methods
   // Public Method called to get organisations list
   getCachedList() {
-    console.info(this.dataStore.organisations);
-    this.orgListSource.next(
-        this.dataStore.organisations
-      );
+    console.info('getCachedList', this.dataStore.organisations);
+    this.orgListSource.next(this.dataStore.organisations);
+    // this.orgListFull.next(this.dataStore.organisations);
   }
 
 
@@ -146,6 +154,9 @@ export class OrganisationService {
 
       this.refinerList.next(this.dataStore.refiners);
 
+      this.analytics.sendEvent('Refine', refineField, value, null, null);
+
+
   }
 
   // Public Method called to get organisations list
@@ -181,17 +192,30 @@ export class OrganisationService {
 
     console.info('subscribe to get all Orgs refining by keyword - check perf')
 
+    var sendTime = new Date();
+    
+
     this.getOrganisations("all", null, null).subscribe(
       result => {
         let kLower = keyword.toLowerCase();
         this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
         this.orgListSource.next(this.dataStore.organisations);
+        this.orgListFull.next(this.dataStore.organisations);
+
         this.appState.set('results', this.dataStore.organisations);
 
         this.selectedOrganisation.next(null);
         this.refinerList.next(this.dataStore.refiners);
+
+        var endTime = new Date();
+        var milliseconds = (endTime.getTime() - sendTime.getTime());
+        console.log('time diff ms', milliseconds);
+        this.analytics.sendTiming('Search', 'Keyword', milliseconds, keyword, null);
       }
     )
+
+    this.analytics.sendEvent('Search', 'Keyword', keyword, null, null);
+
   }
 
   keywordMatch(kLower, item){
@@ -210,19 +234,35 @@ export class OrganisationService {
 
     console.info('subscribe to get Orgs - check perf')
 
+    var sendTime = new Date();
+
     this.getOrganisations(searchType, value1, value2).subscribe(
       results => {
         this.dataStore.organisations = results;
         this.orgListSource.next(results);
+        this.orgListFull.next(results);
         this.selectedOrganisation.next(null);
         this.refinerList.next(this.dataStore.refiners);
         this.appState.set('results', results);
 
+        var endTime = new Date();
+        var milliseconds = (endTime.getTime() - sendTime.getTime());
+        this.analytics.sendTiming('Search', searchType, milliseconds, value1, null);
+
+
+      },
+      error => {
+        console.error('from getOrganisations', error);
       }
     )
+
+    this.analytics.sendEvent('Search', searchType, value1, null, null);
+    // ga('send', 'event', 'category', 'action', 'opt_label', opt_value, {'nonInteraction': 1});
   }
 
   private getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
+
+
     switch (searchType) {
 
     case "byProviderType":
@@ -280,9 +320,13 @@ export class OrganisationService {
 
   // Public method called to get a single Org
   getOrganisation(id: number): Observable<Organisation> {
+    this.analytics.sendEvent('Select', 'Organisation', id, null, null);
+ 
     return this.getJsonFromAPI(
       this.apiUrl
       + this.getSingleOrganisationUrl + id);
+
+ 
       // return this.getJsonFromAPI("/data/detail-sample.json");
 
   }
@@ -298,9 +342,22 @@ export class OrganisationService {
   // Using the url, get the response from the API,
   // map through it to extract the data and catch any errors
   private getJsonFromAPI (url) {
+    var sendTime = new Date();
+
     return this.http.get(url)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+                    .map((res) => { 
+                      
+                      var endTime = new Date();
+                      var milliseconds = (endTime.getTime() - sendTime.getTime());
+                      this.analytics.sendTiming('API', url, milliseconds, null, null);
+
+                      return this.extractData(res);
+
+                    })
+                    .catch((error) => { 
+                      console.error('from getJsonFromAPI', error);
+                        return this.handleError(error); }
+                      );
   }
   // Return the body of the json file
   // NOTE: there is no value after "body ||",
@@ -316,6 +373,7 @@ export class OrganisationService {
     // We'd also dig deeper into the error to get a better message
     let errMsg = error.message || error.statusText || 'Server error';
     console.error(errMsg); // log to console instead
+    this.analytics.sendException(errMsg, false);
     return Observable.throw(errMsg);
     // error.json().error || 'Server error'
   }

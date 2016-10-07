@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 // import { GeolocationService } from '../../shared/geolocation.service';
 // import { GeoLocation } from '../../shared/geolocation-interface';
-import {GeolocationService, GeoLocation} from '../../shared/index';
+import {GeolocationService, GeoLocation, AnalyticsService} from '../../shared/index';
 
 @Component({
   
@@ -37,7 +37,8 @@ export class SearchLocationComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private analytics: AnalyticsService
   ) {
 
   }
@@ -67,6 +68,8 @@ export class SearchLocationComponent implements OnInit {
   onGetCurrentLocation() {
     this.locatingPosition = true;
     this.geolocationService.getLocation(this.opts);
+    this.analytics.sendEvent('Location', 'Geolocation', 'Use my location requested');
+
   }
 
   SearchCurrentLocation(){
