@@ -1,0 +1,36 @@
+@import '../../_vars.scss';
+
+#search-area, #results, #result-detail{
+  height: 100%;
+}
+#search-area, #result-detail{
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+#search-area{
+  padding: 10px;
+
+}
+
+:host(.searchContainer) #search-area{
+    /*position: fixed;
+    display: inline-block;
+    width: 100%;*/
+    /*right:100%;*/
+
+    -webkit-transition: all ease-in-out 2s;
+    transition: all ease-in-out 2s;
+    transform: translate(0,0);
+}
+
+:host(.searchContainer.ng-enter) #search-area{
+    /*transform: rotateZ(180deg)*/
+    transform: translate(0, 100%);
+
+}
+
+:host(.searchContainer.ng-enter-active)  #search-area{
+  transform: translate(0, -50%);
+    /*transform: translate(-100%,0);*/
+}

@@ -8,7 +8,7 @@ import { Organisation, OrganisationService, Refiner } from '../../index'
 
   selector: 'search-summary',
   templateUrl: 'search-summary.component.html',
-  styleUrls: ['search-summary.component.css'],
+  styleUrls: ['search-summary.component.scss'],
   // directives: [],
 
 })

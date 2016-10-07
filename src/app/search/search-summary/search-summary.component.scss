@@ -1,0 +1,15 @@
+@import '../../../_vars.scss';
+
+.summary{
+  margin:15px 0 5px;
+
+  
+}
+.summary > p,
+{
+  margin:0;
+}
+
+.alert-info .btn-link{
+  color:$contrast;
+}

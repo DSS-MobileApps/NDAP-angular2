@@ -21,7 +21,7 @@ import { GeolocationService } from '../shared/geolocation.service';
 
   selector: 'search-area',
   templateUrl: 'search-area.component.html',
-  styleUrls: ['search-area.component.css'],
+  styleUrls: ['search-area.component.scss'],
   // directives: [ SearchComponent ],
   // host: {'class' : 'ng-animate searchContainer'},
 
