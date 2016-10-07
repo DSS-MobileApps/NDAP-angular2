@@ -85,7 +85,7 @@ export class SmapComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.info('INIT SMapComponent: ', this.organisations);
+    // console.info('INIT SMapComponent: ', this.organisations);
 
     // console.info('maps wrapper', this._wrapper);
     // this._wrapper.getNativeMap().then((m: mapTypes.GoogleMap) => {
@@ -109,7 +109,7 @@ export class SmapComponent implements OnInit, OnChanges {
 
   ngAfterViewInit() {
     // children are set
-    console.log('markers after view init', this.children);
+    // console.log('markers after view init', this.children);
     if (this._googMap){
       let options: any = {
         imagePath: 'assets/images/markerplus/m'
@@ -122,7 +122,7 @@ export class SmapComponent implements OnInit, OnChanges {
     if (changes.organisations){
         var orgsChange:Organisation[] = changes.organisations.currentValue;
         if (orgsChange) {
-          console.info('organisations changed', this.organisations)
+          // console.info('organisations changed', this.organisations)
           // this.internalModel = new Contact(personChange.id,
           //                                 personChange.firstname,
           //                                 personChange.lastname);
@@ -131,7 +131,7 @@ export class SmapComponent implements OnInit, OnChanges {
     }else if (changes.selectedOrganisation){
       var orgChange:Organisation = changes.selectedOrganisation.currentValue;
       if (orgChange){
-        console.info('selected organisation changed', orgChange);
+        // console.info('selected organisation changed', orgChange);
         this.AddMarkers([orgChange]);
       }
     }
@@ -149,14 +149,14 @@ export class SmapComponent implements OnInit, OnChanges {
 
     return this._wrapper.getNativeMap()
     .then( (map: mapTypes.GoogleMap)=> {
-      console.log("getNativeMap() resolved");
+      // console.log("getNativeMap() resolved");
       // this.myConsole.log(`google.map, keys=${Object.keys(map)}`);
       // console.log('native map promise resolved')
 
       return this._googMap = map;
     })
     .catch( (err)=>{
-      console.log("catch GoogleMapsAPIWrapper.getNativeMap()")
+      // console.log("catch GoogleMapsAPIWrapper.getNativeMap()")
       return Promise.reject(err);
     });
   }
@@ -196,7 +196,7 @@ export class SmapComponent implements OnInit, OnChanges {
       }
 
       private clearAllMarkers() {
-        console.debug('clear all markers');
+        // console.debug('clear all markers');
         // Clear marker cluster
         if (this._markerCluster) {
           this._markerCluster.setMap(null);
@@ -260,13 +260,13 @@ export class SmapComponent implements OnInit, OnChanges {
 
 
           if (data.length < 1){
-            console.log('No data found, set map to all Aus' ,this.defaultCentreLat, this.defaultCentreLng);
+            // console.log('No data found, set map to all Aus' ,this.defaultCentreLat, this.defaultCentreLng);
             // map.setCenter({lat: this.defaultCentreLat, lng: this.defaultCentreLng});
             // this._googMap.setCenter(new google.maps.LatLng(this.defaultCentreLat, this.defaultCentreLng));
             map.setZoom(this.defaultZoom);
           }else if (data.length == 1){
             map.fitBounds(bounds);
-            console.log('One result found, set map Zoom to show that marker context');
+            // console.log('One result found, set map Zoom to show that marker context');
             map.setZoom(16);
           }else{
             map.fitBounds(bounds);
@@ -322,7 +322,7 @@ export class SmapComponent implements OnInit, OnChanges {
 
 
   clickedMarker(label: string, index: number) {
-      console.log('clicked the marker: ', label, index)
+      // console.log('clicked the marker: ', label, index)
       // console.log('selected mkr ', this.children.toArray()[index].latitude);
       this.selectedMarker = this.markers[index];
 
@@ -332,7 +332,7 @@ export class SmapComponent implements OnInit, OnChanges {
 
 
     markerDragEnd(o: Organisation, $event: MouseEvent) {
-      console.log('dragEnd', o, $event);
+      // console.log('dragEnd', o, $event);
     }
 
 
