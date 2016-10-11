@@ -104,7 +104,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   subscribeToOrganisationListUpdates() {
-    this.subOrgs = this.organisationService.orgListSource$
+    // this.subOrgs = this.organisationService.orgListSource$
+    this.subOrgs = this.organisationService.organisations
     .subscribe(
       organisations => {
         // set the map.comp Org Array to match the results

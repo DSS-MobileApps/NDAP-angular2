@@ -1,5 +1,8 @@
 import { Component, OnInit, transition, animate, style, state, trigger, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title }     from '@angular/platform-browser';
+import { Observable }     from 'rxjs/Observable';
+
 import { AppState } from '../../app.service';
 
 // import { ProviderType } from '../search/search-categories/provider-type';
@@ -89,7 +92,8 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     private elementRef: ElementRef,
     private _wrapper: GoogleMapsAPIWrapper,
     public appState: AppState,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private titleService: Title
   ) {
       this.startTime = new Date();
   }
@@ -120,12 +124,18 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     }
 
     
+      this.setTitle("Disability Advocacy Finder");
 
 
   }
 
   ngAfterViewInit() {
     this.sendFinishedLoadTime();
+  }
+
+
+  public setTitle( newTitle: string) {
+      this.titleService.setTitle( newTitle );
   }
 
     private setMapHeight(){
@@ -200,15 +210,22 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   }
 
   private subscribeToOrganisations() {
-    this.subOrgs = this.organisationService.orgListSource$
+    console.info('searchResults, subscribing to Orgs');
+    // this.subOrgs = this.organisationService.orgListSource$
+    this.subOrgs = this.organisationService.organisations
       .subscribe(
         organisations => {
+          console.info('got orgs from orgListSource', organisations);
           this.updateOrganisations(organisations)
         },
         error =>  {
           console.error('Search results error:', error);
           this.errorMessage = <any>error;
+        },
+        () => {
+          console.log('org subscribe complete');
         });
+        
   }
 
   private updateSelected(id: number) {

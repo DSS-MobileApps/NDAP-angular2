@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Title }     from '@angular/platform-browser';
+
 
 // import { ProviderTypesComponent } from './search-categories/provider-types.component';
 // import { SearchLocationComponent } from './search-location/search-location.component';
@@ -44,7 +46,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
     private router: Router,
     private organisationService: OrganisationService,
     private geolocationService: GeolocationService,
-    public analytics: AnalyticsService
+    public analytics: AnalyticsService,
+    private titleService: Title
   ) {}
 
   ngOnInit(){
@@ -76,6 +79,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
         this.textPlaceholder = "Type...";
         // this.textPlaceholder = "Enter a postcode...";
       });
+
+      this.setTitle("Disability Advocacy Finder");
+
 
   }
 
@@ -195,6 +201,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
   //
   // }
 
+
+  public setTitle( newTitle: string) {
+      this.titleService.setTitle( newTitle );
+  }
 
 
 }

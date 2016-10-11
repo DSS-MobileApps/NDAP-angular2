@@ -25,7 +25,7 @@
           <div id="org-result" (window:resize)="onResize($event)">
 
 
-                <div *ngIf="!organisations" class="loading">
+                <div *ngIf="!organisations && !errorMessage" class="loading">
                   <p class="text-info text-center">Retrieving search results</p>
                   <div class="spinner">
                       <div class="rect1"></div>
@@ -37,13 +37,13 @@
                 </div>
                     
 
-              <div *ngIf="organisations">
-                <search-summary [organisations]="organisations"></search-summary>
+              <div *ngIf="(organisationService.organisations | async) && !errorMessage">
+                <search-summary [organisations]="organisationService.organisations | async"></search-summary>
 
-                <refiner-options *ngIf="organisations?.length > 0"></refiner-options>
+                <refiner-options *ngIf="(organisationService.organisations | async).length > 0"></refiner-options>
 
 
-                <org-list [organisations]="organisations"
+                <org-list [organisations]="organisationService.organisations | async"
                   [selectedOrgId]="selectedOrgId"
                   (onSelectionChanged)="onSelect($event)"></org-list>
                 <div *ngIf="organisations?.length == 0" class="text-center">
@@ -54,10 +54,10 @@
 
               </div>
 
-              <div *ngIf="errorMessage" class="text-center">
+              <div *ngIf="errorMessage" class="well text-center">
                   <p class="lead text-danger" >Oh noes, something went wrong!</p>
                   <hr />
-                  <p>Would you like to try again?</p>
+                  <p>Would you like to <a [routerLink]="['/search']">try again?</a></p>
                   <p>Fear not, this issue has been reported and our techies are looking into it!</p>
               </div>
 

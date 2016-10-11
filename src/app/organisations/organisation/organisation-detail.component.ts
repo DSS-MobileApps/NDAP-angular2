@@ -44,10 +44,10 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
 
   ngOnInit() {
 
-    this.sub = this.organisationService.selectedOrganisation$
-      .subscribe(
-        selectedOrganisation => this.getOrganisation(selectedOrganisation),
-        error =>  console.log(error));
+    // this.sub = this.organisationService.selectedOrganisation$
+    //   .subscribe(
+    //     selectedOrganisation => this.getOrganisation(selectedOrganisation),
+    //     error =>  console.log(error));
 
     // if (this.organisation){
     //   console.log(this.organisation);
@@ -102,29 +102,29 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   }
 
   ngOnDestroy() {
-    if (this.sub) {this.sub.unsubscribe();}
-    if (this.subLocation) {this.subLocation.unsubscribe();}
+    // if (this.sub) {this.sub.unsubscribe();}
+    // if (this.subLocation) {this.subLocation.unsubscribe();}
   }
 
   ngOnChanges(changes) {
 
   		// console.log('Change detected:', changes);
-      if (changes.organisation){
-        console.log('Organisation Change detected:', changes.organisation);
-        if (this.organisation){
-          this.initMap();
-        }
-      }
+      // if (changes.organisation){
+      //   console.log('Organisation Change detected:', changes.organisation);
+      //   if (this.organisation){
+      //     this.initMap();
+      //   }
+      // }
   	}
 
-  initMap() {
-    console.debug('org detail - init map');
-    // if (this.mapElement != null && this.organisation != null)
-    // {
-    //   // this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
-    //   this.mapService.addDetailMarker(this.organisation);
-    // }
-  }
+  // initMap() {
+  //   console.debug('org detail - init map');
+  //   // if (this.mapElement != null && this.organisation != null)
+  //   // {
+  //   //   // this.mapService.createDetailMap(this.mapElement.nativeElement, this.organisation)
+  //   //   this.mapService.addDetailMarker(this.organisation);
+  //   // }
+  // }
 
   sendFinishedLoadTime(){
       var endTime = new Date();
@@ -134,28 +134,31 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   }
 
 
-    getOrganisation(organisation: Organisation){
+    // getOrganisation(organisation: Organisation){
 
-      this.organisation = organisation;
-      console.log('get organisation');
-      console.log(this.organisation);
+    //   this.organisation = organisation;
+    //   console.log('get organisation');
+    //   console.log(this.organisation);
+      
 
-      if (this.organisation){
-        this.getOrganisationById(organisation.Id);
-        this.googleMapsDirections = this.getDirectionsUrl();
-      }
+    //   if (this.organisation){
+    //     console.log('set page title to', this.organisation.Name);
+    //     this.setTitle(this.organisation.Name + " - Disability Advocacy Finder");
+    //     this.getOrganisationById(organisation.Id);
+    //     this.googleMapsDirections = this.getDirectionsUrl();
+    //   }
 
-    }
+    // }
 
-    getOrganisationById(id){
-      console.log('get organisation by id: ' + id);
-      this.subOrgId = this.organisationService.getOrganisation(id)
-      .subscribe((organisation) => {
-        this.organisation = organisation;
-        this.initMap();
-        this.subOrgId.unsubscribe();
-      });
-    }
+    // getOrganisationById(id){
+    //   console.log('get organisation by id: ' + id);
+    //   this.subOrgId = this.organisationService.getOrganisation(id)
+    //   .subscribe((organisation) => {
+    //     this.organisation = organisation;
+    //     this.initMap();
+    //     this.subOrgId.unsubscribe();
+    //   });
+    // }
 
 
 
@@ -166,7 +169,7 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   // }
   deselect() {
     this.onUnselected.emit(this.organisation);
-    this.organisationService.updateSelectedOrganisation(null);
+    // this.organisationService.updateSelectedOrganisation(null);
     // this.router.navigate(['/']);
     // this.goBack();
   }

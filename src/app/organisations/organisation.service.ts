@@ -2,9 +2,11 @@ import { Injectable, Inject }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
+import {BehaviorSubject} from "rxjs/Rx";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
+
 
 import { ProviderType, Refiner } from '../search/index';
 
@@ -12,18 +14,22 @@ import { Organisation }   from './organisation';
 import { AppState } from '../app.service';
 
 import { AnalyticsService } from '../shared/analytics.service';
+import { BackendService } from '../shared/backend.service';
 
 
 @Injectable()
 export class OrganisationService {
 
-  // Observable for Organisation Search Results
-  private orgListSource = new Subject<Organisation[]>();
-  orgListSource$ = this.orgListSource.asObservable();
+  // // Observable for Organisation Search Results
+  // private orgListSource = new Subject<Organisation[]>();
+  // orgListSource$ = this.orgListSource.asObservable();
 
+  private _organisations: BehaviorSubject<Organisation[]> = new BehaviorSubject([]);
+  public organisations: Observable<Organisation[]> = this._organisations.asObservable();
+  
   // Observable for Unfiltered Organisation Search Results
-  private orgListFull = new Subject<Organisation[]>();
-  orgListFull$ = this.orgListFull.asObservable();
+  private _orgsUnfiltered: BehaviorSubject<Organisation[]> = new BehaviorSubject([]);
+  orgsUnfiltered = this._orgsUnfiltered.asObservable();
 
   // Observable for selected organisation record
   selectedOrganisation = new Subject<Organisation>();
@@ -38,91 +44,54 @@ export class OrganisationService {
       refiners: Refiner[]
     };
   constructor (private http: Http,
-              @Inject('API_URL') private apiUrl: string,
               public appState: AppState,
+              public backendService: BackendService,
               public analytics: AnalyticsService) {
-      this.dataStore = { organisations: [], refiners: [] };
+
+      this.loadInitialData();
+
+
   }
 
-  /*
-  *************************************
-  * API Calls
-  *************************************
-  */
+  // get organisations() {
+  //       return this._organisations.asObservable();
+  //   }
 
-  // All Organisations (URL) (800ms on average)
-  private getAllOrganisationsUrl =
-    '/api/provider/getall/all/NDAP';
+  private loadInitialData() {
 
-  // Single Organisation (URL + id) (60ms on average)
-  private getSingleOrganisationUrl =
-    '/api/provider/';
+      console.info('load initial organisation data');
 
-  // Organisation (URL + postcode) (60ms on average)
-  private getOrganisationsInPostcodeUrlA =
-    // '/api/provider/getallbypostcode/'
-    '/api/provider/getallbyserviceareapostcode/'
-
-  private getOrganisationsInPostcodeUrlB =
-    '/NDAP'
-
-  // Get all by Provider Type
-  private getOrganisationsFilteredByTypeUrlA =
-    '/api/provider/getallbytype/';
-
-  private getOrganisationsFilteredByTypeUrlB =
-      '/NDAP';
+      this.dataStore = { organisations: [], refiners: [] };
 
 
-  private getOrganisationsByState =
-        '/api/provider/getallbyState/'
-  private getOrganisationsByDistance =
-        '/api/provider/GetAllByDistance/'
+      if (this.appState.get().allOrgs == null){
+            this.backendService.getAllOrganisations()
+                                .subscribe(
+                                  orgs => {
+                                      // console.info('got initial organisations list');
+                                      // this.dataStore.organisations = orgs;
+                                      this.appState.set('allOrgs', orgs);
 
-  private getOrganisationsByKeyword =
-        '/api/provider/GetAllByKeyword/'
+                                      // this._organisations.next(orgs);
+                                  },
+                                  err => console.log("Error retrieving Organisations")
+                              );
 
-  // Get suburbs from a postcode
-  // '/api/location/';
+      }
 
-  // Get by State
-  // /api/provider/getallbystate/ACT/NDAP
+       
+    }
 
-  // Get Provider Types
-  // /api/utilities/getallprovidertypes/NDAP
-
-  // Get by name
-  // ????
-
-  // Get within a shape
-  // /api/provider
-  // /GetAllWithinShape/-36.037825426409505/148.3338165283203/
-
-  // Get within a distance
-  // /api/provider/GetAllByDistance/-35.276/149.13/300
-
-
+  
   /*
   *************************************
   * Methods that the Service returns
   *************************************
   */
 
-  // TODO - add other methods
+  
   // Public Method called to get organisations list
-  getCachedList() {
-    console.info('getCachedList', this.dataStore.organisations);
-    this.orgListSource.next(this.dataStore.organisations);
-    // this.orgListFull.next(this.dataStore.organisations);
-  }
-
-
-  replaceRefiner(refineField, value){
-    // if (refine)
-  }
-
-  // Public Method called to get organisations list
-  refineOrgList(refineField, value, singleRefiner = false) {
+  public refineOrgList(refineField, value, singleRefiner = false) {
     console.info(refineField, value);
 
     var newRef: Refiner = {type: refineField, value: value, summary: refineField + " refined by " + value};
@@ -131,26 +100,18 @@ export class OrganisationService {
       this.dataStore.refiners = this.dataStore.refiners
         .filter((refiner) => refiner.type !== refineField);
       }
-      // this.dataStore.refiners
-      // .map((refiner) => {
-      //   if (refiner.type === refineField
-      //       && refiner.value !== value)
-      //   {
-      //     refiner.value = value
-      //   }
-      // })
+
       this.dataStore.refiners.push(newRef);
 
 
     console.info(this.dataStore.refiners);
 
     // console.info(this.dataStore.organisations.filter((item) => item.Category === value))
-    this.orgListSource.next(
+    this._organisations.next(
         this.dataStore.organisations
         // .filter((item) => item.Category === value)
         .filter((item) => item.Category.indexOf(value) != -1)
       );
-      
 
       this.refinerList.next(this.dataStore.refiners);
 
@@ -160,21 +121,22 @@ export class OrganisationService {
   }
 
   // Public Method called to get organisations list
-  clearRefinerProperty(refineField) {
+  public clearRefinerProperty(refineField) {
 
     this.dataStore.refiners = this.dataStore.refiners
       .filter((refiner) => refiner.type !== refineField);
 
 
-      console.info(this.dataStore.refiners);
+      // console.info(this.dataStore.refiners);
 
     switch (refineField) {
 
       case "byProviderType":
-      this.orgListSource.next(
-          this.dataStore.organisations
-          // .filter((item) => item.Category === value)
-        );
+        this._organisations.next(
+            this.dataStore.organisations
+            // .filter((item) => item.Category === value)
+          );
+
       default:
     }
 
@@ -183,66 +145,81 @@ export class OrganisationService {
   }
 
   // Public Method called to get organisations list
-  getByKeyword(keyword) {
+  public getByKeyword(keyword) {
     this.appState.set('searchType', 'keyword');
     this.appState.set('searchValue1', keyword);
 
     // clear refiners
     this.dataStore.refiners = [];
 
-    console.info('subscribe to get all Orgs refining by keyword - check perf')
+    // console.info('subscribe to get all Orgs refining by keyword - check perf')
 
-    var sendTime = new Date();
-    
+    if (this.appState.get().allOrgs){
+      console.info('using all orgs cache', this.appState.get().allOrgs);
 
-    this.getOrganisations("all", null, null).subscribe(
-      result => {
+        let result = this.appState.get().allOrgs;
         let kLower = keyword.toLowerCase();
         this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
-        this.orgListSource.next(this.dataStore.organisations);
-        this.orgListFull.next(this.dataStore.organisations);
+        
+        // console.log('got new orgs from kw search', this.dataStore.organisations);
+        this._organisations.next(this.dataStore.organisations);
+        this._orgsUnfiltered.next(this.dataStore.organisations);
 
         this.appState.set('results', this.dataStore.organisations);
 
         this.selectedOrganisation.next(null);
         this.refinerList.next(this.dataStore.refiners);
 
-        var endTime = new Date();
-        var milliseconds = (endTime.getTime() - sendTime.getTime());
-        console.log('time diff ms', milliseconds);
-        this.analytics.sendTiming('Search', 'Keyword', milliseconds, keyword, null);
-      }
-    )
+    }else{
+
+        var sendTime = new Date();
+        this.backendService.getOrganisations("all", null, null).subscribe(
+              result => {
+
+                let kLower = keyword.toLowerCase();
+                this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
+                
+                // console.log('got new orgs from kw search', this.dataStore.organisations);
+                this._organisations.next(this.dataStore.organisations);
+                this._orgsUnfiltered.next(this.dataStore.organisations);
+
+                this.appState.set('results', this.dataStore.organisations);
+
+                this.selectedOrganisation.next(null);
+                this.refinerList.next(this.dataStore.refiners);
+
+                var endTime = new Date();
+                var milliseconds = (endTime.getTime() - sendTime.getTime());
+                this.analytics.sendTiming('Search', 'Keyword', milliseconds, keyword, null);
+              })
+
+    }
 
     this.analytics.sendEvent('Search', 'Keyword', keyword, null, null);
 
   }
 
-  keywordMatch(kLower, item){
-      return (item.Name != null && item.Name.toLowerCase().includes(kLower)) ||
-      // (item.FurtherDetails != null && item.FurtherDetails.toLowerCase().includes(kLower)) ||
-      (item.Category != null && item.Category.toLowerCase().includes(kLower))
-    }
-
   // Public Method called to get organisations list
-  searchOrgList(searchType, value1, value2) {
+  public searchOrgList(searchType, value1, value2) {
     this.appState.set('searchType', searchType);
     this.appState.set('searchValue1', value1);
     this.appState.set('searchValue2', value2);
     // clear refiners
     this.dataStore.refiners = [];
 
-    console.info('subscribe to get Orgs - check perf')
+    // console.info('subscribe to get Orgs - check perf')
 
     var sendTime = new Date();
 
-    this.getOrganisations(searchType, value1, value2).subscribe(
+    this.backendService.getOrganisations(searchType, value1, value2).subscribe(
       results => {
         this.dataStore.organisations = results;
-        this.orgListSource.next(results);
-        this.orgListFull.next(results);
+
+        this._organisations.next(results);
+        this._orgsUnfiltered.next(results);
         this.selectedOrganisation.next(null);
         this.refinerList.next(this.dataStore.refiners);
+
         this.appState.set('results', results);
 
         var endTime = new Date();
@@ -253,6 +230,12 @@ export class OrganisationService {
       },
       error => {
         console.error('from getOrganisations', error);
+        this._organisations
+              // .retry(3)
+              .error(error)
+              // .onErrorResumeNext(this.organisations);
+        this._orgsUnfiltered.error(error);
+
       }
     )
 
@@ -260,78 +243,21 @@ export class OrganisationService {
     // ga('send', 'event', 'category', 'action', 'opt_label', opt_value, {'nonInteraction': 1});
   }
 
-  private getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
-
-
-    switch (searchType) {
-
-    case "byProviderType":
-      return this.getJsonFromAPI(
-        this.apiUrl
-        + this.getOrganisationsFilteredByTypeUrlA
-        + value1.Code
-        + this.getOrganisationsFilteredByTypeUrlB);
-
-    case "byRadius":
-            return this.getJsonFromAPI(
-              this.apiUrl
-              + this.getOrganisationsByDistance
-              + "-35.276/149.13/"
-              + value1
-              + this.getOrganisationsInPostcodeUrlB);
-
-    case "byState":
-            return this.getJsonFromAPI(
-              this.apiUrl
-              + this.getOrganisationsByState
-              // + "-35.276/149.13/"
-              + value1.code
-              + this.getOrganisationsInPostcodeUrlB);
-
-    case "byKeyword":
-          return this.getJsonFromAPI(
-            this.apiUrl
-            + this.getOrganisationsByKeyword
-            + value1
-            + "/-35.276/149.13/"
-            + "3000"
-            + this.getOrganisationsInPostcodeUrlB
-            + "/1");
-
-    case "byPostCode":
-        return this.getJsonFromAPI(
-          this.apiUrl
-          + this.getOrganisationsInPostcodeUrlA
-          + value1
-          + this.getOrganisationsInPostcodeUrlB 
-          +  "/-35.276/149.13/1/1");
-
-    case "all":
-        return this.getJsonFromAPI(
-          this.apiUrl
-          + this.getAllOrganisationsUrl);
-
-    default:
-        return this.getJsonFromAPI(
-          this.apiUrl
-          + this.getAllOrganisationsUrl);
-    }
-  }
-
   // Public method called to get a single Org
-  getOrganisation(id: number): Observable<Organisation> {
+  public getOrganisation(id: number): Observable<Organisation> {
     this.analytics.sendEvent('Select', 'Organisation', id, null, null);
  
-    return this.getJsonFromAPI(
-      this.apiUrl
-      + this.getSingleOrganisationUrl + id);
+    // return this.getJsonFromAPI(
+    //   this.apiUrl
+    //   + this.getSingleOrganisationUrl + id);
 
- 
+    return this.backendService.getOrganisation(id);
+
       // return this.getJsonFromAPI("/data/detail-sample.json");
 
   }
 
-    updateSelectedOrganisation (selectedOrganisation){
+    public updateSelectedOrganisation (selectedOrganisation){
       this.selectedOrganisation.next(selectedOrganisation);
       this.appState.set('selectedOrganisation', selectedOrganisation);
 
@@ -339,44 +265,12 @@ export class OrganisationService {
 
 
 
-  // Using the url, get the response from the API,
-  // map through it to extract the data and catch any errors
-  private getJsonFromAPI (url) {
-    var sendTime = new Date();
+  private keywordMatch(kLower, item){
+      return (item.Name != null && item.Name.toLowerCase().includes(kLower)) ||
+      // (item.FurtherDetails != null && item.FurtherDetails.toLowerCase().includes(kLower)) ||
+      (item.Category != null && item.Category.toLowerCase().includes(kLower))
+    }
 
-    return this.http.get(url)
-                    .map((res) => { 
-                      
-                      var endTime = new Date();
-                      var milliseconds = (endTime.getTime() - sendTime.getTime());
-                      this.analytics.sendTiming('API', url, milliseconds, null, null);
-
-                      return this.extractData(res);
-
-                    })
-                    .catch((error) => { 
-                      console.error('from getJsonFromAPI', error);
-                        return this.handleError(error); }
-                      );
-  }
-  // Return the body of the json file
-  // NOTE: there is no value after "body ||",
-  // if we wanted the 'data' object we would put it here after the ||
-  // e.g. 'return body || data { };'
-  private extractData(res: Response) {
-    let body = res.json();
-    return body || { };
-  }
-
-  private handleError (error: any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let errMsg = error.message || error.statusText || 'Server error';
-    console.error(errMsg); // log to console instead
-    this.analytics.sendException(errMsg, false);
-    return Observable.throw(errMsg);
-    // error.json().error || 'Server error'
-  }
 
 
 

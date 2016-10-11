@@ -1,5 +1,5 @@
 import { NgModule }       from '@angular/core';
-import { BrowserModule  } from '@angular/platform-browser';
+import { BrowserModule, Title  } from '@angular/platform-browser';
 import { AppComponent }   from './app.component';
 import {
   LocationStrategy,
@@ -50,6 +50,7 @@ import { environment } from '../environments/';
 import { SmapContainerComponent, SmapComponent } from './map/smap/index';
 
 import { AnalyticsService } from './shared/analytics.service';
+import { BackendService } from './shared/backend.service';
 
 @NgModule({
     declarations: [AppComponent,
@@ -92,7 +93,9 @@ import { AnalyticsService } from './shared/analytics.service';
                     // }},
                     // MapService,
                     // {provide: LocationStrategy, useClass: HashLocationStrategy},
+                    Title,
                     AnalyticsService,
+                    BackendService,
                     GoogleMapsAPIWrapper,
                     AppState,
                     { provide: Window, useValue: window},

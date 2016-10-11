@@ -37,7 +37,7 @@ export class ProviderTypesComponent implements OnInit {
   // When the component starts, get the organisations
   ngOnInit () {
     // Subscribe to Org Search Results
-    this.subscribeToUnfilteredOrganisations();
+    // this.subscribeToUnfilteredOrganisations();
     
     this.subscribeToProviderTypes();
 
@@ -52,13 +52,13 @@ export class ProviderTypesComponent implements OnInit {
   // Get provider types from the provider service,
   // then assigned the observable result to the Provider Types Array
   private subscribeToProviderTypes() {
-    this.subTypes = this.providerTypesService.getProviderTypes()
+    this.subTypes = this.providerTypesService.filteredTypes
       .subscribe(
         providerTypes => {
           console.log('providerTypes returned from API', providerTypes);
-          
           this.providerTypes = this.providerTypesService.sortProviderTypes(providerTypes);
           this.filteredTypes = this.providerTypes;
+          this.subscribeToUnfilteredOrganisations();
         },
         error =>  console.log(error));
   }
@@ -66,7 +66,8 @@ export class ProviderTypesComponent implements OnInit {
 private subscribeToUnfilteredOrganisations() {
   // this.organisationService.getCachedList();
 
-    this.subOrgs = this.organisationService.orgListFull$
+    // this.subOrgs = this.organisationService.orgListFull$
+    this.organisationService.orgsUnfiltered
       .subscribe(
         organisations => {
           console.log('full orgs list updated:', organisations);

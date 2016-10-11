@@ -173,7 +173,8 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
   }
 
   private subscribeToOrganisations() {
-    this.subOrgs = this.organisationService.orgListSource$
+    // this.subOrgs = this.organisationService.orgListSource$
+    this.subOrgs = this.organisationService.organisations
       .subscribe(
         organisations => this.updateOrganisations(organisations),
         // organisations => this.organisations = organisations,

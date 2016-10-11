@@ -60,9 +60,9 @@ export class SmapContainerComponent implements OnInit {
   // The Org Id of the currently selected record
   @Input() selectedOrganisation: Organisation = null;
 
-  private subOrgs: any;
-  private subSelected: any;
-  private subLocation: any;
+  // private subOrgs: any;
+  // private subSelected: any;
+  // private subLocation: any;
 
   // iconUrl = "assets/images/map/Infos_info.svg";
 
@@ -76,14 +76,14 @@ export class SmapContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.info('INIT SMapContainerComponent: ', this.organisations);
+    // console.info('INIT SMapContainerComponent: ', this.organisations);
 
   }
 
   ngOnDestroy(){
-    if (this.subOrgs) {this.subOrgs.unsubscribe();}
-    if (this.subSelected) {this.subSelected.unsubscribe();}
-    if (this.subLocation) {this.subSelected.unsubscribe();}
+    // if (this.subOrgs) {this.subOrgs.unsubscribe();}
+    // if (this.subSelected) {this.subSelected.unsubscribe();}
+    // if (this.subLocation) {this.subSelected.unsubscribe();}
   }
 
 

@@ -1,28 +1,45 @@
 import { Injectable, Inject }     from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
+import {BehaviorSubject} from "rxjs/Rx";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 
 import { ProviderType }   from './provider-type';
 
+import { BackendService } from '../../shared/backend.service';
+import { AppState } from '../../app.service';
+
+
 @Injectable()
 export class ProviderTypesService {
 
+
+  private _filteredTypes: BehaviorSubject<ProviderType[]> = new BehaviorSubject([]);
+  public filteredTypes: Observable<ProviderType[]> = this._filteredTypes.asObservable();
+  
+
+  private dataStore: {  // This is where we will store our data in memory
+      types: ProviderType[]
+    };
+
   constructor (private http: Http,
-    @Inject('API_URL') private apiUrl: string) {}
+                public appState: AppState,
+                private backendService: BackendService
+              ) {
+                this.loadInitialState();
+              }
 
-  /*
-  *************************************
-  * API Calls
-  *************************************
-  */
 
-  // All Provider Types (URL) (800ms on average)
-  private getAllProviderTypesUrl =
-    '/api/utilities/getallprovidertypes/NDAP';
 
+  private loadInitialState(){
+
+    this.dataStore = { types: [] };
+
+    this.backendService.getProviderTypes()
+                        .subscribe(types => this.storeTypes(types));
+  }
 
   /*
   *************************************
@@ -31,14 +48,24 @@ export class ProviderTypesService {
   */
 
   // Get all Types
-  getProviderTypes(): Observable<ProviderType[]> {
-    return this.http.get(this.apiUrl + this.getAllProviderTypesUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
+  public getProviderTypes(): Observable<ProviderType[]> {
+    
+    let obs = this.backendService.getProviderTypes();
+    obs.subscribe(types => this.storeTypes(types))
+    return obs;
+
+  }
+
+  private storeTypes(types: ProviderType[]){
+      this._filteredTypes.next(types);
+      this.dataStore.types = types;
+      this.appState.set('allTypes', types);
+
+
   }
 
   // Sort types by Value
-  sortProviderTypes(providerTypes: ProviderType[], descending?: boolean): ProviderType[]{
+  public sortProviderTypes(providerTypes: ProviderType[], descending?: boolean): ProviderType[]{
 
     if (descending){
       return providerTypes.sort(function(a, b) {
@@ -52,16 +79,4 @@ export class ProviderTypesService {
 
   }
 
-  private extractData(res: Response) {
-    let body = res.json();
-    return body || { };
-  }
-
-  private handleError (error: any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let errMsg = error.message || error.statusText || 'Server error';
-    console.error(errMsg); // log to console instead
-    return Observable.throw(errMsg);
-  }
 }

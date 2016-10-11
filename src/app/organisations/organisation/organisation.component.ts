@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input, transition, animate, style, state, trigger } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Title }     from '@angular/platform-browser';
+
 import { Organisation } from '../index';
 import { OrganisationDetailComponent } from './organisation-detail.component';
 import { MapService } from '../../map/map.service';
@@ -42,6 +44,7 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
       private router: Router,
       private route: ActivatedRoute,
       private organisationService: OrganisationService,
+      private titleService: Title
   ) {
 
 
@@ -95,6 +98,9 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
       console.log('org is ' + organisation.Name);
 
       this.selectedOrganisation = organisation;
+
+      this.setTitle(this.selectedOrganisation.Name + " - Disability Advocacy Finder");
+
       // this.initMap();
     });
   }
@@ -112,7 +118,7 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
   //   this.router.navigate(['/']);
   // }
   onUnselect(selectedOrg: Organisation) {
-    // this.organisationService.updateSelectedOrganisation(null);
+    this.organisationService.updateSelectedOrganisation(null);
     console.group('Unselect Org:');
     console.log(selectedOrg);
     if (selectedOrg){
@@ -123,5 +129,11 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
     console.groupEnd();
     // this.goBack();
   }
+
+  public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
+  }
+
+
 
 }
