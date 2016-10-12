@@ -26,7 +26,7 @@ export class AppState {
 
   set(prop: string, value: any) {
     // internally mutate our state
-    console.log('set appState item: ', prop, ' to ', value);
+    // console.log('set appState item: ', prop, ' to ', value);
     return this._state[prop] = value;
   }
 

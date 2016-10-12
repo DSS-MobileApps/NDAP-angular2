@@ -55,7 +55,7 @@ export class ProviderTypesComponent implements OnInit {
     this.subTypes = this.providerTypesService.filteredTypes
       .subscribe(
         providerTypes => {
-          console.log('providerTypes returned from API', providerTypes);
+          // console.log('providerTypes returned from API', providerTypes);
           this.providerTypes = this.providerTypesService.sortProviderTypes(providerTypes);
           this.filteredTypes = this.providerTypes;
           this.subscribeToUnfilteredOrganisations();
@@ -70,7 +70,7 @@ private subscribeToUnfilteredOrganisations() {
     this.organisationService.orgsUnfiltered
       .subscribe(
         organisations => {
-          console.log('full orgs list updated:', organisations);
+          // console.log('full orgs list updated:', organisations);
           this.organisations = organisations;
           this.filterTypes(this.organisations);
         },
@@ -90,7 +90,7 @@ private subscribeToUnfilteredOrganisations() {
       return orgs.filter(o => o.Category.includes(el.Value) ).length > 0;
     } );
 
-    console.log("filter types after reduced ", this.filteredTypes);
+    // console.log("filter types after reduced ", this.filteredTypes);
   }
 
   
@@ -99,7 +99,7 @@ private subscribeToUnfilteredOrganisations() {
   // This event is captured through the organisation.component html template
   onSelect(providerType) {
     // emit the provider value e.g. "All Disability"
-    console.log(providerType);
+    console.log('Refine by ', providerType);
     this.selectedProviderType = providerType;
     this.onSelectedProviderType.emit(providerType);
 

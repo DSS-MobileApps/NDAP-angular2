@@ -1,20 +1,9 @@
 import { Component, OnInit, transition, animate, style, state, trigger, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { ProviderType } from '../search/search-categories/provider-type';
 
 import { Organisation } from '../organisations/organisation';
-// import { OrganisationListComponent, OrganisationDetailComponent, OrganisationService } from '../organisations/index';
-// import { OrganisationService } from './organisation.service';
-// import { OrganisationSummaryComponent } from './organisation-summary.component';
 import { GeolocationService } from '../shared/geolocation.service';
 
-// import { SearchComponent } from './index';
-// import { RefinerComponent } from '../search/refiner.component';
-// import { MapComponent, MapService } from '../map/index';
-
-// import {RemoveSpaces} from '../shared/';
-
-// import { OrganisationDetailComponent } from './organisation-detail.component';
 
 
 @Component({
@@ -22,7 +11,6 @@ import { GeolocationService } from '../shared/geolocation.service';
   selector: 'search-area',
   templateUrl: 'search-area.component.html',
   styleUrls: ['search-area.component.scss'],
-  // directives: [ SearchComponent ],
   // host: {'class' : 'ng-animate searchContainer'},
 
   /**
@@ -68,19 +56,7 @@ import { GeolocationService } from '../shared/geolocation.service';
 })
 
 export class SearchAreaComponent implements OnInit {
-  // title = 'Search';
-  // organisations: Organisation[];
-  // selectedOrganisation: Organisation;
-  // selectedOrgId: number;
-  // errorMessage: string;
-  // userPos: any;
-
   private sub: any;
-
-  // width = 100;
-  // height = 100;
-  // height: number;
-
   searchMode=true;
 
   opts = {
@@ -95,18 +71,6 @@ export class SearchAreaComponent implements OnInit {
 
   // When the component starts,
   ngOnInit () {
-    // Subscribe to Org Search Results
-    // this.subscribeToOrganisations();
-    // this.subscribeToSelectedOrganisationUpdates();
-
-    // Perform a default search for all orgs
-    // this.organisationService.searchOrgList('all', undefined, undefined);
-
-    // this.organisationService.getCachedList();
-
-    // Subscribe to Selected Org events
-
-
 
   }
 

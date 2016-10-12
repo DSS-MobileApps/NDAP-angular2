@@ -117,7 +117,7 @@ export class BackendService {
                       return this.extractData(res);
                     })
                     .catch((error) => { 
-                      console.error('from getJsonFromAPI', error);
+                    //   console.error('from getJsonFromAPI', error);
                         return this.handleError(error); 
                       });
   }
@@ -134,9 +134,10 @@ export class BackendService {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     let errMsg = error.message || error.statusText || 'Server error';
-    console.error(errMsg); // log to console instead
+    console.error(error); // log to console instead
     this.analytics.sendException(errMsg, false);
     return Observable.throw(errMsg);
+    // return Observable.throw(error);
     // error.json().error || 'Server error'
   }
 

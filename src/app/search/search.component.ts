@@ -3,17 +3,8 @@ import { Router } from '@angular/router';
 import { Title }     from '@angular/platform-browser';
 
 
-// import { ProviderTypesComponent } from './search-categories/provider-types.component';
-// import { SearchLocationComponent } from './search-location/search-location.component';
-// import { SearchKeywordComponent } from './search-keyword/search-keyword.component';
-// import { SearchStateComponent } from './search-state/search-state.component';
-
 import { ProviderType } from './search-categories/provider-type';
 import {GeolocationService, GeoLocation} from '../shared/index';
-
-// import { StateType } from './../shared/state-type';
-
-// import {ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, ProviderType} from './index';
 
 import { OrganisationService } from '../organisations/organisation.service'
 import { AnalyticsService } from '../shared/analytics.service';
@@ -22,8 +13,7 @@ import { AnalyticsService } from '../shared/analytics.service';
 
   selector: 'search-options',
   templateUrl: 'search.component.html',
-  styleUrls: ['search.component.css'],
-  // directives: [ProviderTypesComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent]
+  styleUrls: ['search.component.css']
 })
 
 export class SearchComponent implements OnInit, AfterViewInit {
@@ -40,6 +30,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   @Output() onSearch = new EventEmitter<any>();
   @ViewChild('locationInput') locInput: ElementRef;
+
+  errorMessage: string;
 
 
   constructor(
@@ -100,17 +92,42 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.subLocation.unsubscribe();
   }
 
-  onSelectedProviderType (selectedProviderType: ProviderType) {
-    this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined);
-    this.onSearch.emit(selectedProviderType);
+  // onSelectedProviderType (selectedProviderType: ProviderType) {
 
-  }
+  //   this.errorMessage = null;
 
-  onSelectedRadius (radius) {
-    this.organisationService.searchOrgList('byRadius', radius, undefined);
-    this.onSearch.emit(radius);
+  //   this.organisationService.searchOrgList('byProviderType', selectedProviderType, undefined)
+  //       .subscribe(
+  //           result => {
+  //             console.log('result is ', result);
+  //             this.onSearch.emit(selectedProviderType);
+  //         },
+  //           error => {
+  //             this.showErrorMsg(error);
+  //           },
+  //           () => console.log('complete ProviderType subscription')
+  //         );
 
-  }
+
+  // }
+
+  // onSelectedRadius (radius) {
+
+  //   this.errorMessage = null;
+
+  //   this.organisationService.searchOrgList('byRadius', radius, undefined)
+  //       .subscribe(
+  //           result => {
+  //             console.log('result is ', result);
+  //             this.onSearch.emit(radius);
+  //         },
+  //           error => {
+  //             this.showErrorMsg(error);
+  //           },
+  //           () => console.log('complete radius subscription')
+  //         );
+    
+  // }
 
   // onSelectedState (state: StateType) {
   //   this.organisationService.searchOrgList('byState', state, undefined);
@@ -118,22 +135,54 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
 
   onPostCodeSearch (postCode) {
-    console.log('Org std Postcode search for postcode: ' + postCode);
-    this.organisationService.searchOrgList('byPostCode', postCode, undefined);
-    this.onSearch.emit(postCode);
+    // console.log('Org std Postcode search for postcode: ' + postCode);
+    this.errorMessage = null;
+    this.organisationService.searchOrgList('byPostCode', postCode, undefined)
+      .subscribe(
+        result => {
+          console.log('result is ', result);
+          this.onSearch.emit(postCode);
+       },
+        error => {
+              this.showErrorMsg(error);
+        },
+        () => console.log('complete postcode')
+      );
 
   }
 
   onAllOrganisations() {
-    this.organisationService.searchOrgList('all', undefined, undefined);
-    this.onSearch.emit('all');
+    this.errorMessage = null;
+
+    this.organisationService.searchOrgList('all', undefined, undefined)
+      .subscribe(
+        result => {
+          console.log('result is ', result);
+          this.onSearch.emit('all');
+        },
+        error => {
+              this.showErrorMsg(error);
+        },
+        () => console.log('complete all orgs search subscription')
+      );
 
   }
 
   onKeywordSearch (keywordEntry) {
+    this.errorMessage = null;
+
     // this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
-    this.organisationService.getByKeyword(keywordEntry);
-    this.onSearch.emit(keywordEntry);
+    this.organisationService.getByKeyword(keywordEntry)
+        .subscribe(
+            result => {
+              console.log('result is ', result);
+              this.onSearch.emit(keywordEntry);
+            },
+            error => {
+              this.showErrorMsg(error);
+            },
+            () => console.log('complete keyword search subscription')
+          );
   }
 
   onLocationIdentified (postCode) {
@@ -170,6 +219,14 @@ export class SearchComponent implements OnInit, AfterViewInit {
   //   return this.locationChecked &&
   //           this.locationPos;
   // }
+
+  private showErrorMsg(error: string){
+      // reset value
+      this.errorMessage = '';
+      console.error('search error', error);
+      this.errorMessage = error;
+
+  }
 
   get locationError(){
     return this.locationChecked &&

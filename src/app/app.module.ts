@@ -43,6 +43,7 @@ import { SearchAreaComponent, SearchResultsComponent, SearchComponent, SearchSum
 import { MapComponent } from './map/index';
 import { MapsModule, mapsModuleWithProviders } from './app.maps';
 
+import { ErrorMessageComponent } from './error/index';
 
 import { EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink } from './shared/pipes/';
 
@@ -60,6 +61,7 @@ import { BackendService } from './shared/backend.service';
                   MapComponent,
                   AboutComponent,
                   ContactComponent,
+                  ErrorMessageComponent,
                   // SebmGoogleMapMarker,
                   SmapComponent, SmapContainerComponent],
     imports:      [BrowserModule,

@@ -210,21 +210,20 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   }
 
   private subscribeToOrganisations() {
-    console.info('searchResults, subscribing to Orgs');
+    // console.info('searchResults, subscribing to Orgs');
     // this.subOrgs = this.organisationService.orgListSource$
     this.subOrgs = this.organisationService.organisations
       .subscribe(
         organisations => {
-          console.info('got orgs from orgListSource', organisations);
+          // console.info('got orgs from orgListSource', organisations);
           this.updateOrganisations(organisations)
         },
         error =>  {
           console.error('Search results error:', error);
           this.errorMessage = <any>error;
-        },
-        () => {
-          console.log('org subscribe complete');
+          
         });
+        
         
   }
 
@@ -237,7 +236,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     this.searchMode = false;
     this.errorMessage = null;
 
-    console.info('orgs updated: ', organisations);
+    // console.info('orgs updated: ', organisations);
 
   }
 
@@ -252,7 +251,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   sendFinishedLoadTime(){
       var endTime = new Date();
       var milliseconds = (endTime.getTime() - this.startTime.getTime());
-      console.info('SearchResultsComponent loaded:', milliseconds);
+      // console.info('SearchResultsComponent loaded:', milliseconds);
       this.analytics.sendComponentLoaded('SearchResultsComponent', milliseconds);
   }
 

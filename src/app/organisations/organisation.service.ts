@@ -145,12 +145,14 @@ export class OrganisationService {
   }
 
   // Public Method called to get organisations list
-  public getByKeyword(keyword) {
+  public getByKeyword(keyword): Observable<any> {
     this.appState.set('searchType', 'keyword');
     this.appState.set('searchValue1', keyword);
 
     // clear refiners
     this.dataStore.refiners = [];
+
+    var obs = Observable.of(null);
 
     // console.info('subscribe to get all Orgs refining by keyword - check perf')
 
@@ -161,6 +163,9 @@ export class OrganisationService {
         let kLower = keyword.toLowerCase();
         this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
         
+        console.log('_organisations is stopped?', this._organisations.isStopped);
+
+
         // console.log('got new orgs from kw search', this.dataStore.organisations);
         this._organisations.next(this.dataStore.organisations);
         this._orgsUnfiltered.next(this.dataStore.organisations);
@@ -170,15 +175,21 @@ export class OrganisationService {
         this.selectedOrganisation.next(null);
         this.refinerList.next(this.dataStore.refiners);
 
+        
+        return Observable.of(true);
+
     }else{
 
         var sendTime = new Date();
-        this.backendService.getOrganisations("all", null, null).subscribe(
+        obs = this.backendService.getOrganisations("all", null, null);
+        obs.subscribe(
               result => {
 
                 let kLower = keyword.toLowerCase();
                 this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
                 
+                console.log('_organisations is stopped?', this._organisations.isStopped);
+
                 // console.log('got new orgs from kw search', this.dataStore.organisations);
                 this._organisations.next(this.dataStore.organisations);
                 this._orgsUnfiltered.next(this.dataStore.organisations);
@@ -191,16 +202,24 @@ export class OrganisationService {
                 var endTime = new Date();
                 var milliseconds = (endTime.getTime() - sendTime.getTime());
                 this.analytics.sendTiming('Search', 'Keyword', milliseconds, keyword, null);
+                return Observable.of(true);
+
+              },
+              error => {
+                console.error('from getOrganisations', error);
+                return Observable.of(error);
               })
 
     }
 
     this.analytics.sendEvent('Search', 'Keyword', keyword, null, null);
 
+    return obs;
+
   }
 
   // Public Method called to get organisations list
-  public searchOrgList(searchType, value1, value2) {
+  public searchOrgList(searchType, value1, value2): Observable<any> {
     this.appState.set('searchType', searchType);
     this.appState.set('searchValue1', value1);
     this.appState.set('searchValue2', value2);
@@ -211,9 +230,12 @@ export class OrganisationService {
 
     var sendTime = new Date();
 
-    this.backendService.getOrganisations(searchType, value1, value2).subscribe(
+    let obs = this.backendService.getOrganisations(searchType, value1, value2);
+      obs.subscribe(
       results => {
         this.dataStore.organisations = results;
+
+        console.log('_organisations is stopped?', this._organisations.isStopped);
 
         this._organisations.next(results);
         this._orgsUnfiltered.next(results);
@@ -226,21 +248,25 @@ export class OrganisationService {
         var milliseconds = (endTime.getTime() - sendTime.getTime());
         this.analytics.sendTiming('Search', searchType, milliseconds, value1, null);
 
+        return Observable.of(true);
 
-      },
+      }
+      ,
       error => {
         console.error('from getOrganisations', error);
-        this._organisations
-              // .retry(3)
-              .error(error)
-              // .onErrorResumeNext(this.organisations);
-        this._orgsUnfiltered.error(error);
+
+        // this._organisations.next([])
+        // this._orgsUnfiltered.next([]);
+        
+        return Observable.of(error);
 
       }
     )
 
     this.analytics.sendEvent('Search', searchType, value1, null, null);
     // ga('send', 'event', 'category', 'action', 'opt_label', opt_value, {'nonInteraction': 1});
+
+    return obs;
   }
 
   // Public method called to get a single Org
