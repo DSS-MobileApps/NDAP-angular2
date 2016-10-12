@@ -168,7 +168,7 @@ export class BackendService {
   public getProviderTypes(): Observable<ProviderType[]> {
     return this.http.get(this.apiUrl + this.getAllProviderTypesUrl)
                     .share()
-                    .cache()
+                    // .cache()
                     .map(this.extractData)
                     .catch(this.handleError);
   }

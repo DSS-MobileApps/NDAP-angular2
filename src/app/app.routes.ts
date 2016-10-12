@@ -44,6 +44,12 @@ export const routes: Routes = [
     // loadChildren: 'app/contact/contact.component#ContactComponent'
   },
 
+  // Single Page App
+  {
+  path: 'spa',
+  component: OrganisationsComponent
+},
+
 
   // Root Url
   {

@@ -23,12 +23,18 @@
     <!-- <hr> -->
 
 
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2" [class.hidden]="locationChecked">
+    <!--<div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <div id="location-request" class="jumbotron text-center">
         <p>May we use your current location to assist with finding relevant services?</p>
         <br >
         <a class="btn btn-primary btn-lg" (click)="enableLocation(true)">Yes please</a>   <a class="btn btn-default btn-lg" (click)="enableLocation(false)">No thanks</a>
       </div>
+    </div>-->
+    <div class="alert alert-info text-center" id="location-request" [class.hidden]="locationChecked">
+        <span class="lead">May we use your current location to assist with finding relevant services?</span>
+        <br class="visible-xs">
+        <a class="btn btn-default btn-sm" (click)="enableLocation(true)">Yes please</a>
+        <a class="btn btn-default btn-sm" (click)="enableLocation(false)">No thanks</a>
     </div>
 
     <div class="row" id="primary-search-row">

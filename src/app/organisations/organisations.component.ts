@@ -218,10 +218,23 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
   }
 
   onUnselect(selectedOrg: any) {
-    // this.organisationService.updateSelectedOrganisation(null);
+    this.organisationService.updateSelectedOrganisation(null);
     // this.router.navigate(['/organisations']);
     // this.goBack();
   }
+
+    // onUnselect(selectedOrg: Organisation) {
+    // this.organisationService.updateSelectedOrganisation(null);
+    // console.group('Unselect Org:');
+    // console.log(selectedOrg);
+    // if (selectedOrg){
+    //   this.router.navigate(['/organisations', {o: selectedOrg.Id}]);
+    // }else{
+    //   this.router.navigate(['/organisations']);
+    // }
+    // console.groupEnd();
+    // // this.goBack();
+  // }
 
 
 }

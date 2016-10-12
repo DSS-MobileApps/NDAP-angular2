@@ -202,10 +202,15 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   enableLocation(allowed){
     this.locationChecked = true;
+    this.locationAllowed = allowed;
     if (allowed){
       this.locatingPosition = true;
       this.textPlaceholder = "Locating...";
-      this.geolocationService.getLocation(null);
+      this.geolocationService.getLocation(null)
+      .subscribe(
+        pos => console.log('pos is ', pos),
+        error => console.error(error)
+      );
       this.analytics.sendEvent('Location', 'Geolocation', 'User Opted In');
     }else{
       this.geolocationService.enableLocation(false);

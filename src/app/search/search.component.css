@@ -19,7 +19,7 @@
 }
 
 #location-request .btn{
-  margin: 0 10px 10px;
+  margin: 10px 15px;
 }
 
 #primary-search-row .error.alert {
@@ -91,6 +91,11 @@ input#locationInput {
   padding-top: 20px;
 }
 
+#location-request span{
+  padding-right: 20px;
+}
+
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 @media(max-width:767px){
@@ -152,7 +157,7 @@ input#locationInput {
   .search-postcode{
     max-width: 300px;
   }
-
+  
 
 }
 /* Large devices (large desktops, 1200px and up) */

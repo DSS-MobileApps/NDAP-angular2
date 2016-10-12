@@ -11,6 +11,9 @@
   stroke: $midgrey;
 }
 
+.no-geolocation #location-request{
+    display: none;
+}
 
 
 .mdl-button {

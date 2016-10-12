@@ -105,12 +105,13 @@ export class GeolocationService {
 	// 	this.getLocation()
 	// }
 
-	public getLocation(options?) {
+	public getLocation(options?): Observable<any> {
 
-		// return Observable.create(observer => {
+		return Observable.create(observer => {
 
 			if (window.navigator && window.navigator.geolocation) {
 				this.enableLocation(true);
+				console.log('start getting getCurrentPos');
 				window.navigator.geolocation.getCurrentPosition(
 					this.displayLocation,
 					this.positionErrorCallback,
@@ -122,18 +123,18 @@ export class GeolocationService {
 				this.location.error(GEOLOCATION_ERRORS['errors.location.unsupportedBrowser']);
 			}
 
-		// });
+		});
 
 	}
 
-	positionSuccessCallback =	(position) => {
+	private positionSuccessCallback =	(position) => {
 			// this.location.next(position);
 			this.displayLocation(position);
 
 			// this.location.complete();
 		}
 
-		positionErrorCallback = (error) => {
+	private positionErrorCallback = (error) => {
 			console.group("Geolocation error");
 			console.log("position error: " + new Date());
 			console.error(error);
@@ -162,7 +163,9 @@ export class GeolocationService {
 
 		}
 
-		displayLocation = (position) => {
+	private displayLocation = (position) => {
+
+		// console.log('start getCurrentPos - displayLocation');
 
 			let loc = new GeoLocation();
 			loc.valid = false;
@@ -173,6 +176,9 @@ export class GeolocationService {
       this.http.get('//maps.googleapis.com/maps/api/geocode/json?latlng='+loc.latitude+','+loc.longitude+'&sensor=true')
         .subscribe(
           response => {
+
+
+			// console.log('start getCurrentPos - success geocode');
 
               if(response.status == 200){
                   let data = response.json();
