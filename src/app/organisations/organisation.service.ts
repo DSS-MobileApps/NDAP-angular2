@@ -300,44 +300,38 @@ export class OrganisationService {
 
 
   private formattedSearchLabels(searchType, value){
-    console.log('format search label start', searchType, value);
+    // console.log('format search label start', searchType, value);
 
     switch (searchType) {
 
     case "byProviderType":
       this._searchType.next('Provider Type');
       this._searchValue.next('Provider types of ' + value);
-    console.log('format search label', searchType, value);
     break;
 
     case "byRadius":
       this._searchType.next('Radius');
       this._searchValue.next('within ' + value + 'kms of your location');
-    console.log('format search label', searchType, value);
     break;
 
     case "byState":
       this._searchType.next('State');
       this._searchValue.next('in ' + value);
-    console.log('format search label', searchType, value);
     break;
 
     case "byKeyword":
       this._searchType.next('Keyword');
       this._searchValue.next('matching ' + value);
-    console.log('format search label', searchType, value);
     break;
 
     case "byPostCode":
       this._searchType.next('Postcode');
-      this._searchValue.next('servicing ' + value);
-    console.log('format search label', searchType, value);
+      this._searchValue.next('for postcode ' + value);
     break;
 
     case "all":
       this._searchType.next('All');
       this._searchValue.next('in all organisations');
-    console.log('format search label', searchType, value);
     break;
 
     default:
