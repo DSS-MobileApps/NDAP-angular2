@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Organisation, OrganisationService, Refiner } from '../../index'
 import { AnalyticsService } from '../../shared/index'
+import { AppState } from '../../app.service';
 
 
 @Component({
@@ -13,17 +14,31 @@ import { AnalyticsService } from '../../shared/index'
   // directives: [],
 
 })
-export class SearchSummaryComponent implements OnInit {
+export class SearchSummaryComponent implements OnInit, OnChanges {
   @Input() organisations: Organisation[];
+  @Input() searchValue: string = '';
 
   refiners: Refiner[];
 
 
-  constructor( private analytics: AnalyticsService ) {}
+  constructor( private analytics: AnalyticsService,               
+                public appState: AppState ) {}
 
   ngOnInit(){
     // this.subscribeToRefiners();
+    // if (this.appState.get().searchType){
 
+    // }
+  }
+
+  ngOnChanges(changes:any):void {
+    if (changes.searchValue){
+        var searchChange:string = changes.searchValue.currentValue;
+        if (searchChange) {
+          console.info('search changed', searchChange)
+          
+        }
+    }
   }
 
   searchAgain(){

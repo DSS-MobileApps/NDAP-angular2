@@ -52,7 +52,7 @@ export class RefinerComponent {
   }
 
   private subscribeToRefiners() {
-    this.subRefiners = this.organisationService.refinerList$
+    this.subRefiners = this.organisationService.refiners
       .subscribe(
         refiners => this.updateRefiners(refiners),
         error =>  console.error(<any>error));

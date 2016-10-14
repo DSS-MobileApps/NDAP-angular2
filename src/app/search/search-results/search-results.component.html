@@ -38,7 +38,7 @@
                     
 
               <div *ngIf="(organisationService.organisations | async) && !errorMessage">
-                <search-summary [organisations]="organisationService.organisations | async"></search-summary>
+                <search-summary [organisations]="organisationService.organisations | async" [searchValue]="searchSummary"></search-summary>
 
                 <refiner-options *ngIf="(organisationService.organisations | async).length > 0"></refiner-options>
 

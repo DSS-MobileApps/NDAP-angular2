@@ -68,7 +68,7 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
       let id = +this.route.snapshot.params['id'];
       this.getOrganisationById(id);
 
-    this.sub = this.organisationService.selectedOrganisation$
+    this.sub = this.organisationService.selectedOrganisation
       .subscribe(
         organisation => this.getOrganisation(organisation),
         error =>  console.log(error));

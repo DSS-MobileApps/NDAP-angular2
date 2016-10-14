@@ -18,7 +18,8 @@
         "common.scss"
       ],
       "scripts": [
-        "../node_modules/markerclustererplus/dist/markerclusterer.min.js"
+        "../node_modules/markerclustererplus/dist/markerclusterer.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

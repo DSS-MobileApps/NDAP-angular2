@@ -1,4 +1,3 @@
-@import '../../_vars.scss';
 
 #search-area, #results, #result-detail{
   height: 100%;
@@ -12,6 +11,12 @@
   padding: 10px;
 
 }
+
+#search-area >>> .modal{
+  padding: 15px;
+}
+
+
 
 :host(.searchContainer) #search-area{
     /*position: fixed;

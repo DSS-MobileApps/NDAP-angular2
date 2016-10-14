@@ -165,7 +165,7 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     //   .subscribe(
     //     selectedOrgId => this.updateSelected(+selectedOrgId),
     //     error =>  console.log(error));
-    this.subSelected = this.organisationService.selectedOrganisation$
+    this.subSelected = this.organisationService.selectedOrganisation
       .subscribe(
         selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
         error =>  console.log(error));

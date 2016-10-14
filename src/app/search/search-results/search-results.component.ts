@@ -64,10 +64,13 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   selectedOrgId: number;
   errorMessage: string;
   userPos: any;
+  searchSummary: string;
+  
 
   private subMarker: any;
   private subSelected: any;
   private subOrgs: any;
+  private subSearchVal: any;
 
   private startTime;
 
@@ -113,6 +116,8 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     // Subscribe to Org Search Results
     this.subscribeToOrganisations();
     this.subscribeToSelectedOrganisationUpdates();
+    this.subscribeToSearchValue();
+
 
     // Perform a default search for all orgs
     // this.organisationService.searchOrgList('all', undefined, undefined);
@@ -202,7 +207,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     //   .subscribe(
     //     selectedOrgId => this.updateSelected(+selectedOrgId),
     //     error =>  console.log(error));
-    this.subSelected = this.organisationService.selectedOrganisation$
+    this.subSelected = this.organisationService.selectedOrganisation
       .subscribe(
         selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
         error =>  console.log(error));
@@ -222,6 +227,24 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
           console.error('Search results error:', error);
           this.errorMessage = <any>error;
           
+        });
+        
+        
+  }
+
+  private subscribeToSearchValue() {
+    console.info('searchResults, subscribing to SearchVal');
+    // this.subOrgs = this.organisationService.orgListSource$
+    this.subSearchVal = this.organisationService.searchValue
+      .subscribe(
+        val => {
+          console.info('got search val from OrganisationService', val);
+          this.searchSummary = val;
+        },
+        error =>  {
+          console.error('Search results error:', error);
+          this.errorMessage = <any>error;
+          this.searchSummary = '';
         });
         
         

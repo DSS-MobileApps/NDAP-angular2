@@ -10,7 +10,7 @@ import { GeolocationService } from '../shared/geolocation.service';
 
   selector: 'search-area',
   templateUrl: 'search-area.component.html',
-  styleUrls: ['search-area.component.scss'],
+  styleUrls: ['search-area.component.css'],
   // host: {'class' : 'ng-animate searchContainer'},
 
   /**

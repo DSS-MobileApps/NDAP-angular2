@@ -135,7 +135,7 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   // Be notified when a organisation is selected
   subscribeToSelectedOrganisationUpdates() {
-  this.subSelected = this.organisationService.selectedOrganisation$
+  this.subSelected = this.organisationService.selectedOrganisation
     .subscribe(
       selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
       error =>  console.log(error));

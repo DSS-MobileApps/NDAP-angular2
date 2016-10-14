@@ -24,6 +24,15 @@ export class OrganisationService {
   // private orgListSource = new Subject<Organisation[]>();
   // orgListSource$ = this.orgListSource.asObservable();
 
+
+  // Observable for search types
+  private _searchType: BehaviorSubject<string> = new BehaviorSubject(null);
+  searchType = this._searchType.asObservable();
+  // Observable for search types
+  private _searchValue: BehaviorSubject<string> = new BehaviorSubject(null);
+  searchValue = this._searchValue.asObservable();
+
+
   private _organisations: BehaviorSubject<Organisation[]> = new BehaviorSubject([]);
   public organisations: Observable<Organisation[]> = this._organisations.asObservable();
   
@@ -32,12 +41,12 @@ export class OrganisationService {
   orgsUnfiltered = this._orgsUnfiltered.asObservable();
 
   // Observable for selected organisation record
-  selectedOrganisation = new Subject<Organisation>();
-  selectedOrganisation$ = this.selectedOrganisation.asObservable();
+  private _selectedOrganisation: BehaviorSubject<Organisation> = new BehaviorSubject(null);
+  selectedOrganisation = this._selectedOrganisation.asObservable();
 
   // Observable for Organisation Search Results
-  private refinerList = new Subject<Refiner[]>();
-  refinerList$ = this.refinerList.asObservable();
+  private _refiners: BehaviorSubject<Refiner[]> = new BehaviorSubject(null);
+  refiners = this._refiners.asObservable();
 
   private dataStore: {  // This is where we will store our data in memory
       organisations: Organisation[],
@@ -113,7 +122,7 @@ export class OrganisationService {
         .filter((item) => item.Category.indexOf(value) != -1)
       );
 
-      this.refinerList.next(this.dataStore.refiners);
+      this._refiners.next(this.dataStore.refiners);
 
       this.analytics.sendEvent('Refine', refineField, value, null, null);
 
@@ -140,7 +149,7 @@ export class OrganisationService {
       default:
     }
 
-    this.refinerList.next(this.dataStore.refiners);
+    this._refiners.next(this.dataStore.refiners);
 
   }
 
@@ -148,6 +157,8 @@ export class OrganisationService {
   public getByKeyword(keyword): Observable<any> {
     this.appState.set('searchType', 'keyword');
     this.appState.set('searchValue1', keyword);
+
+    this.formattedSearchLabels('byKeyword', keyword);
 
     // clear refiners
     this.dataStore.refiners = [];
@@ -161,19 +172,16 @@ export class OrganisationService {
 
         let result = this.appState.get().allOrgs;
         let kLower = keyword.toLowerCase();
-        this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
+        this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
+        // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
         
-        console.log('_organisations is stopped?', this._organisations.isStopped);
-
-
-        // console.log('got new orgs from kw search', this.dataStore.organisations);
         this._organisations.next(this.dataStore.organisations);
         this._orgsUnfiltered.next(this.dataStore.organisations);
 
         this.appState.set('results', this.dataStore.organisations);
 
-        this.selectedOrganisation.next(null);
-        this.refinerList.next(this.dataStore.refiners);
+        this._selectedOrganisation.next(null);
+        this._refiners.next(this.dataStore.refiners);
 
         
         return Observable.of(true);
@@ -186,18 +194,16 @@ export class OrganisationService {
               result => {
 
                 let kLower = keyword.toLowerCase();
-                this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
+                this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
+                // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
                 
-                console.log('_organisations is stopped?', this._organisations.isStopped);
-
-                // console.log('got new orgs from kw search', this.dataStore.organisations);
                 this._organisations.next(this.dataStore.organisations);
                 this._orgsUnfiltered.next(this.dataStore.organisations);
 
                 this.appState.set('results', this.dataStore.organisations);
 
-                this.selectedOrganisation.next(null);
-                this.refinerList.next(this.dataStore.refiners);
+                this._selectedOrganisation.next(null);
+                this._refiners.next(this.dataStore.refiners);
 
                 var endTime = new Date();
                 var milliseconds = (endTime.getTime() - sendTime.getTime());
@@ -223,6 +229,10 @@ export class OrganisationService {
     this.appState.set('searchType', searchType);
     this.appState.set('searchValue1', value1);
     this.appState.set('searchValue2', value2);
+
+    this.formattedSearchLabels(searchType, value1);
+
+    
     // clear refiners
     this.dataStore.refiners = [];
 
@@ -235,12 +245,11 @@ export class OrganisationService {
       results => {
         this.dataStore.organisations = results;
 
-        console.log('_organisations is stopped?', this._organisations.isStopped);
-
         this._organisations.next(results);
         this._orgsUnfiltered.next(results);
-        this.selectedOrganisation.next(null);
-        this.refinerList.next(this.dataStore.refiners);
+        this._selectedOrganisation.next(null);
+        this._refiners.next(this.dataStore.refiners);
+
 
         this.appState.set('results', results);
 
@@ -284,19 +293,83 @@ export class OrganisationService {
   }
 
     public updateSelectedOrganisation (selectedOrganisation){
-      this.selectedOrganisation.next(selectedOrganisation);
+      this._selectedOrganisation.next(selectedOrganisation);
       this.appState.set('selectedOrganisation', selectedOrganisation);
 
     }
 
 
+  private formattedSearchLabels(searchType, value){
+    console.log('format search label start', searchType, value);
 
-  private keywordMatch(kLower, item){
+    switch (searchType) {
+
+    case "byProviderType":
+      this._searchType.next('Provider Type');
+      this._searchValue.next('Provider types of ' + value);
+    console.log('format search label', searchType, value);
+    break;
+
+    case "byRadius":
+      this._searchType.next('Radius');
+      this._searchValue.next('within ' + value + 'kms of your location');
+    console.log('format search label', searchType, value);
+    break;
+
+    case "byState":
+      this._searchType.next('State');
+      this._searchValue.next('in ' + value);
+    console.log('format search label', searchType, value);
+    break;
+
+    case "byKeyword":
+      this._searchType.next('Keyword');
+      this._searchValue.next('matching ' + value);
+    console.log('format search label', searchType, value);
+    break;
+
+    case "byPostCode":
+      this._searchType.next('Postcode');
+      this._searchValue.next('servicing ' + value);
+    console.log('format search label', searchType, value);
+    break;
+
+    case "all":
+      this._searchType.next('All');
+      this._searchValue.next('in all organisations');
+    console.log('format search label', searchType, value);
+    break;
+
+    default:
+    break;
+    //   this._searchType.next('All');
+    //   this._searchValue.next('all organisations');
+    // console.log('format search label', searchType, value);
+    }
+    
+  }
+
+  private keywordMatch(kLower, item: Organisation){
       return (item.Name != null && item.Name.toLowerCase().includes(kLower)) ||
       // (item.FurtherDetails != null && item.FurtherDetails.toLowerCase().includes(kLower)) ||
+      (item.Suburb != null && item.Suburb.toLowerCase().includes(kLower)) ||
       (item.Category != null && item.Category.toLowerCase().includes(kLower))
     }
 
+// Sort types by Value
+  public sortOrganisations(organisations: Organisation[], descending?: boolean): Organisation[]{
+
+    if (descending){
+      return organisations.sort(function(a, b) {
+                          return b.Name.localeCompare(a.Name);
+                      });
+    }else{
+      return organisations.sort(function(a, b) {
+                          return a.Name.localeCompare(b.Name);
+                      });
+    }
+
+  }
 
 
 

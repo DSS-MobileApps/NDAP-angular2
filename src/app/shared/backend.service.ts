@@ -74,15 +74,20 @@ export class BackendService {
           + this.getOrganisationsInPostcodeUrlB 
           +  "/-35.276/149.13/1/1");
 
-    case "all":
-        return this.getJsonFromAPI(
-          this.apiUrl
-          + this.getAllOrganisationsUrl);
+    // case "all":
+    //     return this.getJsonFromAPI(
+    //       this.apiUrl
+    //       + this.getAllOrganisationsUrl);
 
     default:
+      if (this.appState.get().allOrgs){
+        // return cached data for all orgs
+        return Observable.of(this.appState.get().allOrgs);
+      }else{
         return this.getJsonFromAPI(
           this.apiUrl
           + this.getAllOrganisationsUrl);
+      }
     }
   }
 

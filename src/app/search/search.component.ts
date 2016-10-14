@@ -140,7 +140,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.organisationService.searchOrgList('byPostCode', postCode, undefined)
       .subscribe(
         result => {
-          console.log('result is ', result);
+          // console.log('result is ', result);
           this.onSearch.emit(postCode);
        },
         error => {
@@ -157,7 +157,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.organisationService.searchOrgList('all', undefined, undefined)
       .subscribe(
         result => {
-          console.log('result is ', result);
+          // console.log('result is ', result);
           this.onSearch.emit('all');
         },
         error => {
@@ -175,7 +175,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.organisationService.getByKeyword(keywordEntry)
         .subscribe(
             result => {
-              console.log('result is ', result);
+              // console.log('result is ', result);
               this.onSearch.emit(keywordEntry);
             },
             error => {
