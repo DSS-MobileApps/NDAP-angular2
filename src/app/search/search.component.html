@@ -1,118 +1,86 @@
 <app-error-message [ErrorMsg]="errorMessage"></app-error-message>
 
 
-<div  id="panelSearch" class="center-block">
-<!-- <div class="row">
+<div id="panelSearch" class="center-block">
+	<!-- <div class="row">
   <div class="col-md-12 col-xs-12">
 
       <h2>Search for a Provider</h2>
   </div>
 </div> -->
-<!-- <div class="row">
+	<!-- <div class="row">
   <div class="col-md-12 col-xs-12">
 
       <search-location (onLocationPostcodeSearch)="onPostCodeSearch($event)"></search-location>
 </div>
     </div> -->
 
-    <!-- <div class="row main-title">
+	<!-- <div class="row main-title">
       <div class="col-xs-12 text-center">
           <span class="lead">Find an Advocate near you</span>
       </div>
     </div> -->
-    <!-- <hr> -->
+	<!-- <hr> -->
 
 
-    <!--<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+	<!--<div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <div id="location-request" class="jumbotron text-center">
         <p>May we use your current location to assist with finding relevant services?</p>
         <br >
         <a class="btn btn-primary btn-lg" (click)="enableLocation(true)">Yes please</a>   <a class="btn btn-default btn-lg" (click)="enableLocation(false)">No thanks</a>
       </div>
     </div>-->
-    <div class="alert alert-info text-center" id="location-request" [class.hidden]="locationChecked">
-        <span class="lead">May we use your current location to assist with finding relevant services?</span>
-        <br class="visible-xs">
-        <button class="btn btn-default btn-sm" (click)="enableLocation(true)">Yes please</button>
-        <button class="btn btn-default btn-sm" (click)="enableLocation(false)">No thanks</button>
-    </div>
+	<div class="alert alert-info text-center" id="location-request" [class.hidden]="locationChecked">
+		<span class="lead">May we use your current location to assist with finding relevant services?</span>
+		<br class="visible-xs">
+		<button class="btn btn-default btn-sm" (click)="enableLocation(true)">Yes please</button>
+		<button class="btn btn-default btn-sm" (click)="enableLocation(false)">No thanks</button>
+	</div>
 
-    <div class="row" id="primary-search-row">
-      <div class="col-xs-12">
+	<div class="row" id="primary-search-row">
+		<div class="col-xs-12">
 
-        <!-- Wide card with share menu button -->
-<div class="search-card-wide mdl-card mdl-shadow--2dp center-block">
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Find advocacy in your area</h2>
-  </div>
-  <div class="mdl-card__supporting-text">
-    <!--Enter a location-->
-    <form (ngSubmit)="onPostCodeSearch(postCode)" #postcodeForm="ngForm">
-      <div class="form-group center-block search-postcode" [class.has-warning]="postcodeWarning" [class.has-error]="postcodeError">
-          <label class="control-label " for="locationInput">Your Postcode</label>
-          <div class="input-group">
-          <input #locationInput type="tel"
-              class="form-control input-lg"
-              id="locationInput"
-              name="locationInput"
-              min="200" max="9999" maxlength="4" autocomplete="off"
-              [placeholder]="textPlaceholder"
-              [(ngModel)]="postCode">
-          <span class="input-group-btn btn-group-lg">
-            <!-- <button type="button" class="btn btn-default btn-lg"
-            (click)="onPostCodeSearch(postCode)">
-                <span class="lnr lnr-location"></span> Near me
-            </button> -->
-            <button type="submit" class="btn btn-default btn-lg"
+			<!-- Wide card with share menu button -->
+			<div class="search-card-wide mdl-card mdl-shadow--2dp center-block">
+				<div class="mdl-card__title">
+					<h2 class="mdl-card__title-text">Find advocacy in your area</h2>
+				</div>
+				<div class="mdl-card__supporting-text">
+					<!--Enter a location-->
 
-            [class.disabled]="!postcodeValid"
-            [disabled]="!postcodeValid">
-                <!-- <span class="lnr lnr-magnifier"></span>  -->
-                Search
-            </button>
-
-          </span>
-        </div>
-
-      </div>
-    </form>
+					<search-postcode [postCode]="postCode" [textPlaceholder]="textPlaceholder" (onSearchEntered)="onPostCodeSearch($event)"></search-postcode>
 
 
-    <div [class.hidden]="locationPos == null || locationPos?.valid" class="error alert alert-warning alert-dismissible" [attr.aria-hidden]="locationPos == null || locationPos?.valid" role="alert">
-      <!-- alert-dismissable -->
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <strong>Cannot access your location: </strong><br/>{{locationPos?.error}}
-    </div>
+					<div [class.hidden]="locationPos == null || locationPos?.valid" class="error alert alert-warning alert-dismissible" [attr.aria-hidden]="locationPos == null || locationPos?.valid"
+						role="alert">
+						<!-- alert-dismissable -->
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<strong>Cannot access your location: </strong><br/>{{locationPos?.error}}
+					</div>
 
-  </div>
-  <div class="mdl-card__actions mdl-card--border">
-    <search-location class="" [class.hidden]="!locationAllowed" (onLocationPostcodeSearch)="onLocationTriggered($event)" [locatingPosition]="locatingPosition"></search-location>
+				</div>
+				<div class="mdl-card__actions mdl-card--border">
+					<search-location class="" [class.hidden]="!locationAllowed" (onLocationPostcodeSearch)="onLocationTriggered($event)" [locatingPosition]="locatingPosition"></search-location>
 
-    <!-- <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+					<!-- <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
       More search options
     </a> -->
-    <a href="#collapseAdvanced" class="btn btn-link pull-right"
-     data-toggle="collapse" aria-expanded="false" aria-controls="collapseAdvanced">more search options</a>
+					<a href="#collapseAdvanced" class="btn btn-link pull-right" data-toggle="collapse" aria-expanded="false" aria-controls="collapseAdvanced">more search options</a>
 
-     <div class=" collapse" id="collapseAdvanced">
- <!-- <hr> -->
-       <!-- <div class="col-md-1 col-xs-12">
+					<div class=" collapse" id="collapseAdvanced">
+						<!-- <hr> -->
+						<!-- <div class="col-md-1 col-xs-12">
          <p class="lead text-center">or</p>
        </div> -->
-       <div class=" col-xs-12">
+						<div class=" col-xs-12">
 
-      <form (ngSubmit)="onKeywordSearch(keyword)" #keywordForm="ngForm">
-         <!--Enter a location-->
-         <div class="form-group">
-         <label class="control-label" for="keywordInput">Keyword</label>
-         <div class="input-group">
-         <input type="text"
-             class="form-control"
-             id="keywordInput"
-             name="keywordInput"
-             placeholder="Enter a Keyword..."
-             [(ngModel)]="keyword">
-             <span class="input-group-btn">
+							<form (ngSubmit)="onKeywordSearch(keyword)" #keywordForm="ngForm">
+								<!--Enter a location-->
+								<div class="form-group">
+									<label class="control-label" for="keywordInput">Keyword</label>
+									<div class="input-group">
+										<input type="text" class="form-control" id="keywordInput" name="keywordInput" placeholder="Enter a Keyword..." [(ngModel)]="keyword">
+										<span class="input-group-btn">
                <button type="submit" class="btn btn-default">
                    Search
                </button>
@@ -121,38 +89,37 @@
                    Locate
                </button> -->
              </span>
-           </div>
-           </div>
-        </form>
-        </div>
+									</div>
+								</div>
+							</form>
+						</div>
 
-         <div class=" col-xs-12 col-lg-6 text-center">
+						<div class=" col-xs-12 col-lg-6 text-center">
 
 
-                 <button id="view-all-btn" type="button" class="btn btn-default"
-                 (click)="onAllOrganisations()">
+							<button id="view-all-btn" type="button" class="btn btn-default" (click)="onAllOrganisations()">
                      View all organisations
                  </button>
-           </div>
+						</div>
 
 
-           <hr/>
+						<hr/>
 
- </div>
-  </div>
-  <div class="mdl-card__menu">
-    <!-- <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+					</div>
+				</div>
+				<div class="mdl-card__menu">
+					<!-- <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
       <i class="material-icons">share</i>
     </button> -->
-  </div>
-</div>
+				</div>
+			</div>
 
 
-        </div>
+		</div>
 
 
 
-        <!-- <div class="col-sm-2 col-xs-12">
+		<!-- <div class="col-sm-2 col-xs-12">
           <p class="lead text-center">or</p>
         </div>
 
@@ -161,16 +128,16 @@
           <search-location (onLocationPostcodeSearch)="onPostCodeSearch($event)"></search-location>
         </div> -->
 
-      </div>
+	</div>
 
-      <!-- <a href="#collapseAdvanced" class="btn btn-link btn-l center-block more-link"
+	<!-- <a href="#collapseAdvanced" class="btn btn-link btn-l center-block more-link"
        data-toggle="collapse" aria-expanded="false" aria-controls="collapseAdvanced">more search options</a> -->
 
 
 
-  <!-- <hr/> -->
+	<!-- <hr/> -->
 
-  <!-- <div class="row">
+	<!-- <div class="row">
   <div class="col-md-offset-4 col-md-4 col-xs-12">
     <span class="center-block">or</span>
     <br/>
@@ -180,14 +147,22 @@
     </button>
 </div>
 </div> -->
-<div class="row" id="disclaimer">
-  <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+	<div class="row" id="disclaimer">
+		<div class="col-sm-10 col-sm-offset-1 col-xs-12">
 
 
-    <h3 class="text-center">DISCLAIMER</h3>
-    <p class="text-center">
-      The Disability Advocacy Finder is a tool made available by the Department of Social Services (DSS) for the purposes of listing the contact details and locations of disability advocacy agencies. Organisations included on the Disability Advocacy Finder are ones that receive funding from the Commonwealth or a state or territory government to provide advocacy under individual or systemic models of advocacy. DSS may extend this to self-funded providers in future. DSS accepts no responsibility for the accuracy or completeness of any material included on the Disability Advocacy Finder. Additionally, the Commonwealth disclaims all liability to any person in respect of anything, and of the consequences of anything, done or omitted to be done by any such person in reliance, whether wholly or partially, upon any information presented on the Disability Advocacy Finder. Inclusion of a provider on the Disability Advocacy Finder does not constitute any endorsement by DSS of the providers or any associated organisation, product or service.
-    </p>
-</div>
-</div>
+			<h3 class="text-center">DISCLAIMER</h3>
+			<p class="text-center">
+				The Disability Advocacy Finder is a tool made available by the Department of Social Services (DSS) for the purposes of listing
+				the contact details and locations of disability advocacy agencies. Organisations included on the Disability Advocacy
+				Finder are ones that receive funding from the Commonwealth or a state or territory government to provide advocacy under
+				individual or systemic models of advocacy. DSS may extend this to self-funded providers in future. DSS accepts no responsibility
+				for the accuracy or completeness of any material included on the Disability Advocacy Finder. Additionally, the Commonwealth
+				disclaims all liability to any person in respect of anything, and of the consequences of anything, done or omitted to
+				be done by any such person in reliance, whether wholly or partially, upon any information presented on the Disability
+				Advocacy Finder. Inclusion of a provider on the Disability Advocacy Finder does not constitute any endorsement by DSS
+				of the providers or any associated organisation, product or service.
+			</p>
+		</div>
+	</div>
 </div>

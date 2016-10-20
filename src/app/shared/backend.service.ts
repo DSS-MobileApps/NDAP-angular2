@@ -1,93 +1,94 @@
-import {Injectable, Inject} from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import { Subject }    from 'rxjs/Subject';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { environment } from '../../environments/environment';
-import { Organisation }   from '../organisations/organisation';
+import { Organisation } from '../organisations/organisation';
 import { AnalyticsService } from './index';
 import { AppState } from '../app.service';
 
-import { ProviderType }   from '../search/search-categories/provider-type';
+import { ProviderType } from '../search/search-categories/provider-type';
 
+// import { Postcode } from '../search/search-postcode/postcode';
 
 @Injectable()
 export class BackendService {
 
-    // http:Http;
+  // http:Http;
 
-    constructor(
-            private http: Http,
-              @Inject('API_URL') private apiUrl: string,
-              public appState: AppState,
-              public analytics: AnalyticsService)  {
-        // this.http = http;
-    }
+  constructor(
+    private http: Http,
+    @Inject('API_URL') private apiUrl: string,
+    public appState: AppState,
+    public analytics: AnalyticsService) {
+    // this.http = http;
+  }
 
-    getAllOrganisations(): Observable<Organisation[]> {
-        // return this.http.get('/todo');
-        return this.getOrganisations('all', null, null);
-    }
+  getAllOrganisations(): Observable<Organisation[]> {
+    // return this.http.get('/todo');
+    return this.getOrganisations('all', null, null);
+  }
 
   public getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
 
 
     switch (searchType) {
 
-    case "byProviderType":
-      return this.getJsonFromAPI(
-        this.apiUrl
-        + this.getOrganisationsFilteredByTypeUrlA
-        + value1.Code
-        + this.getOrganisationsFilteredByTypeUrlB);
+      case "byProviderType":
+        return this.getJsonFromAPI(
+          this.apiUrl
+          + this.getOrganisationsFilteredByTypeUrlA
+          + value1.Code
+          + this.getOrganisationsFilteredByTypeUrlB);
 
-    case "byRadius":
-            return this.getJsonFromAPI(
-              this.apiUrl
-              + this.getOrganisationsByDistance
-              + "-35.276/149.13/"
-              + value1
-              + this.getOrganisationsInPostcodeUrlB);
+      case "byRadius":
+        return this.getJsonFromAPI(
+          this.apiUrl
+          + this.getOrganisationsByDistance
+          + "-35.276/149.13/"
+          + value1
+          + this.getOrganisationsInPostcodeUrlB);
 
-    case "byState":
-            return this.getJsonFromAPI(
-              this.apiUrl
-              + this.getOrganisationsByState
-              // + "-35.276/149.13/"
-              + value1.code
-              + this.getOrganisationsInPostcodeUrlB);
+      case "byState":
+        return this.getJsonFromAPI(
+          this.apiUrl
+          + this.getOrganisationsByState
+          // + "-35.276/149.13/"
+          + value1.code
+          + this.getOrganisationsInPostcodeUrlB);
 
-    case "byKeyword":
-          return this.getJsonFromAPI(
-            this.apiUrl
-            + this.getOrganisationsByKeyword
-            + value1
-            + "/-35.276/149.13/"
-            + "3000"
-            + this.getOrganisationsInPostcodeUrlB
-            + "/1");
+      case "byKeyword":
+        return this.getJsonFromAPI(
+          this.apiUrl
+          + this.getOrganisationsByKeyword
+          + value1
+          + "/-35.276/149.13/"
+          + "3000"
+          + this.getOrganisationsInPostcodeUrlB
+          + "/1");
 
-    case "byPostCode":
+      case "byPostCode":
         return this.getJsonFromAPI(
           this.apiUrl
           + this.getOrganisationsInPostcodeUrlA
           + value1
-          + this.getOrganisationsInPostcodeUrlB 
-          +  "/-35.276/149.13/1/1");
+          + this.getOrganisationsInPostcodeUrlB
+          + "/-35.276/149.13/1/1");
 
-    // case "all":
-    //     return this.getJsonFromAPI(
-    //       this.apiUrl
-    //       + this.getAllOrganisationsUrl);
+      // case "all":
+      //     return this.getJsonFromAPI(
+      //       this.apiUrl
+      //       + this.getAllOrganisationsUrl);
 
-    default:
-      if (this.appState.get().allOrgs){
-        // return cached data for all orgs
-        return Observable.of(this.appState.get().allOrgs);
-      }else{
-        return this.getJsonFromAPI(
-          this.apiUrl
-          + this.getAllOrganisationsUrl);
-      }
+      default:
+        if (this.appState.get().allOrgs) {
+          // return cached data for all orgs
+          return Observable.of(this.appState.get().allOrgs);
+        } else {
+          return this.getJsonFromAPI(
+            this.apiUrl
+            + this.getAllOrganisationsUrl);
+        }
     }
   }
 
@@ -95,36 +96,36 @@ export class BackendService {
   // Public method called to get a single Org
   public getOrganisation(id: number): Observable<Organisation> {
     this.analytics.sendEvent('Select', 'Organisation', id, null, null);
- 
+
     return this.getJsonFromAPI(
       this.apiUrl
       + this.getSingleOrganisationUrl + id);
 
- 
-      // return this.getJsonFromAPI("/data/detail-sample.json");
+
+    // return this.getJsonFromAPI("/data/detail-sample.json");
 
   }
 
 
-    // Using the url, get the response from the API,
+  // Using the url, get the response from the API,
   // map through it to extract the data and catch any errors
-  private getJsonFromAPI (url) {
+  private getJsonFromAPI(url) {
     var sendTime = new Date();
 
     return this.http.get(url)
-                    // .cache()
-                    // .retryWhen(error => error.delay(500))
-                    // .timeout(2000, return new Error('delay exceeded'))
-                    .map((res) => { 
-                      var endTime = new Date();
-                      var milliseconds = (endTime.getTime() - sendTime.getTime());
-                      this.analytics.sendTiming('API', url, milliseconds, null, null);
-                      return this.extractData(res);
-                    })
-                    .catch((error) => { 
-                    //   console.error('from getJsonFromAPI', error);
-                        return this.handleError(error); 
-                      });
+      // .cache()
+      // .retryWhen(error => error.delay(500))
+      // .timeout(2000, return new Error('delay exceeded'))
+      .map((res) => {
+        var endTime = new Date();
+        var milliseconds = (endTime.getTime() - sendTime.getTime());
+        this.analytics.sendTiming('API', url, milliseconds, null, null);
+        return this.extractData(res);
+      })
+      .catch((error) => {
+        //   console.error('from getJsonFromAPI', error);
+        return this.handleError(error);
+      });
   }
   // Return the body of the json file
   // NOTE: there is no value after "body ||",
@@ -132,10 +133,10 @@ export class BackendService {
   // e.g. 'return body || data { };'
   private extractData(res: Response) {
     let body = res.json();
-    return body || { };
+    return body || {};
   }
 
-  private handleError (error: any) {
+  private handleError(error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message
     let errMsg = error.message || error.statusText || 'Server error';
@@ -146,78 +147,98 @@ export class BackendService {
     // error.json().error || 'Server error'
   }
 
-    // saveTodo(newTodo: Todo) : Observable<List<Todo>> {
-    //     var headers = new Headers();
-    //     headers.append('Content-Type', 'application/json; charset=utf-8');
+  // saveTodo(newTodo: Todo) : Observable<List<Todo>> {
+  //     var headers = new Headers();
+  //     headers.append('Content-Type', 'application/json; charset=utf-8');
 
-    //     return this.http.post('/todo', JSON.stringify(newTodo.toJS()),{headers}).share();
-    // }
+  //     return this.http.post('/todo', JSON.stringify(newTodo.toJS()),{headers}).share();
+  // }
 
-    // deleteTodo(deletedTodo: Todo) {
-    //     let params = new URLSearchParams();
-    //     params.append('id', '' + deletedTodo.id );
+  // deleteTodo(deletedTodo: Todo) {
+  //     let params = new URLSearchParams();
+  //     params.append('id', '' + deletedTodo.id );
 
-    //     return this.http.delete('/todo', {search: params}).share();
-    // }
+  //     return this.http.delete('/todo', {search: params}).share();
+  // }
 
 
-    // toggleTodo(toggled: Todo) {
-    //     var headers = new Headers();
-    //     headers.append('Content-Type', 'application/json; charset=utf-8');
-    //     return this.http.put('/todo', JSON.stringify(toggled.toJS()),{headers}).share();
-    // }
+  // toggleTodo(toggled: Todo) {
+  //     var headers = new Headers();
+  //     headers.append('Content-Type', 'application/json; charset=utf-8');
+  //     return this.http.put('/todo', JSON.stringify(toggled.toJS()),{headers}).share();
+  // }
 
 
 
   // Get all Provider Types
   public getProviderTypes(): Observable<ProviderType[]> {
     return this.http.get(this.apiUrl + this.getAllProviderTypesUrl)
-                    .share()
-                    // .cache()
-                    .map(this.extractData)
-                    .catch(this.handleError);
+      .share()
+      // .cache()
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+
+  // Postcode lookup
+  public getPostcodesFromKeyword(keyword): Observable<any[]> {
+
+    let headers = new Headers({ 'Accept': 'application/json' });
+    // headers.append('auth-key', 'a73b3339-b759-4df3-a11f-009c1857da26');
+
+    let options = new RequestOptions({ headers: headers });
+
+    // ...using get request
+    return this.http.get(this.postcodeLookupUrl + keyword, options)
+      // ...and calling .json() on the response to return data
+      .map(this.extractData)
+      .catch(this.handleError);
+    // .map((res: Response) => res.json())
+    // //...errors if any
+    // .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+
   }
 
 
 
-
- /*
-  *************************************
-  * API Calls
-  *************************************
-  */
+  /*
+   *************************************
+   * API Calls
+   *************************************
+   */
 
   // All Organisations (URL) (800ms on average)
   private getAllOrganisationsUrl =
-    '/api/provider/getall/all/NDAP';
+  '/api/provider/getall/all/NDAP';
 
   // Single Organisation (URL + id) (60ms on average)
   private getSingleOrganisationUrl =
-    '/api/provider/';
+  '/api/provider/';
 
   // Organisation (URL + postcode) (60ms on average)
   private getOrganisationsInPostcodeUrlA =
-    // '/api/provider/getallbypostcode/'
-    '/api/provider/getallbyserviceareapostcode/'
+  // '/api/provider/getallbypostcode/'
+  '/api/provider/getallbyserviceareapostcode/'
 
   private getOrganisationsInPostcodeUrlB =
-    '/NDAP'
+  '/NDAP'
 
   // Get all by Provider Type
   private getOrganisationsFilteredByTypeUrlA =
-    '/api/provider/getallbytype/';
+  '/api/provider/getallbytype/';
 
   private getOrganisationsFilteredByTypeUrlB =
-      '/NDAP';
+  '/NDAP';
 
 
   private getOrganisationsByState =
-        '/api/provider/getallbyState/'
+  '/api/provider/getallbyState/'
   private getOrganisationsByDistance =
-        '/api/provider/GetAllByDistance/'
+  '/api/provider/GetAllByDistance/'
 
   private getOrganisationsByKeyword =
-        '/api/provider/GetAllByKeyword/'
+  '/api/provider/GetAllByKeyword/'
+
 
 
   /*
@@ -228,13 +249,21 @@ export class BackendService {
 
   // All Provider Types (URL) (800ms on average)
   private getAllProviderTypesUrl =
-    '/api/utilities/getallprovidertypes/NDAP';
+  '/api/utilities/getallprovidertypes/NDAP';
 
+
+  /*
+  *************************************
+  * Postcode API Calls
+  *************************************
+  */
+  private postcodeLookupUrl = 'https://digitalapi.auspost.com.au/postcode/search.json?q=';
+  // 'https://v0.postcodeapi.com.au/suburbs.json?q=';
 
 
 }
 
 
 export var backendServiceInjectables: Array<any> = [
-  	{ provide: BackendService, useClass: BackendService }
+  { provide: BackendService, useClass: BackendService }
 ];

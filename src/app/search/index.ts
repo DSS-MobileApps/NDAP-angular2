@@ -9,3 +9,4 @@ export * from './search-summary/search-summary.component';
 export * from './search-state/index';
 export * from './search-categories/index';
 export * from './search-results/index';
+export * from './search-postcode/index';
