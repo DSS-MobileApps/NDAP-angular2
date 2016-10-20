@@ -68,6 +68,11 @@ button#searchbtn:focus, button#searchbtn:hover {
   margin-left: 0;
   margin-right: 0;
 }
+#result-split{
+  height: 100%;
+}
+
+
 
 #list-panel{
   overflow-y: auto;
@@ -115,11 +120,6 @@ button#searchbtn:focus, button#searchbtn:hover {
   opacity: 1;
 }*/
 
-#results{
-  width: 200%;
-  /*float: left;*/
-}
-
 #list-panel{
       transform: translateX(-100%);
 }
@@ -144,3 +144,18 @@ button#searchbtn:focus, button#searchbtn:hover {
   font-weight: 100;
   margin: 0;
 }
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media(max-width:767px){
+  #results{
+    overflow-x: hidden;
+  }
+  #result-split{
+    width: 200%;
+  }
+
+
+
+}
+
