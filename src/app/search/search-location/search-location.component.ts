@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 
 // import { GeolocationService } from '../../shared/geolocation.service';
 // import { GeoLocation } from '../../shared/geolocation-interface';
-import {GeolocationService, GeoLocation, AnalyticsService} from '../../shared/index';
+import { GeolocationService, GeoLocation, AnalyticsService } from '../../shared/index';
 
 @Component({
-  
+
   selector: 'search-location',
   templateUrl: 'search-location.component.html',
   // styleUrls: ['search-location.component.css'],
@@ -16,7 +16,7 @@ export class SearchLocationComponent implements OnInit {
   errorMessage: string;
   userPosition: any;
 
-  public selectedCity:any;
+  public selectedCity: any;
 
   private subLocation: any;
 
@@ -28,7 +28,7 @@ export class SearchLocationComponent implements OnInit {
     enableHighAccuracy: false,
     timeout: 10000,
     maximumAge: 0
-          }
+  }
 
 
   // Output that a provider type has been selected
@@ -47,12 +47,12 @@ export class SearchLocationComponent implements OnInit {
     // this.radiuslist = [20, 50, 100, 250, 500, 1000];
 
     this.subLocation = this.geolocationService.location$.subscribe(
-          (position) => {
-            console.log("search-location menu position updated: " + new Date());
-            this.locationPos = position;
-            this.locatingPosition = false;
-            // this.onCurrentPostcodeSearch(this.locationPos.postcode)
-        },
+      (position) => {
+        console.log("search-location menu position updated: " + new Date());
+        this.locationPos = position;
+        this.locatingPosition = false;
+        // this.onCurrentPostcodeSearch(this.locationPos.postcode)
+      },
       error => {
         console.log(error);
         this.locatingPosition = false;
@@ -60,19 +60,23 @@ export class SearchLocationComponent implements OnInit {
 
   }
 
-  ngOnDestroy(){
-    if (this.subLocation) { this.subLocation.unsubscribe();}
+  ngOnDestroy() {
+    if (this.subLocation) { this.subLocation.unsubscribe(); }
   }
 
   // Get location from browser / device
   onGetCurrentLocation() {
     this.locatingPosition = true;
-    this.geolocationService.getLocation(this.opts);
+    this.geolocationService.getLocation(this.opts)
+      .subscribe(
+      pos => console.log('pos is ', pos),
+      error => console.error(error)
+      );
     this.analytics.sendEvent('Location', 'Geolocation', 'Use my location requested');
 
   }
 
-  SearchCurrentLocation(){
+  SearchCurrentLocation() {
     this.onGetCurrentLocation();
   }
 
@@ -84,7 +88,7 @@ export class SearchLocationComponent implements OnInit {
 
   }
 
-  onCurrentPostcodeSearch (postCode) {
+  onCurrentPostcodeSearch(postCode) {
     // this.organisationService.searchOrgList('byPostCode', postCode, undefined);
     console.log('search for postcode: ' + postCode);
     this.onLocationPostcodeSearch.emit(postCode);

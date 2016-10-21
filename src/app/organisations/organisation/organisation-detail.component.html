@@ -1,6 +1,6 @@
 <div class="panel panel-default">
-  <div class="panel-heading" >
-    <button type="button" id="close-details" class="close pull-left" aria-label="Close" (click)="deselect()">
+	<div class="panel-heading">
+		<button type="button" id="close-details" class="close pull-left" aria-label="Close" (click)="deselect()">
       <!-- <span aria-hidden="true">&times;</span> -->
       <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#999999">
       <polygon fill="none" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="  32,8 18,8 25,1 "/>
@@ -12,22 +12,23 @@
       </svg> -->
       <span class="lnr lnr-chevron-up"></span>
     </button>
-    <h3 class="">{{organisation?.Name}}</h3>
-    <!-- <button class="btn btn-default text-right" type="button"(click)="goBack()">Back to Results</button> -->
-    <!-- <button class="btn btn-default text-right" type="button"(click)="deselect()">close</button> -->
-  </div>
-  <div class="panel-body ">
+		<h3 class="">{{organisation?.Name}}</h3>
+		<!-- <button class="btn btn-default text-right" type="button"(click)="goBack()">Back to Results</button> -->
+		<!-- <button class="btn btn-default text-right" type="button"(click)="deselect()">close</button> -->
+	</div>
+	<div class="panel-body ">
 
-    <div class="" id="leftSidePanelDetails">
-      <a id="google-maps-link" [attr.href]="googleMapsLink" target="_blank" class="btn btn-info btn-sm">
-        <!-- <span class="lnr lnr-exit"></span>  -->
-        View in Google Maps
-      </a>
+		<div class="" id="leftSidePanelDetails">
+			<a id="google-maps-link" [attr.href]="googleMapsLink" (click)="linkAction('Maps Service','MapViewInLink')" target="_blank"
+				class="btn btn-info btn-sm">
+				<!-- <span class="lnr lnr-exit"></span>  -->
+				View in Google Maps
+			</a>
 
-    <div id="mapitemcontainer">
-            <!-- <div ref-mapdetail id="mapitem"></div> -->
-            <app-smap-container [selectedOrganisation]="organisation" id="mapitem">Loading...</app-smap-container>
-            <!-- <div id="expand-map">
+			<div id="mapitemcontainer">
+				<!-- <div ref-mapdetail id="mapitem"></div> -->
+				<app-smap-container [selectedOrganisation]="organisation" id="mapitem">Loading...</app-smap-container>
+				<!-- <div id="expand-map">
                 <a class="btn btn-xs btn-default" data-bind="click: $root.expandDetailMap">
                     <span class="fa-stack">
                         <i class="fa fa-square-o fa-stack-2x" style="margin-top:1px;"></i>
@@ -36,83 +37,90 @@
                     <span data-bind="text: $root.expandDetailMapTitle"> Expand map</span>
                 </a>
             </div> -->
-        </div>
-        <!-- <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails"> -->
-        <!-- <hr> -->
+			</div>
+			<!-- <div class="col-md-4 sideBar col-xs-12" id="leftSidePanelDetails"> -->
+			<!-- <hr> -->
 
-        <div id="detailsPanel" class="row">
+			<div id="detailsPanel" class="row">
 
-          <ul class=" list-group contact">
-            <li class="list-group-item col-xs-12">
-              <h5><span class="lnr lnr-store"></span>Advocacy Services</h5>
-              <p style="white-space: pre-wrap;">{{organisation?.FurtherDetails}}</p>
-            </li>
-            <li *ngIf="organisation?.Comments" class="list-group-item col-xs-12">
-              <h5><span class="lnr lnr-question-circle"></span>Additional information</h5>
-              <span style="white-space: pre-wrap;">{{organisation?.Comments}}</span>
-            </li>
-            <!-- <li class="list-group-item">Category: {{organisation.Category}}</li> -->
-            <li class="list-group-item col-xs-12 col-sm-6">
-              <h5><span class="lnr lnr-tag"></span>Provider Types</h5>
-              <!-- <ul [innerHTML]="organisation?.Category | commaSplitList"></ul> -->
-              <div class="tags">
-                <span *ngFor="let category of organisation?.Category | commaSplitArray" class="label label-default">{{category}}</span>
-              </div>
-            </li>
-
-
-          <li class="list-group-item col-xs-12 col-sm-6">
-            <h5><span class="lnr lnr-map"></span>Service Areas</h5>
-            <span>{{organisation?.ServiceAreas}}</span>
-          </li>
-
-          <hr class="list-group col-xs-12">
-
-          <div class="clearfix"></div>
+				<ul class=" list-group contact">
+					<li class="list-group-item col-xs-12">
+						<h5><span class="lnr lnr-store"></span>Advocacy Services</h5>
+						<p style="white-space: pre-wrap;">{{organisation?.FurtherDetails}}</p>
+					</li>
+					<li *ngIf="organisation?.Comments" class="list-group-item col-xs-12">
+						<h5><span class="lnr lnr-question-circle"></span>Additional information</h5>
+						<span style="white-space: pre-wrap;">{{organisation?.Comments}}</span>
+					</li>
+					<!-- <li class="list-group-item">Category: {{organisation.Category}}</li> -->
+					<li class="list-group-item col-xs-12 col-sm-6">
+						<h5><span class="lnr lnr-tag"></span>Provider Types</h5>
+						<!-- <ul [innerHTML]="organisation?.Category | commaSplitList"></ul> -->
+						<div class="tags">
+							<span *ngFor="let category of organisation?.Category | commaSplitArray" class="label label-default">{{category}}</span>
+						</div>
+					</li>
 
 
-            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-phone-handset"></span>Phone</h5><a  href="{{organisation?.Phone | phoneLink}}">{{organisation?.Phone}}</a></li>
-            <li class="col-sm-6 col-md-4 list-group-item" ><h5><span class="lnr lnr-envelope"></span>Email</h5><a href="{{organisation?.Email | emailLink}}">{{organisation?.Email}}</a></li>
-            <div class="visible-sm-block clearfix"></div>
-            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-earth"></span>Website</h5><a href="{{organisation?.Website | webLink}}" target="_blank">{{organisation?.Website}}</a></li>
-            <div class="hidden-sm clearfix"></div>
-            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-phone"></span>Alt. Phone</h5><a href="{{organisation?.AltTelephoneNumber | phoneLink}}">{{organisation?.AltTelephoneNumber}}</a></li>
-            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-clock"></span>Business Hours</h5><span>{{organisation?.BusinessHours}}</span></li>
-          <div class="visible-sm-block clearfix"></div>
-            <li class="col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-printer"></span>Fax</h5><span>{{organisation?.Fax}}</span></li>
-            <!-- <li class="list-group-item">Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li> -->
-            <!-- <a class="list-group-item"><h5>Distance</h5>{{organisation.Distance}}</a> -->
+					<li class="list-group-item col-xs-12 col-sm-6">
+						<h5><span class="lnr lnr-map"></span>Service Areas</h5>
+						<span>{{organisation?.ServiceAreas}}</span>
+					</li>
 
-            <li class="list-group-item col-xs-12 col-sm-6 col-md-4">
-              <h5>
-                <span class="lnr lnr-map-marker"></span>
-                Address</h5>
-                <address>
-                  <a [attr.href]="googleMapsLink" target="_blank"><span [innerHTML]="organisation?.StreetAddress" ></span><br/>{{organisation?.Suburb}} {{organisation?.Postcode}} {{organisation?.State}}</a>
-                </address>
+					<hr class="list-group col-xs-12">
 
-              <a [attr.href]="googleMapsLink" target="_blank" class="btn btn-link btn-sm">
-                <!-- <span class="lnr lnr-exit"></span>  -->
-                View in Google Maps
-              </a> |
-              <a [href]="googleMapsDirections" target="_blank" class="btn btn-link btn-sm">
-                <!-- <span class="lnr lnr-exit"></span>  -->
-                Directions
-              </a>
-            </li>
-            <li class="col-xs-12 col-sm-6 col-md-4 list-group-item"><h5><span class="lnr lnr-license"></span>Funded by</h5><span>{{organisation?.FundingSource}}</span></li>
+					<div class="clearfix"></div>
 
-          </ul>
-            <!-- <hr class="list-group col-xs-12"> -->
-            <!-- <ul class="list-group">
+
+					<li class="col-sm-6 col-md-4 list-group-item">
+						<h5><span class="lnr lnr-phone-handset"></span>Phone</h5><a href="{{organisation?.Phone | phoneLink}}" (click)="linkAction('Dial Phone','PhoneLink')">{{organisation?.Phone}}</a></li>
+					<li class="col-sm-6 col-md-4 list-group-item">
+						<h5><span class="lnr lnr-envelope"></span>Email</h5><a href="{{organisation?.Email | emailLink}}" (click)="linkAction('Send Email','EmailLink')">{{organisation?.Email}}</a></li>
+					<div class="visible-sm-block clearfix"></div>
+					<li class="col-sm-6 col-md-4 list-group-item">
+						<h5><span class="lnr lnr-earth"></span>Website</h5><a href="{{organisation?.Website | webLink}}" target="_blank" (click)="linkAction('Visit website','WebsiteLink')">{{organisation?.Website}}</a></li>
+					<div class="hidden-sm clearfix"></div>
+					<li class="col-sm-6 col-md-4 list-group-item">
+						<h5><span class="lnr lnr-phone"></span>Alt. Phone</h5><a href="{{organisation?.AltTelephoneNumber | phoneLink}}" (click)="linkAction('Dial Alt Phone','AltPhoneLink')">{{organisation?.AltTelephoneNumber}}</a></li>
+					<li class="col-sm-6 col-md-4 list-group-item">
+						<h5><span class="lnr lnr-clock"></span>Business Hours</h5><span>{{organisation?.BusinessHours}}</span></li>
+					<div class="visible-sm-block clearfix"></div>
+					<li class="col-sm-6 col-md-4 list-group-item">
+						<h5><span class="lnr lnr-printer"></span>Fax</h5><span>{{organisation?.Fax}}</span></li>
+					<!-- <li class="list-group-item">Lat/Lng: {{organisation.Lat}},{{organisation.Lng}}</li> -->
+					<!-- <a class="list-group-item"><h5>Distance</h5>{{organisation.Distance}}</a> -->
+
+					<li class="list-group-item col-xs-12 col-sm-6 col-md-4">
+						<h5>
+							<span class="lnr lnr-map-marker"></span> Address
+						</h5>
+						<address>
+							<a [attr.href]="googleMapsLink" (click)="linkAction('Maps Service','AddressLink')" target="_blank"><span [innerHTML]="organisation?.StreetAddress" ></span><br/>{{organisation?.Suburb}} {{organisation?.Postcode}} {{organisation?.State}}</a>
+						</address>
+
+						<a [attr.href]="googleMapsLink" (click)="linkAction('Maps Service','AddressViewInLink')" target="_blank" class="btn btn-link btn-sm">
+							<!-- <span class="lnr lnr-exit"></span>  -->
+							View in Google Maps
+						</a> |
+						<a [attr.href]="googleMapsDirections" (click)="linkAction('Directions Service','DirectionsLink')" target="_blank" class="btn btn-link btn-sm">
+							<!-- <span class="lnr lnr-exit"></span>  -->
+							Directions
+						</a>
+					</li>
+					<li class="col-xs-12 col-sm-6 col-md-4 list-group-item">
+						<h5><span class="lnr lnr-license"></span>Funded by</h5><span>{{organisation?.FundingSource}}</span></li>
+
+				</ul>
+				<!-- <hr class="list-group col-xs-12"> -->
+				<!-- <ul class="list-group">
 
 
               <div class="hidden-xs clearfix"></div>
 
 
           </ul> -->
-        <!-- </div> -->
-      </div>
+				<!-- </div> -->
+			</div>
 
-    </div>
-</div>
+		</div>
+	</div>

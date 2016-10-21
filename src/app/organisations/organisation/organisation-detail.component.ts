@@ -1,8 +1,8 @@
-import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter  } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { MapService } from '../../map/map.service';
-import {GeolocationService, GeoLocation, AnalyticsService} from '../../shared/index';
+import { GeolocationService, GeoLocation, AnalyticsService } from '../../shared/index';
 
 import { Organisation } from '../organisation';
 import { OrganisationService } from '../organisation.service';
@@ -14,10 +14,10 @@ import { OrganisationService } from '../organisation.service';
   styleUrls: ['organisation-detail.component.css'],
   templateUrl: 'organisation-detail.component.html',
   // pipes: [EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink],
-  host: {'class' : 'ng-animate orgDetailContainer'}
+  host: { 'class': 'ng-animate orgDetailContainer' }
 })
 
-export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
+export class OrganisationDetailComponent implements OnInit, AfterViewInit, OnChanges {
   // @ViewChild('mapdetail') mapElement: ElementRef;
   @Input() organisation: Organisation = null;
   @Output() onUnselected = new EventEmitter<any>();
@@ -27,6 +27,7 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   private subLocation: any;
   private subOrgId: any;
   locationPos: GeoLocation;
+  googleMapsLink: string;
   googleMapsDirections: string;
 
   private startTime;
@@ -34,7 +35,7 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   constructor(
     // private router: Router,
     // private route: ActivatedRoute,
-    private organisationService: OrganisationService,
+    // private organisationService: OrganisationService,
     private geolocationService: GeolocationService,
     private analytics: AnalyticsService
   ) {
@@ -56,24 +57,34 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
     // }
 
     // this._initMapInstance(this.mapElement.nativeElement);
+    this.subLocation = this.geolocationService.location$
+      .subscribe(
+      (loc) => {
+        console.info('got location', loc);
+        this.locationPos = loc;
+        this.googleMapsDirections = this.generateDirectionsUrl();
+      },
+      error => {
+        console.log(error);
+      });
 
   }
 
 
   ngAfterViewInit() {
 
-          this.sendFinishedLoadTime();
+    this.sendFinishedLoadTime();
     // this.initMap();
 
-        //
-        // this.subLocation = this.geolocationService.location$.subscribe(
-        //           (loc) => {
-        //             this.locationPos = loc;
-        //             this.googleMapsDirections = this.getDirectionsUrl();
-        //         },
-        //       error => {
-        //         console.log(error);
-        //       });
+
+    this.geolocationService.getLocation(null)
+      .subscribe(
+      (loc) => {
+        console.info('start location', loc);
+      },
+      error => {
+        console.log(error);
+      });
 
     // this.sub = this.route
     //   .params
@@ -98,7 +109,7 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   private _initMapInstance(el: any) {
     console.log('init detail map');
 
-      // this.mapService.createDetailMap(el);
+    // this.mapService.createDetailMap(el);
   }
 
   ngOnDestroy() {
@@ -108,14 +119,15 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
 
   ngOnChanges(changes) {
 
-  		// console.log('Change detected:', changes);
-      // if (changes.organisation){
-      //   console.log('Organisation Change detected:', changes.organisation);
-      //   if (this.organisation){
-      //     this.initMap();
-      //   }
-      // }
-  	}
+    // console.log('Change detected:', changes);
+    if (changes.organisation) {
+      console.log('Organisation Change detected:', changes.organisation);
+      if (this.organisation) {
+        this.googleMapsLink = this.generateGoogleMapsLink();
+        this.googleMapsDirections = this.generateDirectionsUrl();
+      }
+    }
+  }
 
   // initMap() {
   //   console.debug('org detail - init map');
@@ -126,39 +138,39 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
   //   // }
   // }
 
-  sendFinishedLoadTime(){
-      var endTime = new Date();
-      var milliseconds = (endTime.getTime() - this.startTime.getTime());
-      console.info('OrganisationDetailComponent loaded:', milliseconds);
-      this.analytics.sendComponentLoaded('OrganisationDetailComponent', milliseconds);
+  sendFinishedLoadTime() {
+    var endTime = new Date();
+    var milliseconds = (endTime.getTime() - this.startTime.getTime());
+    console.info('OrganisationDetailComponent loaded:', milliseconds);
+    this.analytics.sendComponentLoaded('OrganisationDetailComponent', milliseconds);
   }
 
 
-    // getOrganisation(organisation: Organisation){
+  // getOrganisation(organisation: Organisation){
 
-    //   this.organisation = organisation;
-    //   console.log('get organisation');
-    //   console.log(this.organisation);
-      
+  //   this.organisation = organisation;
+  //   console.log('get organisation');
+  //   console.log(this.organisation);
 
-    //   if (this.organisation){
-    //     console.log('set page title to', this.organisation.Name);
-    //     this.setTitle(this.organisation.Name + " - Disability Advocacy Finder");
-    //     this.getOrganisationById(organisation.Id);
-    //     this.googleMapsDirections = this.getDirectionsUrl();
-    //   }
 
-    // }
+  //   if (this.organisation){
+  //     console.log('set page title to', this.organisation.Name);
+  //     this.setTitle(this.organisation.Name + " - Disability Advocacy Finder");
+  //     this.getOrganisationById(organisation.Id);
+  //     this.googleMapsDirections = this.getDirectionsUrl();
+  //   }
 
-    // getOrganisationById(id){
-    //   console.log('get organisation by id: ' + id);
-    //   this.subOrgId = this.organisationService.getOrganisation(id)
-    //   .subscribe((organisation) => {
-    //     this.organisation = organisation;
-    //     this.initMap();
-    //     this.subOrgId.unsubscribe();
-    //   });
-    // }
+  // }
+
+  // getOrganisationById(id){
+  //   console.log('get organisation by id: ' + id);
+  //   this.subOrgId = this.organisationService.getOrganisation(id)
+  //   .subscribe((organisation) => {
+  //     this.organisation = organisation;
+  //     this.initMap();
+  //     this.subOrgId.unsubscribe();
+  //   });
+  // }
 
 
 
@@ -174,52 +186,61 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit  {
     // this.goBack();
   }
 
-  get fundingSourceFormatted(){
-    if (this.organisation.FundingSource == "Commonwealth"){
+  get fundingSourceFormatted() {
+    if (this.organisation.FundingSource == "Commonwealth") {
       return "Commonwealth funded";
     }
-    else if (this.organisation.FundingSource == "State"){
+    else if (this.organisation.FundingSource == "State") {
       return "State funded";
     }
     return "";
 
   }
 
-  get googleMapsLink(){
-    if (this.organisation != null){
-      // console.info('maps link url update');
+  generateGoogleMapsLink() {
+    if (this.organisation != null) {
+      let url = "https://www.google.com/maps/place/"
+        + this.organisation.Lat + "," + this.organisation.Lng
+        + "/@"
+        + this.organisation.Lat
+        + ","
+        + this.organisation.Lng
+        + ",18z/";
 
-      return "https://www.google.com/maps/place/"
-            + this.organisation.Lat + "," + this.organisation.Lng
-            + "/@"
-            + this.organisation.Lat
-            + ","
-            + this.organisation.Lng
-            + ",18z/";
-    }else{
+      console.info('maps url is ' + url);
+      return url;
+    } else {
       return "#";
     }
   }
 
- getDirectionsUrl(){
-    if (this.organisation != null){
+  generateDirectionsUrl() {
+    if (this.organisation != null) {
       let url = "https://www.google.com/maps/dir/";
       if (this.locationPos) {
-        url = url +  this.locationPos.latitude + "," + this.locationPos.longitude;
+        url = url + this.locationPos.latitude + "," + this.locationPos.longitude;
       }
-            url = url + "/" + this.organisation.Lat + "," + this.organisation.Lng
-            + "/@"
-            + this.organisation.Lat
-            + ","
-            + this.organisation.Lng
-            + "/";
-            console.info('directions url is ' + url);
-            return url;
-            // window.location.href= url;
+      url = url + "/" + this.organisation.Lat + "," + this.organisation.Lng
+        + "/@"
+        + this.organisation.Lat
+        + ","
+        + this.organisation.Lng
+        + "/";
+      console.info('directions url is ' + url);
+      return url;
+      // window.location.href= url;
 
-    }else{
+    } else {
       return "#";
     }
   }
+
+
+  linkAction(action: string, triggerName?: string) {
+    console.log(triggerName + ' triggered going to ', action);
+    this.analytics.sendUIEvent(action, triggerName);
+  }
+
+
 
 }

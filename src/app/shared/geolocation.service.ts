@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import { Subject }    from 'rxjs/Subject';
-import { GeoLocation }    from './geolocation-interface';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { GeoLocation } from './geolocation-interface';
 
-import {Locker, LockerConfig} from 'angular2-locker'
+import { Locker, LockerConfig } from 'angular2-locker'
 
 const GEOLOCATION_ERRORS = {
 	'errors.location.unsupportedBrowser': 'Browser does not support location services',
@@ -30,25 +30,25 @@ export class GeolocationService {
 	 * @returns {Observable} An observable sequence with the geographical location of the device running the client.
 	 */
 
-	 public location = new Subject<GeoLocation>() ;
+	public location = new Subject<GeoLocation>();
 
-	 // Observable string streams
+	// Observable string streams
 	location$ = this.location.asObservable();
 
 	private loc: GeoLocation;
 
 	opts = {
-    enableHighAccuracy: false,
-    timeout: 10000,
-    maximumAge: 0
-  }
+		enableHighAccuracy: false,
+		timeout: 10000,
+		maximumAge: 0
+	}
 
 	constructor(
 		public http: Http,
-		private locker: Locker) {}
+		private locker: Locker) { }
 
 
-	get hasUserAgreed(){
+	get hasUserAgreed() {
 		if (this.locker.has('allowGeolocation')) {
 			console.info('user has set geolocation preference');
 			return true;
@@ -57,12 +57,12 @@ export class GeolocationService {
 		return false;
 	}
 
-	get locationCapable(){
+	get locationCapable() {
 		if (window.navigator && window.navigator.geolocation) {
-			if (this.locker.get('allowGeolocation')){
+			if (this.locker.get('allowGeolocation')) {
 				console.info('device is geolocation capable and user has agreed');
 				return true;
-			}else{
+			} else {
 				console.info('device is geolocation capable and user has not set agreement preference');
 				return false;
 			}
@@ -79,13 +79,13 @@ export class GeolocationService {
 	// 	return false;
 	// }
 
-	public enableLocation(allow){
+	public enableLocation(allow) {
 		console.log('set allow geolocation preference to ' + allow);
-		if (allow){
+		if (allow) {
 			this.locker.set('allowGeolocation', true);
 			// this.getLocation(this.opts);
 			return true;
-		}else{
+		} else {
 			this.locker.set('allowGeolocation', false);
 			return false;
 		}
@@ -127,99 +127,99 @@ export class GeolocationService {
 
 	}
 
-	private positionSuccessCallback =	(position) => {
-			// this.location.next(position);
-			this.displayLocation(position);
+	private positionSuccessCallback = (position) => {
+		// this.location.next(position);
+		this.displayLocation(position);
 
-			// this.location.complete();
-		}
+		// this.location.complete();
+	}
 
 	private positionErrorCallback = (error) => {
-			console.group("Geolocation error");
-			console.log("position error: " + new Date());
-			console.error(error);
-			console.groupEnd();
+		console.group("Geolocation error");
+		console.log("position error: " + new Date());
+		console.error(error);
+		console.groupEnd();
 
-			let loc = new GeoLocation();
-			loc.valid = false;
+		let loc = new GeoLocation();
+		loc.valid = false;
 
-			switch (error.code) {
-				case 1:
-					// this.location.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
-					loc.error = GEOLOCATION_ERRORS['errors.location.permissionDenied'];
-					break;
-				case 2:
-					// this.location.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
-					loc.error = GEOLOCATION_ERRORS['errors.location.positionUnavailable'];
-					break;
-				case 3:
-					// this.location.error(GEOLOCATION_ERRORS['errors.location.timeout']);
-					loc.error = GEOLOCATION_ERRORS['errors.location.timeout'];
-					break;
-			}
-
-			this.location.next(loc);
-			// this.location.error(error);
-
+		switch (error.code) {
+			case 1:
+				// this.location.error(GEOLOCATION_ERRORS['errors.location.permissionDenied']);
+				loc.error = GEOLOCATION_ERRORS['errors.location.permissionDenied'];
+				break;
+			case 2:
+				// this.location.error(GEOLOCATION_ERRORS['errors.location.positionUnavailable']);
+				loc.error = GEOLOCATION_ERRORS['errors.location.positionUnavailable'];
+				break;
+			case 3:
+				// this.location.error(GEOLOCATION_ERRORS['errors.location.timeout']);
+				loc.error = GEOLOCATION_ERRORS['errors.location.timeout'];
+				break;
 		}
+
+		this.location.next(loc);
+		// this.location.error(error);
+
+	}
 
 	private displayLocation = (position) => {
 
 		// console.log('start getCurrentPos - displayLocation');
 
-			let loc = new GeoLocation();
-			loc.valid = false;
-			loc.position = position;
-			loc.latitude = position.coords.latitude;
-			loc.longitude = position.coords.longitude;
+		let loc = new GeoLocation();
+		loc.valid = false;
+		loc.position = position;
+		loc.latitude = position.coords.latitude;
+		loc.longitude = position.coords.longitude;
 
-      this.http.get('//maps.googleapis.com/maps/api/geocode/json?latlng='+loc.latitude+','+loc.longitude+'&sensor=true')
-        .subscribe(
-          response => {
-
-
-			// console.log('start getCurrentPos - success geocode');
-
-              if(response.status == 200){
-                  let data = response.json();
-                  loc.address =  data.results[0].formatted_address
-
-                  let city = data.results[0].address_components.reduce((city, value) => {
-                     if (value.types[0] == "locality") {
-                           city = value.long_name;
-                           loc.city = city;
-                      }
-                     if (value.types[0] == "postal_code") {
-                            let postal_code = value.long_name;
-                            loc.postcode = postal_code;
-														loc.valid = true;
-                        }
-                    // return loc;
+		this.http.get('//maps.googleapis.com/maps/api/geocode/json?latlng=' + loc.latitude + ',' + loc.longitude + '&sensor=true')
+			.subscribe(
+			response => {
 
 
-                  }, '');
-									// console.group("Geolocation update");
-									console.log("Geolocation position updated: ",new Date(), loc);
-									// console.log(loc);
-									// console.groupEnd();
+				// console.log('start getCurrentPos - success geocode');
 
-									this.location.next(loc);
+				if (response.status == 200) {
+					let data = response.json();
+					loc.address = data.results[0].formatted_address
 
-              }
-              // localStorage.setItem('location', JSON.stringify(location));
-              // EmitterService.get("selectedCity").emit(location['city']);
+					let city = data.results[0].address_components.reduce((city, value) => {
+						if (value.types[0] == "locality") {
+							city = value.long_name;
+							loc.city = city;
+						}
+						if (value.types[0] == "postal_code") {
+							let postal_code = value.long_name;
+							loc.postcode = postal_code;
+							loc.valid = true;
+						}
+						// return loc;
 
-      },
-        error => {
-        console.error(error.text());
+
+					}, '');
+					// console.group("Geolocation update");
+					console.log("Geolocation position updated: ", new Date(), loc);
+					// console.log(loc);
+					// console.groupEnd();
+
+					this.location.next(loc);
+
+				}
+				// localStorage.setItem('location', JSON.stringify(location));
+				// EmitterService.get("selectedCity").emit(location['city']);
+
+			},
+			error => {
+				console.error(error.text());
 				loc.error = error;
 				this.location.next(loc);
 				// return loc;
-      }
-      );
+			}
+			);
 
 
-    };
+	};
 
 	// public getLocation(opts): Observable<any> {
 	//
@@ -229,7 +229,7 @@ export class GeolocationService {
 	// 			window.navigator.geolocation.getCurrentPosition(
 	// 				(position) => {
 	// 					observer.next(position);
-  //           observer.complete();
+	//           observer.complete();
 	// 				},
 	// 				(error) => {
 	// 					switch (error.code) {
@@ -261,6 +261,6 @@ export class GeolocationService {
 }
 
 export var geolocationServiceInjectables: Array<any> = [
-  // provide(GeolocationService, { useClass: GeolocationService })
+	// provide(GeolocationService, { useClass: GeolocationService })
 	{ provide: GeolocationService, useClass: GeolocationService }
 ];
