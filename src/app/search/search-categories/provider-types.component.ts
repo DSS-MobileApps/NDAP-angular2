@@ -9,7 +9,7 @@ import { OrganisationService } from '../../organisations/index';
 
 
 @Component({
-  
+
   selector: 'provider-types',
   templateUrl: 'provider-types.component.html',
   styleUrls: ['provider-types.component.css']
@@ -32,21 +32,21 @@ export class ProviderTypesComponent implements OnInit {
     private router: Router,
     private providerTypesService: ProviderTypesService,
     private organisationService: OrganisationService
-  ) {}
+  ) { }
 
   // When the component starts, get the organisations
-  ngOnInit () {
+  ngOnInit() {
     // Subscribe to Org Search Results
     // this.subscribeToUnfilteredOrganisations();
-    
+
     this.subscribeToProviderTypes();
 
-    
+
   }
 
-  ngOnDestroy(){
-    if (this.subTypes) { this.subTypes.unsubscribe();}
-    if (this.subOrgs) { this.subOrgs.unsubscribe();}
+  ngOnDestroy() {
+    if (this.subTypes) { this.subTypes.unsubscribe(); }
+    if (this.subOrgs) { this.subOrgs.unsubscribe(); }
   }
 
   // Get provider types from the provider service,
@@ -54,46 +54,48 @@ export class ProviderTypesComponent implements OnInit {
   private subscribeToProviderTypes() {
     this.subTypes = this.providerTypesService.filteredTypes
       .subscribe(
-        providerTypes => {
-          // console.log('providerTypes returned from API', providerTypes);
-          this.providerTypes = this.providerTypesService.sortProviderTypes(providerTypes);
-          this.filteredTypes = this.providerTypes;
-          this.subscribeToUnfilteredOrganisations();
-        },
-        error =>  console.log(error));
+      providerTypes => {
+        console.log('providerTypes returned from API', providerTypes);
+        this.providerTypes = this.providerTypesService.sortProviderTypes(providerTypes);
+        this.filteredTypes = this.providerTypes;
+        this.subscribeToUnfilteredOrganisations();
+      },
+      error => console.log(error));
   }
 
-private subscribeToUnfilteredOrganisations() {
-  // this.organisationService.getCachedList();
+  private subscribeToUnfilteredOrganisations() {
+    // this.organisationService.getCachedList();
 
     // this.subOrgs = this.organisationService.orgListFull$
     this.organisationService.orgsUnfiltered
       .subscribe(
-        organisations => {
-          // console.log('full orgs list updated:', organisations);
-          this.organisations = organisations;
-          this.filterTypes(this.organisations);
-        },
-        error =>  console.error(error)
+      organisations => {
+        // console.log('full orgs list updated:', organisations);
+        this.organisations = organisations;
+        this.filterTypes(this.organisations);
+      },
+      error => console.error(error)
       );
-      
+
   }
 
 
 
-  private filterTypes(orgs: Organisation[]){
+  private filterTypes(orgs: Organisation[]) {
 
     // console.log("filter types contained in Orgs: ", this.providerTypes);
 
-    this.filteredTypes = this.providerTypes.filter( function( el ) {
+    this.filteredTypes = this.providerTypes.filter(function (el) {
       // console.log("filtering type: ", el,  orgs.filter(o => o.Category.includes(el.Value) ))
-      return orgs.filter(o => o.Category.includes(el.Value) ).length > 0;
-    } );
+      return orgs.filter(o => o.Category.includes(el.Value)).length > 0;
+    });
+
+
 
     // console.log("filter types after reduced ", this.filteredTypes);
   }
 
-  
+
 
   // When a provider type is selected, tell the org list to filter by the type selected
   // This event is captured through the organisation.component html template

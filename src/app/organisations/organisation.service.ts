@@ -1,8 +1,8 @@
-import { Injectable, Inject }     from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Observable }     from 'rxjs/Observable';
-import { Subject }    from 'rxjs/Subject';
-import {BehaviorSubject} from "rxjs/Rx";
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from "rxjs/Rx";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
@@ -10,12 +10,17 @@ import 'rxjs/add/observable/of';
 
 import { ProviderType, Refiner } from '../search/index';
 
-import { Organisation }   from './organisation';
+import { Organisation } from './organisation';
 import { AppState } from '../app.service';
 
 import { AnalyticsService } from '../shared/analytics.service';
 import { BackendService } from '../shared/backend.service';
 
+const APPSTATE_RESULTS = 'results',
+  APPSTATE_REFINERS = 'refiners',
+  APPSTATE_SEARCHTYPE = 'searchType',
+  APPSTATE_SEARCHVAL = 'searchValue1'
+  ;
 
 @Injectable()
 export class OrganisationService {
@@ -23,6 +28,8 @@ export class OrganisationService {
   // // Observable for Organisation Search Results
   // private orgListSource = new Subject<Organisation[]>();
   // orgListSource$ = this.orgListSource.asObservable();
+
+  private;
 
 
   // Observable for search types
@@ -35,7 +42,7 @@ export class OrganisationService {
 
   private _organisations: BehaviorSubject<Organisation[]> = new BehaviorSubject([]);
   public organisations: Observable<Organisation[]> = this._organisations.asObservable();
-  
+
   // Observable for Unfiltered Organisation Search Results
   private _orgsUnfiltered: BehaviorSubject<Organisation[]> = new BehaviorSubject([]);
   orgsUnfiltered = this._orgsUnfiltered.asObservable();
@@ -49,15 +56,15 @@ export class OrganisationService {
   refiners = this._refiners.asObservable();
 
   private dataStore: {  // This is where we will store our data in memory
-      organisations: Organisation[],
-      refiners: Refiner[]
-    };
-  constructor (private http: Http,
-              public appState: AppState,
-              public backendService: BackendService,
-              public analytics: AnalyticsService) {
+    organisations: Organisation[],
+    refiners: Refiner[]
+  };
+  constructor(private http: Http,
+    public appState: AppState,
+    public backendService: BackendService,
+    public analytics: AnalyticsService) {
 
-      this.loadInitialData();
+    this.loadInitialData();
 
 
   }
@@ -68,63 +75,89 @@ export class OrganisationService {
 
   private loadInitialData() {
 
-      console.info('load initial organisation data');
+    console.info('load initial organisation data');
 
-      this.dataStore = { organisations: [], refiners: [] };
+    this.dataStore = { organisations: [], refiners: [] };
 
 
-      if (this.appState.get().allOrgs == null){
-            this.backendService.getAllOrganisations()
-                                .subscribe(
-                                  orgs => {
-                                      // console.info('got initial organisations list');
-                                      // this.dataStore.organisations = orgs;
-                                      this.appState.set('allOrgs', orgs);
+    if (this.appState.get().allOrgs == null) {
+      this.backendService.getAllOrganisations()
+        .subscribe(
+        orgs => {
+          // console.info('got initial organisations list');
+          // this.dataStore.organisations = orgs;
+          this.appState.set('allOrgs', orgs);
 
-                                      // this._organisations.next(orgs);
-                                  },
-                                  err => console.log("Error retrieving Organisations")
-                              );
+          // this._organisations.next(orgs);
+        },
+        err => console.log("Error retrieving Organisations")
+        );
 
-      }
-
-       
     }
 
-  
+    // get last results
+    if (this.appState.get(APPSTATE_RESULTS)) {
+      this.dataStore.organisations = this.appState.get(APPSTATE_RESULTS);
+      this._organisations.next(this.dataStore.organisations);
+
+      // // get last search type
+      // if (this.appState.get(APPSTATE_SEARCHTYPE)) {
+      //   this._searchType.next(this.appState.get(APPSTATE_SEARCHTYPE));
+      // }
+      // // get last search value
+      // if (this.appState.get(APPSTATE_SEARCHVAL)) {
+      //   this._searchType.next(this.appState.get(APPSTATE_SEARCHVAL));
+      // }
+      this.formattedSearchLabels(this.appState.get(APPSTATE_SEARCHTYPE), this.appState.get(APPSTATE_SEARCHVAL));
+
+      // get last search type
+      if (this.appState.get(APPSTATE_REFINERS)) {
+        this.dataStore.refiners = this.appState.get(APPSTATE_REFINERS);
+        this._refiners.next(this.dataStore.refiners);
+      }
+
+    }
+
+
+
+  }
+
+
   /*
   *************************************
   * Methods that the Service returns
   *************************************
   */
 
-  
+
   // Public Method called to get organisations list
   public refineOrgList(refineField, value, singleRefiner = false) {
     console.info(refineField, value);
 
-    var newRef: Refiner = {type: refineField, value: value, summary: refineField + " refined by " + value};
+    var newRef: Refiner = { type: refineField, value: value, summary: refineField + " refined by " + value };
 
-    if (singleRefiner){
+    if (singleRefiner) {
       this.dataStore.refiners = this.dataStore.refiners
         .filter((refiner) => refiner.type !== refineField);
-      }
+    }
 
-      this.dataStore.refiners.push(newRef);
+    this.dataStore.refiners.push(newRef);
 
 
     console.info(this.dataStore.refiners);
 
     // console.info(this.dataStore.organisations.filter((item) => item.Category === value))
     this._organisations.next(
-        this.dataStore.organisations
+      this.dataStore.organisations
         // .filter((item) => item.Category === value)
         .filter((item) => item.Category.indexOf(value) != -1)
-      );
+    );
 
-      this._refiners.next(this.dataStore.refiners);
+    this._refiners.next(this.dataStore.refiners);
 
-      this.analytics.sendEvent('Refine', refineField, value, null, null);
+    this.appState.set(APPSTATE_REFINERS, this.dataStore.refiners);
+
+    this.analytics.sendEvent('Refine', refineField, value, null, null);
 
 
   }
@@ -136,27 +169,30 @@ export class OrganisationService {
       .filter((refiner) => refiner.type !== refineField);
 
 
-      // console.info(this.dataStore.refiners);
+    // console.info(this.dataStore.refiners);
 
     switch (refineField) {
 
       case "byProviderType":
         this._organisations.next(
-            this.dataStore.organisations
-            // .filter((item) => item.Category === value)
-          );
+          this.dataStore.organisations
+          // .filter((item) => item.Category === value)
+        );
 
       default:
     }
 
+
     this._refiners.next(this.dataStore.refiners);
+
+    this.appState.set(APPSTATE_REFINERS, null);
 
   }
 
   // Public Method called to get organisations list
   public getByKeyword(keyword): Observable<any> {
-    this.appState.set('searchType', 'keyword');
-    this.appState.set('searchValue1', keyword);
+    this.appState.set(APPSTATE_SEARCHTYPE, 'keyword');
+    this.appState.set(APPSTATE_SEARCHVAL, keyword);
 
     this.formattedSearchLabels('byKeyword', keyword);
 
@@ -167,54 +203,57 @@ export class OrganisationService {
 
     // console.info('subscribe to get all Orgs refining by keyword - check perf')
 
-    if (this.appState.get().allOrgs){
+    if (this.appState.get().allOrgs) {
       console.info('using all orgs cache', this.appState.get().allOrgs);
 
-        let result = this.appState.get().allOrgs;
-        let kLower = keyword.toLowerCase();
-        this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
-        // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
-        
-        this._organisations.next(this.dataStore.organisations);
-        this._orgsUnfiltered.next(this.dataStore.organisations);
+      let result = this.appState.get().allOrgs;
+      let kLower = keyword.toLowerCase();
+      this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
+      // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
 
-        this.appState.set('results', this.dataStore.organisations);
+      this._organisations.next(this.dataStore.organisations);
+      this._orgsUnfiltered.next(this.dataStore.organisations);
 
-        this._selectedOrganisation.next(null);
-        this._refiners.next(this.dataStore.refiners);
+      this.appState.set(APPSTATE_RESULTS, this.dataStore.organisations);
+      this.appState.set(APPSTATE_REFINERS, this.dataStore.refiners);
 
-        
-        return Observable.of(true);
+      this._selectedOrganisation.next(null);
+      this._refiners.next(this.dataStore.refiners);
 
-    }else{
 
-        var sendTime = new Date();
-        obs = this.backendService.getOrganisations("all", null, null);
-        obs.subscribe(
-              result => {
+      return Observable.of(true);
 
-                let kLower = keyword.toLowerCase();
-                this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
-                // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
-                
-                this._organisations.next(this.dataStore.organisations);
-                this._orgsUnfiltered.next(this.dataStore.organisations);
+    } else {
 
-                this.appState.set('results', this.dataStore.organisations);
+      var sendTime = new Date();
+      obs = this.backendService.getOrganisations("all", null, null);
+      obs.subscribe(
+        result => {
 
-                this._selectedOrganisation.next(null);
-                this._refiners.next(this.dataStore.refiners);
+          let kLower = keyword.toLowerCase();
+          this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
+          // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
 
-                var endTime = new Date();
-                var milliseconds = (endTime.getTime() - sendTime.getTime());
-                this.analytics.sendTiming('Search', 'Keyword', milliseconds, keyword, null);
-                return Observable.of(true);
+          this._organisations.next(this.dataStore.organisations);
+          this._orgsUnfiltered.next(this.dataStore.organisations);
 
-              },
-              error => {
-                console.error('from getOrganisations', error);
-                return Observable.of(error);
-              })
+          this.appState.set(APPSTATE_RESULTS, this.dataStore.organisations);
+          this.appState.set(APPSTATE_REFINERS, this.dataStore.refiners);
+
+
+          this._selectedOrganisation.next(null);
+          this._refiners.next(this.dataStore.refiners);
+
+          var endTime = new Date();
+          var milliseconds = (endTime.getTime() - sendTime.getTime());
+          this.analytics.sendTiming('Search', 'Keyword', milliseconds, keyword, null);
+          return Observable.of(true);
+
+        },
+        error => {
+          console.error('from getOrganisations', error);
+          return Observable.of(error);
+        })
 
     }
 
@@ -226,13 +265,13 @@ export class OrganisationService {
 
   // Public Method called to get organisations list
   public searchOrgList(searchType, value1, value2): Observable<any> {
-    this.appState.set('searchType', searchType);
-    this.appState.set('searchValue1', value1);
+    this.appState.set(APPSTATE_SEARCHTYPE, searchType);
+    this.appState.set(APPSTATE_SEARCHVAL, value1);
     this.appState.set('searchValue2', value2);
 
     this.formattedSearchLabels(searchType, value1);
 
-    
+
     // clear refiners
     this.dataStore.refiners = [];
 
@@ -241,7 +280,7 @@ export class OrganisationService {
     var sendTime = new Date();
 
     let obs = this.backendService.getOrganisations(searchType, value1, value2);
-      obs.subscribe(
+    obs.subscribe(
       results => {
         this.dataStore.organisations = results;
 
@@ -251,7 +290,9 @@ export class OrganisationService {
         this._refiners.next(this.dataStore.refiners);
 
 
-        this.appState.set('results', results);
+        this.appState.set(APPSTATE_RESULTS, results);
+        this.appState.set(APPSTATE_REFINERS, this.dataStore.refiners);
+
 
         var endTime = new Date();
         var milliseconds = (endTime.getTime() - sendTime.getTime());
@@ -266,7 +307,7 @@ export class OrganisationService {
 
         // this._organisations.next([])
         // this._orgsUnfiltered.next([]);
-        
+
         return Observable.of(error);
 
       }
@@ -281,86 +322,86 @@ export class OrganisationService {
   // Public method called to get a single Org
   public getOrganisation(id: number): Observable<Organisation> {
     this.analytics.sendEvent('Select', 'Organisation', id, null, null);
- 
+
     // return this.getJsonFromAPI(
     //   this.apiUrl
     //   + this.getSingleOrganisationUrl + id);
 
     return this.backendService.getOrganisation(id);
 
-      // return this.getJsonFromAPI("/data/detail-sample.json");
+    // return this.getJsonFromAPI("/data/detail-sample.json");
 
   }
 
-    public updateSelectedOrganisation (selectedOrganisation){
-      this._selectedOrganisation.next(selectedOrganisation);
-      this.appState.set('selectedOrganisation', selectedOrganisation);
+  public updateSelectedOrganisation(selectedOrganisation) {
+    this._selectedOrganisation.next(selectedOrganisation);
+    this.appState.set('selectedOrganisation', selectedOrganisation);
 
-    }
+  }
 
 
-  private formattedSearchLabels(searchType, value){
+  private formattedSearchLabels(searchType, value) {
     // console.log('format search label start', searchType, value);
 
     switch (searchType) {
 
-    case "byProviderType":
-      this._searchType.next('Provider Type');
-      this._searchValue.next('Provider types of ' + value);
-    break;
+      case "byProviderType":
+        this._searchType.next('Provider Type');
+        this._searchValue.next('Provider types of ' + value);
+        break;
 
-    case "byRadius":
-      this._searchType.next('Radius');
-      this._searchValue.next('within ' + value + 'kms of your location');
-    break;
+      case "byRadius":
+        this._searchType.next('Radius');
+        this._searchValue.next('within ' + value + 'kms of your location');
+        break;
 
-    case "byState":
-      this._searchType.next('State');
-      this._searchValue.next('in ' + value);
-    break;
+      case "byState":
+        this._searchType.next('State');
+        this._searchValue.next('in ' + value);
+        break;
 
-    case "byKeyword":
-      this._searchType.next('Keyword');
-      this._searchValue.next('matching ' + value);
-    break;
+      case "byKeyword":
+        this._searchType.next('Keyword');
+        this._searchValue.next('matching ' + value);
+        break;
 
-    case "byPostCode":
-      this._searchType.next('Postcode');
-      this._searchValue.next('for postcode ' + value);
-    break;
+      case "byPostCode":
+        this._searchType.next('Postcode');
+        this._searchValue.next('for postcode ' + value);
+        break;
 
-    case "all":
-      this._searchType.next('All');
-      this._searchValue.next('in all organisations');
-    break;
+      case "all":
+        this._searchType.next('All');
+        this._searchValue.next('in all organisations');
+        break;
 
-    default:
-    break;
-    //   this._searchType.next('All');
-    //   this._searchValue.next('all organisations');
-    // console.log('format search label', searchType, value);
+      default:
+        break;
+      //   this._searchType.next('All');
+      //   this._searchValue.next('all organisations');
+      // console.log('format search label', searchType, value);
     }
-    
+
   }
 
-  private keywordMatch(kLower, item: Organisation){
-      return (item.Name != null && item.Name.toLowerCase().includes(kLower)) ||
+  private keywordMatch(kLower, item: Organisation) {
+    return (item.Name != null && item.Name.toLowerCase().includes(kLower)) ||
       // (item.FurtherDetails != null && item.FurtherDetails.toLowerCase().includes(kLower)) ||
       (item.Suburb != null && item.Suburb.toLowerCase().includes(kLower)) ||
       (item.Category != null && item.Category.toLowerCase().includes(kLower))
-    }
+  }
 
-// Sort types by Value
-  public sortOrganisations(organisations: Organisation[], descending?: boolean): Organisation[]{
+  // Sort types by Value
+  public sortOrganisations(organisations: Organisation[], descending?: boolean): Organisation[] {
 
-    if (descending){
-      return organisations.sort(function(a, b) {
-                          return b.Name.localeCompare(a.Name);
-                      });
-    }else{
-      return organisations.sort(function(a, b) {
-                          return a.Name.localeCompare(b.Name);
-                      });
+    if (descending) {
+      return organisations.sort(function (a, b) {
+        return b.Name.localeCompare(a.Name);
+      });
+    } else {
+      return organisations.sort(function (a, b) {
+        return a.Name.localeCompare(b.Name);
+      });
     }
 
   }

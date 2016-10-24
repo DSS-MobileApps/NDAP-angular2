@@ -90,7 +90,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     // console.info('INIT SearchResultsComponent: state is ', this.appState.get().searchType);
 
 
-    if (this.appState.get().searchType == null) {
+    if (this.appState.get('searchType') == null) {
       console.info('No search state detected, redirect to search page');
       this.router.navigateByUrl("/search");
     } else {
