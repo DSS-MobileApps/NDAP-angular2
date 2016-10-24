@@ -197,6 +197,11 @@
 .open>.dropdown-toggle.btn-info.focus{
     background-color: $color-primary-2;    
 }
+.btn-info:active, .btn-info:active:hover {
+    background-color: $color-primary-2;
+    background-image: -webkit-radial-gradient(circle, $color-primary-2 10%, $color-primary-1 11%);
+    background-image: radial-gradient(circle, $color-primary-2 10%, $color-primary-1 11%);
+}
 
 
 .dropdown-menu>.active>a,
