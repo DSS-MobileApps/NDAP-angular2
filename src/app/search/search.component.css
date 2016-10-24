@@ -93,6 +93,9 @@ input#locationInput {
   padding-right: 20px;
 }
 
+#search-links .nav li{
+  display: inline-block;
+}
 
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
