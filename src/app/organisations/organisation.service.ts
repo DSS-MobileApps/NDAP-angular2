@@ -19,7 +19,8 @@ import { BackendService } from '../shared/backend.service';
 const APPSTATE_RESULTS = 'results',
   APPSTATE_REFINERS = 'refiners',
   APPSTATE_SEARCHTYPE = 'searchType',
-  APPSTATE_SEARCHVAL = 'searchValue1'
+  APPSTATE_SEARCHVAL = 'searchValue1',
+  APPSTATE_SELECTEDORG = 'selectedOrganisation'
   ;
 
 @Injectable()
@@ -335,7 +336,7 @@ export class OrganisationService {
 
   public updateSelectedOrganisation(selectedOrganisation) {
     this._selectedOrganisation.next(selectedOrganisation);
-    this.appState.set('selectedOrganisation', selectedOrganisation);
+    this.appState.set(APPSTATE_SELECTEDORG, selectedOrganisation);
 
   }
 

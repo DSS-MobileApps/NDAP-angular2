@@ -1,13 +1,14 @@
 import { Component, OnInit, Output, EventEmitter, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Title }     from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 
 import { ProviderType } from './search-categories/provider-type';
-import {GeolocationService, GeoLocation} from '../shared/index';
+import { GeolocationService, GeoLocation } from '../shared/index';
 
 import { OrganisationService } from '../organisations/organisation.service'
 import { AnalyticsService } from '../shared/analytics.service';
+import { ProviderTypesService } from './search-categories/index';
 
 @Component({
 
@@ -37,34 +38,35 @@ export class SearchComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private organisationService: OrganisationService,
+    private typesService: ProviderTypesService,
     private geolocationService: GeolocationService,
     public analytics: AnalyticsService,
     private titleService: Title
-  ) {}
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.locationChecked = this.geolocationService.hasUserAgreed;
-    if (this.locationChecked){
+    if (this.locationChecked) {
       this.locationAllowed = this.geolocationService.locationCapable;
 
     }
 
     this.subLocation = this.geolocationService.location$.subscribe(
-          (loc) => {
-            console.log("search menu position updated: " + new Date());
-            this.locationPos = loc;
-            this.locatingPosition = false;
-            this.textPlaceholder = "Type...";
+      (loc) => {
+        console.log("search menu position updated: " + new Date());
+        this.locationPos = loc;
+        this.locatingPosition = false;
+        this.textPlaceholder = "Type...";
 
-            if (this.locationPos.valid){
-              this.onLocationIdentified(loc.postcode);
-              // this.onCurrentPostcodeSearch(this.locationPos.postcode)
-            }else{
-              //error
+        if (this.locationPos.valid) {
+          this.onLocationIdentified(loc.postcode);
+          // this.onCurrentPostcodeSearch(this.locationPos.postcode)
+        } else {
+          //error
 
-            }
+        }
 
-        },
+      },
       error => {
         console.log(error);
         this.locatingPosition = false;
@@ -72,23 +74,23 @@ export class SearchComponent implements OnInit, AfterViewInit {
         // this.textPlaceholder = "Enter a postcode...";
       });
 
-      this.setTitle("Disability Advocacy Finder");
+    this.setTitle("Disability Advocacy Finder");
 
 
   }
 
-  
-   ngAfterViewInit() {            
-      if (this.locInput && this.locInput.nativeElement){
-        this.locInput.nativeElement.focus();
-      }
 
-      this.analytics.sendPageLoaded('SearchComponent');
-
-
+  ngAfterViewInit() {
+    if (this.locInput && this.locInput.nativeElement) {
+      this.locInput.nativeElement.focus();
     }
 
-  ngOnDestroy(){
+    this.analytics.sendPageLoaded('SearchComponent');
+
+
+  }
+
+  ngOnDestroy() {
     this.subLocation.unsubscribe();
   }
 
@@ -108,6 +110,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   //           () => console.log('complete ProviderType subscription')
   //         );
 
+  // this.resetRefiners();
 
   // }
 
@@ -126,7 +129,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   //           },
   //           () => console.log('complete radius subscription')
   //         );
-    
+  // this.resetRefiners();
+
   // }
 
   // onSelectedState (state: StateType) {
@@ -134,20 +138,22 @@ export class SearchComponent implements OnInit, AfterViewInit {
   // }
 
 
-  onPostCodeSearch (postCode) {
+  onPostCodeSearch(postCode) {
     // console.log('Org std Postcode search for postcode: ' + postCode);
     this.errorMessage = null;
     this.organisationService.searchOrgList('byPostCode', postCode, undefined)
       .subscribe(
-        result => {
-          // console.log('result is ', result);
-          this.onSearch.emit(postCode);
-       },
-        error => {
-              this.showErrorMsg(error);
-        },
-        () => console.log('complete postcode')
+      result => {
+        // console.log('result is ', result);
+        this.onSearch.emit(postCode);
+      },
+      error => {
+        this.showErrorMsg(error);
+      },
+      () => console.log('complete postcode')
       );
+
+    this.resetRefiners();
 
   }
 
@@ -156,39 +162,45 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
     this.organisationService.searchOrgList('all', undefined, undefined)
       .subscribe(
-        result => {
-          // console.log('result is ', result);
-          this.onSearch.emit('all');
-        },
-        error => {
-              this.showErrorMsg(error);
-        },
-        () => console.log('complete all orgs search subscription')
+      result => {
+        // console.log('result is ', result);
+        this.onSearch.emit('all');
+      },
+      error => {
+        this.showErrorMsg(error);
+      },
+      () => console.log('complete all orgs search subscription')
       );
+
+    this.resetRefiners();
+
 
   }
 
-  onKeywordSearch (keywordEntry) {
+  onKeywordSearch(keywordEntry) {
     this.errorMessage = null;
 
     // this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
     this.organisationService.getByKeyword(keywordEntry)
-        .subscribe(
-            result => {
-              // console.log('result is ', result);
-              this.onSearch.emit(keywordEntry);
-            },
-            error => {
-              this.showErrorMsg(error);
-            },
-            () => console.log('complete keyword search subscription')
-          );
+      .subscribe(
+      result => {
+        // console.log('result is ', result);
+        this.onSearch.emit(keywordEntry);
+      },
+      error => {
+        this.showErrorMsg(error);
+      },
+      () => console.log('complete keyword search subscription')
+      );
+
+    this.resetRefiners();
+
   }
 
-  onLocationIdentified (postCode) {
+  onLocationIdentified(postCode) {
     console.log('Postcode identified: ' + postCode);
     // if (this.postCode.toString().length == 0){
-      this.postCode = postCode;
+    this.postCode = postCode;
     // }
   }
 
@@ -200,19 +212,19 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   // }
 
-  enableLocation(allowed){
+  enableLocation(allowed) {
     this.locationChecked = true;
     this.locationAllowed = allowed;
-    if (allowed){
+    if (allowed) {
       this.locatingPosition = true;
       this.textPlaceholder = "Locating...";
       this.geolocationService.getLocation(null)
-      .subscribe(
+        .subscribe(
         pos => console.log('pos is ', pos),
         error => console.error(error)
-      );
+        );
       this.analytics.sendEvent('Location', 'Geolocation', 'User Opted In');
-    }else{
+    } else {
       this.geolocationService.enableLocation(false);
       this.analytics.sendEvent('Location', 'Geolocation', 'User Opted Out');
 
@@ -220,42 +232,46 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   }
 
+  resetRefiners() {
+    this.typesService.updateSelectedType(null);
+  }
+
   // get locationCapable(){
   //   return this.locationChecked &&
   //           this.locationPos;
   // }
 
-  private showErrorMsg(error: string){
-      // reset value
-      this.errorMessage = '';
-      console.error('search error', error);
-      this.errorMessage = error;
+  private showErrorMsg(error: string) {
+    // reset value
+    this.errorMessage = '';
+    console.error('search error', error);
+    this.errorMessage = error;
 
   }
 
-  get locationError(){
+  get locationError() {
     return this.locationChecked &&
-            this.locationPos &&
-            !this.locationPos.valid;
+      this.locationPos &&
+      !this.locationPos.valid;
   }
 
-  get postcodeValid(){
+  get postcodeValid() {
     return this.postCode != null &&
-            this.postCode.toString().length >= 3 &&
-            !isNaN(this.postCode);
+      this.postCode.toString().length >= 3 &&
+      !isNaN(this.postCode);
   }
 
-  get postcodeWarning(){
+  get postcodeWarning() {
     return this.postCode != null &&
-          ((this.postCode.toString().length > 0 && this.postCode.toString().length < 3) ||
-            isNaN(this.postCode));
+      ((this.postCode.toString().length > 0 && this.postCode.toString().length < 3) ||
+        isNaN(this.postCode));
   }
 
-  get postcodeError(){
+  get postcodeError() {
     return this.postCode != null &&
-          this.postCode.toString().length > 3 &&
-            (this.postCode.toString().length < 3 ||
-            isNaN(this.postCode));
+      this.postCode.toString().length > 3 &&
+      (this.postCode.toString().length < 3 ||
+        isNaN(this.postCode));
   }
 
   // get locationChecked(){
@@ -264,8 +280,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   // }
 
 
-  public setTitle( newTitle: string) {
-      this.titleService.setTitle( newTitle );
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
 

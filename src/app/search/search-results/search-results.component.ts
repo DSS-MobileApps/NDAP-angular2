@@ -148,6 +148,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     if (this.subMarker) { this.subMarker.unsubscribe(); }
     if (this.subSelected) { this.subSelected.unsubscribe(); }
     if (this.subOrgs) { this.subOrgs.unsubscribe(); }
+    if (this.subSearchVal) { this.subSearchVal.unsubscribe(); }
   }
 
   onResize(event) {

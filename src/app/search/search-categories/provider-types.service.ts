@@ -11,7 +11,8 @@ import { ProviderType } from './provider-type';
 import { BackendService } from '../../shared/backend.service';
 import { AppState } from '../../app.service';
 
-const APPSTATE_PROVIDERTYPES = 'allTypes';
+const APPSTATE_PROVIDERTYPES = 'allTypes',
+  APPSTATE_SELECTEDTYPE = 'selectedType';
 
 
 @Injectable()
@@ -21,9 +22,14 @@ export class ProviderTypesService {
   private _filteredTypes: BehaviorSubject<ProviderType[]> = new BehaviorSubject([]);
   public filteredTypes: Observable<ProviderType[]> = this._filteredTypes.asObservable();
 
+  // Observable for selected type record
+  private _selectedType: BehaviorSubject<ProviderType> = new BehaviorSubject(null);
+  selectedType = this._selectedType.asObservable();
+
 
   private dataStore: {  // This is where we will store our data in memory
-    types: ProviderType[]
+    types: ProviderType[],
+    selected: ProviderType
   };
 
   constructor(private http: Http,
@@ -37,11 +43,15 @@ export class ProviderTypesService {
 
   private loadInitialState() {
 
-    this.dataStore = { types: [] };
+    this.dataStore = { types: [], selected: null };
     // get last results
     if (this.appState.get(APPSTATE_PROVIDERTYPES)) {
       this.dataStore.types = this.appState.get(APPSTATE_PROVIDERTYPES);
       this._filteredTypes.next(this.dataStore.types);
+    }
+    if (this.appState.get(APPSTATE_SELECTEDTYPE)) {
+      this.dataStore.selected = this.appState.get(APPSTATE_SELECTEDTYPE);
+      this._selectedType.next(this.dataStore.selected);
     }
 
     this.backendService.getProviderTypes()
@@ -64,6 +74,14 @@ export class ProviderTypesService {
     return obs;
 
   }
+
+  public updateSelectedType(selectedType) {
+    this._selectedType.next(selectedType);
+    this.dataStore.selected = selectedType;
+    this.appState.set(APPSTATE_SELECTEDTYPE, selectedType);
+
+  }
+
 
   private storeTypes(types: ProviderType[]) {
     this._filteredTypes.next(types);

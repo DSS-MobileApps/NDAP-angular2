@@ -1,6 +1,8 @@
-<div id="org-search-container"  [style.max-height.px]="height" [class.has-results]="organisations" [class.search-mode]="searchMode" [class.detail-open]="selectedOrganisation != null">
-<!-- [style.height.px]="height" -->
-  <button id="searchbtn" (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent" data-upgraded=",MaterialButton,MaterialRipple">
+<div id="org-search-container" [style.max-height.px]="height" [class.has-results]="organisations" [class.search-mode]="searchMode"
+	[class.detail-open]="selectedOrganisation != null">
+	<!-- [style.height.px]="height" -->
+	<button id="searchbtn" (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent"
+		data-upgraded=",MaterialButton,MaterialRipple">
               <!-- <i class="material-icons" role="presentation">search</i> -->
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#ffffff">
 
@@ -12,27 +14,27 @@
       </button>
 
 
-  <div id="org-search">
+	<div id="org-search">
 
 
 
-    <!-- Search options -->
-  <div class="row" id="search-area" [style.height.px]="height" [attr.aria-hidden]="!searchMode">
-    <div class="col-xs-12">
-      <h2 class="sr-only">Search options</h2>
-        <search-options></search-options>
-    </div>
-    <div class="opaque"></div>
-  </div>
+		<!-- Search options -->
+		<div class="row" id="search-area" [style.height.px]="height" [attr.aria-hidden]="!searchMode">
+			<div class="col-xs-12">
+				<h2 class="sr-only">Search options</h2>
+				<search-options></search-options>
+			</div>
+			<div class="opaque"></div>
+		</div>
 
 
-  <div class="row" id="results"  [style.height.px]="height" [attr.aria-hidden]="searchMode">
+		<div class="row" id="results" [style.height.px]="height" [attr.aria-hidden]="searchMode">
 
 
-    <h2 class="sr-only">Search results</h2>
-      <!-- <div class="blurry"> -->
+			<h2 class="sr-only">Search results</h2>
+			<!-- <div class="blurry"> -->
 
-      <!-- <div class="col-xs-12">
+			<!-- <div class="col-xs-12">
         <div class="row">
       <search-summary class="col-xs-6" [organisations]="organisations"></search-summary>
 
@@ -40,77 +42,76 @@
     </div>
     </div> -->
 
-        <div id="list-panel"  role="tabpanel" class="col-xs-6 col-sm-5 col-lg-4 active">
-          <h3 class="sr-only">List view</h3>
-          <div id="org-result" (window:resize)="onResize($event)">
+			<div id="list-panel" role="tabpanel" class="col-xs-6 col-sm-5 col-lg-4 active">
+				<h3 class="sr-only">List view</h3>
+				<div id="org-result" (window:resize)="onResize($event)">
 
 
-              <p *ngIf="!organisations" >Loading...</p>
+					<p *ngIf="!organisations">Loading...</p>
 
-              <search-summary [organisations]="organisations"></search-summary>
+					<search-summary [organisations]="organisations" [searchValue]="searchSummary"></search-summary>
 
-              <refiner-options></refiner-options>
+					<refiner-options></refiner-options>
 
 
-              <org-list [organisations]="organisations"
-                [selectedOrgId]="selectedOrgId"
-                (onSelectionChanged)="onSelect($event)"></org-list>
-      <!--
+					<org-list [organisations]="organisations" [selectedOrgId]="selectedOrgId" (onSelectionChanged)="onSelect($event)"></org-list>
+					<!--
               <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
               <h5>{{organisation.Name}}</h5>
               <p>{{organisation.Suburb}}</p>
               </button>-->
-              <!-- <div class="opaque"></div> -->
-              <div [class.hidden]="hasOrganisations" class="text-center">
-                <p class="lead text-danger" >Sorry, no results were found for your search.</p>
-                <hr />
-                <p>Try another location, or remove the filters.</p>
-              </div>
+					<!-- <div class="opaque"></div> -->
+					<div [class.hidden]="hasOrganisations" class="text-center">
+						<p class="lead text-danger">Sorry, no results were found for your search.</p>
+						<hr />
+						<p>Try another location, or remove the filters.</p>
+					</div>
 
-          </div>
-        </div>
-        <div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
-          <h3 class="sr-only">Map view</h3>
-          <!--<map-component>LOADING MAP...</map-component>-->
-          <app-smap-container [organisations]="organisations">Loading...</app-smap-container>
+				</div>
+			</div>
+			<div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
+				<h3 class="sr-only">Map view</h3>
+				<!--<map-component>LOADING MAP...</map-component>-->
+				<app-smap-container [organisations]="organisations">Loading...</app-smap-container>
 
-        </div>
-      <!-- </div> -->
-
-
-
-
-
-    </div>
-
-
-    <div class="row"  id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
-      <div class="col-xs-12" [class.detail-open]="selectedOrganisation != null"  > <!-- @selectedState="selectedOrganisation != null" -->
-          <organisation-detail [organisation]="selectedOrganisation" (onUnselected)="onUnselect($event)"></organisation-detail>
-      </div>
-    </div>
+			</div>
+			<!-- </div> -->
 
 
 
 
-  </div>
+
+		</div>
 
 
-                    <!-- Tabs for the Mobile View -->
-                    <div class="visible-xs col-xs-12" id="tabs-list-map-view">
-                      <!-- <div class=""> -->
-                          <ul class="nav nav-tabs text-center" role="tablist">
-                            <!-- <li class="" role="presentation">
+		<div class="row" id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
+			<div class="col-xs-12" [class.detail-open]="selectedOrganisation != null">
+				<!-- @selectedState="selectedOrganisation != null" -->
+				<organisation-detail [organisation]="selectedOrganisation" (onUnselected)="onUnselect($event)"></organisation-detail>
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+
+	<!-- Tabs for the Mobile View -->
+	<div class="visible-xs col-xs-12" id="tabs-list-map-view">
+		<!-- <div class=""> -->
+		<ul class="nav nav-tabs text-center" role="tablist">
+			<!-- <li class="" role="presentation">
                                 <a href="#search-area" aria-controls="search-area" role="tab" data-toggle="tab">Search</a>
                             </li> -->
-                            <li class="active" role="presentation">
-                                <a href="#list-panel" aria-controls="list-panel" role="tab" data-toggle="tab"><span class="lnr lnr-list"></span> List</a>
-                            </li>
+			<li class="active" role="presentation">
+				<a href="#list-panel" aria-controls="list-panel" role="tab" data-toggle="tab"><span class="lnr lnr-list"></span> List</a>
+			</li>
 
-                            <li class="" role="presentation">
-                                <a href="#map-panel" aria-controls="map-panel" role="tab" data-toggle="tab"><span class="lnr lnr-map"></span> Map</a>
-                            </li>
-                          </ul>
-                      <!-- </div> -->
-                    </div>
+			<li class="" role="presentation">
+				<a href="#map-panel" aria-controls="map-panel" role="tab" data-toggle="tab"><span class="lnr lnr-map"></span> Map</a>
+			</li>
+		</ul>
+		<!-- </div> -->
+	</div>
 </div>
