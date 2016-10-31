@@ -1,9 +1,10 @@
 <!doctype html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="">
+<!--[if lt IE 7]> <html class="lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie10 lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie10 lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9]> 	<html class="lt-ie10" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en">
 <!--<![endif]-->
 
 <head>
@@ -95,23 +96,14 @@
 </head>
 
 <body>
+
+	<div id="browser-unsupported" class="alert alert-danger hidden hidden-print" aria-hidden="true" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h2>Browser support problem</h2>
+		<p>You are viewing this site in an unsupported browser and may not function correctly. <br>Please view the <a href="/providerlist.aspx?service=NDAP">Printable list of providers</a>			or upgrade to a more recent browser. Apologies for any inconvenience.</p>
+	</div>
+
 	<angular2-service-finder-app>
-		<!-- <div id="loading" class="text-center">
-      <p>Loading</p>
-      <div class="spinner">
-        <div class="cube1"></div>
-        <div class="cube2"></div>
-      </div>
-
-      <div class="spinner">
-        <div class="rect1"></div>
-        <div class="rect2"></div>
-        <div class="rect3"></div>
-        <div class="rect4"></div>
-        <div class="rect5"></div>
-      </div>
-    </div> -->
-
 		<div class="container-fluid launch" id="layout">
 			<header>
 				<div class="row" id="header">

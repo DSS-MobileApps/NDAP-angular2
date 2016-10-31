@@ -14,9 +14,9 @@
   color: #666;
 
 }
-#view-all-btn{
+/*#view-all-btn{
   margin-top: 24px;
-}
+}*/
 
 #location-request .btn{
   margin: 10px 15px;
@@ -88,6 +88,10 @@ input#locationInput {
 #collapseAdvanced{
   padding-top: 20px;
 }
+#collapseAdvanced > div{
+  margin-top: 20px;
+  margin-bottom: 10px; 
+}
 
 #location-request span{
   padding-right: 20px;
@@ -95,6 +99,10 @@ input#locationInput {
 
 #search-links .nav li{
   display: inline-block;
+}
+
+.mdl-card__actions .btn .lnr{
+  padding-right: 5px;
 }
 
 /* Extra small devices (phones, less than 768px) */
