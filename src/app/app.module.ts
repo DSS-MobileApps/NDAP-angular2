@@ -1,12 +1,13 @@
-import { NgModule }       from '@angular/core';
-import { BrowserModule, Title  } from '@angular/platform-browser';
-import { AppComponent }   from './app.component';
+import { NgModule } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
 import {
   LocationStrategy,
   HashLocationStrategy
 } from '@angular/common';
 
-import {Locker, LockerConfig} from 'angular2-locker'
+import { Locker, LockerConfig } from 'angular2-locker'
 // import { MapService } from './map/map.service';
 // import {LazyMapsAPILoader, LazyMapsAPILoaderConfig} from './map/loading/lazy-maps-api-loader';
 // import {MapsAPILoader} from './map/loading/maps-api-loader';
@@ -54,58 +55,59 @@ import { AnalyticsService } from './shared/analytics.service';
 import { BackendService } from './shared/backend.service';
 
 @NgModule({
-    declarations: [AppComponent,
-                  SearchAreaComponent, SearchComponent, SearchResultsComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, RefinerComponent, SearchSummaryComponent, ProviderTypesComponent,
-                  EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink,
-                  OrganisationsComponent, OrganisationComponent, OrganisationDetailComponent,OrganisationListComponent, OrganisationDetailComponent,
-                  MapComponent,
-                  AboutComponent,
-                  ContactComponent,
-                  ErrorMessageComponent,
-                  // SebmGoogleMapMarker,
-                  SmapComponent, SmapContainerComponent],
-    imports:      [BrowserModule,
-                  // Router
-                  // RouterModule,//.forRoot(config),
-                  // Forms
-                  FormsModule,
-                  HttpModule,
-                  AgmCoreModule.forRoot({
-                    apiKey: environment.googleMapsAPIkey
-                  }),
-                  routing,
-                  // RouterModule.forChild([
-                  //     { path: 'search', component: SearchAreaComponent },
-                  //     { path: 'organisations', component: SearchResultsComponent },
-                  //     { path: 'organisation/:id', component: OrganisationComponent },
-                  //     { path: 'about', component: AboutComponent },
-                  //     { path: 'contact', component: ContactComponent }
-                  //
-                  //   ])
-                  ],
-    providers:    [  // disableDeprecatedForms(),
-                    // provideForms(),
-                    // BROWSER_GLOBALS_PROVIDERS,
-                    // { provide: MapsAPILoader, useClass: LazyMapsAPILoader},
-                    // { provide: LazyMapsAPILoaderConfig,
-                    //   useFactory: () => {
-                    //   let config = new LazyMapsAPILoaderConfig();
-                    //   config.apiKey = environment.googleMapsAPIkey;
-                    //   return config;
-                    // }},
-                    // MapService,
-                    // {provide: LocationStrategy, useClass: HashLocationStrategy},
-                    Title,
-                    AnalyticsService,
-                    BackendService,
-                    GoogleMapsAPIWrapper,
-                    AppState,
-                    { provide: Window, useValue: window},
-                    { provide: Document, useValue: document},
-                    { provide: 'MAPS_API_KEY', useValue: environment.googleMapsAPIkey},
-                    { provide: 'API_URL', useValue: environment.apiHost},
-                    { provide: LockerConfig,  useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL)},
-                    Locker],
-    bootstrap:    [AppComponent],
+  declarations: [AppComponent,
+    SearchAreaComponent, SearchComponent, SearchResultsComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, RefinerComponent, SearchSummaryComponent, ProviderTypesComponent,
+    EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink,
+    OrganisationsComponent, OrganisationComponent, OrganisationDetailComponent, OrganisationListComponent, OrganisationDetailComponent,
+    MapComponent,
+    AboutComponent,
+    ContactComponent,
+    ErrorMessageComponent,
+    // SebmGoogleMapMarker,
+    SmapComponent, SmapContainerComponent],
+  imports: [BrowserModule,
+    // Router
+    // RouterModule,//.forRoot(config),
+    // Forms
+    FormsModule,
+    HttpModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsAPIkey
+    }),
+    routing,
+    // RouterModule.forChild([
+    //     { path: 'search', component: SearchAreaComponent },
+    //     { path: 'organisations', component: SearchResultsComponent },
+    //     { path: 'organisation/:id', component: OrganisationComponent },
+    //     { path: 'about', component: AboutComponent },
+    //     { path: 'contact', component: ContactComponent }
+    //
+    //   ])
+  ],
+  providers: [  // disableDeprecatedForms(),
+    // provideForms(),
+    // BROWSER_GLOBALS_PROVIDERS,
+    // { provide: MapsAPILoader, useClass: LazyMapsAPILoader},
+    // { provide: LazyMapsAPILoaderConfig,
+    //   useFactory: () => {
+    //   let config = new LazyMapsAPILoaderConfig();
+    //   config.apiKey = environment.googleMapsAPIkey;
+    //   return config;
+    // }},
+    // MapService,
+    // {provide: LocationStrategy, useClass: HashLocationStrategy},
+    Title,
+    AnalyticsService,
+    BackendService,
+    GoogleMapsAPIWrapper,
+    AppState,
+    { provide: Window, useValue: window },
+    { provide: Document, useValue: document },
+    { provide: 'MAPS_API_KEY', useValue: environment.googleMapsAPIkey },
+    { provide: 'API_URL', useValue: environment.apiHost },
+    { provide: APP_BASE_HREF, useValue: environment.appBaseHref },
+    { provide: LockerConfig, useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL) },
+    Locker],
+  bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
