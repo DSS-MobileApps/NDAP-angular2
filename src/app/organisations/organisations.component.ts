@@ -104,17 +104,20 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
   private setMapHeight() {
     // let currentHeight = this.elementRef.nativeElement.getElementsByTagName('div')[0].offsetHeight;
-    // let windowHeight = this.elementRef.nativeElement.ownerDocument.defaultView.innerHeight;
-    // let headerHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('header')[0].offsetHeight;
+    let windowHeight = this.elementRef.nativeElement.ownerDocument.defaultView.innerHeight;
+    let headerHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('header')[0].offsetHeight;
     // let footerHeight = this.elementRef.nativeElement.ownerDocument.getElementById('footer').offsetHeight;
     // let tabsHeight = this.elementRef.nativeElement.ownerDocument.getElementById('tabs-list-map-view').offsetHeight;
+    let summaryHeight = this.elementRef.nativeElement.ownerDocument.getElementsByClassName('summary')[0].offsetHeight;
+
     //
     //
     //
     // console.log('current height=' + currentHeight + ' : window=' + windowHeight + ' : header=' + headerHeight  + ' : tabs=' + tabsHeight + ' : footer=' + footerHeight);
     //
-    // this.height = windowHeight - headerHeight - footerHeight;
-
+    // console.log('window=' + windowHeight + ' : header=' + headerHeight + ' : summary=' + summaryHeight);
+    // this.height = windowHeight - headerHeight - summaryHeight;
+    // console.log('current main flexbox height=' + this.height);
 
     let mainHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('main')[0].offsetHeight;
     if (mainHeight >= 0) {

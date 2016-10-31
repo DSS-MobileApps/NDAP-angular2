@@ -1,14 +1,22 @@
 <div id="org-search-container" [style.max-height.px]="height" [class.has-results]="organisations" [class.search-mode]="searchMode"
 	[class.detail-open]="selectedOrganisation != null">
 	<!-- [style.height.px]="height" -->
-	<button id="searchbtn" (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent"
+	<button id="searchbtn" (click)="toggleSearchMode()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
 		data-upgraded=",MaterialButton,MaterialRipple">
               <!-- <i class="material-icons" role="presentation">search</i> -->
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#ffffff">
+
+
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#000000">
+
+<polyline fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="  19.004,10.27 13,13 1,7 1,43 13,49 25,43 38,49 49,43 49,7 38,13 36.685,12.843 "/>
+<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="  M37,10c0,8.162-9,19-9,19s-9-10.644-9-19c0-4.971,4.029-9,9-9C32.971,1,37,5.029,37,10z"/>
+<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="28" cy="11" r="4"/>
+</svg>
+              <!--<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#ffffff">
 
               <circle fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" cx="21" cy="20" r="16"/>
               <line fill="none" stroke="#ffffff" stroke-width="4" stroke-miterlimit="10" x1="32.229" y1="32.229" x2="45.5" y2="45.5"/>
-              </svg>
+              </svg>-->
               <h2 class="sr-only">Search</h2>
             <!-- <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span> -->
       </button>
@@ -28,8 +36,8 @@
 		</div>
 
 
-		<div class="row" id="results" [style.height.px]="height" [attr.aria-hidden]="searchMode">
 
+		<div class="row" id="results" [style.height.px]="height" [attr.aria-hidden]="searchMode">
 
 			<h2 class="sr-only">Search results</h2>
 			<!-- <div class="blurry"> -->
@@ -41,43 +49,44 @@
       <refiner-options class="col-xs-6"></refiner-options>
     </div>
     </div> -->
+			<search-summary id="summary-area" [organisations]="organisations" [searchValue]="searchSummary"></search-summary>
 
-			<div id="list-panel" role="tabpanel" class="col-xs-6 col-sm-5 col-lg-4 active">
-				<h3 class="sr-only">List view</h3>
-				<div id="org-result" (window:resize)="onResize($event)">
-
-
-					<p *ngIf="!organisations">Loading...</p>
-
-					<search-summary [organisations]="organisations" [searchValue]="searchSummary"></search-summary>
-
-					<refiner-options></refiner-options>
+			<div id="toggle-views">
+				<div id="list-panel" role="tabpanel" class="col-xs-6 col-sm-5 col-lg-4 active">
+					<h3 class="sr-only">List view</h3>
+					<div id="org-result" (window:resize)="onResize($event)">
 
 
-					<org-list [organisations]="organisations" [selectedOrgId]="selectedOrgId" (onSelectionChanged)="onSelect($event)"></org-list>
-					<!--
+						<p *ngIf="!organisations">Loading...</p>
+
+
+						<refiner-options></refiner-options>
+
+
+						<org-list [organisations]="organisations" [selectedOrgId]="selectedOrgId" (onSelectionChanged)="onSelect($event)"></org-list>
+						<!--
               <button class="btn btn-default" *ngFor="let organisation of organisations" (click)="onSelectDetailsButton(organisation)" >
               <h5>{{organisation.Name}}</h5>
               <p>{{organisation.Suburb}}</p>
               </button>-->
-					<!-- <div class="opaque"></div> -->
-					<div [class.hidden]="hasOrganisations" class="text-center">
-						<p class="lead text-danger">Sorry, no results were found for your search.</p>
-						<hr />
-						<p>Try another location, or remove the filters.</p>
+						<!-- <div class="opaque"></div> -->
+						<div [class.hidden]="hasOrganisations" class="text-center">
+							<p class="lead text-danger">Sorry, no results were found for your search.</p>
+							<hr />
+							<p>Try another location, or remove the filters.</p>
+						</div>
+
 					</div>
+				</div>
+				<div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
+					<h3 class="sr-only">Map view</h3>
+					<!--<map-component>LOADING MAP...</map-component>-->
+					<app-smap-container [organisations]="organisations">Loading...</app-smap-container>
 
 				</div>
-			</div>
-			<div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
-				<h3 class="sr-only">Map view</h3>
-				<!--<map-component>LOADING MAP...</map-component>-->
-				<app-smap-container [organisations]="organisations">Loading...</app-smap-container>
+				<!-- </div> -->
 
 			</div>
-			<!-- </div> -->
-
-
 
 
 

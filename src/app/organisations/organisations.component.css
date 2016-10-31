@@ -2,8 +2,8 @@
   overflow: hidden;
 }
 #org-search{
-  -webkit-transition: all ease-in-out 0.2s;
-  transition: all ease-in-out 0.2s;
+  -webkit-transition: all ease-out 0.3s;
+  transition: all ease-out 0.3s;
 }
 
 .has-results #org-search{
@@ -61,6 +61,12 @@ button#searchbtn:focus, button#searchbtn:hover {
   margin-right: 0;
 }
 
+#results >>> .summary{
+  margin:0;
+  padding: 10px;
+  border-radius:0;
+}
+
 #list-panel{
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -103,8 +109,13 @@ button#searchbtn:focus, button#searchbtn:hover {
 }
 
 #results{
-  width: 200%;
-  /*float: left;*/
+  /*width: 200%;*/
+}
+
+#toggle-views{
+  height: 100%;
+  display: flex;
+  
 }
 
 #list-panel{
@@ -131,3 +142,39 @@ button#searchbtn:focus, button#searchbtn:hover {
   font-weight: 100;
   margin: 0;
 }
+
+/*BS4*/
+/*
+@media(min-width:34em){}
+@media(min-width:48em){}
+@media(min-width:62em){}
+@media(min-width:75em){}*/
+
+/* BS3 */
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media(max-width:767px){
+  #toggle-views{
+    width: 200%;
+    
+  }
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media(min-width:768px){
+  #results >>> .summary{
+    font-size: 1.5rem;
+    padding: 10px 20px;
+  }
+
+}
+/* Medium devices (desktops, 992px and up) */
+@media(min-width:992px){
+
+}
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1200px){}
+
+
