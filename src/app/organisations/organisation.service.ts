@@ -358,7 +358,7 @@ export class OrganisationService {
 
       case "byState":
         this._searchType.next('State');
-        this._searchValue.next('in ' + value);
+        this._searchValue.next('in ' + value.code);
         break;
 
       case "byKeyword":

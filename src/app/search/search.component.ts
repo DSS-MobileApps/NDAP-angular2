@@ -4,11 +4,12 @@ import { Title } from '@angular/platform-browser';
 
 
 import { ProviderType } from './search-categories/provider-type';
-import { GeolocationService, GeoLocation } from '../shared/index';
+import { GeolocationService, GeoLocation, StateType } from '../shared/index';
 
 import { OrganisationService } from '../organisations/organisation.service'
 import { AnalyticsService } from '../shared/analytics.service';
 import { ProviderTypesService } from './search-categories/index';
+
 
 @Component({
 
@@ -25,6 +26,15 @@ export class SearchComponent implements OnInit, AfterViewInit {
   locationAllowed: boolean = false;
   locationPos: GeoLocation;
   textPlaceholder = "Type...";
+
+  states: StateType[] = [{ code: 'ACT', name: 'Australian Capital Territory' },
+  { code: 'NSW', name: 'New South Wales' },
+  { code: 'NT', name: 'Northern Territory' },
+  { code: 'QLD', name: 'Queensland' },
+  { code: 'SA', name: 'South Australia' },
+  { code: 'TAS', name: 'Tasmania' },
+  { code: 'VIC', name: 'Victoria' },
+  { code: 'WA', name: 'Western Australia' }];
   private locatingPosition: boolean;
 
   private subLocation: any;
@@ -133,9 +143,25 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   // }
 
-  // onSelectedState (state: StateType) {
-  //   this.organisationService.searchOrgList('byState', state, undefined);
-  // }
+  onSelectedState(state: StateType) {
+
+    this.errorMessage = null;
+
+    this.organisationService.searchOrgList('byState', state, undefined)
+      .subscribe(
+      result => {
+        console.log('result is ', result);
+        this.onSearch.emit(state);
+      },
+      error => {
+        this.showErrorMsg(error);
+      },
+      () => console.log('complete state subscription')
+      );
+    this.resetRefiners();
+
+
+  }
 
 
   onPostCodeSearch(postCode) {

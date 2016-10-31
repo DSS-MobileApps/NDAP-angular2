@@ -114,7 +114,23 @@
 							</form>
 						</div>
 
-						<div class=" col-xs-12 text-center">
+
+						<div class=" col-xs-12 col-sm-6">
+							<div class="btn-group dropup">
+								<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									View by State
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li *ngFor="let state of states">
+										<a (click)="onSelectedState(state)" href="javascript:void(0);" name="{{state.code}}">{{state.name}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+
+						<div class=" col-xs-12 col-sm-6">
 
 
 							<button id="view-all-btn" type="button" class="btn btn-default" (click)="onAllOrganisations()">
