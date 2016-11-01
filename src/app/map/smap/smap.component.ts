@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, OnChanges, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnChanges, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, NgZone } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
 import { MapService } from '../map.service';
 
 // import { OrganisationService } from '../../organisations/organisation.service';
@@ -23,12 +24,12 @@ export class SmapComponent implements OnInit, OnChanges {
   // @ViewChild('map') mapElement: SebmGoogleMap;
 
   // default lat/long focus of the map
-  private defaultCentreLat : number = -29;
-  private defaultCentreLng : number = 135;
-  private defaultZoom : number = 4;
+  private defaultCentreLat: number = -29;
+  private defaultCentreLng: number = 135;
+  private defaultZoom: number = 4;
 
-  private latLng : LatLng;
-  private mapBounds : LatLngBounds;
+  private latLng: LatLng;
+  private mapBounds: LatLngBounds;
 
   // organisations: Organisation[] = [
   //   {
@@ -63,23 +64,27 @@ export class SmapComponent implements OnInit, OnChanges {
 
   iconUrl = "assets/images/map/Infos_info.svg";
 
- private _googMap: mapTypes.GoogleMap;
- private _markerMgr: MarkerManager;
+  private _googMap: mapTypes.GoogleMap;
+  private _markerMgr: MarkerManager;
+
+  organisationBaseUrl;
 
   constructor(
-      // private organisationService: OrganisationService,
-      // private geolocationService: GeolocationService,
-      private _wrapper: GoogleMapsAPIWrapper,
-      // private _markerMgr: MarkerManager,
-      private ref: ChangeDetectorRef,
-      private zone: NgZone)
-  {
+    // private organisationService: OrganisationService,
+    // private geolocationService: GeolocationService,
+    private _wrapper: GoogleMapsAPIWrapper,
+    // private _markerMgr: MarkerManager,
+    private ref: ChangeDetectorRef,
+    private zone: NgZone,
+    @Inject(APP_BASE_HREF) private baseHref: string) {
 
     this._markerMgr = new MarkerManager(this._wrapper, this.zone);
 
     var isIE11 = !!(navigator.userAgent.match(/Trident/) && navigator.userAgent.match(/rv[ :]11/));
 
     this.iconUrl = isIE11 ? "assets/images/map/Infos_info.png" : "assets/images/map/Infos_info.svg";
+
+    this.organisationBaseUrl = this.baseHref + 'organisation/';
 
     // this.latLng = LatLng(this.defaultCentreLat, this.defaultCentreLng);
   }
@@ -100,17 +105,17 @@ export class SmapComponent implements OnInit, OnChanges {
     // this.subscribeToOrganisationListUpdates();
   }
 
-  ngOnDestroy(){
-    if (this.subOrgs) {this.subOrgs.unsubscribe();}
-    if (this.subSelected) {this.subSelected.unsubscribe();}
-    if (this.subLocation) {this.subSelected.unsubscribe();}
+  ngOnDestroy() {
+    if (this.subOrgs) { this.subOrgs.unsubscribe(); }
+    if (this.subSelected) { this.subSelected.unsubscribe(); }
+    if (this.subLocation) { this.subSelected.unsubscribe(); }
   }
 
 
   ngAfterViewInit() {
     // children are set
     // console.log('markers after view init', this.children);
-    if (this._googMap){
+    if (this._googMap) {
       let options: any = {
         imagePath: 'assets/images/markerplus/m'
       }
@@ -118,26 +123,26 @@ export class SmapComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes:any):void {
-    if (changes.organisations){
-        var orgsChange:Organisation[] = changes.organisations.currentValue;
-        if (orgsChange) {
-          // console.info('organisations changed', this.organisations)
-          // this.internalModel = new Contact(personChange.id,
-          //                                 personChange.firstname,
-          //                                 personChange.lastname);
-          this.AddMarkers(orgsChange)
-        }
-    }else if (changes.selectedOrganisation){
-      var orgChange:Organisation = changes.selectedOrganisation.currentValue;
-      if (orgChange){
+  ngOnChanges(changes: any): void {
+    if (changes.organisations) {
+      var orgsChange: Organisation[] = changes.organisations.currentValue;
+      if (orgsChange) {
+        // console.info('organisations changed', this.organisations)
+        // this.internalModel = new Contact(personChange.id,
+        //                                 personChange.firstname,
+        //                                 personChange.lastname);
+        this.AddMarkers(orgsChange)
+      }
+    } else if (changes.selectedOrganisation) {
+      var orgChange: Organisation = changes.selectedOrganisation.currentValue;
+      if (orgChange) {
         // console.info('selected organisation changed', orgChange);
         this.AddMarkers([orgChange]);
       }
     }
   }
 
-  getNativeMap() : Promise<mapTypes.GoogleMap> {
+  getNativeMap(): Promise<mapTypes.GoogleMap> {
     // call from this.ready().then()
     if (this._googMap) {
       return Promise.resolve(this._googMap)
@@ -148,17 +153,17 @@ export class SmapComponent implements OnInit, OnChanges {
     // find google.map object
 
     return this._wrapper.getNativeMap()
-    .then( (map: mapTypes.GoogleMap)=> {
-      // console.log("getNativeMap() resolved");
-      // this.myConsole.log(`google.map, keys=${Object.keys(map)}`);
-      // console.log('native map promise resolved')
+      .then((map: mapTypes.GoogleMap) => {
+        // console.log("getNativeMap() resolved");
+        // this.myConsole.log(`google.map, keys=${Object.keys(map)}`);
+        // console.log('native map promise resolved')
 
-      return this._googMap = map;
-    })
-    .catch( (err)=>{
-      // console.log("catch GoogleMapsAPIWrapper.getNativeMap()")
-      return Promise.reject(err);
-    });
+        return this._googMap = map;
+      })
+      .catch((err) => {
+        // console.log("catch GoogleMapsAPIWrapper.getNativeMap()")
+        return Promise.reject(err);
+      });
   }
 
   // onSetBounds(){
@@ -178,162 +183,162 @@ export class SmapComponent implements OnInit, OnChanges {
   //   console.log(`bounds=${bounds}`);
   // }
 
-      AddMarkers(data: Organisation[]){
+  AddMarkers(data: Organisation[]) {
 
-        this.getNativeMap()
-          .then((map: mapTypes.GoogleMap) => {
-            // console.log('Add Markers for found orgs', data);
-            
-            this.clearAllMarkers();
-            this.addAreaMarkers(map, data);
-            // let bounds = this.addAreaMarkers(data);
-            // map.fitBounds(bounds);
-            // let styledMapType = new google.maps.StyledMapType([{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e9e9e9"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":21}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}]);
-            // let styledMapType = new google.maps.StyledMapType([{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#C6E2FF"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#C5E3BF"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#D1D1B8"}]}]);
-            // this.areaMap.mapTypes.set('styled_map', styledMapType);
-            // this.areaMap.setMapTypeId('styled_map');
-        });
-      }
+    this.getNativeMap()
+      .then((map: mapTypes.GoogleMap) => {
+        // console.log('Add Markers for found orgs', data);
 
-      private clearAllMarkers() {
-        // console.debug('clear all markers');
-        // Clear marker cluster
-        if (this._markerCluster) {
-          this._markerCluster.setMap(null);
-        }
+        this.clearAllMarkers();
+        this.addAreaMarkers(map, data);
+        // let bounds = this.addAreaMarkers(data);
+        // map.fitBounds(bounds);
+        // let styledMapType = new google.maps.StyledMapType([{"featureType":"water","elementType":"geometry","stylers":[{"color":"#e9e9e9"},{"lightness":17}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffffff"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#ffffff"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#ffffff"},{"lightness":16}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#f5f5f5"},{"lightness":21}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#dedede"},{"lightness":21}]},{"elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#ffffff"},{"lightness":16}]},{"elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#333333"},{"lightness":40}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#f2f2f2"},{"lightness":19}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#fefefe"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#fefefe"},{"lightness":17},{"weight":1.2}]}]);
+        // let styledMapType = new google.maps.StyledMapType([{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry","stylers":[{"visibility":"on"},{"color":"#C6E2FF"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#C5E3BF"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#D1D1B8"}]}]);
+        // this.areaMap.mapTypes.set('styled_map', styledMapType);
+        // this.areaMap.setMapTypeId('styled_map');
+      });
+  }
 
-        //Clear markers
-        // if (this.markers){
-        //   this.markers.map( marker => marker.setMap(null) );
-        // }
-        this.markers = [];
+  private clearAllMarkers() {
+    // console.debug('clear all markers');
+    // Clear marker cluster
+    if (this._markerCluster) {
+      this._markerCluster.setMap(null);
+    }
 
-      }
+    //Clear markers
+    // if (this.markers){
+    //   this.markers.map( marker => marker.setMap(null) );
+    // }
+    this.markers = [];
 
-      private addAreaMarkers(map: mapTypes.GoogleMap, data: Organisation[]) {
-          let bounds = new google.maps.LatLngBounds();
-          // let defaultLatLng = new google.maps.LatLng(item.Lat, item.Lng);
+  }
 
-
-          // let service = this;
-          // let markers: google.maps.Marker[] = [];
-          this.markers = [];
-
-          for (let item of data) {
-
-            this.markers.push({
-                Id: Number(item.Id),
-                Lat: Number(item.Lat),
-                Lng: Number(item.Lng),
-                Name: item.Name,
-                isOpen: false
-              });
+  private addAreaMarkers(map: mapTypes.GoogleMap, data: Organisation[]) {
+    let bounds = new google.maps.LatLngBounds();
+    // let defaultLatLng = new google.maps.LatLng(item.Lat, item.Lng);
 
 
-            let latLng = new google.maps.LatLng(item.Lat, item.Lng);
+    // let service = this;
+    // let markers: google.maps.Marker[] = [];
+    this.markers = [];
 
-            bounds.extend(latLng);
+    for (let item of data) {
 
-          }
+      this.markers.push({
+        Id: Number(item.Id),
+        Lat: Number(item.Lat),
+        Lng: Number(item.Lng),
+        Name: item.Name,
+        isOpen: false
+      });
 
 
+      let latLng = new google.maps.LatLng(item.Lat, item.Lng);
 
-          this.ref.detectChanges();
-          // console.log('markers after adding', this.children.toArray());
+      bounds.extend(latLng);
 
-          // // Marker cluster
-          // let options: any = {
-          //   imagePath: 'assets/images/markerplus/m'
-          // }
-          // this._markerCluster = new MarkerClusterer(map, this.markers, options);
-          // var nm = this.children.toArray().map(m =>  this._markerMgr.getNativeMarker(m)) //.then(n => console.log('something', n)) )
-          // console.log('nm', nm);
-
-          // this.getNativeMarkers(this.children.toArray())
-          //     .then((nm) => {
-          //   console.log('nativeMarkers outer: ', nm);
-          //   // this._markerCluster = new MarkerClusterer(map, nm, options);
-          // },
-          // err => { console.log('error in nativeMarker promise: ', err);}
-          // );
+    }
 
 
 
-          if (data.length < 1){
-            // console.log('No data found, set map to all Aus' ,this.defaultCentreLat, this.defaultCentreLng);
-            // map.setCenter({lat: this.defaultCentreLat, lng: this.defaultCentreLng});
-            // this._googMap.setCenter(new google.maps.LatLng(this.defaultCentreLat, this.defaultCentreLng));
-            map.setZoom(this.defaultZoom);
-          }else if (data.length == 1){
-            map.fitBounds(bounds);
-            // console.log('One result found, set map Zoom to show that marker context');
-            map.setZoom(16);
-          }else{
-            map.fitBounds(bounds);
+    this.ref.detectChanges();
+    // console.log('markers after adding', this.children.toArray());
 
-          }
-          return bounds;
+    // // Marker cluster
+    // let options: any = {
+    //   imagePath: 'assets/images/markerplus/m'
+    // }
+    // this._markerCluster = new MarkerClusterer(map, this.markers, options);
+    // var nm = this.children.toArray().map(m =>  this._markerMgr.getNativeMarker(m)) //.then(n => console.log('something', n)) )
+    // console.log('nm', nm);
 
-        // });
+    // this.getNativeMarkers(this.children.toArray())
+    //     .then((nm) => {
+    //   console.log('nativeMarkers outer: ', nm);
+    //   // this._markerCluster = new MarkerClusterer(map, nm, options);
+    // },
+    // err => { console.log('error in nativeMarker promise: ', err);}
+    // );
 
-      }
 
 
-      // // Not working yet
-      // getNativeMarkers(sebMarkers: SebmGoogleMapMarker[]): Promise<mapTypes.Marker[]>{
-        
-      //   var markerPromise = new Promise<mapTypes.Marker[]>((resolve, reject) => {
-      //     var nmr = sebMarkers.map((m) => {
-            
-      //       this.getNativeMarker(m)
+    if (data.length < 1) {
+      // console.log('No data found, set map to all Aus' ,this.defaultCentreLat, this.defaultCentreLng);
+      // map.setCenter({lat: this.defaultCentreLat, lng: this.defaultCentreLng});
+      // this._googMap.setCenter(new google.maps.LatLng(this.defaultCentreLat, this.defaultCentreLng));
+      map.setZoom(this.defaultZoom);
+    } else if (data.length == 1) {
+      map.fitBounds(bounds);
+      // console.log('One result found, set map Zoom to show that marker context');
+      map.setZoom(16);
+    } else {
+      map.fitBounds(bounds);
 
-      //     // console.log('m:',m);
+    }
+    return bounds;
 
-      //     //   that._markerMgr.getNativeMarker(m)
-      //     //    .then((nm) => { 
-      //     //      console.log('nm', nm);
-      //     //     //  resolve(nm);
-      //     //     // return nm; 
-      //     //     });
+    // });
 
-              
-      //     });
+  }
 
-      //   });
-      //   return markerPromise;
 
-      // }
+  // // Not working yet
+  // getNativeMarkers(sebMarkers: SebmGoogleMapMarker[]): Promise<mapTypes.Marker[]>{
 
-      // getNativeMarker(sebmMarker: SebmGoogleMapMarker): Promise<mapTypes.Marker>{
-      //   console.log('this is ',this);
-      //   var that = this;
-      //   return new Promise<mapTypes.Marker>((resolve, reject) => {
-      //     console.log('that is ',that);
-      //        console.log('m:',sebmMarker);
-      //        that._markerMgr.getNativeMarker(sebmMarker)
-      //        .then((nm) => { 
-      //          console.log('nm', nm);
-      //          resolve(nm);
-      //         // return nm; 
-      //         });
-      //   });
-      // }
+  //   var markerPromise = new Promise<mapTypes.Marker[]>((resolve, reject) => {
+  //     var nmr = sebMarkers.map((m) => {
+
+  //       this.getNativeMarker(m)
+
+  //     // console.log('m:',m);
+
+  //     //   that._markerMgr.getNativeMarker(m)
+  //     //    .then((nm) => { 
+  //     //      console.log('nm', nm);
+  //     //     //  resolve(nm);
+  //     //     // return nm; 
+  //     //     });
+
+
+  //     });
+
+  //   });
+  //   return markerPromise;
+
+  // }
+
+  // getNativeMarker(sebmMarker: SebmGoogleMapMarker): Promise<mapTypes.Marker>{
+  //   console.log('this is ',this);
+  //   var that = this;
+  //   return new Promise<mapTypes.Marker>((resolve, reject) => {
+  //     console.log('that is ',that);
+  //        console.log('m:',sebmMarker);
+  //        that._markerMgr.getNativeMarker(sebmMarker)
+  //        .then((nm) => { 
+  //          console.log('nm', nm);
+  //          resolve(nm);
+  //         // return nm; 
+  //         });
+  //   });
+  // }
 
 
 
   clickedMarker(label: string, index: number) {
-      // console.log('clicked the marker: ', label, index)
-      // console.log('selected mkr ', this.children.toArray()[index].latitude);
-      this.selectedMarker = this.markers[index];
+    // console.log('clicked the marker: ', label, index)
+    // console.log('selected mkr ', this.children.toArray()[index].latitude);
+    this.selectedMarker = this.markers[index];
 
-      this.infoWindows.map(m => m.close());
+    this.infoWindows.map(m => m.close());
 
-    }
+  }
 
 
-    markerDragEnd(o: Organisation, $event: MouseEvent) {
-      // console.log('dragEnd', o, $event);
-    }
+  markerDragEnd(o: Organisation, $event: MouseEvent) {
+    // console.log('dragEnd', o, $event);
+  }
 
 
 
@@ -341,10 +346,10 @@ export class SmapComponent implements OnInit, OnChanges {
 
 // just an interface for type safety.
 interface marker {
-	Id?: number;
-	Lat: number;
-	Lng: number;
-	Name?: string;
-	draggable?: boolean;
+  Id?: number;
+  Lat: number;
+  Lng: number;
+  Name?: string;
+  draggable?: boolean;
   isOpen?: boolean;
 }
