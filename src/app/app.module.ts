@@ -113,6 +113,7 @@ import { PostcodeService } from './search/search-postcode/postcode.service';
     { provide: Document, useValue: document },
     { provide: 'MAPS_API_KEY', useValue: environment.googleMapsAPIkey },
     { provide: 'API_URL', useValue: environment.apiHost },
+    { provide: APP_BASE_HREF, useValue: environment.appBaseHref },
     { provide: LockerConfig, useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL) },
     Locker],
   bootstrap: [AppComponent],

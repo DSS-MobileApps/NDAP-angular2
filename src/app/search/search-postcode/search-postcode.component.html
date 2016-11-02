@@ -3,7 +3,7 @@
 		<label class="control-label " for="locationInput">Your Postcode</label>
 		<div class="input-group">
 			<input #locationInput type="tel" class="form-control input-lg" id="locationInput" name="locationInput" min="200" max="9999"
-				maxlength="4" autocomplete="off" [placeholder]="textPlaceholder" [(ngModel)]="query" (keyup)=filter()>
+				autocomplete="off" [placeholder]="textPlaceholder" [(ngModel)]="query" (keyup)=filter()>
 			<span class="input-group-btn btn-group-lg">
             <!-- <button type="button" class="btn btn-default btn-lg"
             (click)="onPostCodeSearch(postCode)">
@@ -19,7 +19,7 @@
 		<div class="suggestions" *ngIf="filteredList.length > 0">
 			<ul *ngFor="let item of filteredList">
 				<li>
-					<a (click)="select(item)">{{item}}</a>
+					<a (click)="select(item)" href="javascript:void(0);" class='lead'><span class="locationname">{{item.Location}}, {{item.State}}</span> <span class='postcode pull-right'>{{item.Postcode}}</span></a>
 				</li>
 			</ul>
 		</div>

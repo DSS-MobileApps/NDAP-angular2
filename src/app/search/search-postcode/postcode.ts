@@ -1,5 +1,6 @@
 export class Postcode {
-  name: string;
-  postcode: string;
+    Location: string;
+    Postcode: Number;
+    State: string;
 
 }

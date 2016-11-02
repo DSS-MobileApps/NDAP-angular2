@@ -189,7 +189,7 @@ export class BackendService {
     let options = new RequestOptions({ headers: headers });
 
     // ...using get request
-    return this.http.get(this.postcodeLookupUrl + keyword, options)
+    return this.http.get(this.apiUrl + this.postcodeLookupUrl + keyword, options)
       // ...and calling .json() on the response to return data
       .map(this.extractData)
       .catch(this.handleError);
@@ -257,7 +257,8 @@ export class BackendService {
   * Postcode API Calls
   *************************************
   */
-  private postcodeLookupUrl = 'https://digitalapi.auspost.com.au/postcode/search.json?q=';
+  private postcodeLookupUrl = '/api/utilities/getpostcodelookup/';
+  //'https://digitalapi.auspost.com.au/postcode/search.json?q=';
   // 'https://v0.postcodeapi.com.au/suburbs.json?q=';
 
 

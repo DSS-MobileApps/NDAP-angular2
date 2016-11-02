@@ -1,0 +1,22 @@
+.suggestions {
+    max-height: 200px;
+    background-color: #f6f6f6;
+    overflow-y: scroll;
+}
+
+.suggestions ul {
+    margin: 0;
+    padding: 5px;
+}
+
+.suggestions li {
+    list-style: none;
+}
+
+.suggestions a .locationname{
+    max-width: 80%;
+    display: inline-block;
+}
+.suggestions a .postcode{
+    font-weight: bold;
+}
