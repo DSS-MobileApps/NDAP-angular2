@@ -4,10 +4,12 @@ import { Title } from '@angular/platform-browser';
 
 
 import { ProviderType } from './search-categories/provider-type';
-import { GeolocationService, GeoLocation } from '../shared/index';
+import { GeolocationService, GeoLocation, StateType } from '../shared/index';
 
 import { OrganisationService } from '../organisations/organisation.service'
 import { AnalyticsService } from '../shared/analytics.service';
+import { ProviderTypesService } from './search-categories/index';
+
 
 @Component({
 
@@ -24,6 +26,15 @@ export class SearchComponent implements OnInit, AfterViewInit {
   locationAllowed: boolean = false;
   locationPos: GeoLocation;
   textPlaceholder = "Type...";
+
+  states: StateType[] = [{ code: 'ACT', name: 'Australian Capital Territory' },
+  { code: 'NSW', name: 'New South Wales' },
+  { code: 'NT', name: 'Northern Territory' },
+  { code: 'QLD', name: 'Queensland' },
+  { code: 'SA', name: 'South Australia' },
+  { code: 'TAS', name: 'Tasmania' },
+  { code: 'VIC', name: 'Victoria' },
+  { code: 'WA', name: 'Western Australia' }];
   private locatingPosition: boolean;
 
   private subLocation: any;
@@ -37,6 +48,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private organisationService: OrganisationService,
+    private typesService: ProviderTypesService,
     private geolocationService: GeolocationService,
     public analytics: AnalyticsService,
     private titleService: Title
@@ -108,6 +120,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   //           () => console.log('complete ProviderType subscription')
   //         );
 
+  // this.resetRefiners();
 
   // }
 
@@ -129,9 +142,27 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   // }
 
-  // onSelectedState (state: StateType) {
-  //   this.organisationService.searchOrgList('byState', state, undefined);
   // }
+
+  onSelectedState(state: StateType) {
+
+    this.errorMessage = null;
+
+    this.organisationService.searchOrgList('byState', state, undefined)
+      .subscribe(
+      result => {
+        console.log('result is ', result);
+        this.onSearch.emit(state);
+      },
+      error => {
+        this.showErrorMsg(error);
+      },
+      () => console.log('complete state subscription')
+      );
+    this.resetRefiners();
+
+
+  }
 
 
   onPostCodeSearch(postCode) {
@@ -148,6 +179,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
       },
       () => console.log('complete postcode')
       );
+
+    this.resetRefiners();
 
   }
 
@@ -166,6 +199,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
       () => console.log('complete all orgs search subscription')
       );
 
+    this.resetRefiners();
+
+
   }
 
   onKeywordSearch(keywordEntry) {
@@ -183,6 +219,9 @@ export class SearchComponent implements OnInit, AfterViewInit {
       },
       () => console.log('complete keyword search subscription')
       );
+
+    this.resetRefiners();
+
   }
 
   onLocationIdentified(postCode) {
@@ -220,6 +259,10 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   }
 
+  resetRefiners() {
+    this.typesService.updateSelectedType(null);
+  }
+
   // get locationCapable(){
   //   return this.locationChecked &&
   //           this.locationPos;
@@ -239,24 +282,24 @@ export class SearchComponent implements OnInit, AfterViewInit {
       !this.locationPos.valid;
   }
 
-  // get postcodeValid() {
-  //   return this.postCode != null &&
-  //     this.postCode.toString().length >= 3 &&
-  //     !isNaN(this.postCode);
-  // }
+  get postcodeValid() {
+    return this.postCode != null &&
+      this.postCode.toString().length >= 3 &&
+      !isNaN(this.postCode);
+  }
 
-  // get postcodeWarning() {
-  //   return this.postCode != null &&
-  //     ((this.postCode.toString().length > 0 && this.postCode.toString().length < 3) ||
-  //       isNaN(this.postCode));
-  // }
+  get postcodeWarning() {
+    return this.postCode != null &&
+      ((this.postCode.toString().length > 0 && this.postCode.toString().length < 3) ||
+        isNaN(this.postCode));
+  }
 
-  // get postcodeError() {
-  //   return this.postCode != null &&
-  //     this.postCode.toString().length > 3 &&
-  //     (this.postCode.toString().length < 3 ||
-  //       isNaN(this.postCode));
-  // }
+  get postcodeError() {
+    return this.postCode != null &&
+      this.postCode.toString().length > 3 &&
+      (this.postCode.toString().length < 3 ||
+        isNaN(this.postCode));
+  }
 
   // get locationChecked(){
   //   return this.geolocationService.hasRequested;

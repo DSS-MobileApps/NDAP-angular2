@@ -1,85 +1,92 @@
 <!doctype html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+<!--[if lt IE 7]> <html class="lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie10 lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie10 lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9]> 	<html class="lt-ie10" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html lang="en">
+<!--<![endif]-->
+
 <head>
-  <title>Disability Advocacy Finder</title>
-  <meta charset="utf-8">
-  <meta name="description" content="">
-  <meta name="author" content="Department of Social Services">
-  <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Disability Advocacy Finder</title>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="author" content="Department of Social Services">
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <base href="/">
+	<base href="/">
 
-  <link rel="manifest" href="/manifest.json">
+	<link rel="manifest" href="/manifest.json">
 
 
-  <!-- <link rel="preconnect" href="//netdna.bootstrapcdn.com">
+	<!-- <link rel="preconnect" href="//netdna.bootstrapcdn.com">
   <link rel="preconnect" href="//code.jquery.com"> -->
 
 
-  <!-- Bootstrap styles CDN -->
-  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
+	<!-- Bootstrap styles CDN -->
+	<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
 
-  <link href="assets/css/bs/paper/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/bs/paper/bootstrap.min.css" rel="stylesheet">
 
-  <link href="assets/css/critical.css" rel="stylesheet">
-  
-  <!--<link href="common.css" rel="stylesheet">-->
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
+	<link href="assets/css/critical.css" rel="stylesheet">
+
+	<!--<link href="common.css" rel="stylesheet">-->
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
       <link type="text/css" rel="stylesheet" href="css/ndap-ie8.css" />
   <![endif]-->
-  <!--[if lt IE 8]>
+	<!--[if lt IE 8]>
       <link type="text/css" rel="stylesheet" href="css/ndap-ie7below.css" />
   <![endif]-->
 
-  <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+	<link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
 
-  <!-- <script src="modernizr-custom.js" async></script> -->
+	<!-- <script src="modernizr-custom.js" async></script> -->
 
-  <!-- {{#unless environment.production}}
+	<!-- {{#unless environment.production}}
   <script src="/ember-cli-live-reload.js" type="text/javascript"></script>
   {{/unless}} -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"> -->
-<!-- Cool spinners from http://tobiasahlin.com/spinkit/ -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"> -->
+	<!-- Cool spinners from http://tobiasahlin.com/spinkit/ -->
 
-  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
-  <!-- page icons -->
-  <link rel="shortcut icon" type="image/x-icon" href="assets/webpageIcons/DSS/icons/favicon.ico" />
-    <link rel="shortcut icon" href="assets/webpageIcons/DSS/icons/favicon-lg.png" />
-    <link rel="apple-touch-icon" href="assets/webpageIcons/DSS/icons/Icon-60.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/webpageIcons/DSS/icons/Icon-76.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/webpageIcons/DSS/icons/Icon-60@2x.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/webpageIcons/DSS/icons/Icon-76@2x.png">
+	<!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+	<!-- page icons -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/webpageIcons/DSS/icons/favicon.ico" />
+	<link rel="shortcut icon" href="assets/webpageIcons/DSS/icons/favicon-lg.png" />
+	<link rel="apple-touch-icon" href="assets/webpageIcons/DSS/icons/Icon-60.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/webpageIcons/DSS/icons/Icon-76.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="assets/webpageIcons/DSS/icons/Icon-60@2x.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="assets/webpageIcons/DSS/icons/Icon-76@2x.png">
 
-    <!-- iPhone 3 and 4 Non-Retina -->
-    <link rel="apple-touch-startup-image" media="(device-width: 320px)" href="assets/webpageIcons/DSS/Startup/ios-startup-320x460.png">
-    <!-- iPhone 4 Retina -->
-    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" href="assets/webpageIcons/DSS/Startup/ios-startup-640x920.png">
-    <!-- iPhone 5 Retina -->
-    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="assets/webpageIcons/DSS/Startup/ios-startup-640x1096.png">
+	<!-- iPhone 3 and 4 Non-Retina -->
+	<link rel="apple-touch-startup-image" media="(device-width: 320px)" href="assets/webpageIcons/DSS/Startup/ios-startup-320x460.png">
+	<!-- iPhone 4 Retina -->
+	<link rel="apple-touch-startup-image" media="(device-width: 320px) and (-webkit-device-pixel-ratio: 2)" href="assets/webpageIcons/DSS/Startup/ios-startup-640x920.png">
+	<!-- iPhone 5 Retina -->
+	<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+		href="assets/webpageIcons/DSS/Startup/ios-startup-640x1096.png">
 
-    <!-- iPad Non-Retina Portrait -->
-    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait)" href="assets/webpageIcons/DSS/Startup/ios-startup-768x1004.png">
-    <!-- iPad Non-Retina Landscape -->
-    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape)" href="assets/webpageIcons/DSS/Startup/ios-startup-1024x748.png">
-    <!-- iPad Retina Portrait -->
-    <link rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="assets/webpageIcons/DSS/Startup/ios-startup-1536x2008.png">
-    <!-- iPad Retina Landscape -->
-    <link rel="apple-touch-startup-image" media="(device-width: 1536px)  and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="assets/webpageIcons/DSS/Startup/ios-startup-2048x1496.png">
+	<!-- iPad Non-Retina Portrait -->
+	<link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: portrait)" href="assets/webpageIcons/DSS/Startup/ios-startup-768x1004.png">
+	<!-- iPad Non-Retina Landscape -->
+	<link rel="apple-touch-startup-image" media="(device-width: 768px) and (orientation: landscape)" href="assets/webpageIcons/DSS/Startup/ios-startup-1024x748.png">
+	<!-- iPad Retina Portrait -->
+	<link rel="apple-touch-startup-image" media="(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)"
+		href="assets/webpageIcons/DSS/Startup/ios-startup-1536x2008.png">
+	<!-- iPad Retina Landscape -->
+	<link rel="apple-touch-startup-image" media="(device-width: 1536px)  and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)"
+		href="assets/webpageIcons/DSS/Startup/ios-startup-2048x1496.png">
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <!-- MS 8.1 Tiles-->
-    <!-- <meta name="application-name" content="&nbsp;" /> -->
-    <meta name="application-name" content="Disability Advocacy Finder" />
-    <meta name="msapplication-TileColor" content="#0da6ab" />
-    <!-- <meta name="msapplication-square70x70logo" content="webpageIcons/windows/tiny.png" />
+	<!-- MS 8.1 Tiles-->
+	<!-- <meta name="application-name" content="&nbsp;" /> -->
+	<meta name="application-name" content="Disability Advocacy Finder" />
+	<meta name="msapplication-TileColor" content="#0da6ab" />
+	<!-- <meta name="msapplication-square70x70logo" content="webpageIcons/windows/tiny.png" />
     <meta name="msapplication-square150x150logo" content="webpageIcons/windows/square.png" />
     <meta name="msapplication-wide310x150logo" content="webpageIcons/windows/wide.png" />
     <meta name="msapplication-square310x310logo" content="webpageIcons/windows/large.png" /> -->
@@ -87,91 +94,85 @@
 
 
 </head>
+
 <body>
-  <angular2-service-finder-app>
-    <!-- <div id="loading" class="text-center">
-      <p>Loading</p>
-      <div class="spinner">
-        <div class="cube1"></div>
-        <div class="cube2"></div>
-      </div>
 
-      <div class="spinner">
-        <div class="rect1"></div>
-        <div class="rect2"></div>
-        <div class="rect3"></div>
-        <div class="rect4"></div>
-        <div class="rect5"></div>
-      </div>
-    </div> -->
+	<div id="browser-unsupported" class="alert alert-danger hidden hidden-print" aria-hidden="true" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<h2>Browser support problem</h2>
+		<p>You are viewing this site in an unsupported browser and may not function correctly. <br>Please view the <a href="/providerlist.aspx?service=NDAP">Printable list of providers</a>			or upgrade to a more recent browser. Apologies for any inconvenience.</p>
+	</div>
 
-    <div class="container-fluid launch" id="layout">
-      <header>
-            <div class="row" id="header">
-                <div class="hidden-xs col-sm-2 logo">
-                    <img class="img-responsive center-block" src="assets/images/aus-gov-logo-stacked-white.png">
-                </div>
+	<angular2-service-finder-app>
+		<div class="container-fluid launch" id="layout">
+			<header>
+				<div class="row" id="header">
+					<div class="hidden-xs col-sm-2 logo">
+						<img class="center-block" src="assets/images/aus-gov-logo-stacked-white.png" srcset="assets/images/aus-gov-logo-stacked-white-sm.png 1x, assets/images/aus-gov-logo-stacked-white@2x.png 2x">
+					</div>
 
-                <div class="col-xs-9 col-sm-6">
-                    <h1>Disability Advocacy Finder</h1>
-                  </div>
-                    <div class="">
-                    <nav class="navbar">
+					<div class="col-xs-9 col-sm-5">
+						<h1>Disability Advocacy Finder</h1>
+					</div>
+					<div class="col-xs-3 col-sm-5" id="global-navbar">
+						<nav class="navbar hidden-xs">
 
-                    </nav>
-                </div>
+						</nav>
+					</div>
 
-            </div>
+				</div>
 
 
-          </header>
-          <main>
+			</header>
+			<main>
 
-                        <div class="row well">
-                          <span class="lead col-xs-6 col-sm-3 col-sm-offset-3">loading</span>
-                          <div class="col-xs-6 col-sm-3 ">
-                            <div class="spinner">
-                              <div class="rect1"></div>
-                              <div class="rect2"></div>
-                              <div class="rect3"></div>
-                              <div class="rect4"></div>
-                              <div class="rect5"></div>
-                            </div>
-                          </div>
-                      </div>
+				<div class="row well">
+					<span class="lead col-xs-6 col-sm-3 col-sm-offset-3">loading</span>
+					<div class="col-xs-6 col-sm-3 ">
+						<div class="spinner">
+							<div class="rect1"></div>
+							<div class="rect2"></div>
+							<div class="rect3"></div>
+							<div class="rect4"></div>
+							<div class="rect5"></div>
+						</div>
+					</div>
+				</div>
 
-                      <div class="row">
-                        <p class=" col-xs-12 col-sm-8 col-sm-offset-2 lead" style="">Provides people with disability with access to effective disability advocacy that promotes, protects and ensures their full and equal enjoyment of all human rights enabling community participation.</p>
-                        <!-- <ul><li><strong>Citizen advocacy:</strong> matches people with disability with volunteers.</li>
+				<div class="row">
+					<p class=" col-xs-12 col-sm-8 col-sm-offset-2 lead" style="">Provides people with disability with access to effective disability advocacy that promotes, protects and ensures their
+						full and equal enjoyment of all human rights enabling community participation.</p>
+					<!-- <ul><li><strong>Citizen advocacy:</strong> matches people with disability with volunteers.</li>
                         	<li><strong>Family advocacy:</strong> helps parents and family members advocate on behalf of the person with disability for a particular issue.</li>
                         	<li><strong>Individual advocacy:</strong> upholds the rights of individual people with disability by working on discrimination, abuse and neglect.</li>
                         	<li><strong>Legal advocacy:</strong> upholds the rights and interests of individual people with disability by addressing the legal aspects of discrimination, abuse and neglect.</li>
                         	<li><strong>Self advocacy:</strong> supports people with disability to advocate for themselves, or as a group.</li>
                         	<li><strong>Systemic advocacy:</strong> seeks to remove barriers and address discrimination to ensure the rights of people with disability.</li>
                         </ul> -->
-                      </div>
-          </main>
-          <footer class="hidden-xs">
-            <div class="row hidden-xs" id="footer">
-                <div class="col-sm-6">
-                    <p>&copy; Commonwealth of Australia 2016</p>
-                </div>
-                <div class="col-sm-6">
-                    <p class="text-right">Accessibility | Privacy | Copyright &amp; Disclaimer</p>
-                </div>
-            </div>
-          </footer>
-        </div>
-  </angular2-service-finder-app>
+				</div>
+			</main>
+			<footer class="hidden-xs">
+				<div class="row hidden-xs" id="footer">
+					<div class="col-sm-6">
+						<p>&copy; Commonwealth of Australia 2016</p>
+					</div>
+					<div class="col-sm-6">
+						<p class="text-right">Accessibility | Privacy | Copyright &amp; Disclaimer</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</angular2-service-finder-app>
 
 
 
-  <!-- Latest compiled and minified CSS & JS -->
-  <!-- <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> -->
-  <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
-  <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+	<!-- Latest compiled and minified CSS & JS -->
+	<!-- <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> -->
+	<script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+	<!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
 
-<script>
+
+	<script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -183,8 +184,9 @@
 
 </script>
 
-  <!-- svg icons -->
-  <!-- <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script> -->
-<!-- icons from  https://linearicons.com -->
+	<!-- svg icons -->
+	<!-- <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script> -->
+	<!-- icons from  https://linearicons.com -->
 </body>
+
 </html>

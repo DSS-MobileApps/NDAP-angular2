@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input, transition, animate, style, state, trigger } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Title }     from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 import { Organisation } from '../index';
 import { OrganisationDetailComponent } from './organisation-detail.component';
@@ -24,13 +24,15 @@ import { OrganisationService } from '../organisation.service';
    */
   animations: [
     trigger('enterLeave', [
-      state('in', style({transform: 'translateY(0)'})),
+      state('in', style({ transform: 'translateY(0)' })),
+      // state('void', style({ transform: 'translateY(-100%)' })),
+      // state('*', style({ transform: 'translateY(100%)' })),
       transition('void => *', [
-        style({transform: 'translateY(100%)'}),
+        style({ transform: 'translateY(100%)' }),
         animate(200)
       ]),
       transition('* => void', [
-        animate(200, style({transform: 'translateY(-100%)'}))
+        animate(200, style({ transform: 'translateY(-100%)' }))
       ])
     ])
   ]
@@ -41,17 +43,17 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
   private subRoute: any;
 
   constructor(
-      private router: Router,
-      private route: ActivatedRoute,
-      private organisationService: OrganisationService,
-      private titleService: Title
+    private router: Router,
+    private route: ActivatedRoute,
+    private organisationService: OrganisationService,
+    private titleService: Title
   ) {
 
 
-      }
+  }
 
   ngOnInit() {
-/** Use this subscribe if changing params within this same component */
+    /** Use this subscribe if changing params within this same component */
     // this.subRoute = this.route
     //   .params
     //   .subscribe(params => {
@@ -64,14 +66,14 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
     //   });
 
     /** Use this if params never change in same component  ie. no router link to same component */
-      // (+) converts string 'id' to a number
-      let id = +this.route.snapshot.params['id'];
-      this.getOrganisationById(id);
+    // (+) converts string 'id' to a number
+    let id = +this.route.snapshot.params['id'];
+    this.getOrganisationById(id);
 
     this.sub = this.organisationService.selectedOrganisation
       .subscribe(
-        organisation => this.getOrganisation(organisation),
-        error =>  console.log(error));
+      organisation => this.getOrganisation(organisation),
+      error => console.log(error));
 
   }
 
@@ -81,28 +83,28 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
   }
 
 
-  getOrganisation(organisation: Organisation){
+  getOrganisation(organisation: Organisation) {
     this.selectedOrganisation = organisation;
-    if (this.selectedOrganisation){
+    if (this.selectedOrganisation) {
       this.getOrganisationById(organisation.Id);
-    }else{
+    } else {
       // this.goBack();
       // this.onUnselect(null);
     }
 
   }
 
-  getOrganisationById(id){
+  getOrganisationById(id) {
     this.organisationService.getOrganisation(id)
-    .subscribe((organisation) => {
-      console.log('org is ' + organisation.Name);
+      .subscribe((organisation) => {
+        console.log('org is ' + organisation.Name);
 
-      this.selectedOrganisation = organisation;
+        this.selectedOrganisation = organisation;
 
-      this.setTitle(this.selectedOrganisation.Name + " - Disability Advocacy Finder");
+        this.setTitle(this.selectedOrganisation.Name + " - Disability Advocacy Finder");
 
-      // this.initMap();
-    });
+        // this.initMap();
+      });
   }
 
   ngAfterViewInit() {
@@ -121,17 +123,17 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
     this.organisationService.updateSelectedOrganisation(null);
     console.group('Unselect Org:');
     console.log(selectedOrg);
-    if (selectedOrg){
-      this.router.navigate(['/organisations', {o: selectedOrg.Id}]);
-    }else{
+    if (selectedOrg) {
+      this.router.navigate(['/organisations', { o: selectedOrg.Id }]);
+    } else {
       this.router.navigate(['/organisations']);
     }
     console.groupEnd();
     // this.goBack();
   }
 
-  public setTitle( newTitle: string) {
-    this.titleService.setTitle( newTitle );
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 
 

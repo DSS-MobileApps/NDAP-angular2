@@ -65,7 +65,8 @@
 					<!-- <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
       More search options
     </a> -->
-					<a href="#collapseAdvanced" class="btn btn-link pull-right" data-toggle="collapse" aria-expanded="false" aria-controls="collapseAdvanced">more search options</a>
+					<a href="#collapseAdvanced" class="btn btn-link pull-right" data-toggle="collapse" aria-expanded="false" aria-controls="collapseAdvanced">
+						<i class="lnr lnr-list"></i> more search options</a>
 
 					<div class=" collapse" id="collapseAdvanced">
 						<!-- <hr> -->
@@ -94,14 +95,29 @@
 							</form>
 						</div>
 
-						<div class=" col-xs-12 col-lg-6 text-center">
+
+						<div class=" col-xs-12 col-sm-6">
+							<div class="btn-group dropup">
+								<a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									View by State
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li *ngFor="let state of states">
+										<a (click)="onSelectedState(state)" href="javascript:void(0);" name="{{state.code}}">{{state.name}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+
+						<div class=" col-xs-12 col-sm-6">
 
 
 							<button id="view-all-btn" type="button" class="btn btn-default" (click)="onAllOrganisations()">
                      View all organisations
                  </button>
 						</div>
-
 
 						<hr/>
 
@@ -163,6 +179,18 @@
 				Advocacy Finder. Inclusion of a provider on the Disability Advocacy Finder does not constitute any endorsement by DSS
 				of the providers or any associated organisation, product or service.
 			</p>
+		</div>
+	</div>
+
+	<div class="row" id="search-links">
+		<div class="col-xs-12">
+			<ul class="nav text-center">
+				<li><a [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Search <span class="sr-only">(current)</span></a></li>
+				<li><a [routerLink]="['/about']" routerLinkActive="active">About Disability Advocacy</a></li>
+				<li><a [routerLink]="['/contact']" routerLinkActive="active">Contact</a></li>
+
+			</ul>
+
 		</div>
 	</div>
 </div>

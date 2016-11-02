@@ -1,6 +1,7 @@
 <!-- <div id="org-search-container"  [style.max-height.px]="height" > -->
 <!-- [style.height.px]="height" -->
-  <button id="searchbtn" (click)="goToSearch()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent" data-upgraded=",MaterialButton,MaterialRipple">
+<button id="searchbtn" (click)="goToSearch()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent"
+	data-upgraded=",MaterialButton,MaterialRipple">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#ffffff">
 
               <circle fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" cx="21" cy="20" r="16"/>
@@ -10,69 +11,67 @@
       </button>
 
 
-  <!-- <div id="org-search"> -->
+<!-- <div id="org-search"> -->
 
 
 
 
-  <div class="row" id="results"  [@enterLeave]="'in'" [style.height.px]="height" [attr.aria-hidden]="searchMode">
+<div class="row" id="results" [@enterLeave]="'in'" [style.height.px]="height" [attr.aria-hidden]="searchMode">
+	<div id="result-split">
+
+		<h2 class="sr-only">Search results</h2>
+
+		<div id="list-panel" role="tabpanel" class="col-xs-6 col-sm-5 col-lg-4 active">
+			<h3 class="sr-only">List view</h3>
+			<div id="org-result" (window:resize)="onResize($event)">
 
 
-    <h2 class="sr-only">Search results</h2>
-
-        <div id="list-panel"  role="tabpanel" class="col-xs-6 col-sm-5 col-lg-4 active">
-          <h3 class="sr-only">List view</h3>
-          <div id="org-result" (window:resize)="onResize($event)">
-
-
-                <div *ngIf="!organisations && !errorMessage" class="loading">
-                  <p class="text-info text-center">Retrieving search results</p>
-                  <div class="spinner">
-                      <div class="rect1"></div>
-                      <div class="rect2"></div>
-                      <div class="rect3"></div>
-                      <div class="rect4"></div>
-                      <div class="rect5"></div>
-                  </div>
-                </div>
-                    
-
-              <div *ngIf="(organisationService.organisations | async) && !errorMessage">
-                <search-summary [organisations]="organisationService.organisations | async" [searchValue]="searchSummary"></search-summary>
-
-                <refiner-options *ngIf="(organisationService.organisations | async).length > 0"></refiner-options>
+				<div *ngIf="!organisations && !errorMessage" class="loading">
+					<p class="text-info text-center">Retrieving search results</p>
+					<div class="spinner">
+						<div class="rect1"></div>
+						<div class="rect2"></div>
+						<div class="rect3"></div>
+						<div class="rect4"></div>
+						<div class="rect5"></div>
+					</div>
+				</div>
 
 
-                <org-list [organisations]="organisationService.organisations | async"
-                  [selectedOrgId]="selectedOrgId"
-                  (onSelectionChanged)="onSelect($event)"></org-list>
-                <div *ngIf="organisations?.length == 0" class="text-center">
-                  <p class="lead text-danger" >Sorry, no results were found for your search.</p>
-                  <hr />
-                  <p>Try another location, or remove the filters.</p>
-                </div>
+				<div *ngIf="(organisationService.organisations | async) && !errorMessage">
+					<search-summary [organisations]="organisationService.organisations | async" [searchValue]="searchSummary"></search-summary>
 
-              </div>
-
-              <div *ngIf="errorMessage" class="well text-center">
-                  <p class="lead text-danger" >Oh noes, something went wrong!</p>
-                  <hr />
-                  <p>Would you like to <a [routerLink]="['/search']">try again?</a></p>
-                  <p>Fear not, this issue has been reported and our techies are looking into it!</p>
-              </div>
+					<refiner-options *ngIf="(organisationService.organisations | async).length > 0"></refiner-options>
 
 
-          </div>
-        </div>
-        <div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
-          <h3 class="sr-only">Map view</h3>
-          <app-smap-container [organisations]="organisations">Loading...</app-smap-container>
-        </div>
+					<org-list [organisations]="organisationService.organisations | async" [selectedOrgId]="selectedOrgId" (onSelectionChanged)="onSelect($event)"></org-list>
+					<div *ngIf="organisations?.length == 0" class="text-center">
+						<p class="lead text-danger">Sorry, no results were found for your search.</p>
+						<hr />
+						<p>Try another location, or remove the filters.</p>
+					</div>
 
-    </div>
+				</div>
+
+				<div *ngIf="errorMessage" class="well text-center">
+					<p class="lead text-danger">Oh noes, something went wrong!</p>
+					<hr />
+					<p>Would you like to <a [routerLink]="['/search']">try again?</a></p>
+					<p>Fear not, this issue has been reported and our techies are looking into it!</p>
+				</div>
 
 
-    <!-- <div class="row"  id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
+			</div>
+		</div>
+		<div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
+			<h3 class="sr-only">Map view</h3>
+			<app-smap-container [organisations]="organisations">Loading...</app-smap-container>
+		</div>
+
+	</div>
+</div>
+
+<!-- <div class="row"  id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
       <div class="col-xs-12" [class.detail-open]="selectedOrganisation != null"  >
           <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
       </div>
@@ -81,24 +80,24 @@
 
 
 
-  <!-- </div> -->
+<!-- </div> -->
 
 
-                    <!-- Tabs for the Mobile View -->
-                    <div class="visible-xs col-xs-12" id="tabs-list-map-view">
-                      <!-- <div class=""> -->
-                          <ul class="nav nav-tabs text-center" role="tablist">
-                            <!-- <li class="" role="presentation">
+<!-- Tabs for the Mobile View -->
+<div class="visible-xs col-xs-12" id="tabs-list-map-view">
+	<!-- <div class=""> -->
+	<ul class="nav nav-tabs text-center" role="tablist">
+		<!-- <li class="" role="presentation">
                                 <a href="#search-area" aria-controls="search-area" role="tab" data-toggle="tab">Search</a>
                             </li> -->
-                              <li class="active" role="presentation">
-                                  <a href="#list-panel" aria-controls="list-panel" role="tab" data-toggle="tab"><span class="lnr lnr-list"></span> List</a>
-                              </li>
+		<li class="active" role="presentation">
+			<a href="#list-panel" aria-controls="list-panel" role="tab" data-toggle="tab"><span class="lnr lnr-list"></span> List</a>
+		</li>
 
-                              <li class="" role="presentation">
-                                  <a href="#map-panel" aria-controls="map-panel" role="tab" data-toggle="tab"><span class="lnr lnr-map"></span> Map</a>
-                              </li>
-                          </ul>
-                      <!-- </div> -->
-                    </div>
+		<li class="" role="presentation">
+			<a href="#map-panel" aria-controls="map-panel" role="tab" data-toggle="tab"><span class="lnr lnr-map"></span> Map</a>
+		</li>
+	</ul>
+	<!-- </div> -->
+</div>
 <!-- </div> -->
