@@ -17,8 +17,9 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
 
 
     @ViewChild('locationInput') locInput: ElementRef;
+    @ViewChild('searchBtn') searchBtn: ElementRef;
 
-    // Output that a provider type has been selected
+    // Output that a postcode has been selected
     @Output() onSearchEntered = new EventEmitter<any>();
 
 
@@ -26,15 +27,8 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
 
 
     public query = '';
-    public countries = ["Albania", "Andorra", "Armenia", "Austria", "Azerbaijan", "Belarus",
-        "Belgium", "Bosnia & Herzegovina", "Bulgaria", "Croatia", "Cyprus",
-        "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Georgia",
-        "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Kosovo",
-        "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Malta",
-        "Moldova", "Monaco", "Montenegro", "Netherlands", "Norway", "Poland",
-        "Portugal", "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia",
-        "Spain", "Sweden", "Switzerland", "Turkey", "Ukraine", "United Kingdom", "Vatican City"];
     public filteredList = [];
+
 
     constructor(
         private postcodeService: PostcodeService
@@ -81,6 +75,10 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
         this.postCode = item.Postcode;
         this.selectedLocation = item;
         this.filteredList = [];
+        this.postcodeService.setSelectedLocation(item);
+        if (this.searchBtn && this.searchBtn.nativeElement) {
+            this.searchBtn.nativeElement.focus();
+        }
     }
 
 

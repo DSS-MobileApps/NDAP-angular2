@@ -9,7 +9,7 @@
             (click)="onPostCodeSearch(postCode)">
                 <span class="lnr lnr-location"></span> Near me
 			</button> -->
-			<button type="submit" class="btn btn-default btn-lg" [class.disabled]="!postcodeValid" [disabled]="!postcodeValid">
+			<button #searchBtn type="submit" class="btn btn-default btn-lg" [class.disabled]="!postcodeValid" [disabled]="!postcodeValid">
                 <!-- <span class="lnr lnr-magnifier"></span>  -->
                 Search
             </button>
@@ -23,6 +23,8 @@
 				</li>
 			</ul>
 		</div>
-
+		<div class="selectedLocation" *ngIf="selectedLocation">
+			<p class='lead text text-info'>{{selectedLocation.Location}}, {{selectedLocation.State}}</p>
+		</div>
 	</div>
 </form>
