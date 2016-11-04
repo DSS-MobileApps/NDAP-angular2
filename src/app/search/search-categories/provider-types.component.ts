@@ -85,11 +85,12 @@ export class ProviderTypesComponent implements OnInit {
 
     // console.log("filter types contained in Orgs: ", this.providerTypes);
 
-    this.filteredTypes = this.providerTypes.filter(function (el) {
-      // console.log("filtering type: ", el,  orgs.filter(o => o.Category.includes(el.Value) ))
-      return orgs.filter(o => o.Category.includes(el.Value)).length > 0;
-    });
-
+    if (this.providerTypes) {
+      this.filteredTypes = this.providerTypes.filter(function (el) {
+        // console.log("filtering type: ", el,  orgs.filter(o => o.Category.includes(el.Value) ))
+        return orgs.filter(o => o.Category.includes(el.Value)).length > 0;
+      });
+    }
 
 
     // console.log("filter types after reduced ", this.filteredTypes);

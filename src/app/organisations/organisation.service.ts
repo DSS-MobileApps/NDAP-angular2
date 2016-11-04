@@ -17,6 +17,7 @@ import { AnalyticsService } from '../shared/analytics.service';
 import { BackendService } from '../shared/backend.service';
 
 const APPSTATE_RESULTS = 'results',
+  APPSTATE_RESULTS_UNFILTERED = 'resultsUnfiltered',
   APPSTATE_REFINERS = 'refiners',
   APPSTATE_SEARCHTYPE = 'searchType',
   APPSTATE_SEARCHVAL = 'searchValue1',
@@ -100,6 +101,8 @@ export class OrganisationService {
     if (this.appState.get(APPSTATE_RESULTS)) {
       this.dataStore.organisations = this.appState.get(APPSTATE_RESULTS);
       this._organisations.next(this.dataStore.organisations);
+      this._orgsUnfiltered.next(this.dataStore.organisations);
+
 
       // // get last search type
       // if (this.appState.get(APPSTATE_SEARCHTYPE)) {
@@ -115,6 +118,11 @@ export class OrganisationService {
       if (this.appState.get(APPSTATE_REFINERS)) {
         this.dataStore.refiners = this.appState.get(APPSTATE_REFINERS);
         this._refiners.next(this.dataStore.refiners);
+
+        if (this.dataStore.refiners.length > 0) {
+          this._organisations.next(this.filterByCategory(this.dataStore.refiners[0].value));
+        }
+
       }
 
     }
@@ -148,11 +156,7 @@ export class OrganisationService {
     console.info(this.dataStore.refiners);
 
     // console.info(this.dataStore.organisations.filter((item) => item.Category === value))
-    this._organisations.next(
-      this.dataStore.organisations
-        // .filter((item) => item.Category === value)
-        .filter((item) => item.Category.indexOf(value) != -1)
-    );
+    this._organisations.next(this.filterByCategory(value));
 
     this._refiners.next(this.dataStore.refiners);
 
@@ -161,6 +165,12 @@ export class OrganisationService {
     this.analytics.sendEvent('Refine', refineField, value, null, null);
 
 
+  }
+
+  private filterByCategory(value) {
+    return this.dataStore.organisations
+      // .filter((item) => item.Category === value)
+      .filter((item) => item.Category.indexOf(value) != -1)
   }
 
   // Public Method called to get organisations list
