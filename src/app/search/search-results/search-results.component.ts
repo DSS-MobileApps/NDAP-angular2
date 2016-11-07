@@ -62,6 +62,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
   width = 100;
   height = 500;
+  summaryHeight = 0;
   // height: number;
 
   searchMode = true;
@@ -137,8 +138,17 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
     let mainHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('main')[0].offsetHeight;
     if (mainHeight >= 0) {
-      console.log('current main flexbox height=' + mainHeight);
-      this.height = mainHeight;
+      let summaryEl = this.elementRef.nativeElement.ownerDocument.querySelector('#summary-area .summary');
+      if (summaryEl) {
+        this.summaryHeight = summaryEl.offsetHeight;
+        this.height = mainHeight - this.summaryHeight;
+        console.log('current main flexbox height=' + this.height);
+      } else {
+        console.log('current main flexbox height=' + mainHeight);
+        this.height = mainHeight;
+      }
+
+
     }
 
 

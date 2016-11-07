@@ -16,11 +16,14 @@
 
 
 
-<div class="row" id="results" [@enterLeave]="'in'" [style.height.px]="height" [attr.aria-hidden]="searchMode">
-	<div id="result-split">
+<div class="row" id="results" [@enterLeave]="'in'" [attr.aria-hidden]="searchMode">
 
-		<h2 class="sr-only">Search results</h2>
+	<h2 class="sr-only">Search results</h2>
 
+
+	<search-summary id="summary-area" [organisations]="organisationService.organisations | async" [searchValue]="searchSummary"></search-summary>
+
+	<div id="result-split" [style.height.px]="height" [style.margin-top.px]="summaryHeight">
 		<div id="list-panel" role="tabpanel" [class.active]="isListActive" class="col-xs-6 col-sm-5 col-lg-4 active">
 			<h3 class="sr-only">List view</h3>
 			<div id="org-result" (window:resize)="onResize($event)">
@@ -39,7 +42,6 @@
 
 
 				<div *ngIf="(organisationService.organisations | async) && !errorMessage">
-					<search-summary [organisations]="organisationService.organisations | async" [searchValue]="searchSummary"></search-summary>
 
 					<refiner-options *ngIf="(organisationService.organisations | async).length > 0"></refiner-options>
 
