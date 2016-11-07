@@ -1,6 +1,6 @@
 <!-- <div id="org-search-container"  [style.max-height.px]="height" > -->
 <!-- [style.height.px]="height" -->
-<button id="searchbtn" (click)="goToSearch()" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent"
+<button id="searchbtn" (click)="goToSearch()" class="hidden-xs mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent"
 	data-upgraded=",MaterialButton,MaterialRipple">
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#ffffff">
 
@@ -21,7 +21,7 @@
 
 		<h2 class="sr-only">Search results</h2>
 
-		<div id="list-panel" role="tabpanel" class="col-xs-6 col-sm-5 col-lg-4 active">
+		<div id="list-panel" role="tabpanel" [class.active]="isListActive" class="col-xs-6 col-sm-5 col-lg-4 active">
 			<h3 class="sr-only">List view</h3>
 			<div id="org-result" (window:resize)="onResize($event)">
 
@@ -63,7 +63,7 @@
 
 			</div>
 		</div>
-		<div id="map-panel" role="tabpanel" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
+		<div id="map-panel" role="tabpanel" [class.active]="!isListActive" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
 			<h3 class="sr-only">Map view</h3>
 			<app-smap-container [organisations]="organisations">Loading...</app-smap-container>
 		</div>
@@ -71,33 +71,36 @@
 	</div>
 </div>
 
-<!-- <div class="row"  id="result-detail" [style.height.px]="height" [attr.aria-hidden]="selectedOrganisation == null">
-      <div class="col-xs-12" [class.detail-open]="selectedOrganisation != null"  >
-          <organisation-detail [organisation]="selectedOrganisation"></organisation-detail>
-      </div>
-    </div> -->
-
-
-
-
-<!-- </div> -->
-
 
 <!-- Tabs for the Mobile View -->
-<div class="visible-xs col-xs-12" id="tabs-list-map-view">
-	<!-- <div class=""> -->
+<!--<div class="visible-xs col-xs-12" id="tabs-list-map-view">
 	<ul class="nav nav-tabs text-center" role="tablist">
-		<!-- <li class="" role="presentation">
-                                <a href="#search-area" aria-controls="search-area" role="tab" data-toggle="tab">Search</a>
-                            </li> -->
 		<li class="active" role="presentation">
 			<a href="#list-panel" aria-controls="list-panel" role="tab" data-toggle="tab"><span class="lnr lnr-list"></span> List</a>
 		</li>
-
 		<li class="" role="presentation">
 			<a href="#map-panel" aria-controls="map-panel" role="tab" data-toggle="tab"><span class="lnr lnr-map"></span> Map</a>
 		</li>
 	</ul>
-	<!-- </div> -->
-</div>
-<!-- </div> -->
+</div>-->
+
+<button id="view-toggle-btn" (click)="toggleView()" class="visible-xs mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--8dp mdl-color--accent"
+	data-upgraded=",MaterialButton,MaterialRipple">
+			<svg [class.hidden]="!isListActive" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="50px" height="50px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#000000">
+				<polyline fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="  19.004,10.27 13,13 1,7 1,43 13,49 25,43 38,49 49,43 49,7 38,13 36.685,12.843 "/>
+				<path fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="  M37,10c0,8.162-9,19-9,19s-9-10.644-9-19c0-4.971,4.029-9,9-9C32.971,1,37,5.029,37,10z"/>
+				<circle fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="28" cy="11" r="4"/>
+			</svg>
+			<svg [class.hidden]="isListActive" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve" fill="#000000">
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="11" y1="20" x2="47" y2="20"/>
+				<rect x="3" y="18" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="4" height="4"/>
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="11" y1="10" x2="47" y2="10"/>
+				<rect x="3" y="8" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="4" height="4"/>
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="11" y1="30" x2="47" y2="30"/>
+				<rect x="3" y="28" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="4" height="4"/>
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="11" y1="40" x2="47" y2="40"/>
+				<rect x="3" y="38" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="4" height="4"/>
+			</svg>
+
+              <h2 class="sr-only">Toggle Map View</h2>
+      </button>

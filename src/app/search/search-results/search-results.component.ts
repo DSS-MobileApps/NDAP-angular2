@@ -50,6 +50,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   userPos: any;
   searchSummary: string;
 
+  public isListActive: boolean = true;
 
   private subMarker: any;
   private subSelected: any;
@@ -247,6 +248,11 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/search');
     this.analytics.sendUIEvent('Search again', 'From search icon button');
 
+  }
+
+  public toggleView() {
+    this.isListActive = !this.isListActive;
+    console.log('toggle view mode', this.isListActive);
   }
 
   sendFinishedLoadTime() {

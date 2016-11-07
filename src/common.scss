@@ -10,6 +10,12 @@
 #searchbtn svg *{
   stroke: $midgrey;
 }
+#view-toggle-btn{
+    background-color: $color-primary-1;
+}
+#view-toggle-btn svg *{
+   stroke: $contrast;
+}
 
 .no-geolocation #location-request{
     display: none;

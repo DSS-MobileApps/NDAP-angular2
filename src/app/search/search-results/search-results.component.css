@@ -28,13 +28,28 @@
 #searchbtn {
     transition: all ease-in-out 0.2s;
     position: absolute;
-    right: 10px;
-     bottom: 10px;
+    /*right: 10px;
+     bottom: 10px;*/
     z-index: 999;
 }
 .search-mode #searchbtn  {
 
 }
+#view-toggle-btn{
+    transition: all ease-in-out 0.2s;
+    position: absolute;
+    right: 15px;
+    bottom: 20px;
+    z-index: 999;
+}
+/*#view-toggle-btn svg{
+  opacity: 0;
+  position: absolute;
+}
+#view-toggle-btn svg.active{
+  opacity: 1;
+}*/
+
 .detail-open #searchbtn{
   opacity: 0;
 }
@@ -44,7 +59,7 @@ button#searchbtn:focus, button#searchbtn:hover {
 
 }
 
-#searchbtn svg{
+#searchbtn svg, #view-toggle-btn svg{
   width:60%;
   height: 60%;
   margin-top: 15%;
@@ -86,7 +101,8 @@ button#searchbtn:focus, button#searchbtn:hover {
 }
 #list-panel, #map-panel{
   height: 100%;
-  padding-bottom: 50px;
+  /*padding-bottom: 50px;*/
+  /*padding-top: 30px;*/
 }
 
 #map-panel >>> .map-container{

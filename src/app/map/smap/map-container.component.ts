@@ -19,6 +19,8 @@ declare var google: any;
                     [longitude]="defaultCentreLng"
                     [zoom]="defaultZoom"
                     (mapClick)="mapClicked($event)"
+                    [disableDefaultUI]="true"
+                    [streetViewControl]="false"
                     class="map-container">
                     <app-smap [organisations]="organisations" [selectedOrganisation]="selectedOrganisation"></app-smap>
               </sebm-google-map>`,
@@ -29,12 +31,12 @@ export class SmapContainerComponent implements OnInit {
   @ViewChild('map') mapElement: SebmGoogleMap;
 
   // default lat/long focus of the map
-  private defaultCentreLat : number = -29;
-  private defaultCentreLng : number = 135;
-  private defaultZoom : number = 4;
+  private defaultCentreLat: number = -29;
+  private defaultCentreLng: number = 135;
+  private defaultZoom: number = 4;
 
-  private latLng : LatLng;
-  private mapBounds : LatLngBounds;
+  private latLng: LatLng;
+  private mapBounds: LatLngBounds;
 
   // organisations: Organisation[] = [
   //   {
@@ -66,21 +68,22 @@ export class SmapContainerComponent implements OnInit {
 
   // iconUrl = "assets/images/map/Infos_info.svg";
 
- private _googMap: mapTypes.GoogleMap;
+  private _googMap: mapTypes.GoogleMap;
 
   constructor(
-      // private organisationService: OrganisationService,
-      // private geolocationService: GeolocationService,
-      private _wrapper: GoogleMapsAPIWrapper)
-  {
+    // private organisationService: OrganisationService,
+    // private geolocationService: GeolocationService,
+    private _wrapper: GoogleMapsAPIWrapper) {
   }
+
 
   ngOnInit() {
     // console.info('INIT SMapContainerComponent: ', this.organisations);
 
+
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // if (this.subOrgs) {this.subOrgs.unsubscribe();}
     // if (this.subSelected) {this.subSelected.unsubscribe();}
     // if (this.subLocation) {this.subSelected.unsubscribe();}
@@ -88,14 +91,14 @@ export class SmapContainerComponent implements OnInit {
 
 
 
-    mapClicked($event: MouseEvent) {
-      console.info('clicked map');
-        // this.markers.push({
-        //   Name: 'Some new marker',
-        //   Lat: this.defaultCentreLat,
-        //   Lng: this.defaultCentreLng
-        // });
-      }
+  mapClicked($event: MouseEvent) {
+    console.info('clicked map');
+    // this.markers.push({
+    //   Name: 'Some new marker',
+    //   Lat: this.defaultCentreLat,
+    //   Lng: this.defaultCentreLng
+    // });
+  }
 
 
 }

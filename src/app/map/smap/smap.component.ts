@@ -97,7 +97,23 @@ export class SmapComponent implements OnInit, OnChanges {
     //       console.info('got map', m);
     //     });
     // console.log("map ready...");
-    this.getNativeMap();
+    this.getNativeMap()
+      .then((m) => {
+        console.log('got natvie map');
+        var options = {
+          // minZoom: 14, maxZoom: 15, 
+          disableDefaultUI: true,
+          // scrollwheel: true,
+          // draggable: true,
+          // disableDoubleClickZoom: true,
+          // panControl: false,
+          // scaleControl: false,
+          zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+          }
+        };
+        m.setOptions(options);
+      });
 
     // this._initMapInstance();
 
