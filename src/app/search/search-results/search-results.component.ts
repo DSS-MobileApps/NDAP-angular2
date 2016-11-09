@@ -135,7 +135,6 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     //
     // this.height = windowHeight - headerHeight - footerHeight;
 
-
     let mainHeight = this.elementRef.nativeElement.ownerDocument.getElementsByTagName('main')[0].offsetHeight;
     if (mainHeight >= 0) {
       let summaryEl = this.elementRef.nativeElement.ownerDocument.querySelector('#summary-area .summary');

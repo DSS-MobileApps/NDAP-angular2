@@ -1,22 +1,71 @@
 .suggestions {
-    max-height: 200px;
-    background-color: #f6f6f6;
-    overflow-y: scroll;
+    min-height: 0;
+   transition: ease-in-out .1s;
+}
+.suggestions.open {
+    min-height: 100px;
 }
 
-.suggestions ul {
+.suggestions .dropdown-menu {
+    max-height: 120px;
+    background-color: #f6f6f6;
+    overflow-y: scroll;
+    top:auto;
+    left: auto;
+    min-width: 240px;
+}
+
+.suggestions .dropdown-menu ul {
     margin: 0;
     padding: 5px;
 }
 
-.suggestions li {
+.suggestions .dropdown-menu li {
     list-style: none;
 }
 
-.suggestions a .locationname{
+.suggestions .dropdown-menu a .locationname{
     max-width: 80%;
     display: inline-block;
 }
-.suggestions a .postcode{
+.suggestions .dropdown-menu a .postcode{
     font-weight: bold;
 }
+
+/*BS4*/
+/*
+@media(min-width:34em){}
+@media(min-width:48em){}
+@media(min-width:62em){}
+@media(min-width:75em){}*/
+
+/* BS3 */
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+@media(max-width:767px){
+    .suggestions .dropdown-menu>li>a{
+        padding: 3px 10px;
+        max-width: 240px;
+        white-space: normal;
+    }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media(min-width:768px){
+    .suggestions .dropdown-menu>li>a{
+        max-width: 240px;
+    }
+}
+/* Medium devices (desktops, 992px and up) */
+@media(min-width:992px){
+    .suggestions .dropdown-menu{
+        min-width: 300px;
+    }
+    .suggestions .dropdown-menu>li>a{
+        max-width: none;
+    }
+    
+}
+/* Large devices (large desktops, 1200px and up) */
+@media(min-width:1200px){}

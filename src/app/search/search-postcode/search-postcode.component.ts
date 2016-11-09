@@ -10,7 +10,7 @@ import { PostcodeService } from './postcode.service'
 })
 export class SearchPostcodeComponent implements OnInit, AfterViewInit {
 
-    @Input() postCode: number;
+    @Input() postCode: any;
     keyword: string;
     @Input() textPlaceholder = "Type...";
     selectedLocation: any;
@@ -45,6 +45,7 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
     }
 
     filter() {
+        this.query = this.postCode;
         if (this.query !== "" && this.query.length > 2) {
             // this.filteredList = this.countries.filter(function (el) {
             //   return el.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
@@ -64,9 +65,9 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
             this.filteredList = [];
         }
 
-        if (!isNaN(Number(this.query))) {
-            this.postCode = Number(this.query);
-        }
+        // if (!isNaN(Number(this.query))) {
+        //     this.postCode = Number(this.query);
+        // }
 
     }
 

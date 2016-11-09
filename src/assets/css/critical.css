@@ -92,8 +92,9 @@ html, body{
     /*overflow-y: hidden;*/
     overflow-y: auto;
     align-self: stretch;
-
+    -webkit-overflow-scrolling: touch;
   }
+
   footer{
     padding: 0 15px;
     max-height: 50px;

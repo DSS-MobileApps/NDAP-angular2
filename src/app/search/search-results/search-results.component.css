@@ -49,6 +49,14 @@
 #view-toggle-btn svg.active{
   opacity: 1;
 }*/
+#view-toggle-btn #listicon,
+#view-toggle-btn.list-active #mapicon{
+  display: none;
+}
+#view-toggle-btn #mapicon,
+#view-toggle-btn.list-active #listicon{
+  display: inline-block;
+}
 
 .detail-open #searchbtn{
   opacity: 0;
@@ -112,6 +120,7 @@ button#searchbtn:focus, button#searchbtn:hover {
 }
 #list-panel, #map-panel{
   height: 100%;
+  transition: ease-out .25s;
   /*padding-bottom: 50px;*/
   /*padding-top: 30px;*/
 }
