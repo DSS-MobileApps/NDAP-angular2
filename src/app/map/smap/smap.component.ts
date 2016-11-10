@@ -67,7 +67,7 @@ export class SmapComponent implements OnInit, OnChanges {
   private _googMap: mapTypes.GoogleMap;
   private _markerMgr: MarkerManager;
 
-  organisationBaseUrl;
+  organisationBaseUrl: any;
 
   constructor(
     // private organisationService: OrganisationService,

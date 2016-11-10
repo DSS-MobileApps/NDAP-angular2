@@ -53,7 +53,7 @@ export class PostcodeService {
 
     }
 
-    getPostcodesForLocations(keyword): Observable<Postcode[]> {
+    getPostcodesForLocations(keyword: string): Observable<Postcode[]> {
 
         return this.backendService.
             getPostcodesFromKeyword(keyword);

@@ -1,14 +1,14 @@
-import {Pipe} from "@angular/core";
+import { Pipe } from "@angular/core";
 
 @Pipe({
-	name : "phoneLink"
+	name: "phoneLink"
 })
 
-export class PhoneLink{
-	transform(value){
+export class PhoneLink {
+	transform(value: string) {
 		if (value != null && value.length > 0) {
 			return "tel:" + value.replace(/ /g, "");
-		}else{
+		} else {
 			return '';
 		}
 

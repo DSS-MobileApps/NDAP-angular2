@@ -57,10 +57,10 @@ export class MapComponent implements OnInit, AfterViewInit {
     private organisationService: OrganisationService,
     private geolocationService: GeolocationService,
     // private mapService: MapService
-    ) {}
+  ) { }
 
   // When the component starts
-  ngOnInit () {
+  ngOnInit() {
     console.info('INIT MapComponent');
 
     this._initMapInstance(this.mapElement.nativeElement);
@@ -77,10 +77,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngOnDestroy(){
-    if (this.subOrgs) {this.subOrgs.unsubscribe();}
-    if (this.subSelected) {this.subSelected.unsubscribe();}
-    if (this.subLocation) {this.subSelected.unsubscribe();}
+  ngOnDestroy() {
+    if (this.subOrgs) { this.subOrgs.unsubscribe(); }
+    if (this.subSelected) { this.subSelected.unsubscribe(); }
+    if (this.subLocation) { this.subSelected.unsubscribe(); }
   }
 
   private _initMapInstance(el: any) {
@@ -106,7 +106,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   subscribeToOrganisationListUpdates() {
     // this.subOrgs = this.organisationService.orgListSource$
     this.subOrgs = this.organisationService.organisations
-    .subscribe(
+      .subscribe(
       organisations => {
         // set the map.comp Org Array to match the results
         this.organisations = organisations;
@@ -114,7 +114,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         // this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
         // this.mapService.AddMarkers(this.organisations);
       },
-      error =>  console.log(error));
+      error => console.log(error));
   }
 
 
@@ -129,17 +129,17 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   // When a marker is clicked, tell the Org Service
-  clickedMarker(selectedOrganisation) {
+  clickedMarker(selectedOrganisation: any) {
     this.organisationService.updateSelectedOrganisation(selectedOrganisation);
   };
 
   // Be notified when a organisation is selected
   subscribeToSelectedOrganisationUpdates() {
-  this.subSelected = this.organisationService.selectedOrganisation
-    .subscribe(
+    this.subSelected = this.organisationService.selectedOrganisation
+      .subscribe(
       selectedOrganisation => this.selectedOrganisation = selectedOrganisation,
-      error =>  console.log(error));
-    }
+      error => console.log(error));
+  }
 
   ngAfterViewInit() {
     //need to make sure the organisations are available...
@@ -150,15 +150,15 @@ export class MapComponent implements OnInit, AfterViewInit {
     // this.mapService.createAreaMap(this.mapElement.nativeElement, this.organisations);
   }
 
-    //this.markerService.createMarker(this.map);
+  //this.markerService.createMarker(this.map);
 
 
   subscribeToPositionUpdates() {
     this.subLocation = this.geolocationService.location$.subscribe(
-          (position) => {
-            console.log("map position updated: " + new Date());
-            this.locationPos = position;
-        },
+      (position) => {
+        console.log("map position updated: " + new Date());
+        this.locationPos = position;
+      },
       error => console.log(error));
 
   }

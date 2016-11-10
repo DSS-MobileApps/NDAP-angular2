@@ -7,7 +7,7 @@ import {
   HashLocationStrategy
 } from '@angular/common';
 
-import { Locker, LockerConfig } from 'angular2-locker'
+import { LockerModule, LockerConfig, DRIVERS } from 'angular2-locker'
 // import { MapService } from './map/map.service';
 // import {LazyMapsAPILoader, LazyMapsAPILoaderConfig} from './map/loading/lazy-maps-api-loader';
 // import {MapsAPILoader} from './map/loading/maps-api-loader';
@@ -57,9 +57,26 @@ import { BackendService } from './shared/backend.service';
 import { ProviderTypesService } from './search/search-categories/provider-types.service';
 import { GeolocationService } from './shared/geolocation.service';
 import { PostcodeService } from './search/search-postcode/postcode.service';
+import { RemoveSpaces } from './shared/index';
+
+
+const lockerConfig = new LockerConfig('FinderApp', DRIVERS.LOCAL);
 
 @NgModule({
-  declarations: [AppComponent,
+  declarations: declarations(),
+  imports: imports(),
+  providers: providers(),
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+// export function lockerConfig() {
+//   return new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL);
+// }
+
+export function declarations() {
+  return [
+    AppComponent,
     SearchAreaComponent, SearchComponent, SearchResultsComponent, SearchLocationComponent, SearchKeywordComponent, SearchStateComponent, RefinerComponent, SearchSummaryComponent, ProviderTypesComponent, SearchPostcodeComponent,
     EmailLink, PhoneLink, CommaSplitList, CommaSplitArray, WebLink,
     OrganisationsComponent, OrganisationComponent, OrganisationDetailComponent, OrganisationListComponent, OrganisationDetailComponent,
@@ -68,8 +85,13 @@ import { PostcodeService } from './search/search-postcode/postcode.service';
     ContactComponent,
     ErrorMessageComponent,
     // SebmGoogleMapMarker,
-    SmapComponent, SmapContainerComponent, SearchPostcodeComponent],
-  imports: [BrowserModule,
+    SmapComponent, SmapContainerComponent, SearchPostcodeComponent,
+    RemoveSpaces
+  ];
+}
+
+export function imports() {
+  return [BrowserModule,
     // Router
     // RouterModule,//.forRoot(config),
     // Forms
@@ -79,6 +101,9 @@ import { PostcodeService } from './search/search-postcode/postcode.service';
       apiKey: environment.googleMapsAPIkey
     }),
     routing,
+
+    // LockerModule.forRoot({ driverNamespace: 'FinderApp', defaultDriverType: DRIVERS.LOCAL, namespaceSeparator: '-' })
+    LockerModule.forRoot(lockerConfig)
     // RouterModule.forChild([
     //     { path: 'search', component: SearchAreaComponent },
     //     { path: 'organisations', component: SearchResultsComponent },
@@ -87,8 +112,10 @@ import { PostcodeService } from './search/search-postcode/postcode.service';
     //     { path: 'contact', component: ContactComponent }
     //
     //   ])
-  ],
-  providers: [  // disableDeprecatedForms(),
+  ];
+}
+export function providers() {
+  return [  // disableDeprecatedForms(),
     // provideForms(),
     // BROWSER_GLOBALS_PROVIDERS,
     // { provide: MapsAPILoader, useClass: LazyMapsAPILoader},
@@ -113,9 +140,5 @@ import { PostcodeService } from './search/search-postcode/postcode.service';
     { provide: Document, useValue: document },
     { provide: 'MAPS_API_KEY', useValue: environment.googleMapsAPIkey },
     { provide: 'API_URL', useValue: environment.apiHost },
-    { provide: APP_BASE_HREF, useValue: environment.appBaseHref },
-    { provide: LockerConfig, useValue: new LockerConfig('FinderApp', Locker.DRIVERS.LOCAL) },
-    Locker],
-  bootstrap: [AppComponent],
-})
-export class AppModule { }
+    { provide: APP_BASE_HREF, useValue: environment.appBaseHref }];
+}

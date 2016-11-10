@@ -1,12 +1,12 @@
 //file name: remove-spaces.ts
-import {Pipe} from "@angular/core";
+import { Pipe } from "@angular/core";
 
 @Pipe({
-	name : "removeSpaces"
+	name: "removeSpaces"
 })
 
-export class RemoveSpaces{
-	transform(value){
+export class RemoveSpaces {
+	transform(value: string) {
 		return value.replace(/ /g, "");
 	}
 }

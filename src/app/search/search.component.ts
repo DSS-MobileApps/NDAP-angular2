@@ -165,7 +165,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
 
-  onPostCodeSearch(postCode) {
+  onPostCodeSearch(postCode: any) {
     // console.log('Org std Postcode search for postcode: ' + postCode);
     this.errorMessage = null;
     this.organisationService.searchOrgList('byPostCode', postCode, undefined)
@@ -204,7 +204,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   }
 
-  onKeywordSearch(keywordEntry) {
+  onKeywordSearch(keywordEntry: string) {
     this.errorMessage = null;
 
     // this.organisationService.searchOrgList('byKeyword', keywordEntry, undefined);
@@ -224,7 +224,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   }
 
-  onLocationIdentified(postCode) {
+  onLocationIdentified(postCode: any) {
     console.log('Postcode identified: ' + postCode);
     // if (this.postCode.toString().length == 0){
     this.postCode = postCode;
@@ -239,7 +239,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   // }
 
-  enableLocation(allowed) {
+  enableLocation(allowed: boolean) {
     this.locationChecked = true;
     this.locationAllowed = allowed;
     if (allowed) {

@@ -1,14 +1,14 @@
-import {Pipe} from "@angular/core";
+import { Pipe } from "@angular/core";
 
 @Pipe({
-	name : "emailLink"
+	name: "emailLink"
 })
 
-export class EmailLink{
-	transform(value){
+export class EmailLink {
+	transform(value: string) {
 		if (value != null && value.length > 0) {
 			return "mailto:" + value.replace(/ /g, "");
-		}else{
+		} else {
 			return '';
 		}
 

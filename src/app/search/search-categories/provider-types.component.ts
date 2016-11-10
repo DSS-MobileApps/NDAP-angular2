@@ -100,7 +100,7 @@ export class ProviderTypesComponent implements OnInit {
 
   // When a provider type is selected, tell the org list to filter by the type selected
   // This event is captured through the organisation.component html template
-  onSelect(providerType) {
+  onSelect(providerType: any) {
     // emit the provider value e.g. "All Disability"
     console.log('Refine by ', providerType);
     this.selectedProviderType = providerType;

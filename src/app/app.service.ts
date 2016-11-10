@@ -22,7 +22,7 @@ export class AppState {
 
   get(prop?: any) {
     // use our state getter for the clone
-    var returnVal = null;
+    var returnVal: any = null;
     const state = this.state;
 
     if (prop) {
@@ -52,7 +52,7 @@ export class AppState {
   }
 
 
-  _clone(object) {
+  _clone(object: any) {
     // simple object clone
     return JSON.parse(JSON.stringify(object));
   }

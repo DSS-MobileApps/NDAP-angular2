@@ -79,7 +79,7 @@ export class GeolocationService {
 	// 	return false;
 	// }
 
-	public enableLocation(allow) {
+	public enableLocation(allow: boolean) {
 		console.log('set allow geolocation preference to ' + allow);
 		if (allow) {
 			this.locker.set('allowGeolocation', true);
@@ -105,9 +105,9 @@ export class GeolocationService {
 	// 	this.getLocation()
 	// }
 
-	public getLocation(options?): Observable<any> {
+	public getLocation(options?: any): Observable<any> {
 
-		return Observable.create(observer => {
+		return Observable.create((observer: any) => {
 
 			if (window.navigator && window.navigator.geolocation) {
 				this.enableLocation(true);
@@ -127,14 +127,14 @@ export class GeolocationService {
 
 	}
 
-	private positionSuccessCallback = (position) => {
+	private positionSuccessCallback = (position: any) => {
 		// this.location.next(position);
 		this.displayLocation(position);
 
 		// this.location.complete();
 	}
 
-	private positionErrorCallback = (error) => {
+	private positionErrorCallback = (error: any) => {
 		console.group("Geolocation error");
 		console.log("position error: " + new Date());
 		console.error(error);
@@ -163,7 +163,7 @@ export class GeolocationService {
 
 	}
 
-	private displayLocation = (position) => {
+	private displayLocation = (position: any) => {
 
 		// console.log('start getCurrentPos - displayLocation');
 
@@ -184,7 +184,7 @@ export class GeolocationService {
 					let data = response.json();
 					loc.address = data.results[0].formatted_address
 
-					let city = data.results[0].address_components.reduce((city, value) => {
+					let city = data.results[0].address_components.reduce((city: any, value: any) => {
 						if (value.types[0] == "locality") {
 							city = value.long_name;
 							loc.city = city;

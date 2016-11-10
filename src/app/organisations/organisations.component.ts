@@ -57,7 +57,7 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
   private subOrgs: any;
   private subSearchVal: any;
 
-  private startTime;
+  private startTime: any;
 
   width = 100;
   height = 500;
@@ -98,7 +98,7 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
-    setTimeout(_ => this.setMapHeight());
+    setTimeout((_: any) => this.setMapHeight());
     this.sendFinishedLoadTime();
   }
 
@@ -136,7 +136,7 @@ export class OrganisationsComponent implements OnInit, AfterViewInit {
     if (this.subSearchVal) { this.subSearchVal.unsubscribe(); }
   }
 
-  onResize(event) {
+  onResize(event: any) {
     // // this.width += 100;
     // // this.height += 100;
     // let currentHeight = this.elementRef.nativeElement.getElementsByTagName('div')[0].offsetHeight;

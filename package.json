@@ -22,14 +22,15 @@
     "@angular/platform-browser-dynamic": "~2.1.0",
     "@angular/platform-server": "~2.1.0",
     "@angular/router": "~3.1.0",
-    "angular2-google-maps": "^0.15.0",
+    "angular2-google-maps": "^0.16.0",
     "angular2-locker": "^0.5.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "markerclustererplus": "^2.1.4",
     "modernizr": "^3.3.1",
-    "rxjs": "^5.0.0-rc.1",
+    "rxjs": "^5.0.0-beta.12",
     "ts-helpers": "^1.1.2",
+    "typescript": "^2.0.8",
     "zone.js": "^0.6.25"
   },
   "devDependencies": {

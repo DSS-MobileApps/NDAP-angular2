@@ -27,7 +27,7 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
 
 
     public query = '';
-    public filteredList = [];
+    public filteredList: any = [];
 
 
     constructor(
@@ -71,7 +71,7 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
 
     }
 
-    select(item) {
+    select(item: any) {
         this.query = item.Postcode;
         this.postCode = item.Postcode;
         this.selectedLocation = item;
@@ -97,7 +97,7 @@ export class SearchPostcodeComponent implements OnInit, AfterViewInit {
     //   }
     // }
 
-    onSearch(postcode) {
+    onSearch(postcode: any) {
         this.onSearchEntered.emit(postcode);
     }
 

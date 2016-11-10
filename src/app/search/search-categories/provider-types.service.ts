@@ -75,7 +75,7 @@ export class ProviderTypesService {
 
   }
 
-  public updateSelectedType(selectedType) {
+  public updateSelectedType(selectedType: any) {
     this._selectedType.next(selectedType);
     this.dataStore.selected = selectedType;
     this.appState.set(APPSTATE_SELECTEDTYPE, selectedType);

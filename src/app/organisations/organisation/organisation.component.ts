@@ -94,7 +94,7 @@ export class OrganisationComponent implements OnInit, AfterViewInit {
 
   }
 
-  getOrganisationById(id) {
+  getOrganisationById(id: number) {
     this.organisationService.getOrganisation(id)
       .subscribe((organisation) => {
         console.log('org is ' + organisation.Name);

@@ -81,14 +81,14 @@ export class SearchLocationComponent implements OnInit {
   }
 
   // When a radius is selected, tell the org list to filter by the radius selected
-  onSelect(radius) {
+  onSelect(radius: any) {
     // emit the radius value e.g. "50"
     this.onSelectedRadius.emit(radius);
 
 
   }
 
-  onCurrentPostcodeSearch(postCode) {
+  onCurrentPostcodeSearch(postCode: any) {
     // this.organisationService.searchOrgList('byPostCode', postCode, undefined);
     console.log('search for postcode: ' + postCode);
     this.onLocationPostcodeSearch.emit(postCode);

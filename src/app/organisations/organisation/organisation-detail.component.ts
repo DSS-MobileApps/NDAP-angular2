@@ -30,7 +30,7 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit, OnCha
   googleMapsLink: string;
   googleMapsDirections: string;
 
-  private startTime;
+  private startTime: any;
 
   constructor(
     // private router: Router,
@@ -117,7 +117,7 @@ export class OrganisationDetailComponent implements OnInit, AfterViewInit, OnCha
     // if (this.subLocation) {this.subLocation.unsubscribe();}
   }
 
-  ngOnChanges(changes) {
+  ngOnChanges(changes: any) {
 
     // console.log('Change detected:', changes);
     if (changes.organisation) {

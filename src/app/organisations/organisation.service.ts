@@ -31,7 +31,7 @@ export class OrganisationService {
   // private orgListSource = new Subject<Organisation[]>();
   // orgListSource$ = this.orgListSource.asObservable();
 
-  private;
+  // private;
 
 
   // Observable for search types
@@ -140,7 +140,7 @@ export class OrganisationService {
 
 
   // Public Method called to get organisations list
-  public refineOrgList(refineField, value, singleRefiner = false) {
+  public refineOrgList(refineField: any, value: any, singleRefiner: boolean = false) {
     console.info(refineField, value);
 
     var newRef: Refiner = { type: refineField, value: value, summary: refineField + " refined by " + value };
@@ -167,14 +167,14 @@ export class OrganisationService {
 
   }
 
-  private filterByCategory(value) {
+  private filterByCategory(value: any) {
     return this.dataStore.organisations
       // .filter((item) => item.Category === value)
       .filter((item) => item.Category.indexOf(value) != -1)
   }
 
   // Public Method called to get organisations list
-  public clearRefinerProperty(refineField) {
+  public clearRefinerProperty(refineField: any) {
 
     this.dataStore.refiners = this.dataStore.refiners
       .filter((refiner) => refiner.type !== refineField);
@@ -201,7 +201,7 @@ export class OrganisationService {
   }
 
   // Public Method called to get organisations list
-  public getByKeyword(keyword): Observable<any> {
+  public getByKeyword(keyword: string): Observable<any> {
     this.appState.set(APPSTATE_SEARCHTYPE, 'keyword');
     this.appState.set(APPSTATE_SEARCHVAL, keyword);
 
@@ -219,7 +219,7 @@ export class OrganisationService {
 
       let result = this.appState.get().allOrgs;
       let kLower = keyword.toLowerCase();
-      this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
+      this.dataStore.organisations = this.sortOrganisations(result.filter((item: any) => this.keywordMatch(kLower, item)));
       // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
 
       this._organisations.next(this.dataStore.organisations);
@@ -242,7 +242,7 @@ export class OrganisationService {
         result => {
 
           let kLower = keyword.toLowerCase();
-          this.dataStore.organisations = this.sortOrganisations(result.filter(item => this.keywordMatch(kLower, item)));
+          this.dataStore.organisations = this.sortOrganisations(result.filter((item: any) => this.keywordMatch(kLower, item)));
           // this.dataStore.organisations = result.filter(item => this.keywordMatch(kLower, item));
 
           this._organisations.next(this.dataStore.organisations);
@@ -275,7 +275,7 @@ export class OrganisationService {
   }
 
   // Public Method called to get organisations list
-  public searchOrgList(searchType, value1, value2): Observable<any> {
+  public searchOrgList(searchType: any, value1: any, value2: any): Observable<any> {
     this.appState.set(APPSTATE_SEARCHTYPE, searchType);
     this.appState.set(APPSTATE_SEARCHVAL, value1);
     this.appState.set('searchValue2', value2);
@@ -344,14 +344,14 @@ export class OrganisationService {
 
   }
 
-  public updateSelectedOrganisation(selectedOrganisation) {
+  public updateSelectedOrganisation(selectedOrganisation: any) {
     this._selectedOrganisation.next(selectedOrganisation);
     this.appState.set(APPSTATE_SELECTEDORG, selectedOrganisation);
 
   }
 
 
-  private formattedSearchLabels(searchType, value) {
+  private formattedSearchLabels(searchType: any, value: any) {
     // console.log('format search label start', searchType, value);
 
     switch (searchType) {
@@ -395,7 +395,7 @@ export class OrganisationService {
 
   }
 
-  private keywordMatch(kLower, item: Organisation) {
+  private keywordMatch(kLower: string, item: Organisation) {
     return (item.Name != null && item.Name.toLowerCase().includes(kLower)) ||
       // (item.FurtherDetails != null && item.FurtherDetails.toLowerCase().includes(kLower)) ||
       (item.Suburb != null && item.Suburb.toLowerCase().includes(kLower)) ||

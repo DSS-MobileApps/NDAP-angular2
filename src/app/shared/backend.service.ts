@@ -29,7 +29,7 @@ export class BackendService {
     return this.getOrganisations('all', null, null);
   }
 
-  public getOrganisations(searchType, value1, value2): Observable<Organisation[]> {
+  public getOrganisations(searchType: string, value1: any, value2: any): Observable<Organisation[]> {
 
 
     switch (searchType) {
@@ -109,7 +109,7 @@ export class BackendService {
 
   // Using the url, get the response from the API,
   // map through it to extract the data and catch any errors
-  private getJsonFromAPI(url) {
+  private getJsonFromAPI(url: string) {
     var sendTime = new Date();
 
     return this.http.get(url)
@@ -181,7 +181,7 @@ export class BackendService {
 
 
   // Postcode lookup
-  public getPostcodesFromKeyword(keyword): Observable<any[]> {
+  public getPostcodesFromKeyword(keyword: string): Observable<any[]> {
 
     let headers = new Headers({ 'Accept': 'application/json' });
     // headers.append('auth-key', 'a73b3339-b759-4df3-a11f-009c1857da26');
