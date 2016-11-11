@@ -1,21 +1,21 @@
+<div class="list-container fade-in">
+	<div class="panel panel-default delay-{{i+1}}" *ngFor="let organisation of displayOrgs; let i = index" [class.selected]="organisation.Id == selectedOrgId"
+		(click)="onSelect(organisation)">
+		<!-- <div class="panel-heading" >
+		<h5 class="panel-title">{{organisation.Name}}</h5>
+		</div> -->
+		<div class="panel-body">
+			<h4><a href="#" (click)="onSelect(organisation)">{{organisation.Name}}</a></h4>
+			<span class="pull-left"><span class="lnr lnr-map-marker"></span>{{organisation.Suburb}}, {{organisation.Postcode}}</span>
+			<span *ngFor="let category of organisation.Category | commaSplitArray" class="label label-default pull-right">{{category}}</span>
 
-<div class="panel panel-default" *ngFor="let organisation of organisations"
-      [class.selected]="organisation.Id == selectedOrgId"
-      (click)="onSelect(organisation)">
-  <!-- <div class="panel-heading" >
-      <h5 class="panel-title">{{organisation.Name}}</h5>
-    </div> -->
-    <div class="panel-body" >
-        <h4><a href="#" (click)="onSelect(organisation)">{{organisation.Name}}</a></h4>
-        <span class="pull-left"><span class="lnr lnr-map-marker"></span>{{organisation.Suburb}}, {{organisation.Postcode}}</span>
-        <span *ngFor="let category of organisation.Category | commaSplitArray" class="label label-default pull-right">{{category}}</span>
 
-
-    </div>
-    <!-- <div class="panel-footer">
-        <div class="btn-group listitem-actionbtn">
-            <a class="btn btn-sm btn-primary" href="#" tabindex="0"><i class="fa fa-map-marker"></i> View on map</a>
-            <a class="btn btn-sm btn-default" tabindex="-1" aria-controls="item" [routerLink]="['/organisation/', organisation.Id]"><i class="fa fa-info-circle"></i> More details</a>
-        </div>
-    </div> -->
+		</div>
+		<!-- <div class="panel-footer">
+			<div class="btn-group listitem-actionbtn">
+				<a class="btn btn-sm btn-primary" href="#" tabindex="0"><i class="fa fa-map-marker"></i> View on map</a>
+				<a class="btn btn-sm btn-default" tabindex="-1" aria-controls="item" [routerLink]="['/organisation/', organisation.Id]"><i class="fa fa-info-circle"></i> More details</a>
+			</div>
+		</div> -->
+	</div>
 </div>

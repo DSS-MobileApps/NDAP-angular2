@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef } from '@angular/core';
 // import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Organisation } from '../organisation';
 // import { CommaSplitArray } from '../../shared/index';
@@ -9,18 +9,34 @@ import { Organisation } from '../organisation';
   templateUrl: 'organisation-list.component.html',
   styleUrls: ['organisation-list.component.css'],
   // directives: [
-    // ROUTER_DIRECTIVES
+  // ROUTER_DIRECTIVES
   // ],
   // pipes: [CommaSplitArray]
 })
-export class OrganisationListComponent implements OnInit {
+export class OrganisationListComponent implements OnInit, OnChanges {
   @Input() organisations: Organisation[];
   @Input() selectedOrgId: number;
   @Output() onSelectionChanged = new EventEmitter<Organisation>();
-  constructor() { }
+
+  public displayOrgs: Organisation[];
+
+  constructor(private ref: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() { }
 
+  ngOnChanges(changes: any) {
+
+    // console.log('Change detected:', changes);
+    if (changes.organisations) {
+      console.log('Organisations Change detected:', changes.organisations);
+      this.displayOrgs = [];
+      this.ref.detectChanges();
+      if (this.organisations) {
+        this.displayOrgs = this.organisations;
+      }
+    }
+  }
 
   onSelect(org: Organisation) {
     this.onSelectionChanged.emit(org);
