@@ -22,9 +22,11 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#FFFFFF",
-  "theme_color": "#005A70",
-  "related_applications": [{
-    "platform": "web",
-    "url":"http://www.dss.gov.au/our-responsibilities/disability-and-carers/program-services/for-people-with-disability/national-disability-advocacy-program"
-  }]
+  "theme_color": "#004A58",
+  "related_applications": [
+    {
+      "platform": "web",
+      "url": "http://www.dss.gov.au/our-responsibilities/disability-and-carers/program-services/for-people-with-disability/national-disability-advocacy-program"
+    }
+  ]
 }

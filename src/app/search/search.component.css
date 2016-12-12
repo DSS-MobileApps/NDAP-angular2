@@ -30,7 +30,7 @@
 }
 
 .more-link {
-  color: #005A70;
+  color: #004A58;
   margin-bottom: 20px;
 }
 
@@ -62,7 +62,7 @@
 .search-card-wide > .mdl-card__title {
   color: #fff;
   min-height: 100px;
-  background: #005A70;
+  background: #004A58;
    /*url('../assets/demos/welcome_card.jpg') center / cover;*/
 }
 .search-card-wide > .mdl-card__menu {
