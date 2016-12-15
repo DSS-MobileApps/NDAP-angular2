@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSearch(postCode)" #postcodeForm="ngForm">
 	<div class="form-group center-block search-postcode" [class.has-warning]="postcodeWarning" [class.has-error]="postcodeError">
-		<label class="control-label " for="locationInput">Your Postcode</label>
+		<label class="control-label " for="locationInput">Your Postcode, Town or Suburb</label>
 		<div class="input-group">
 			<input #locationInput type="tel" class="form-control input-lg" id="locationInput" name="locationInput" min="200" max="9999"
 				autocomplete="off" [placeholder]="textPlaceholder" [(ngModel)]="postCode" (keyup)=filter()>
