@@ -24,7 +24,9 @@
 	<search-summary id="summary-area" [organisations]="organisationService.organisations | async" [searchValue]="searchSummary"></search-summary>
 
 	<div id="result-split" [style.height.px]="height" [style.margin-top.px]="summaryHeight">
-		<div id="list-panel" role="tabpanel" [class.active]="isListActive" class="col-xs-6 col-sm-5 col-lg-4 active">
+		<div id="list-panel" role="tabpanel" [class.active]="isListActive" class="col-xs-12 col-sm-5 col-lg-4 active">
+			<!--<div class="opaque"></div>-->
+
 			<h3 class="sr-only">List view</h3>
 			<div id="org-result" (window:resize)="onResize($event)">
 
@@ -65,7 +67,7 @@
 
 			</div>
 		</div>
-		<div id="map-panel" role="tabpanel" [class.active]="!isListActive" class="col-xs-6 col-sm-7 col-lg-8" aria-hidden="true">
+		<div id="map-panel" role="tabpanel" [class.active]="!isListActive" class="col-xs-12 col-sm-7 col-lg-8" aria-hidden="true">
 			<h3 class="sr-only">Map view</h3>
 			<app-smap-container [organisations]="organisations">Loading...</app-smap-container>
 		</div>
