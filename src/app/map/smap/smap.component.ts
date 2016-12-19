@@ -247,6 +247,8 @@ export class SmapComponent implements OnInit, OnChanges {
         Lat: Number(item.Lat),
         Lng: Number(item.Lng),
         Name: item.Name,
+        Suburb: item.Suburb,
+        Postcode: item.Postcode,
         isOpen: false
       });
 
@@ -366,6 +368,8 @@ interface marker {
   Lat: number;
   Lng: number;
   Name?: string;
+  Suburb?: string;
+  Postcode?: number;
   draggable?: boolean;
   isOpen?: boolean;
 }

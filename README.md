@@ -37,4 +37,22 @@ To get more help on the `angular-cli` use `ng --help` or go check out the [Angul
 IIS 7 does not include SVG Mime type by default. to add see [Adding IIS7 Mime type Setting](http://www.iis.net/learn/manage/managing-your-configuration-settings/adding-ie-9-mime-types-to-iis)
 Add new Mime type in IIS
 File Name extension     .svg
-MIME tyoe	            image/svg+xml
+MIME type	            image/svg+xml
+
+
+## Build Commands for environments
+
+### DEVINT
+[Dev website](https://dev-disabilityadvocacyfinder.development.local/disability/ndap)
+from CLI, run `ng build -e devint -prod -bh /disability/ndap/`
+Stop LocatorAngular website on DEAWDWEB003 IIS
+Copy dist files to \\deawdweb003.development.local\LocatorAngular
+Start LocatorAngular website
+
+### ST
+[ST website](https://st-disabilityadvocacyfinder.development.local/disability/ndap)
+from CLI, run `ng build -e st -prod -bh /disability/ndap/`
+Stop LocatorAngular website on DEINFWFE111 IIS
+Copy dist files to \\deinfwfe111.development.local\LocatorAngular
+Start LocatorAngular website
+
