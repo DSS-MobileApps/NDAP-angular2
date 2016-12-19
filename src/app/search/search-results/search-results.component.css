@@ -198,7 +198,7 @@ button#searchbtn:focus, button#searchbtn:hover {
 
   #map-panel{
     /*filter: grayscale(80%);*/
-    filter: blur(5px) grayscale(80%);
+    filter: blur(5px) grayscale(90%);
     transition: 200ms ease-in;
   }
   #map-panel.active{

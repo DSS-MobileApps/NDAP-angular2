@@ -22,17 +22,17 @@
 </div>-->
 
 <div *ngIf="ErrorMessageIsVisible" class="modal fade show in">
-  <div class="opaque"></div>
-  <div class="modal-dialog">
-    <div class="modal-content alert alert-dismissible alert-info ">
+    <div class="opaque"></div>
+    <div class="modal-dialog">
+        <div class="modal-content alert alert-dismissible alert-info ">
             <button type="button" class="close" data-dismiss="modal" (click)="hideErrorMsg()">&times;</button>
-            <h4 class="modal-title text-info">Oh noes, something broke!</h4>
+            <h4 class="modal-title text-info">Oh no, something broke!</h4>
             <blockquote>
                 <p>Never say, "oops." Always say, "Ah, interesting."</p>
                 <small>Anon</small>
             </blockquote>
             <p class="">The problem seems to be: <strong>{{ErrorMsg}}</strong></p>
             <p>But fear not, this issue has been reported to our techies are we will be looking into it!</p>
+        </div>
     </div>
-  </div>
 </div>
